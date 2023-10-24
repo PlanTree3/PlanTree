@@ -8,7 +8,8 @@ const App = () => {
   return (
     <>
       <img className="logo" src={a} alt="a" />
-      <h1>서울한강</h1>
+
+      <h1 className="text-5xl text-blue-300 font-bold">Hey!</h1>
     </>
   )
 }
