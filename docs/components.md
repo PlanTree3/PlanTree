@@ -1,4 +1,5 @@
 ```text
+// npm으로 상태관리
 ├── index.html
 ├── index.css
 ├── .eslintrc.cjs
@@ -6,17 +7,71 @@
 ├── package.json
 ├── package-lock.json
 ├── tsconfig.json
+├── pulic
+│ 	├── images
+│ 	└── 3ds
+│       ├── seed.stl
+│       └── tree.stl
 └── src
+    ├── apis
+    │   ├── LoginApi.ts
+    │   └── ApiCongif.ts
+    ├── components
+    │   ├── index.tsx
+    │   ├── SideBar.tsx
+    │   ├── GroupCreate.tsx
+    │   ├── GroupJoin.tsx
+    │   ├── GroupQR.tsx
+    │   ├── GroupNoticeCreate.tsx
+    │   ├── GroupNoticeDetail.tsx
+    │   ├── CreateBud.tsx
+    │   ├── BudDetail.tsx
+    │   ├── BranchCreate.tsx
+    │   ├── TreeRender.tsx
+    │   ├── ForestRender.tsx
+    │   ├── ForestCard.tsx
+    │   ├── TreeLog.tsx
+    │   ├── Statistic.tsx
+    │   ├── BudRender.tsx
+    │   └── Quest.tsx
     ├── pages
-    │   ├── loading.tsx    
-    │   ├── 404.tsx
-    │   ├── _app.tsx
-    │   └── user
-    │       ├── index.tsx
-    │       └── [id].tsx
+    │   ├── index.tsx
+    │   ├── Loading.tsx    
+    │   ├── NotFound.tsx
+    │   ├── MainPage.tsx
+    │   ├── TutorialPage.tsx
+    │   ├── SignUpPage.tsx
+    │   ├── LoginPage.tsx
+    │   ├── ForestPage.tsx
+    │   ├── ForestDetailPage.tsx
+    │   ├── TreeDetailPage.tsx
+    │   ├── GroupPage.tsx
+    │   ├── GroupDetailPage.tsx
+    │   ├── GroupNoticePage.tsx
+    │   ├── QuestPage.tsx
+    │   ├── NoticePage.tsx
+    │   ├── CRUDPage.tsx
+    │   └── MyPage.tsx
+    ├── stores
+    │   ├── features
+    │	│   ├── userSlice.ts
+    │   │   └── planSlice.ts
+    │   ├── services
+    │	│   ├── userSaga.ts
+    │   │   └── planSaga.ts
+    │   └── store.ts
+    ├── styles
+    ├── types
+    │   ├── index.tsx
+    │   ├── quest.tsx
+    │   ├── forest.tsx 
+    │   ├── user.tsx
+    │   └── tree.tsx
+    ├── utils
     ├── main.tsx
     ├── routes.tsx
     └── vite-env.d.tsx
+
 
 ```
 ```ts
