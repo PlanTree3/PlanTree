@@ -31,6 +31,14 @@ module.exports = {
     'react-hooks',
     'jsx-a11y',
   ],
+  settings: {
+    // import/resolver` 는 `eslint-plugin-import` 의 경로 설정 옵션
+    'import/resolver': {
+      node: {
+        paths: ['src'],
+      },
+    },
+  },
   rules: {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
@@ -46,4 +54,4 @@ module.exports = {
       { namedComponents: ['arrow-function'] },
     ],
   },
-};
+}
