@@ -20,9 +20,7 @@ export const apiPostJson = axios.create({
 
 apiGet.interceptors.request.use()
 apiGet.interceptors.response.use(
-  (response) => {
-    return response.data
-  },
+  (response) => response.data,
   (error) => {
     if (error.response && error.response.status === HTTP_STATUS.UNAUTHORIZED) {
       console.log('접근 권한이 없습니다.')
