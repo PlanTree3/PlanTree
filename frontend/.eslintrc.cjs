@@ -52,5 +52,6 @@ module.exports = {
       2,
       { namedComponents: ['arrow-function'] },
     ],
+    "spaced-comment": "off",
   },
 };
