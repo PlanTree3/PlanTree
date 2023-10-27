@@ -8,7 +8,7 @@ const App = () => {
   return (
     <>
       <img className="logo" src={a} alt="a" />
-      <h1>Hey!</h1>
+      <h1 className="text-5xl text-blue-300 font-bold">Hey!</h1>
     </>
   )
 }
