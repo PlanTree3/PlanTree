@@ -2,8 +2,7 @@ import './App.css'
 import { BrowserRouter } from 'react-router-dom'
 import RoutesComponent from './router.tsx'
 
-const App = () => {
-  return (
+const App = () => (
     <>
       <BrowserRouter>
         <RoutesComponent />
@@ -11,5 +10,4 @@ const App = () => {
       <div>진짜 린트 개새끼야</div>
     </>
   )
-}
 export default App
