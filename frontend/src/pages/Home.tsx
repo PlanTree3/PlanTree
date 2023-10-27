@@ -6,6 +6,7 @@ const Home = () => {
   const handleLogin = () => {
     navigate('/login')
   }
+
   return (
     <>
       <img className="logo" src={logo} alt="logo" />

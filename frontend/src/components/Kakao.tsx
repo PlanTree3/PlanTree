@@ -16,8 +16,8 @@ const Kakao = () => {
       token={kakaoKey}
       onSuccess={handleLoginSuccess}
       onFail={handleLoginFailure}
-    />
-  )
+     />
+  );
 }
 
 export default Kakao
