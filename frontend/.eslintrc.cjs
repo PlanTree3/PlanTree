@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2021: true,
@@ -23,6 +24,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    tsconfigRootDir: __dirname,
   },
   plugins: [
     'prettier',
@@ -53,5 +55,6 @@ module.exports = {
       2,
       { namedComponents: ['arrow-function'] },
     ],
+    'import/no-unresolved': 'off',
   },
 }
