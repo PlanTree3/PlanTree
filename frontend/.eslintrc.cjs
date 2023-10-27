@@ -42,6 +42,13 @@ module.exports = {
     },
   },
   rules: {
+    "import/no-extraneous-dependencies": [
+        "error",
+      {
+        "devDependencies": ["**/vite.config.{js,ts}"],
+        "optionalDependencies": true,
+        "peerDependencies": true
+      }],
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'react-hooks/rules-of-hooks': 'error',
