@@ -4,6 +4,7 @@ import com.plantree.memberservice.domain.member.domain.Member;
 import com.plantree.memberservice.global.exception.AuthenticationFailException;
 import com.plantree.memberservice.global.exception.TokenExpiredException;
 import com.plantree.memberservice.global.property.JwtProperty;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -40,7 +41,9 @@ public class JwtProvider {
         Instant accessExpiredTime = Instant.now()
                                            .plus(accessExpiredMinute, ChronoUnit.MINUTES);
         return Jwts.builder()
-                   .setSubject(member.getId())
+                   .setSubject(member.getId()
+                                     .toString())
+                   .claim("role", member.getRole())
                    .setExpiration(Date.from(accessExpiredTime))
                    .signWith(accessKey)
                    .compact();
@@ -87,6 +90,25 @@ public class JwtProvider {
             throw new AuthenticationFailException("지원되지 않는 토큰입니다.");
         } catch (IllegalArgumentException e) {
             throw new AuthenticationFailException("잘못된 토큰입니다.");
+        }
+    }
+
+    public String getMemberIdFromExpiredAccessToken(String accessToken) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                                .setSigningKey(accessKey)
+                                .build()
+                                .parseClaimsJws(accessToken)
+                                .getBody();
+            return claims.getSubject();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims()
+                    .getSubject();
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            throw new AuthenticationFailException("잘못된 JWT 서명입니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AuthenticationFailException("지원되지 않는 JWT 토큰입니다.");
         }
     }
 }

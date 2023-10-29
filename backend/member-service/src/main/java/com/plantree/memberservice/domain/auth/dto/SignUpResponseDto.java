@@ -1,13 +1,15 @@
 package com.plantree.memberservice.domain.auth.dto;
 
+import java.util.UUID;
 import lombok.Getter;
 
 @Getter
 public class SignUpResponseDto {
 
-    private String memberId;
+    private UUID memberId;
 
-    public SignUpResponseDto(String memberId) {
+    public SignUpResponseDto(UUID memberId) {
         this.memberId = memberId;
     }
+
 }
