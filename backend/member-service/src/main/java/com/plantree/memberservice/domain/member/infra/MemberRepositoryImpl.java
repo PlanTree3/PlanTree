@@ -5,6 +5,7 @@ import com.plantree.memberservice.domain.member.domain.Member;
 import com.plantree.memberservice.domain.member.domain.OauthProvider;
 import com.plantree.memberservice.domain.member.infra.jpa.MemberJpaRepository;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -28,5 +29,10 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public Member save(Member member) {
         return memberJpaRepository.save(member);
+    }
+
+    @Override
+    public Optional<Member> findById(UUID memberId) {
+        return memberJpaRepository.findById(memberId);
     }
 }

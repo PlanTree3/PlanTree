@@ -11,6 +11,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class LoginUseCase {
     private final JwtProvider jwtProvider;
     private final CookieHelper cookieHelper;
 
+    @Transactional
     public LoginResponseDto oauthLogin(LoginRequestDto loginRequestDto,
             HttpServletResponse httpServletResponse) {
         OIDCMember oidcMember = idTokenValidatorHandler.getOidcMemberByProviderAndIDToken(
@@ -40,7 +42,8 @@ public class LoginUseCase {
         String refreshToken = jwtProvider.generateRefreshToken();
         member.setRefreshToken(refreshToken);
 
-        cookieHelper.setTokenInCookie(httpServletResponse, accessToken, refreshToken);
+        cookieHelper.setAccessTokenInCookie(httpServletResponse, accessToken);
+        cookieHelper.setRefreshTokenInCookie(httpServletResponse, refreshToken);
         return new LoginResponseDto(false);
     }
 
