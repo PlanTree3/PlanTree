@@ -1,4 +1,4 @@
-// import { authApi } from '@/apis'
+// import { authApi } from '..'
 
 // 그룹 퀘스트 생성
 

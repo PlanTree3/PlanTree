@@ -1,4 +1,4 @@
-// import { authApi } from '@/apis'
+// import { authApi } from '..'
 
 // 가정통신문 리스트 조회(학생, 부모)
 

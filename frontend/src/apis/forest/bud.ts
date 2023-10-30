@@ -1,4 +1,4 @@
-// import { authApi } from '@/apis'
+// import { authApi } from '..'
 
 // 봉오리 추가
 
