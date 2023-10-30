@@ -14,7 +14,7 @@ import {
   fetchUserLogout,
   successUserLogout,
 } from '@/stores/features/userSlice'
-import { fetchUserDataAPI, LogoutAPI } from '@/apis/userApi'
+import { fetchUserDataAPI, LogoutAPI } from '@/apis/member/user'
 import { handleTokenError } from '@/stores/services/tokenEventSaga'
 
 function* fetchUserDataSaga(): Generator<
