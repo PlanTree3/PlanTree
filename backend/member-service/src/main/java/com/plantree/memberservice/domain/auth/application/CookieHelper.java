@@ -15,6 +15,7 @@ public class CookieHelper {
         accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setSecure(true);
         accessTokenCookie.setMaxAge(TOKEN_MAX_AGE);
+        accessTokenCookie.setPath("/");
         httpServletResponse.addCookie(accessTokenCookie);
     }
 
@@ -24,6 +25,7 @@ public class CookieHelper {
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(true);
         refreshTokenCookie.setMaxAge(TOKEN_MAX_AGE);
+        refreshTokenCookie.setPath("/");
         httpServletResponse.addCookie(refreshTokenCookie);
     }
 }
