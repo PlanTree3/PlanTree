@@ -6,14 +6,8 @@ const LoginPage = () => {
   console.log(baseURL)
   return (
     <>
-      <button>
-          <Kakao />
-      </button>
-
-      <button>
-        <Google />
-        {/*<img src={googleBtDark} alt="구글 로그인" />*/}
-      </button>
+      <Kakao />
+      <Google />
     </>
   )
 }
