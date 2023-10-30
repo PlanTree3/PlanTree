@@ -5,9 +5,9 @@ import {
   CallEffect,
   PutEffect,
 } from 'redux-saga/effects'
+import axios, { AxiosResponse } from 'axios'
 import { FetchUserDataResponse } from '@/types/UserType'
 // import { PayloadAction } from '@reduxjs/toolkit'
-import axios, { AxiosResponse } from 'axios'
 import {
   fetchUserData,
   fetchUserDataSuccess,
