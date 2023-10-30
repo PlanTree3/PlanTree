@@ -60,6 +60,7 @@ module.exports = {
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
     'spaced-comment': 'off',
     'import/extensions': 'off',
+    'import/prefer-default-export': 'off',
   },
   ignorePatterns: ['.eslintrc.cjs'],
 }
