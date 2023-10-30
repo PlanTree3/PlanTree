@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios'
-import { HTTP_STATUS } from '@/types/StatusType'
 import { put, takeLatest } from 'redux-saga/effects'
+import { HTTP_STATUS } from '@/types/StatusType'
 
 // 액션 타입 정의
 const ACCESS_TOKEN_EXPIRED = 'ACCESS_TOKEN_EXPIRED'
