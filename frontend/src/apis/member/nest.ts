@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios'
-import { authApi } from '..'
+import { authApi } from '@/apis'
 
 const nestBaseUrl = 'api/member-service/nest'
 
@@ -19,14 +19,52 @@ const nestNameUpdate = async (nestId: number, data: AxiosRequestConfig) => {
     .catch((err) => console.log(err))
 }
 
-// 둥지 삭제
+// 그룹 삭제
+const nestDelete = async (nestId: number) => {
+  authApi
+    .delete(`${nestBaseUrl}/${nestId}`)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
+}
 
-// 둥지 가입 신청
+// 그룹 가입 신청
+const nestJoinRequest = async (nestId: number) => {
+  authApi
+    .post(`${nestBaseUrl}/${nestId}/join-request`)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
+}
 
-// 둥지 가입 수락
+// 그룹 가입 수락
+const nestJoinAccept = async (nestId: number) => {
+  authApi
+    .patch(`${nestBaseUrl}/${nestId}/join-accept`)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
+}
 
-// 학생의 둥지 상세
+// 학생의 그룹 상세
+const nestDetail = async (nestId: number) => {
+  return authApi
+    .get(`${nestBaseUrl}/${nestId}`)
+    .then((res) => res)
+    .catch((err) => err)
+}
 
-// 둥지 학생 리스트 조회
+// 그룹 학생 리스트 조회
+const nestStudents = async (nestId: number) => {
+  return authApi
+    .get(`${nestBaseUrl}/${nestId}/student`)
+    .then((res) => res)
+    .catch((err) => err)
+}
 
-export { nestCreate, nestNameUpdate }
+export {
+  nestCreate,
+  nestNameUpdate,
+  nestDelete,
+  nestJoinRequest,
+  nestJoinAccept,
+  nestDetail,
+  nestStudents,
+}

@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from 'axios'
-import { api, authApi } from '..'
+import { api, authApi } from '@/apis'
 
+const memberBaseUrl = 'api/member-service'
 const userBaseUrl = 'api/member-service/member'
 
 // 로그인
@@ -20,11 +21,11 @@ const userSignup = async (data: AxiosRequestConfig): Promise<string> => {
 }
 
 // 토큰 리프레쉬
-const userRefresh = async (): Promise<string> => {
-  return authApi
+const userRefresh = async () => {
+  authApi
     .post(`${userBaseUrl}/refresh`)
-    .then((res) => res)
-    .catch((err) => err)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
 }
 
 // 프로필 이미지 수정
@@ -42,13 +43,22 @@ const userNameUpdate = async (data: AxiosRequestConfig) =>
     .catch((err) => console.log(err))
 
 // 그룹 둥지 리스트 조회(학생)
-const userGroupList = async (data: AxiosRequestConfig) =>
-  authApi
-    .get(`api/member-service/student-group`, data)
+const userGroupList = async () => {
+  return authApi
+    .get(`${memberBaseUrl}/student-group`)
     .then((res) => res)
-    .catch((err) => console.log(err))
+    .catch((err) => err)
+}
 
-// 로그아웃
+// 선생의 그룹 리스트 조회
+const teacherGroupList = async () => {
+  return authApi
+    .get(`${memberBaseUrl}/teacher-group`)
+    .then((res) => res)
+    .catch((err) => err)
+}
+
+// 로그아웃??
 const userLogout = async () => authApi.post(`${userBaseUrl}`)
 
 export {
@@ -58,5 +68,6 @@ export {
   userImageUpdate,
   userNameUpdate,
   userGroupList,
+  teacherGroupList,
   userLogout,
 }
