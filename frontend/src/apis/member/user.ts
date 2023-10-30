@@ -6,7 +6,9 @@ const userBaseUrl = 'api/member-service/member'
 
 // 로그인
 const userLogin = async (data: unknown): Promise<AxiosResponse> => {
-  return api.post(`${userBaseUrl}/login`, data).then((res) => res.data)
+  return api
+    .post(`${userBaseUrl}/login`, data)
+    .then((res) => res.data.isNewMember)
 }
 
 // 회원가입

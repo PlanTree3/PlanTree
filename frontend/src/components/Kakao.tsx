@@ -14,7 +14,8 @@ const Kakao = () => {
       idToken: response.response.id_token,
     }
 
-    userLogin(data)
+    if (userLogin(data)) {
+    }
   }
 
   const handleLoginFailure = (error: unknown) => {
