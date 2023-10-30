@@ -1,23 +1,20 @@
-import { AxiosRequestConfig } from 'axios'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { api, authApi } from '@/apis'
 
 const memberBaseUrl = 'api/member-service'
 const userBaseUrl = 'api/member-service/member'
 
 // 로그인
-const userLogin = async (data: AxiosRequestConfig): Promise<string> => {
-  return api
-    .post(`${userBaseUrl}/login`, data)
-    .then((res) => res.data)
-    .catch((err) => console.log(err))
+const userLogin = async (data: unknown): Promise<AxiosResponse> => {
+  return api.post(`${userBaseUrl}/login`, data).then((res) => res.data)
 }
 
 // 회원가입
-const userSignup = async (data: AxiosRequestConfig): Promise<string> => {
+const userSignup = async (data: AxiosRequestConfig): Promise<AxiosResponse> => {
   return api
     .post(`${userBaseUrl}`, data)
     .then((res) => res.data.memberId)
-    .catch((err) => console.log(err))
+    .catch((err) => err)
 }
 
 // 토큰 리프레쉬
