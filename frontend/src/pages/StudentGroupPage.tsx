@@ -6,12 +6,14 @@ import forest from '../../public/forest_tmp.png'
 // import StudentGroupPageResponse from '../types/GroupStudentType'
 
 
-const GroupStudentPage = () => {
+const StudentGroupPage = () => {
+  <>
+  </>
   // const [data, setData] = useState<StudentGroupPageResponse | null>(null);
   
 
   // useEffect(() => {
-    const apiUrl = 'API URL자리임';
+    // const apiUrl = 'API URL자리임';
   //   axios
   //     .get<StudentGroupPageResponse>(apiUrl)
   //     .then((response) => {
@@ -46,4 +48,4 @@ const GroupStudentPage = () => {
   )
   }
 
-  export default GroupStudentPage
+  export default StudentGroupPage

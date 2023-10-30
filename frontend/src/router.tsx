@@ -2,14 +2,14 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home.tsx'
 import LoginPage from './pages/LoginPage.tsx'
 import OauthRedirectPage from './pages/OauthRedirectPage.tsx'
-import GroupStudentPage from './pages/GroupPage.tsx'
+import StudentGroupPage from './pages/StudentGroupPage.tsx'
 
 const RoutesComponent = () => (
   <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="/login" element={<LoginPage />} />
+    <Route path="/login" element={<LoginPage />} />G
     <Route path="/oauth" element={<OauthRedirectPage />} />
-    <Route path="/groupStudent" element={<GroupStudentPage />} />
+    <Route path="/studentGroup" element={<StudentGroupPage />} />
   </Routes>
 )
 

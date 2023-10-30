@@ -13,11 +13,6 @@ export type StudentGroupPageResponse = {
   }[];
 };
 
-// 학생 둥지 상세 (요청)
-export type NestDetailRequest = {
-  nestId: number;
-};
-
 // 학생 둥지 상세 (응답)
 export type NestDetailResponse = {
   nestName: string;
@@ -28,11 +23,6 @@ export type NestDetailResponse = {
     totalBudCount: number;
     completedBudCount: number;
   }[];
-};
-
-// 학생 그룹 상세 (요청)
-export type GroupDetailRequest = {
-  groupId: number;
 };
 
 // 학생 그룹 상세 (응답)
