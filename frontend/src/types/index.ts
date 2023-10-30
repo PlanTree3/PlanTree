@@ -1,1 +1,2 @@
-export { default as StatusType } from '@/types/StatusType'
+export type * from '@/types/StatusType'
+export type * from '@/types/UserType'
