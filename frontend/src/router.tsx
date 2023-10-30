@@ -1,7 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import Home from './pages/Home.tsx'
-import LoginPage from './pages/LoginPage.tsx'
-import OauthRedirectPage from './pages/OauthRedirectPage.tsx'
+import { Home, LoginPage, OauthRedirectPage } from './pages'
 
 const RoutesComponent = () => (
   <Routes>

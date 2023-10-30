@@ -1,7 +1,7 @@
-import Kakao from '../components/Kakao.tsx'
 // import kakaoBtn from '../asset/login_btn/kakao_btn_login.png'
 // import googleBtDark from '../asset/login_btn/google_btn_dark.png'
-import Google from '../components/Google.tsx'
+
+import { Google, Kakao } from '@/components'
 
 const LoginPage = () => {
   const baseURL = import.meta.env.VITE_PUBLIC_SERVER_BASE_URL
