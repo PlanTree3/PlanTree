@@ -1,8 +1,8 @@
 package com.plantree.memberservice.domain.member.domain;
 
-import com.fasterxml.uuid.Generators;
 import com.plantree.memberservice.global.entity.BaseTimeEntity;
 import com.plantree.memberservice.global.exception.AuthenticationFailException;
+import com.plantree.memberservice.global.util.SequentialUUIDGenerator;
 import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -107,21 +107,8 @@ public class Member extends BaseTimeEntity {
     }
 
     @PrePersist
-    public void createMemberId() {
-        System.out.println("ㅗㅁㄴ이;ㅏ러;이마너리ㅏㅇㄴㅁ런ㅇ미ㅏ;ㄹ");
-        //sequential uuid 생성
-        UUID uuid = Generators.timeBasedGenerator()
-                              .generate();
-        String[] uuidArr = uuid.toString()
-                               .split("-");
-        String uuidStr = uuidArr[2] + uuidArr[1] + uuidArr[0] + uuidArr[3] + uuidArr[4];
-        StringBuffer sb = new StringBuffer(uuidStr);
-        sb.insert(8, "-");
-        sb.insert(13, "-");
-        sb.insert(18, "-");
-        sb.insert(23, "-");
-        uuid = UUID.fromString(sb.toString());
-        this.id = uuid;
+    public void generateMemberId() {
+        this.id = SequentialUUIDGenerator.generateSequentialUUID();
     }
 
 }
