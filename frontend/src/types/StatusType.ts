@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export enum HTTP_STATUS {
   OK = 200,
   BAD_REQUEST = 400, // 잘못된 토큰(로그아웃)

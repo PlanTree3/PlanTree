@@ -1,5 +1,4 @@
-import Kakao from '../components/Kakao.tsx'
-import Google from '../components/Google.tsx'
+import { Google, Kakao } from '@/components'
 
 const LoginPage = () => {
   const baseURL = import.meta.env.VITE_PUBLIC_SERVER_BASE_URL

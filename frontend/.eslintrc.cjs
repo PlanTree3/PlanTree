@@ -2,12 +2,14 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    node: true,
   },
   extends: [
     'airbnb',
     'airbnb/hooks',
+    'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',
-    'prettier',
+    'plugin:prettier/recommended',
   ],
   overrides: [
     {
@@ -20,9 +22,11 @@ module.exports = {
       },
     },
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    project: './tsconfig.json',
   },
   plugins: [
     'prettier',
@@ -32,7 +36,6 @@ module.exports = {
     'jsx-a11y',
   ],
   rules: {
-    'no-console': 'off',
     'import/no-extraneous-dependencies': [
       'error',
       {
@@ -48,12 +51,18 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/jsx-filename-extension': [
       1,
-      { extensions: ['.js', '.jsx', '.tsx'] },
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
     'react/function-component-definition': [
       2,
       { namedComponents: ['arrow-function'] },
     ],
+    'no-param-reassign': [
+      'error',
+      { props: true, ignorePropertyModificationsFor: ['state'] },
+    ],
     'spaced-comment': 'off',
+    'import/extensions': 'off',
   },
+  ignorePatterns: ['.eslintrc.cjs'],
 }
