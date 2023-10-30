@@ -1,4 +1,4 @@
-// import { authApi } from '..'
+// import { authApi } from '@/apis'
 
 // 나무 조회
 
