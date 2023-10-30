@@ -57,6 +57,7 @@ module.exports = {
       2,
       { namedComponents: ['arrow-function'] },
     ],
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
     'spaced-comment': 'off',
     'import/extensions': 'off',
   },
