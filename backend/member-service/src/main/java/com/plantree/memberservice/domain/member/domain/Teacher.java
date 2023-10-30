@@ -37,4 +37,13 @@ public class Teacher {
         this.member = member;
         this.member.setTeacher(this);
     }
+
+    public Group createGroup(String name) {
+        Group group = Group.builder()
+                           .name(name)
+                           .teacher(this)
+                           .build();
+        this.groups.add(group);
+        return group;
+    }
 }

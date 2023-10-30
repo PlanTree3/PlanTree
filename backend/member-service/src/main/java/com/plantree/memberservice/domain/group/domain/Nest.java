@@ -4,14 +4,16 @@ package com.plantree.memberservice.domain.group.domain;
 import com.plantree.memberservice.domain.member.domain.Parent;
 import com.plantree.memberservice.domain.member.domain.Student;
 import com.plantree.memberservice.global.entity.BaseTimeEntity;
+import com.plantree.memberservice.global.util.SequentialUUIDGenerator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,9 +23,8 @@ import lombok.NoArgsConstructor;
 public class Nest extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "nest_id")
-    private Long id;
+    @Column(name = "nest_id", columnDefinition = "BINARY(16)")
+    private UUID id;
 
     private String name;
 
@@ -32,4 +33,15 @@ public class Nest extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "nest")
     private List<Parent> parents = new ArrayList<>();
+
+    @Builder
+    public Nest(String name, Parent parent) {
+        this.name = name;
+        this.parents.add(parent);
+    }
+
+    @PrePersist
+    public void generateMemberId() {
+        this.id = SequentialUUIDGenerator.generateSequentialUUID();
+    }
 }
