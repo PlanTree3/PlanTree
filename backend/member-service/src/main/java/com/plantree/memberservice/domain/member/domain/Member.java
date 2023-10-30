@@ -98,6 +98,14 @@ public class Member extends BaseTimeEntity {
         }
     }
 
+    public void changeProfileImage(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
     @PrePersist
     public void createMemberId() {
         System.out.println("ㅗㅁㄴ이;ㅏ러;이마너리ㅏㅇㄴㅁ런ㅇ미ㅏ;ㄹ");
