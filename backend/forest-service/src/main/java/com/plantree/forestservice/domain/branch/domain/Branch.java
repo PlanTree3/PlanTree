@@ -4,6 +4,7 @@ import com.plantree.forestservice.domain.bud.domain.Bud;
 import com.plantree.forestservice.domain.seed.domain.Seed;
 import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.plantree.forestservice.global.entity.BaseTimeEntity;
+import com.plantree.forestservice.global.util.SequentialUUIDGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,5 +52,10 @@ public class Branch extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Bud> buds = new ArrayList<>();
+
+    @PrePersist
+    public void generateMemberId() {
+        this.id = SequentialUUIDGenerator.generateSequentialUUID();
+    }
 
 }

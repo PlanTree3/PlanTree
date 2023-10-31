@@ -6,7 +6,6 @@ import lombok.Getter;
 @Getter
 public class CommonsSignupReqDto {
 
-    private UUID memberId;
     private Long studentId;
 
 }

@@ -22,7 +22,7 @@ public class FromMemberController {
     @PostMapping("/signup")
     public ResponseEntity<?> createForestAndTree(
             @RequestBody CommonsSignupReqDto request){
-        commonsSignupUseCase.createForestAndTree(request.getMemberId(), request.getStudentId());
+        commonsSignupUseCase.createForestAndTree(request.getStudentId());
         return HttpResponse.ok(HttpStatus.OK, "새 멤버의 숲과 나무가 생성되었습니다.");
     }
 

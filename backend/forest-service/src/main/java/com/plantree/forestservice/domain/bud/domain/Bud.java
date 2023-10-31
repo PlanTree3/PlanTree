@@ -3,6 +3,7 @@ package com.plantree.forestservice.domain.bud.domain;
 import com.plantree.forestservice.domain.branch.domain.Branch;
 import com.plantree.forestservice.domain.bud.infra.database.converter.DayConverter;
 import com.plantree.forestservice.global.entity.BaseTimeEntity;
+import com.plantree.forestservice.global.util.SequentialUUIDGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,5 +50,10 @@ public class Bud extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "bud", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BudComment> budComments = new ArrayList<>();
+
+    @PrePersist
+    public void generateMemberId() {
+        this.id = SequentialUUIDGenerator.generateSequentialUUID();
+    }
 
 }

@@ -7,6 +7,7 @@ import com.plantree.forestservice.domain.tree.domain.Tree;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,8 +16,9 @@ public class CommonsSignupUseCase {
     private final ForestRepository forestRepository;
     private final TreeRepository treeRepository;
 
-    public void createForestAndTree(UUID memberId, Long studentId) {
-        Tree tree = treeRepository.save(new Tree(studentId));
-        Forest forest = forestRepository.save(Forest.of(studentId, tree));
+    @Transactional
+    public void createForestAndTree(Long studentId) {
+        Forest forest = forestRepository.save(new Forest(studentId));
+        Tree tree = treeRepository.save(new Tree(studentId, forest));
     }
 }

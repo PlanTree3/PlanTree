@@ -17,10 +17,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Table(name = "forest")
@@ -30,7 +32,7 @@ public class Forest extends BaseTimeEntity {
 
     @Id
     @Column(name = "forest_id", columnDefinition = "BINARY(16)")
-    private UUID id = SequentialUUIDGenerator.generateSequentialUUID();
+    private UUID id;
 
     @Column(name = "student_id")
     private Long studentId;
@@ -49,23 +51,17 @@ public class Forest extends BaseTimeEntity {
         this.endedAt = calculateEndDate();
     }
 
-    public static Forest of(Long studentId, Tree tree){
-        Forest forest = new Forest(studentId);
-        forest.addTree(tree);
-        return forest;
-    }
-
-
-    public void addTree(Tree tree){
-        this.trees.add(tree);
-    }
-
     private LocalDate calculateEndDate(){
         LocalDate endDate = LocalDate.now();
         if(endDate.isAfter(LocalDate.now().withMonth(3).withDayOfMonth(1).with(DayOfWeek.SUNDAY))){
-            endDate.plusYears(1L);
+            endDate = endDate.withYear(endDate.getYear() + 1);
         }
         return endDate.withMonth(3).withDayOfMonth(1).with(DayOfWeek.SUNDAY);
+    }
+
+    @PrePersist
+    public void generateMemberId() {
+        this.id = SequentialUUIDGenerator.generateSequentialUUID();
     }
 
 }
