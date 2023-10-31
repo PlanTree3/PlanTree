@@ -25,7 +25,7 @@ export function* handleTokenError(error: AxiosError) {
         yield put(refreshTokenExpired())
         break
       default:
-        alert(error.message)
+        console.log(error.message)
     }
   }
 }
