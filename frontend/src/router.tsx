@@ -8,6 +8,7 @@ import {
   MainPage,
 } from './pages'
 import AtroposPage from './pages/AtroposPage'
+import { ForestPage, Home, LoginPage, OauthRedirectPage } from './pages'
 
 const RoutesComponent = () => (
   <Routes>
@@ -18,6 +19,7 @@ const RoutesComponent = () => (
     <Route path="/atropos" element={<AtroposPage />} />
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="/main" element={<MainPage />} />
+    <Route path="/atropos" element={<ForestPage />} />
   </Routes>
 )
 

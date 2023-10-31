@@ -1,7 +1,8 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { authApi } from '@/apis'
+import { branchApiUrl, seedApiUrl, treeApiUrl } from '@/utils'
 
-const baseUrl = 'api/forest-service/'
+const baseUrl = 'api/forest-service'
 const forestBaseUrl = 'api/forest-service/forest'
 
 // 메인페이지
@@ -23,17 +24,21 @@ const forestGetApi = async (
 }
 
 // 가지 추가
-const branchCreate = async (forestId: number, treeId: number) => {
+const branchCreate = async (
+  forestId: number,
+  treeId: number,
+  data: unknown,
+) => {
   authApi
-    .post(`${forestBaseUrl}/${forestId}/tree/${treeId}/branch`)
+    .post(`${treeApiUrl(forestId, treeId)}/branch`, data)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
 }
 
 // 그룹원 가지 일괄등록
-const branchGroupCreate = async (groupId: string) => {
+const branchGroupCreate = async (groupId: string, data: unknown) => {
   authApi
-    .post(`${baseUrl}/group/${groupId}/branch`)
+    .post(`${baseUrl}/group/${groupId}/branch`, data)
     .then((res) => res)
     .catch((err) => err)
 }
@@ -43,24 +48,24 @@ const seedCreate = async (
   forestId: number,
   treeId: number,
   branchId: number,
+  data: unknown,
 ) => {
   authApi
-    .post(`${forestBaseUrl}/${forestId}/tree/${treeId}/branch/${branchId}/seed`)
+    .post(`${branchApiUrl(forestId, treeId, branchId)}/seed`, data)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
 }
 
 // 씨앗 이름 수정
-const seedUpdate = async (
+const seedNameUpdate = async (
   forestId: number,
   treeId: number,
   branchId: number,
   seedId: number,
+  data: unknown,
 ) => {
   authApi
-    .patch(
-      `${forestBaseUrl}/${forestId}/tree/${treeId}/branch/${branchId}/seed/${seedId}`,
-    )
+    .patch(`${seedApiUrl(forestId, treeId, branchId, seedId)}`, data)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
 }
@@ -72,9 +77,7 @@ const seedDelete = async (
   seedId: number,
 ) => {
   authApi
-    .delete(
-      `${forestBaseUrl}/${forestId}/tree/${treeId}/branch/${branchId}/seed/${seedId}`,
-    )
+    .delete(`${seedApiUrl(forestId, treeId, branchId, seedId)}`)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
 }
@@ -85,6 +88,6 @@ export {
   branchCreate,
   branchGroupCreate,
   seedCreate,
-  seedUpdate,
+  seedNameUpdate,
   seedDelete,
 }
