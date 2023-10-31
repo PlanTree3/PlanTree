@@ -4,6 +4,7 @@ package com.plantree.memberservice.domain.group.domain;
 import com.plantree.memberservice.domain.member.domain.Parent;
 import com.plantree.memberservice.domain.member.domain.Student;
 import com.plantree.memberservice.global.entity.BaseTimeEntity;
+import com.plantree.memberservice.global.exception.UnauthorizedException;
 import com.plantree.memberservice.global.util.SequentialUUIDGenerator;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,5 +44,20 @@ public class Nest extends BaseTimeEntity {
     @PrePersist
     public void generateMemberId() {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();
+    }
+
+    public void checkIsNestParent(UUID memberId) {
+        if (this.parents.stream()
+                        .filter(parent -> parent.getMember()
+                                                .getId()
+                                                .equals(memberId))
+                        .findAny()
+                        .isEmpty()) {
+            throw new UnauthorizedException("둥지 부모님이 아닙니다.");
+        }
+    }
+
+    public void changeName(String name) {
+        this.name = name;
     }
 }

@@ -3,6 +3,7 @@ package com.plantree.memberservice.domain.group.domain;
 
 import com.plantree.memberservice.domain.member.domain.Teacher;
 import com.plantree.memberservice.global.entity.BaseTimeEntity;
+import com.plantree.memberservice.global.exception.UnauthorizedException;
 import com.plantree.memberservice.global.util.SequentialUUIDGenerator;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,5 +52,17 @@ public class Group extends BaseTimeEntity {
     @PrePersist
     public void generateGroupId() {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();
+    }
+
+    public void checkIsGroupTeacher(UUID memberId) {
+        if (!this.teacher.getMember()
+                         .getId()
+                         .equals(memberId)) {
+            throw new UnauthorizedException("그룹 선생님이 아닙니다.");
+        }
+    }
+
+    public void changeName(String name) {
+        this.name = name;
     }
 }
