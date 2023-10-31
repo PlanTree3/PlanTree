@@ -2,7 +2,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { authApi } from '@/apis'
 import { branchApiUrl, seedApiUrl, treeApiUrl } from '@/utils'
 
-const baseUrl = 'api/forest-service/'
+const baseUrl = 'api/forest-service'
 const forestBaseUrl = 'api/forest-service/forest'
 
 // 메인페이지
