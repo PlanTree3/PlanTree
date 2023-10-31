@@ -6,9 +6,8 @@ import {
   OauthRedirectPage,
   SignUpPage,
   MainPage,
+  ForestPage,
 } from './pages'
-import AtroposPage from './pages/AtroposPage'
-import { ForestPage, Home, LoginPage, OauthRedirectPage } from './pages'
 
 const RoutesComponent = () => (
   <Routes>
@@ -16,10 +15,9 @@ const RoutesComponent = () => (
     <Route path="/login" element={<LoginPage />} />
     <Route path="/oauth" element={<OauthRedirectPage />} />
     <Route path="/studentGroup" element={<StudentGroupPage />} />
-    <Route path="/atropos" element={<AtroposPage />} />
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="/main" element={<MainPage />} />
-    <Route path="/atropos" element={<ForestPage />} />
+    <Route path="/forest" element={<ForestPage />} />
   </Routes>
 )
 

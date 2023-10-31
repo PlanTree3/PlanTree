@@ -5,8 +5,7 @@ const AdminGroupPage = () => {
 <>
 </>
 return (
-<>
-</>
+
 )}
 
 

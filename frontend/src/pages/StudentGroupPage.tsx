@@ -2,6 +2,7 @@
 
 import chick from '../../public/chick.png'
 import forest from '../../public/forest_tmp.png'
+import './StudentGroupPage.css'
 // import axios from 'axios';
 // import StudentGroupPageResponse from '../types/GroupStudentType'
 
@@ -19,8 +20,9 @@ const StudentGroupPage = () => {
   //       console.error(error);
   //     });
   // }, []);
+
   return (
-    <>
+    <div>
       <text>내 둥지 확인하기</text>
       <div className="box-border h-30 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
         <div className="flex flex-row">
@@ -38,9 +40,8 @@ const StudentGroupPage = () => {
       <div className="flex flex-row">
         <img className="forest" src={forest} alt="" />
         <img className="forest" src={forest} alt="" />
-        <img className="forest" src={forest} alt="" />
       </div>
-    </>
+    </div>
   )
 }
 
