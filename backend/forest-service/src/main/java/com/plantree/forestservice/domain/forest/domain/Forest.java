@@ -2,7 +2,10 @@ package com.plantree.forestservice.domain.forest.domain;
 
 import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.plantree.forestservice.global.entity.BaseTimeEntity;
-import java.time.LocalDateTime;
+import com.plantree.forestservice.global.util.SequentialUUIDGenerator;
+import java.time.Clock;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,20 +29,43 @@ import lombok.NoArgsConstructor;
 public class Forest extends BaseTimeEntity {
 
     @Id
-    @Column(name = "forest_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    @Column(name = "forest_id", columnDefinition = "BINARY(16)")
+    private UUID id = SequentialUUIDGenerator.generateSequentialUUID();
 
     @Column(name = "student_id")
-    private UUID studentId;
+    private Long studentId;
 
     @Column(name = "started_at")
-    private LocalDateTime startedAt;
+    private LocalDate startedAt = LocalDate.now(Clock.systemDefaultZone());
 
     @Column(name = "ended_at")
-    private LocalDateTime endedAt;
+    private LocalDate endedAt;
 
     @OneToMany(mappedBy = "forest", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<Tree> trees = new ArrayList<>();
+
+    public Forest(Long studentId) {
+        this.studentId = studentId;
+        this.endedAt = calculateEndDate();
+    }
+
+    public static Forest of(Long studentId, Tree tree){
+        Forest forest = new Forest(studentId);
+        forest.addTree(tree);
+        return forest;
+    }
+
+
+    public void addTree(Tree tree){
+        this.trees.add(tree);
+    }
+
+    private LocalDate calculateEndDate(){
+        LocalDate endDate = LocalDate.now();
+        if(endDate.isAfter(LocalDate.now().withMonth(3).withDayOfMonth(1).with(DayOfWeek.SUNDAY))){
+            endDate.plusYears(1L);
+        }
+        return endDate.withMonth(3).withDayOfMonth(1).with(DayOfWeek.SUNDAY);
+    }
 
 }

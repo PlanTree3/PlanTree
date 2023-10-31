@@ -27,8 +27,7 @@ import lombok.NoArgsConstructor;
 public class Branch extends BaseTimeEntity {
 
     @Id
-    @Column(name = "branch_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "branch_id", columnDefinition = "BINARY(16)")
     private UUID id;
 
     @Column

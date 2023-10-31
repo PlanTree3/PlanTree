@@ -3,6 +3,9 @@ package com.plantree.forestservice.domain.tree.domain;
 import com.plantree.forestservice.domain.branch.domain.Branch;
 import com.plantree.forestservice.domain.forest.domain.Forest;
 import com.plantree.forestservice.global.entity.BaseTimeEntity;
+import java.time.Clock;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,23 +30,26 @@ import lombok.NoArgsConstructor;
 public class Tree extends BaseTimeEntity {
 
     @Id
-    @Column(name = "tree_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tree_id", columnDefinition = "BINARY(16)")
     private UUID id;
 
     @Column(name = "student_id")
-    private UUID studentId;
+    private Long studentId;
 
     @Column
-    private LocalDateTime startedAt;
+    private LocalDate startedAt = LocalDate.now(Clock.systemDefaultZone());;
 
     @Column
-    private LocalDateTime endedAt;
+    private LocalDate endedAt = LocalDate.now().with(DayOfWeek.SUNDAY);;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Forest forest;
 
     @OneToMany(mappedBy = "tree", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Branch> branches = new ArrayList<>();
+
+    public Tree(Long studentId){
+        this.studentId = studentId;
+    }
 
 }
