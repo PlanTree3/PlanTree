@@ -22,7 +22,8 @@ const StudentGroupPage = () => {
   // }, []);
 
   return (
-    <div>
+    // <div className="sketchbook">
+    <div className="whiteBox">
       <text>내 둥지 확인하기</text>
       <div className="box-border h-30 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
         <div className="flex flex-row">
@@ -38,6 +39,7 @@ const StudentGroupPage = () => {
       </div>
       <text>내 그룹 확인하기</text>
       <div className="flex flex-row">
+        <img className="forest" src={forest} alt="" />
         <img className="forest" src={forest} alt="" />
         <img className="forest" src={forest} alt="" />
       </div>

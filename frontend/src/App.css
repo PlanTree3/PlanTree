@@ -2,20 +2,14 @@
   width: 300px;
   height: 300px;
 }
+
 html,
 body {
   height: 100%;
   margin: 0;
-  /* padding-right: 100;  */
+  padding-right: 100;
 }
 
 body {
-  background-image: url('../public/sketchbook.png');
-  background-size: 85%;
-  /* background-size: contain;  */
-  background-repeat: no-repeat;
-  /* padding: 100px; */
-  /* margin: 100px; */
-  background-position: left 15% center;
-  background-color: #F5F1E3;
+  background-color: #f5f1e3;
 }
