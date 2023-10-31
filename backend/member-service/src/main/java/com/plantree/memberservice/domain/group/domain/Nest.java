@@ -27,6 +27,7 @@ public class Nest extends BaseTimeEntity {
     @Column(name = "nest_id", columnDefinition = "BINARY(16)")
     private UUID id;
 
+    @Column
     private String name;
 
     @OneToMany(mappedBy = "nest")

@@ -1,7 +1,7 @@
 package com.plantree.memberservice.domain.group.controller;
 
 import com.plantree.memberservice.domain.group.application.NestCreateUseCase;
-import com.plantree.memberservice.domain.group.application.NestNameChangeUseCase;
+import com.plantree.memberservice.domain.group.application.NestModifyUseCase;
 import com.plantree.memberservice.domain.group.dto.request.NestCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestNameChangeRequestDto;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class NestController {
 
     private final NestCreateUseCase nestCreateUseCase;
-    private final NestNameChangeUseCase nestNameChangeUseCase;
+    private final NestModifyUseCase nestModifyUseCase;
 
     @PostMapping
     public ResponseEntity<?> createNest(@JwtLoginMember AuthMember authMember,
@@ -37,7 +37,7 @@ public class NestController {
     public ResponseEntity<?> changeName(@PathVariable("nestId") UUID nestId,
             @JwtLoginMember AuthMember authMember,
             NestNameChangeRequestDto nestNameChangeRequestDto) {
-        nestNameChangeUseCase.changeName(nestId, authMember, nestNameChangeRequestDto);
+        nestModifyUseCase.changeName(nestId, authMember, nestNameChangeRequestDto);
         return HttpResponse.ok(HttpStatus.OK, "둥지 이름 수정 성공");
     }
 }

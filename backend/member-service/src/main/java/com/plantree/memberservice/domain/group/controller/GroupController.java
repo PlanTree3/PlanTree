@@ -1,8 +1,11 @@
 package com.plantree.memberservice.domain.group.controller;
 
 import com.plantree.memberservice.domain.group.application.GroupCreateUseCase;
-import com.plantree.memberservice.domain.group.application.GroupNameChangeUseCase;
+import com.plantree.memberservice.domain.group.application.GroupJoinUseCase;
+import com.plantree.memberservice.domain.group.application.GroupModifyUseCase;
 import com.plantree.memberservice.domain.group.dto.request.GroupCreateRequestDto;
+import com.plantree.memberservice.domain.group.dto.request.GroupJoinAcceptRequestDto;
+import com.plantree.memberservice.domain.group.dto.request.GroupJoinRefuseRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupNameChangeRequestDto;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
 import com.plantree.memberservice.global.config.webmvc.JwtLoginMember;
@@ -24,7 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class GroupController {
 
     private final GroupCreateUseCase groupCreateUseCase;
-    private final GroupNameChangeUseCase groupNameChangeUseCase;
+    private final GroupModifyUseCase groupModifyUseCase;
+    private final GroupJoinUseCase groupJoinUseCase;
 
     @PostMapping
     public ResponseEntity<?> createGroup(@JwtLoginMember AuthMember authMember,
@@ -37,7 +41,30 @@ public class GroupController {
     public ResponseEntity<?> changeName(@PathVariable("groupId") UUID groupId,
             @JwtLoginMember AuthMember authMember,
             GroupNameChangeRequestDto groupNameChangeRequestDto) {
-        groupNameChangeUseCase.changeName(groupId, authMember, groupNameChangeRequestDto);
+        groupModifyUseCase.changeName(groupId, authMember, groupNameChangeRequestDto);
         return HttpResponse.ok(HttpStatus.OK, "그룹 이름 수정 성공");
+    }
+
+    @PostMapping("/{groupId}/join-request")
+    public ResponseEntity<?> requestJoin(@PathVariable("groupId") UUID groupId,
+            @JwtLoginMember AuthMember authMember) {
+        groupJoinUseCase.requestJoin(groupId, authMember);
+        return HttpResponse.ok(HttpStatus.OK, "가입 신청 성공");
+    }
+
+    @PatchMapping("/{groupId}/join-accept")
+    public ResponseEntity<?> acceptJoin(@PathVariable("groupId") UUID groupId,
+            @JwtLoginMember AuthMember authMember,
+            @RequestBody GroupJoinAcceptRequestDto groupJoinAcceptRequestDto) {
+        groupJoinUseCase.acceptJoin(groupId, authMember, groupJoinAcceptRequestDto);
+        return HttpResponse.ok(HttpStatus.OK, "가입 수락 성공");
+    }
+
+    @PatchMapping("/{groupId}/join-refuse")
+    public ResponseEntity<?> refuseJoin(@PathVariable("groupId") UUID groupId,
+            @JwtLoginMember AuthMember authMember,
+            @RequestBody GroupJoinRefuseRequestDto groupJoinRefuseRequestDto) {
+        groupJoinUseCase.refuseJoin(groupId, authMember, groupJoinRefuseRequestDto);
+        return HttpResponse.ok(HttpStatus.OK, "가입 거절 성공");
     }
 }

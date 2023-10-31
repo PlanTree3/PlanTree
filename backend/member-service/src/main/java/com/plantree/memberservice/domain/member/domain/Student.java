@@ -43,4 +43,8 @@ public class Student {
         this.member = member;
         this.member.setStudent(this);
     }
+
+    public void addStudentGroup(GroupStudent studentGroup) {
+        this.studentGroups.add(studentGroup);
+    }
 }

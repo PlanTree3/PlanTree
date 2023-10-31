@@ -4,6 +4,7 @@ import com.plantree.memberservice.domain.member.application.repository.MemberRep
 import com.plantree.memberservice.domain.member.domain.Member;
 import com.plantree.memberservice.domain.member.domain.OauthProvider;
 import com.plantree.memberservice.domain.member.infra.jpa.MemberJpaRepository;
+import com.plantree.memberservice.domain.member.infra.query.MemberQueryRepository;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 public class MemberRepositoryImpl implements MemberRepository {
 
     private final MemberJpaRepository memberJpaRepository;
+    private final MemberQueryRepository memberQueryRepository;
 
     @Override
     public Optional<Member> findByOauthProviderAndOauthId(OauthProvider oauthProvider,
@@ -33,6 +35,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public Optional<Member> findById(UUID memberId) {
-        return memberJpaRepository.findById(memberId);
+        return Optional.ofNullable(memberQueryRepository.findByIdWithRoles(memberId));
     }
 }
