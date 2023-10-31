@@ -1,23 +1,22 @@
-import { AxiosRequestConfig } from 'axios'
+import { AxiosResponse } from 'axios'
 import { api, authApi } from '@/apis'
 
 const memberBaseUrl = 'api/member-service'
 const userBaseUrl = 'api/member-service/member'
 
 // 로그인
-const userLogin = async (data: AxiosRequestConfig): Promise<string> => {
+const userLogin = async (data: unknown): Promise<AxiosResponse> => {
   return api
     .post(`${userBaseUrl}/login`, data)
-    .then((res) => res.data)
-    .catch((err) => console.log(err))
+    .then((res) => res.data.isNewMember)
 }
 
 // 회원가입
-const userSignup = async (data: AxiosRequestConfig): Promise<string> => {
+const userSignup = async (data: unknown): Promise<AxiosResponse> => {
   return api
     .post(`${userBaseUrl}`, data)
     .then((res) => res.data.memberId)
-    .catch((err) => console.log(err))
+    .catch((err) => err)
 }
 
 // 토큰 리프레쉬
@@ -29,14 +28,14 @@ const userRefresh = async () => {
 }
 
 // 프로필 이미지 수정
-const userImageUpdate = async (data: AxiosRequestConfig) =>
+const userImageUpdate = async (data: unknown) =>
   authApi
     .patch(`${userBaseUrl}/profile-image`, data)
     .then((res) => res)
     .catch((err) => console.log(err))
 
 // 이름 수정
-const userNameUpdate = async (data: AxiosRequestConfig) =>
+const userNameUpdate = async (data: unknown) =>
   authApi
     .patch(`${userBaseUrl}/name`, data)
     .then((res) => res)
