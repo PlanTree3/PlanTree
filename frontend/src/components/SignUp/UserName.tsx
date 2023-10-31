@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from 'react'
 
-const UserName = () => {
-  const [inputName, setInputName] = useState<string>('')
+const UserName = ({setInputName}: {setInputName: (value: string) => void}) => {
+  // const [inputName, setInputName] = useState<string>('')
   const [inputCount, setInputCount] = useState<number>(0)
 
-  // 이름이 10글자를 넘어갈 때 스와이프 안되게 하는 함수
+  // 이름이 10글자를 넘어갈 때 스와이프 안되게 하는 함수는 부모 컴포(SignUpPage)에서 실행
 
   // 이름 세는 함수
   const onInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
