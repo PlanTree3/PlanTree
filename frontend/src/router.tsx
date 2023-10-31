@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import StudentGroupPage from './pages/StudentGroupPage.tsx'
-import { Home, LoginPage, OauthRedirectPage } from './pages'
-import AtroposPage from './pages/AtroposPage'
+import { ForestPage, Home, LoginPage, OauthRedirectPage } from './pages'
 
 const RoutesComponent = () => (
   <Routes>
@@ -9,7 +8,7 @@ const RoutesComponent = () => (
     <Route path="/login" element={<LoginPage />} />
     <Route path="/oauth" element={<OauthRedirectPage />} />
     <Route path="/studentGroup" element={<StudentGroupPage />} />
-    <Route path="/atropos" element={<AtroposPage />} />
+    <Route path="/atropos" element={<ForestPage />} />
   </Routes>
 )
 
