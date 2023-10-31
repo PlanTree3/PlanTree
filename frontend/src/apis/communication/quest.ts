@@ -44,8 +44,32 @@ const userQuestList = async () => {
 
 // 퀘스트 수락
 const questAccept = async (questId: number) => {
-  return authApi
-    .get(`${baseUrl}/quest/${questId}/accept`)
+  authApi
+    .patch(`${baseUrl}/quest/${questId}/accept`)
+    .then((res) => res)
+    .catch((err) => err)
+}
+
+// 퀘스트 포기
+const questGiveUp = async (questId: number) => {
+  authApi
+    .patch(`${baseUrl}/quest/${questId}/giveup`)
+    .then((res) => res)
+    .catch((err) => err)
+}
+
+// 퀘스트 성공 요청
+const questSuccessRequest = async (questId: number) => {
+  authApi
+    .patch(`${baseUrl}/quest/${questId}/giveup`)
+    .then((res) => res)
+    .catch((err) => err)
+}
+
+// 퀘스트 성공 수락
+const questSuccessAccept = async (questId: number) => {
+  authApi
+    .patch(`${baseUrl}/quest/${questId}/giveup`)
     .then((res) => res)
     .catch((err) => err)
 }
@@ -57,4 +81,7 @@ export {
   nestQuestList,
   userQuestList,
   questAccept,
+  questGiveUp,
+  questSuccessRequest,
+  questSuccessAccept,
 }

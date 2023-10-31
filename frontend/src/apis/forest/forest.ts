@@ -23,6 +23,22 @@ const forestGetApi = async (
     .catch((err) => err)
 }
 
+// 나무 리스트
+const treeList = async (forestId: number, data: AxiosRequestConfig) => {
+  return authApi
+    .get(`${forestBaseUrl}/${forestId}/tree`, data)
+    .then((res) => res)
+    .catch((err) => err)
+}
+
+// 나무 상세
+const treeDetail = async (forestId: number, treeId: number) => {
+  return authApi
+    .get(`${treeApiUrl(forestId, treeId)}`)
+    .then((res) => res)
+    .catch((err) => err)
+}
+
 // 가지 추가
 const branchCreate = async (
   forestId: number,
@@ -85,6 +101,8 @@ const seedDelete = async (
 export {
   mainPageApi,
   forestGetApi,
+  treeList,
+  treeDetail,
   branchCreate,
   branchGroupCreate,
   seedCreate,
