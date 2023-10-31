@@ -4,6 +4,7 @@ import com.plantree.memberservice.domain.group.application.repository.GroupRepos
 import com.plantree.memberservice.domain.group.domain.Group;
 import com.plantree.memberservice.domain.group.infra.jpa.GroupJpaRepository;
 import com.plantree.memberservice.domain.group.infra.query.GroupQueryRepository;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -23,5 +24,15 @@ public class GroupRepositoryImpl implements GroupRepository {
     @Override
     public Group findByIdWithTeacher(UUID groupId) {
         return groupQueryRepository.findByIdWithTeacher(groupId);
+    }
+
+    @Override
+    public Optional<Group> findById(UUID groupId) {
+        return groupJpaRepository.findById(groupId);
+    }
+
+    @Override
+    public Group findByIdWithGroupStudents(UUID groupId) {
+        return groupQueryRepository.findByIdWithGroupStudents(groupId);
     }
 }
