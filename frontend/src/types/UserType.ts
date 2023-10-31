@@ -14,3 +14,13 @@ export interface FetchUserDataPayload {
   state: string
   kind: string
 }
+
+export interface UpdateUserProfileImage {
+  statusCode: number
+  message: string
+}
+
+export interface UpdateUserName {
+  statusCode: number
+  message: string
+}
