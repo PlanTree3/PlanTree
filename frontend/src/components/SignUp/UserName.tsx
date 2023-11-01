@@ -5,6 +5,7 @@ const UserName = () => {
   const [inputCount, setInputCount] = useState<number>(0)
 
   // 이름이 10글자를 넘어갈 때 스와이프 안되게 하는 함수는 부모 컴포(SignUpPage)에서 실행
+  // 예지바봉
 
   // 이름 세는 함수
   const onInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
