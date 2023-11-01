@@ -16,13 +16,13 @@ const UserName = () => {
     setInputCount(value.length)
   }
 
-  console.log(setInputName)
-
   return (
     <>
       <div>저는 이런 사람입니다!</div>
-      <div>제 이름은</div>
-      <input type="text" value={inputName} onChange={onInputHandler} />
+      <div>
+        <div>제 이름은</div>
+        <input type="text" value={inputName} onChange={onInputHandler} />
+      </div>
       <div>
         {inputCount <= 10 ? (
           <>
