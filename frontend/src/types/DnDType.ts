@@ -22,7 +22,6 @@ export interface MovableItemProps {
   budName: string
   index: number
   moveCardHandler: (dragIndex: number, hoverIndex: number) => void
-  setItems: React.Dispatch<React.SetStateAction<ItemState[]>>
   dayOfWeek: string
 }
 

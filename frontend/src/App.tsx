@@ -1,4 +1,5 @@
 import './App.css'
+import './firebase'
 import { BrowserRouter } from 'react-router-dom'
 import RoutesComponent from './router'
 
