@@ -16,6 +16,10 @@ const Kakao = () => {
       oauthProvider: 'KAKAO',
       idToken: response.response.id_token,
     }
+
+    //idToken 확인
+    console.log(data.idToken)
+
     // userLogin에 data를 넣어
     // boolean이 return
     // true면 signIn으로 라우팅해
