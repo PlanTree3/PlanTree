@@ -14,6 +14,17 @@ const AdminGroupPage: React.FC = () => {
   const closeModal = () => {
     setIsOpen(false)
   }
+  // 모달 내 인풋창
+  const handleEnterKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      // handleCreateGroup();
+    }
+  }
+  //그룹생성
+  const handleCreateGroup = () => {
+    // 그룹생성 api 가져오기
+  }
   // 일단 QR 임시
   const createQr = () => {
     return (
@@ -48,6 +59,7 @@ const AdminGroupPage: React.FC = () => {
   }
 
   const [currentPage, setCurrentPage] = useState(1)
+  const [inputGroupName, setInputGroupName] = useState('')
 
   const indexOfLastGroup = currentPage * GroupsPerPage
   const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
@@ -92,7 +104,23 @@ const AdminGroupPage: React.FC = () => {
         ))}
       </div>
       <Button className="primary" onClick={openModal} label="그룹 생성하기" />
-      <Modal isOpen={isOpen} onClose={closeModal} content="모오달" />
+      <Modal>
+        isOpen={isOpen}
+        onClose={closeModal}
+        content=
+        {
+          <div>
+            <div>그룹명을 입력해주세요</div>
+            <input
+              placeholder="ex. 2023 3학년 2반"
+              maxLength={50}
+              onChange={(e) => setNewGroupName(e.target.value)}
+              onKeyPress={handleEnterKeyPress}
+            />
+            <button onClick={handleCreateGroup}>생성</button>
+          </div>
+        }
+      </Modal>
     </div>
   )
 }
