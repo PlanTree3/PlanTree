@@ -1,5 +1,7 @@
 import { useRef } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
+import { useDispatch, useSelector } from 'react-redux'
+import { addBuds } from '@/stores/features/branchSlice'
 import {
   DragItem,
   ItemState,
@@ -9,30 +11,28 @@ import {
   COLUMN_NAMES,
 } from '@/types/DnDType'
 import '@/styles/branch.scss'
+import { RootState } from '@/stores/store'
 
 const MovableItem = ({
   id,
   budName,
   index,
   moveCardHandler,
-  setItems,
   dayOfWeek,
 }: MovableItemProps) => {
+  const dispatch = useDispatch()
+  const buds = useSelector((state: RootState) => state.branch.buds)
   const changeItemColumn = (
     currentItem: { index: number; budName: string; budId: number },
     columnName: string,
   ) => {
-    setItems((prevState: ItemState[]) =>
-      prevState.map((e: ItemState) => {
-        if (e.budId === currentItem.budId) {
-          return {
-            ...e,
-            dayOfWeek: columnName,
-          }
-        }
-        return e
-      }),
-    )
+    const updatedItems = buds.map((e: ItemState) => {
+      if (e.budId === currentItem.budId) {
+        return { ...e, dayOfWeek: columnName }
+      }
+      return e
+    })
+    dispatch(addBuds(updatedItems))
   }
   const ref = useRef<HTMLDivElement>(null)
   const [, drop] = useDrop<DragItem>({
@@ -70,11 +70,12 @@ const MovableItem = ({
         const maxId = Math.floor(Math.random() * 1000 + 2000)
         if (dayOfWeek === COLUMN_NAMES.DEFAULT) {
           const newItem = {
-            ...item,
             budId: maxId + 1,
+            budName,
             dayOfWeek: point,
           }
-          setItems((prevItems) => [...prevItems, newItem])
+          const newBuds = [...buds, newItem]
+          dispatch(addBuds(newBuds))
         } else {
           const newItem = {
             ...item,
@@ -91,15 +92,16 @@ const MovableItem = ({
   })
   const opacity = isDragging ? 0.4 : 1
   drag(drop(ref))
-  const removeItem = (idx: number) => {
-    setItems((prevItems) => prevItems.filter((item) => item.budId !== idx))
-  }
+  // const removeItem = (itemId: number) => {
+  //   const updatedItems = buds.filter((item) => item.budId !== itemId)
+  //   dispatch(addBuds(updatedItems))
+  // }
   return (
-    <div ref={ref} className="movable-item" style={{ opacity }}>
+    <div ref={ref} className="dnd_movable-item" style={{ opacity }}>
       {budName}
-      <button onClick={() => removeItem(id)} className="delete-btn">
-        X
-      </button>
+      {/*<button onClick={() => removeItem(id)} className="dnd_delete-btn">*/}
+      {/*  X*/}
+      {/*</button>*/}
     </div>
   )
 }
