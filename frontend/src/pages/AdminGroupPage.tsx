@@ -92,7 +92,7 @@ const AdminGroupPage: React.FC = () => {
         ))}
       </div>
       <Button className="primary" onClick={openModal} label="그룹 생성하기" />
-      <Modal isOpen={false} onClose={closeModal} content="모오달" />
+      <Modal isOpen={isOpen} onClose={closeModal} content="모오달" />
     </div>
   )
 }
