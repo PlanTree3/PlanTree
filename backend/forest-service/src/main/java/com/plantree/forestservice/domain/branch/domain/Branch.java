@@ -71,6 +71,10 @@ public class Branch extends BaseTimeEntity {
         return colors[random.nextInt(colors.length)];
     }
 
+    public void updateName(String name){
+        this.name = name;
+    }
+
     @PrePersist
     public void generateBranchId() {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();

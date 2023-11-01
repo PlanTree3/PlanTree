@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class BranchCreateReqDto {
+public class BranchNameUpdateReqDto {
 
-    private String name;
+   private String name;
 
 }
