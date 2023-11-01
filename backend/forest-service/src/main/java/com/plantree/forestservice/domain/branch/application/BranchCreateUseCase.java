@@ -8,7 +8,10 @@ import com.plantree.forestservice.domain.tree.application.repository.TreeReposit
 import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.plantree.forestservice.global.exception.Tree.TreeNotFoundException;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
-import com.plantree.forestservice.global.util.MemberValidator;
+import com.plantree.forestservice.global.openFeign.MemberServiceClient;
+import com.plantree.forestservice.global.openFeign.dto.GetGroupMembersResDto;
+import com.plantree.forestservice.global.util.AuthMemberValidator;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,22 +24,21 @@ public class BranchCreateUseCase {
 
     private final BranchRepository branchRepository;
     private final TreeRepository treeRepository;
-    private final MemberValidator memberValidator;
+    private final AuthMemberValidator authMemberValidator;
+    private final MemberServiceClient memberServiceClient;
 
     @Transactional
     public BranchCreateResDto createBranch(UUID treeId, AuthMember authMember,
-            BranchCreateReqDto branchCreateReqDto) {
+            String name) {
 
         Tree tree = treeRepository.findById(treeId).orElseThrow(TreeNotFoundException::new);
-        memberValidator.validateAuthMember(tree.getStudentId(), authMember);
+        authMemberValidator.validateAuthMember(tree.getStudentId(), authMember);
 
         Branch branch = branchRepository.save(Branch.builder()
-                .name(branchCreateReqDto.getName())
+                .name(name)
                 .issuerId(authMember.getMemberId())
                 .studentId(tree.getStudentId())
                 .build());
-
-        System.out.println(branch.getName());
 
         return BranchCreateResDto.builder()
                 .branchId(branch.getId())
@@ -45,7 +47,17 @@ public class BranchCreateUseCase {
     }
 
     @Transactional
-    public void createBranchesToAllGroupMembers(Long groupId, AuthMember authMember) {
+    public void createBranchesToAllGroupMembers(Long groupId, AuthMember authMember, String name) {
+
+        authMemberValidator.isGroupLeader(groupId, authMember);
+        List<UUID> studentIds = memberServiceClient.getGroupMembers(groupId).getStudentIds();
+
+        //todo 현재 트리를 가져와서 가지를 하나씩 추가해주는 로직
+//        studentIds.stream().map(studentId -> {
+//
+//        });
+
+
 
     }
 }

@@ -2,16 +2,17 @@ package com.plantree.forestservice.global.openFeign.dto;
 
 import java.util.UUID;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 public class CheckGroupLeaderReqDto {
 
-    private UUID studentId;
     private UUID teacherId;
+    private Long groupId;
 
-    public CheckGroupLeaderReqDto(UUID studentId, UUID teacherId){
-        this.studentId = studentId;
+    public CheckGroupLeaderReqDto(UUID teacherId, Long groupId){
         this.teacherId = teacherId;
+        this.groupId = groupId;
     }
 
 }
