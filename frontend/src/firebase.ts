@@ -4,16 +4,26 @@ import { getMessaging, getToken } from 'firebase/messaging'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+const API_KEY = import.meta.env.VITE_PUBLIC_FIREBASE_API_KEY
+const AUTH_DOMAIN = import.meta.env.VITE_PUBLIC_FIREBASE_AUTH_DOMAIN
+const PROJECT_ID = import.meta.env.VITE_PUBLIC_FIREBASE_PROJECT_ID
+const STORAGE_BUCKET = import.meta.env.VITE_PUBLIC_FIREBASE_STORAGE_BUCKET
+const MESSAGING_SENDER_ID = import.meta.env
+  .VITE_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+const APP_ID = import.meta.env.VITE_PUBLIC_FIREBASE_APP_ID
+const MEASUREMENT_ID = import.meta.env.VITE_PUBLIC_FIREBASE_MEASUREMENT_ID
+const VAPID_ID = import.meta.env.VITE_PUBLIC_FIREBASE_VAPID_ID
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyA8bFrHgG1Xl9ncgc8zmMvHcVzjy8wiXq8',
-  authDomain: 'plantree-941e1.firebaseapp.com',
-  projectId: 'plantree-941e1',
-  storageBucket: 'plantree-941e1.appspot.com',
-  messagingSenderId: '654938444882',
-  appId: '1:654938444882:web:62575b7ab19ae2f5f17b8b',
-  measurementId: 'G-H8B00XBRQX',
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID,
 }
 
 // Initialize Firebase
@@ -22,8 +32,7 @@ initializeApp(firebaseConfig)
 const messaging = getMessaging()
 
 getToken(messaging, {
-  vapidKey:
-    'BFKlXjEpVzo5xiulX46GUQ75O7_e4juJxDjUM95llfupPAwlkRFAnsWNq01ORRTxKCr0AxXhOlS1VDEiWyVtQD4',
+  vapidKey: VAPID_ID,
 })
   .then((currentToken) => {
     if (currentToken) {
