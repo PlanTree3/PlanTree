@@ -1,7 +1,5 @@
 const UserRule = () => {
-    return (
-        <div>UserRule Page입니다.</div>
-    )
+  return <div>UserRule Page입니다.</div>
 }
 
 export default UserRule
