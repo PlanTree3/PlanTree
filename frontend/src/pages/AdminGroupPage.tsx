@@ -3,10 +3,17 @@ import React, { useState } from 'react'
 import QR from 'qrcode.react'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
-
-const GroupsPerPage = 5
+import Modal from '@/components/Button/Modal'
 
 const AdminGroupPage: React.FC = () => {
+  // 모달 관련
+  const [isOpen, setIsOpen] = useState(false)
+  const openModal = () => {
+    setIsOpen(true)
+  }
+  const closeModal = () => {
+    setIsOpen(false)
+  }
   // 일단 QR 임시
   const createQr = () => {
     return (
@@ -22,6 +29,7 @@ const AdminGroupPage: React.FC = () => {
     )
   }
   //여기부터는 페이지 넘기면서 조회하는 것 임시
+  const GroupsPerPage = 5
   const dummyData: AcceptResponse = {
     statusCode: 200,
     message: '수락 성공',
@@ -64,12 +72,14 @@ const AdminGroupPage: React.FC = () => {
       <h2>2023 3학년 1반</h2>
       <div className="studentListBox">
         <h3>번호 그룹명 시작일 인원</h3>
-        {currentGroups.map((group, index) => (
-          <div key={index} className="groupItem">
-            <text>{index} </text>
-            <text>{group.groupName} </text>
-            <text>{group.createdAt} </text>
-            <text>{group.studentCount} </text>
+        {currentGroups.map((group, index: number) => (
+          <div>
+            <div key={index} className="groupItem">
+              <p className="groupInfo">{index + 1 + (currentPage - 1) * 5} </p>
+              <p className="groupInfo">{group.groupName} </p>
+              <p className="groupInfo">{group.createdAt} </p>
+              <p className="groupInfo">{group.studentCount} </p>
+            </div>
             <hr style={{ background: 'black', height: 1, border: 0 }} />
           </div>
         ))}
@@ -81,7 +91,8 @@ const AdminGroupPage: React.FC = () => {
           </button>
         ))}
       </div>
-      <Button className="primary" onClick={createQr} label="그룹 생성하기" />
+      <Button className="primary" onClick={openModal} label="그룹 생성하기" />
+      <Modal isOpen={false} onClose={closeModal} content="모오달" />
     </div>
   )
 }
