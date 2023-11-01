@@ -47,7 +47,8 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             String memberId = claims.getSubject();
 
             veryfyAuthority(role, requestUri, httpMethod);
-            ServerHttpRequest modifiedRequest = mutateRequestAndSetHeaders(originRequest, memberId);
+            ServerHttpRequest modifiedRequest = mutateRequestAndSetHeaders(originRequest, memberId,
+                    role);
             return chain.filter(exchange.mutate()
                                         .request(modifiedRequest)
                                         .build());
@@ -55,10 +56,11 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
     }
 
     private ServerHttpRequest mutateRequestAndSetHeaders(ServerHttpRequest originRequest,
-            String memberId) {
+            String memberId, String role) {
         return originRequest.mutate()
                             .headers(httpHeaders -> {
                                 httpHeaders.add("authMember", memberId);
+                                httpHeaders.add("role", role);
                             })
                             .build();
     }

@@ -1,7 +1,7 @@
 package com.plantree.memberservice.domain.member.domain;
 
 import com.plantree.memberservice.domain.group.domain.Nest;
-import com.plantree.memberservice.global.exception.ParentAlreadyNestingException;
+import com.plantree.memberservice.global.exception.AlreadyNestingException;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,6 +39,7 @@ public class Parent {
     }
 
     public Nest createNest(String name) {
+        checkAlreadyNesting();
         Nest nest = Nest.builder()
                         .name(name)
                         .parent(this)
@@ -49,7 +50,11 @@ public class Parent {
 
     public void checkAlreadyNesting() {
         if (this.nest != null) {
-            throw new ParentAlreadyNestingException();
+            throw new AlreadyNestingException();
         }
+    }
+
+    public void setNest(Nest nest) {
+        this.nest = nest;
     }
 }

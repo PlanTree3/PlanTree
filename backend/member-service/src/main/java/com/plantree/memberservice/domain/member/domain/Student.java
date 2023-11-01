@@ -2,6 +2,7 @@ package com.plantree.memberservice.domain.member.domain;
 
 import com.plantree.memberservice.domain.group.domain.GroupStudent;
 import com.plantree.memberservice.domain.group.domain.Nest;
+import com.plantree.memberservice.global.exception.AlreadyNestingException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -46,5 +47,15 @@ public class Student {
 
     public void addStudentGroup(GroupStudent studentGroup) {
         this.studentGroups.add(studentGroup);
+    }
+
+    public void checkAlreadyNesting() {
+        if (this.nest != null) {
+            throw new AlreadyNestingException();
+        }
+    }
+
+    public void setNest(Nest nest) {
+        this.nest = nest;
     }
 }
