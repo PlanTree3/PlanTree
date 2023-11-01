@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,6 +32,16 @@ public class Seed extends BaseTimeEntity {
 
     @ManyToOne
     private Branch branch;
+
+    @Builder
+    public Seed(String name, Branch branch){
+        this.name = name;
+        this.branch = branch;
+    }
+
+    public void updateName(String name){
+        this.name = name;
+    }
 
     @PrePersist
     public void generateMemberId() {
