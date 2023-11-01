@@ -72,7 +72,7 @@ public class Branch extends BaseTimeEntity {
     }
 
     @PrePersist
-    public void generateMemberId() {
+    public void generateBranchId() {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();
     }
 

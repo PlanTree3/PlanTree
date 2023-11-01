@@ -23,6 +23,7 @@ public class BranchCreateUseCase {
     private final TreeRepository treeRepository;
     private final MemberValidator memberValidator;
 
+    @Transactional
     public BranchCreateResDto createBranch(UUID treeId, AuthMember authMember,
             BranchCreateReqDto branchCreateReqDto) {
 
@@ -50,6 +51,7 @@ public class BranchCreateUseCase {
                 .build();
     }
 
+    @Transactional
     public void createBranchesToAllGroupMembers(Long groupId, AuthMember authMember) {
 
     }

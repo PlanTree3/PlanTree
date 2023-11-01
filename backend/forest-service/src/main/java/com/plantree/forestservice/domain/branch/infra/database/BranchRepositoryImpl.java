@@ -4,8 +4,10 @@ import com.plantree.forestservice.domain.branch.application.repository.BranchRep
 import com.plantree.forestservice.domain.branch.domain.Branch;
 import com.plantree.forestservice.domain.branch.infra.database.jpa.BranchJpaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @RequiredArgsConstructor
+@Repository
 public class BranchRepositoryImpl implements BranchRepository {
 
     private final BranchJpaRepository branchJpaRepository;
