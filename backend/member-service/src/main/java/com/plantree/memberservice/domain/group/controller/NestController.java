@@ -1,6 +1,7 @@
 package com.plantree.memberservice.domain.group.controller;
 
 import com.plantree.memberservice.domain.group.application.NestCreateUseCase;
+import com.plantree.memberservice.domain.group.application.NestJoinUseCase;
 import com.plantree.memberservice.domain.group.application.NestModifyUseCase;
 import com.plantree.memberservice.domain.group.dto.request.NestCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestNameChangeRequestDto;
@@ -25,6 +26,7 @@ public class NestController {
 
     private final NestCreateUseCase nestCreateUseCase;
     private final NestModifyUseCase nestModifyUseCase;
+    private final NestJoinUseCase nestJoinUseCase;
 
     @PostMapping
     public ResponseEntity<?> createNest(@JwtLoginMember AuthMember authMember,
@@ -39,5 +41,12 @@ public class NestController {
             NestNameChangeRequestDto nestNameChangeRequestDto) {
         nestModifyUseCase.changeName(nestId, authMember, nestNameChangeRequestDto);
         return HttpResponse.ok(HttpStatus.OK, "둥지 이름 수정 성공");
+    }
+
+    @PostMapping("/{nestId}/join-request")
+    public ResponseEntity<?> requestJoin(@PathVariable("nestId") UUID nestId,
+            @JwtLoginMember AuthMember authMember) {
+        nestJoinUseCase.requestJoin(nestId, authMember);
+        return HttpResponse.ok(HttpStatus.OK, "둥지 가입 신청 성공");
     }
 }

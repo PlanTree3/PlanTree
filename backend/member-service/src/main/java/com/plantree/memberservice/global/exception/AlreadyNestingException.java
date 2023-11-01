@@ -1,8 +1,8 @@
 package com.plantree.memberservice.global.exception;
 
-public class ParentAlreadyNestingException extends BusinessException {
+public class AlreadyNestingException extends BusinessException {
 
-    public ParentAlreadyNestingException() {
+    public AlreadyNestingException() {
         super(400, "이미 둥지가 있습니다.");
     }
 }
