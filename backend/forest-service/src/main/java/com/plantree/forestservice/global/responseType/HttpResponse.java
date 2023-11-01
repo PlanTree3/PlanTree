@@ -1,4 +1,4 @@
-package com.plantree.forestservice.global.dto;
+package com.plantree.forestservice.global.responseType;
 
 import java.util.ArrayList;
 import org.springframework.http.HttpStatus;

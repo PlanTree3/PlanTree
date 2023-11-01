@@ -35,7 +35,7 @@ public class Forest extends BaseTimeEntity {
     private UUID id;
 
     @Column(name = "student_id")
-    private Long studentId;
+    private UUID studentId;
 
     @Column(name = "started_at")
     private LocalDate startedAt = LocalDate.now(Clock.systemDefaultZone());
@@ -46,7 +46,7 @@ public class Forest extends BaseTimeEntity {
     @OneToMany(mappedBy = "forest", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<Tree> trees = new ArrayList<>();
 
-    public Forest(Long studentId) {
+    public Forest(UUID studentId) {
         this.studentId = studentId;
         this.endedAt = calculateEndDate();
     }
@@ -60,7 +60,7 @@ public class Forest extends BaseTimeEntity {
     }
 
     @PrePersist
-    public void generateMemberId() {
+    public void generateForestId() {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();
     }
 

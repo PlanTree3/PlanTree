@@ -17,7 +17,7 @@ public class CommonsSignupUseCase {
     private final TreeRepository treeRepository;
 
     @Transactional
-    public void createForestAndTree(Long studentId) {
+    public void createForestAndTree(UUID studentId) {
         Forest forest = forestRepository.save(new Forest(studentId));
         Tree tree = treeRepository.save(new Tree(studentId, forest));
     }

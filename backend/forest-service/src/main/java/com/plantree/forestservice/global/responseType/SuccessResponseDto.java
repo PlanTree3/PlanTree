@@ -1,4 +1,4 @@
-package com.plantree.forestservice.global.dto;
+package com.plantree.forestservice.global.responseType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FailResponseDto {
+public class SuccessResponseDto {
 
     private String message;
+    private Object data;
+
 }

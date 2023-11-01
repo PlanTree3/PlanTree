@@ -34,7 +34,7 @@ public class Tree extends BaseTimeEntity {
     private UUID id;
 
     @Column(name = "student_id")
-    private Long studentId;
+    private UUID studentId;
 
     @Column
     private LocalDate startedAt = LocalDate.now(Clock.systemDefaultZone());
@@ -50,7 +50,7 @@ public class Tree extends BaseTimeEntity {
     @OneToMany(mappedBy = "tree", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Branch> branches = new ArrayList<>();
 
-    public Tree(Long studentId, Forest forest){
+    public Tree(UUID studentId, Forest forest){
         this.studentId = studentId;
         this.forest = forest;
     }
