@@ -4,6 +4,7 @@ import QR from 'qrcode.react'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
+import { authApi } from '@/apis'
 
 const AdminGroupPage: React.FC = () => {
   // 모달 관련
@@ -21,21 +22,42 @@ const AdminGroupPage: React.FC = () => {
       // handleCreateGroup();
     }
   }
+
   //그룹생성
-  const handleCreateGroup = () => {
-    // 그룹생성 api 가져오기
+  const handleCreateGroup = async () => {
+    // if (!inputGroupName) {
+    //   alert('그룹 이름을 지정해주세요')
+    //   return
+    // }
+     // 그룹 생성 API 호출
+     const data: AxiosRequestConfig = {
+      data: {
+        groupName: inputGroupName,
+      },
+    }
+    try {
+      const response = await authApi.post('api/member-service/group', data)
+      if (response.status === 201) {
+        console.log('그룹 생성에 성공했습니다.')
+        closeModal()
+      }
+    } catch (error) {
+      console.error('그룹 생성에 실패했습니다.')
+    }
   }
+
+
   // 일단 QR 임시
   const createQr = () => {
     return (
       <QR
         value="https://www.naver.com/"
         size={500}
-        id="qr-gen"
+        id="basic"
         level="H"
         includeMargin={false} //QR 테두리 여부
-        bgColor="pink"
-        fgColor="yellow"
+        bgColor="green"
+        fgColor="black"
       />
     )
   }
@@ -107,17 +129,21 @@ const AdminGroupPage: React.FC = () => {
       <Modal>
         isOpen={isOpen}
         onClose={closeModal}
-        content=
-        {
+        content={
           <div>
             <div>그룹명을 입력해주세요</div>
             <input
               placeholder="ex. 2023 3학년 2반"
               maxLength={50}
-              onChange={(e) => setNewGroupName(e.target.value)}
-              onKeyPress={handleEnterKeyPress}
+              onChange={(e) => setInputGroupName(e.target.value)}
+              onKeyDown={handleEnterKeyPress}
             />
-            <button onClick={handleCreateGroup}>생성</button>
+            {/* <button onClick={handleCreateGroup} disabled={isCreatingGroup}>
+              생성하기
+            </button>
+            <button onClick={closeModal} disabled={isCreatingGroup}>
+              취소
+            </button> */}
           </div>
         }
       </Modal>
