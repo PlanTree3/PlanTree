@@ -13,10 +13,13 @@
   "dependencies": {
     "@react-oauth/google": "^0.11.1",
     "@reduxjs/toolkit": "^1.9.7",
+    "@types/qrcode.react": "^1.0.4",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-persist": "^4.3.1",
     "atropos": "^2.0.2",
     "axios": "^1.5.1",
+    "prop-types": "^15.8.1",
+    "qrcode.react": "^3.1.0",
     "firebase": "^10.5.2",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
