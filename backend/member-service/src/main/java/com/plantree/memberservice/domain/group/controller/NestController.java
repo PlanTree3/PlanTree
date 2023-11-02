@@ -3,6 +3,7 @@ package com.plantree.memberservice.domain.group.controller;
 import com.plantree.memberservice.domain.group.application.NestCreateUseCase;
 import com.plantree.memberservice.domain.group.application.NestJoinUseCase;
 import com.plantree.memberservice.domain.group.application.NestModifyUseCase;
+import com.plantree.memberservice.domain.group.application.NestSearchUseCase;
 import com.plantree.memberservice.domain.group.dto.request.NestCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestNameChangeRequestDto;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
@@ -12,6 +13,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +29,7 @@ public class NestController {
     private final NestCreateUseCase nestCreateUseCase;
     private final NestModifyUseCase nestModifyUseCase;
     private final NestJoinUseCase nestJoinUseCase;
+    private final NestSearchUseCase nestSearchUseCase;
 
     @PostMapping
     public ResponseEntity<?> createNest(@JwtLoginMember AuthMember authMember,
@@ -48,5 +51,12 @@ public class NestController {
             @JwtLoginMember AuthMember authMember) {
         nestJoinUseCase.requestJoin(nestId, authMember);
         return HttpResponse.ok(HttpStatus.OK, "둥지 가입 신청 성공");
+    }
+
+    @GetMapping("/{nestId}/student")
+    public ResponseEntity<?> searchNestStudents(@PathVariable("nestId") UUID nestId,
+            @JwtLoginMember AuthMember authMember) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                nestSearchUseCase.searchNestStudents(nestId, authMember));
     }
 }

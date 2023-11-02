@@ -30,4 +30,9 @@ public class NestRepositoryImpl implements NestRepository {
     public Optional<Nest> findByIdWithStudent(UUID nestId) {
         return Optional.ofNullable(nestQueryRepository.findByIdWithStudent(nestId));
     }
+
+    @Override
+    public Optional<Nest> findByIdWithStudentAndParent(UUID nestId) {
+        return Optional.ofNullable(nestQueryRepository.findByIdWithStudentAndParent(nestId));
+    }
 }

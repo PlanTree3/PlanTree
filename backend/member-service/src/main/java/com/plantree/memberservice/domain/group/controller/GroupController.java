@@ -3,6 +3,7 @@ package com.plantree.memberservice.domain.group.controller;
 import com.plantree.memberservice.domain.group.application.GroupCreateUseCase;
 import com.plantree.memberservice.domain.group.application.GroupJoinUseCase;
 import com.plantree.memberservice.domain.group.application.GroupModifyUseCase;
+import com.plantree.memberservice.domain.group.application.GroupSearchUseCase;
 import com.plantree.memberservice.domain.group.dto.request.GroupCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinAcceptRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinRefuseRequestDto;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +31,7 @@ public class GroupController {
     private final GroupCreateUseCase groupCreateUseCase;
     private final GroupModifyUseCase groupModifyUseCase;
     private final GroupJoinUseCase groupJoinUseCase;
+    private final GroupSearchUseCase groupSearchUseCase;
 
     @PostMapping
     public ResponseEntity<?> createGroup(@JwtLoginMember AuthMember authMember,
@@ -66,5 +69,31 @@ public class GroupController {
             @RequestBody GroupJoinRefuseRequestDto groupJoinRefuseRequestDto) {
         groupJoinUseCase.refuseJoin(groupId, authMember, groupJoinRefuseRequestDto);
         return HttpResponse.ok(HttpStatus.OK, "가입 거절 성공");
+    }
+
+    @GetMapping("/student-group")
+    public ResponseEntity<?> searchGroupAndNest(@JwtLoginMember AuthMember authMember) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                groupSearchUseCase.searchGroupAndNest(authMember));
+    }
+
+    @GetMapping("/{groupId}")
+    public ResponseEntity<?> searchGroupDetail(@PathVariable UUID groupId,
+            @JwtLoginMember AuthMember authMember) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                groupSearchUseCase.searchGroupDetail(groupId, authMember));
+    }
+
+    @GetMapping("/teacher-group")
+    public ResponseEntity<?> searchTeacherGroups(@JwtLoginMember AuthMember authMember) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                groupSearchUseCase.searchTeacherGroups(authMember));
+    }
+
+    @GetMapping("/{groupId}/student")
+    public ResponseEntity<?> searchGroupStudent(@PathVariable UUID groupId,
+            @JwtLoginMember AuthMember authMember) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                groupSearchUseCase.searchGroupStudents(groupId, authMember));
     }
 }

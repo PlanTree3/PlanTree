@@ -25,6 +25,12 @@ public class Parent {
     @Column(name = "parent_id")
     private Long id;
 
+    @Column
+    private String name;
+
+    @Column
+    private String profileImageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nest_id")
     private Nest nest;
@@ -34,6 +40,8 @@ public class Parent {
     private Member member;
 
     public Parent(Member member) {
+        this.name = member.getName();
+        this.profileImageUrl = member.getProfileImageUrl();
         this.member = member;
         this.member.setParent(this);
     }
@@ -56,5 +64,13 @@ public class Parent {
 
     public void setNest(Nest nest) {
         this.nest = nest;
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void changeProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }
