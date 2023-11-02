@@ -22,14 +22,14 @@ public class AuthMemberValidator {
     private final TreeRepository treeRepository;
 
     public void validateAuthMember(UUID studentId, AuthMember authMember) {
-//        switch (authMember.getRole()) {
-//            case PARENT:
-//                checkParentOfStudentFromTreeId(studentId, authMember);
-//            case TEACHER:
-//                checkTeacherOfStudentFromTreeId(studentId, authMember);
-//            case STUDENT:
-//                checkOwnerOfTreeId(studentId, authMember);
-//        }
+        switch (authMember.getRole()) {
+            case PARENT:
+                checkParentOfStudentFromTreeId(studentId, authMember);
+            case TEACHER:
+                checkTeacherOfStudentFromTreeId(studentId, authMember);
+            case STUDENT:
+                checkAuthMemberFromStudentIdOfTree(studentId, authMember);
+        }
     }
 
 
