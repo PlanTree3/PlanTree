@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-// import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import QR from 'qrcode.react'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
-import { authApi } from '@/apis'
+import { authApi, groupCreate } from '@/apis'
 import { GroupRequest } from '@/types/GroupAdminType'
 
 const AdminGroupPage: React.FC = () => {
@@ -12,9 +12,9 @@ const AdminGroupPage: React.FC = () => {
 
   const [currentPage, setCurrentPage] = useState(1)
   const [inputGroupName, setInputGroupName] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
   // 모달 관련
-  const [isOpen, setIsOpen] = useState(false)
   const openModal = () => {
     setIsOpen(true)
   }
@@ -28,26 +28,53 @@ const AdminGroupPage: React.FC = () => {
       // handleCreateGroup();
     }
   }
+  // 임시 (뒤에 학생/교사/학부모) -> useState에 넣기
+  useEffect(() => {
+    // API 요청을 보내는 부분
+    axios
+      .post(
+        // 'http://localhost:8000/api/member-service/group',
+        'http://localhost:8000/api/member-service/dev/auth/login?oauthId=jyTeacher',
+      )
+      .then((response) => {
+        console.log('성공', response)
+      })
+      .catch((error) => {
+        console.error('오류', error)
+      })
+  }, [])
 
   //그룹생성
+
+  // if (!inputGroupName) {
+  //   alert('그룹 이름을 지정해주세요')
+  // } else {
+  const data = { groupName: inputGroupName }
   const handleCreateGroup = async () => {
-    // if (!inputGroupName) {
-    //   alert('그룹 이름을 지정해주세요')
-    //   return
+    console.log('여기까진 됌??')
+    try {
+      console.log('이것도 되지?')
+      const response = await groupCreate(data)
+      console.log('Response:', response)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+
     // }
     // 그룹 생성 API 호출
-    const data: GroupRequest = {
-      groupName: inputGroupName,
-    }
-    try {
-      const response = await authApi.post('api/member-service/group', data)
-      if (response.status === 201) {
-        console.log('그룹 생성에 성공했습니다.')
-        closeModal()
-      }
-    } catch (error) {
-      console.error('그룹 생성에 실패했습니다.')
-    }
+    //   const data: GroupRequest = {
+    //     groupName: inputGroupName,
+    //   }
+    //   try {
+    //     const response = await authApi.post('api/member-service/group', data)
+    //     console.log(data)
+    //     if (response.status === 201) {
+    //       console.log('그룹 생성에 성공했습니다.')
+    //       closeModal()
+    //     }
+    //   } catch (error) {
+    //     console.error('그룹 생성에 실패했습니다.', error)
+    //   }
   }
 
   // 일단 QR 임시
