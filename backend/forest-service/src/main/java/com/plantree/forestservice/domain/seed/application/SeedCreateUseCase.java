@@ -4,7 +4,6 @@ import com.plantree.forestservice.domain.branch.application.repository.BranchRep
 import com.plantree.forestservice.domain.branch.domain.Branch;
 import com.plantree.forestservice.domain.seed.application.repository.SeedRepository;
 import com.plantree.forestservice.domain.seed.domain.Seed;
-import com.plantree.forestservice.domain.seed.dto.SeedCreateResDto;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
 import com.plantree.forestservice.global.exception.Branch.BranchNotFoundException;
 import com.plantree.forestservice.global.util.AuthMemberValidator;
@@ -22,17 +21,16 @@ public class SeedCreateUseCase {
     private final AuthMemberValidator authMemberValidator;
 
     @Transactional
-    public SeedCreateResDto createSeed(UUID treeId, UUID branchId, AuthMember authMember,
+    public Seed createSeed(UUID treeId, UUID branchId, AuthMember authMember,
             String name) {
 
-        authMemberValidator.checkOwnerOfTreeId(treeId, authMember);
+        authMemberValidator.checkAuthMemberFromTreeId(treeId, authMember);
         Branch branch = branchRepository.findById(branchId)
                 .orElseThrow(BranchNotFoundException::new);
-        Seed seed = seedRepository.save(Seed.builder()
+        return seedRepository.save(Seed.builder()
                 .name(name)
                 .branch(branch)
                 .build());
-        return new SeedCreateResDto(seed.getId());
 
     }
 

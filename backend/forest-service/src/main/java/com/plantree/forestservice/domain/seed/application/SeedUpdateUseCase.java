@@ -20,7 +20,7 @@ public class SeedUpdateUseCase {
 
     @Transactional
     public void updateName(UUID treeId, UUID branchId, UUID seedId, AuthMember authMember, String name) {
-        authMemberValidator.checkOwnerOfTreeId(treeId, authMember);
+        authMemberValidator.checkAuthMemberFromTreeId(treeId, authMember);
 
         Seed seed = seedRepository.findById(seedId).orElseThrow(SeedNotFoundException::new);
         seed.updateName(name);

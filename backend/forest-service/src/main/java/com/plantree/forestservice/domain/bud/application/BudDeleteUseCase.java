@@ -1,7 +1,9 @@
-package com.plantree.forestservice.domain.seed.application;
+package com.plantree.forestservice.domain.bud.application;
 
-import com.plantree.forestservice.domain.seed.application.repository.SeedRepository;
+import com.plantree.forestservice.domain.bud.application.repository.BudRepository;
+import com.plantree.forestservice.domain.bud.domain.Bud;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
+import com.plantree.forestservice.global.exception.Bud.BudNotFoundException;
 import com.plantree.forestservice.global.util.AuthMemberValidator;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -11,16 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class SeedDeleteUseCase {
+public class BudDeleteUseCase {
 
+    private final BudRepository budRepository;
     private final AuthMemberValidator authMemberValidator;
-    private final SeedRepository seedRepository;
 
     @Transactional
-    public void deleteSeed(UUID treeId, UUID branchId, UUID seedId, AuthMember authMember) {
+    public void deleteBud(UUID treeId, UUID branchId, UUID budId, AuthMember authMember) {
 
         authMemberValidator.checkAuthMemberFromTreeId(treeId, authMember);
-        seedRepository.deleteById(seedId);
+
+        budRepository.deleteById(budId);
 
     }
 }

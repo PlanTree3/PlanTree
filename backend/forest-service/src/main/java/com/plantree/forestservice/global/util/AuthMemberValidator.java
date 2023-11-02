@@ -1,6 +1,9 @@
 package com.plantree.forestservice.global.util;
 
+import com.plantree.forestservice.domain.tree.application.repository.TreeRepository;
+import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
+import com.plantree.forestservice.global.exception.Tree.TreeNotFoundException;
 import com.plantree.forestservice.global.exception.UnauthorizedAccessException;
 import com.plantree.forestservice.global.openFeign.MemberServiceClient;
 import com.plantree.forestservice.global.openFeign.dto.CheckGroupLeaderReqDto;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class AuthMemberValidator {
 
     private final MemberServiceClient memberServiceClient;
+    private final TreeRepository treeRepository;
 
     public void validateAuthMember(UUID studentId, AuthMember authMember) {
 //        switch (authMember.getRole()) {
@@ -49,8 +53,16 @@ public class AuthMemberValidator {
         }
     }
 
-    public void checkOwnerOfTreeId(UUID studentId, AuthMember authMember) {
+    public void checkAuthMemberFromStudentIdOfTree(UUID studentId, AuthMember authMember) {
         boolean authMemberIsOwnerOfTree = studentId.equals(authMember.getMemberId());
+        if (!authMemberIsOwnerOfTree) {
+            throw new UnauthorizedAccessException();
+        }
+    }
+
+    public void checkAuthMemberFromTreeId(UUID treeId, AuthMember authMember) {
+        Tree tree = treeRepository.findById(treeId).orElseThrow(TreeNotFoundException::new);
+        boolean authMemberIsOwnerOfTree = tree.getStudentId().equals(authMember.getMemberId());
         if (!authMemberIsOwnerOfTree) {
             throw new UnauthorizedAccessException();
         }

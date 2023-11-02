@@ -4,6 +4,7 @@ import com.plantree.forestservice.domain.seed.application.SeedCreateUseCase;
 import com.plantree.forestservice.domain.seed.application.SeedDeleteUseCase;
 import com.plantree.forestservice.domain.seed.application.SeedUpdateUseCase;
 import com.plantree.forestservice.domain.seed.dto.SeedCreateReqDto;
+import com.plantree.forestservice.domain.seed.dto.SeedCreateResDto;
 import com.plantree.forestservice.domain.seed.dto.SeedModifyReqDto;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
 import com.plantree.forestservice.global.config.webmvc.JwtLoginMember;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,8 +34,8 @@ public class SeedController {
             @JwtLoginMember AuthMember authMember) {
 
         return HttpResponse.okWithData(HttpStatus.OK, "씨앗이 생성되었습니다.",
-                seedCreateUseCase.createSeed(treeId, branchId, authMember,
-                        seedCreateReqDto.getName()));
+                new SeedCreateResDto(seedCreateUseCase.createSeed(treeId, branchId, authMember,
+                        seedCreateReqDto.getName())));
 
     }
 

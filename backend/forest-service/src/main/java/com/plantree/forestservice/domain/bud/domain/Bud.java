@@ -12,13 +12,12 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,7 +39,7 @@ public class Bud extends BaseTimeEntity {
     private Day day;
 
     @Column
-    private boolean is_complete;
+    private boolean isComplete;
 
     @Column
     private UUID studentId;
@@ -50,6 +49,30 @@ public class Bud extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "bud", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BudComment> budComments = new ArrayList<>();
+
+    @Builder
+    public Bud(String name, Day day, UUID studentId, Branch branch){
+        this.name = name;
+        this.day = day;
+        this.studentId = studentId;
+        this.branch = branch;
+    }
+
+    public void updateDay(Day day){
+        this.day = day;
+    }
+
+    public void updateName(String name){
+        this.name = name;
+    }
+
+    public void complete(){
+        this.isComplete = true;
+    }
+
+    public void undoComplete(){
+        this.isComplete = false;
+    }
 
     @PrePersist
     public void generateMemberId() {

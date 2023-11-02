@@ -10,6 +10,7 @@ import com.plantree.forestservice.global.openFeign.dto.GetGroupMembersResDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "member-service")
 public interface MemberServiceClient {
@@ -18,12 +19,12 @@ public interface MemberServiceClient {
     public GetGroupMembersResDto getGroupMembers(@PathVariable Long groupId);
 
     @GetMapping("/group/student/check-leader")
-    public CheckTeacherResDto checkTeacher(CheckTeacherReqDto checkTeacherReqDto);
+    public CheckTeacherResDto checkTeacher(@RequestBody CheckTeacherReqDto checkTeacherReqDto);
 
     @GetMapping("/student/check-parent")
-    public CheckNestParentResDto checkNestParent(CheckNestParentReqDto checkNestParentReqDto);
+    public CheckNestParentResDto checkNestParent(@RequestBody CheckNestParentReqDto checkNestParentReqDto);
 
     @GetMapping("/group/{groupId}/check-leader")
-    public CheckGroupLeaderResDto checkGroupLeader(CheckGroupLeaderReqDto checkGroupLeaderReqDto);
+    public CheckGroupLeaderResDto checkGroupLeader(@RequestBody CheckGroupLeaderReqDto checkGroupLeaderReqDto);
 
 }

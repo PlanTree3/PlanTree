@@ -4,6 +4,7 @@ import com.plantree.forestservice.domain.branch.application.BranchCreateUseCase;
 import com.plantree.forestservice.domain.branch.application.BranchDeleteUseCase;
 import com.plantree.forestservice.domain.branch.application.BranchUpdateUseCase;
 import com.plantree.forestservice.domain.branch.dto.BranchCreateReqDto;
+import com.plantree.forestservice.domain.branch.dto.BranchCreateResDto;
 import com.plantree.forestservice.domain.branch.dto.BranchCreateToGroupMembersReqDto;
 import com.plantree.forestservice.domain.branch.dto.BranchNameUpdateReqDto;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
@@ -35,7 +36,8 @@ public class BranchController {
 
         return HttpResponse.okWithData(HttpStatus.OK,
                 "가지가 생성되었습니다.",
-                branchCreateUseCase.createBranch(treeId, authMember, branchCreateReqDto.getName()));
+                new BranchCreateResDto(branchCreateUseCase.createBranch(treeId, authMember,
+                        branchCreateReqDto.getName())));
 
     }
 
@@ -68,6 +70,5 @@ public class BranchController {
         branchCreateUseCase.createBranchesToAllGroupMembers(groupId, authMember, reqDto.getName());
         return HttpResponse.ok(HttpStatus.OK, "가지가 일괄 생성되었습니다.");
     }
-
 
 }
