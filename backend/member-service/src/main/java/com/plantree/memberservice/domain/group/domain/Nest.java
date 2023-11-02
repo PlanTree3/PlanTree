@@ -6,8 +6,8 @@ import com.plantree.memberservice.domain.member.domain.Student;
 import com.plantree.memberservice.global.entity.BaseTimeEntity;
 import com.plantree.memberservice.global.exception.UnauthorizedException;
 import com.plantree.memberservice.global.util.SequentialUUIDGenerator;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,10 +32,10 @@ public class Nest extends BaseTimeEntity {
     private String name;
 
     @OneToMany(mappedBy = "nest", cascade = CascadeType.PERSIST)
-    private List<Student> students = new ArrayList<>();
+    private Set<Student> students = new HashSet<>();
 
     @OneToMany(mappedBy = "nest", cascade = CascadeType.PERSIST)
-    private List<Parent> parents = new ArrayList<>();
+    private Set<Parent> parents = new HashSet<>();
 
     @Builder
     public Nest(String name, Parent parent) {
@@ -74,4 +74,12 @@ public class Nest extends BaseTimeEntity {
         this.name = name;
     }
 
+    public void checkIsNestParentByMemberId(UUID memberId) {
+        if (this.parents.stream()
+                        .noneMatch(parent -> parent.getMember()
+                                                   .getId()
+                                                   .equals(memberId))) {
+            throw new UnauthorizedException("둥지 부모님이 아닙니다.");
+        }
+    }
 }

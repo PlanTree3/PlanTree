@@ -22,9 +22,14 @@ public class GroupModifyUseCase {
     @Transactional
     public void changeName(UUID groupId, AuthMember authMember,
             GroupNameChangeRequestDto groupNameChangeRequestDto) {
-        Group group = groupRepository.findByIdWithTeacher(groupId);
+        Group group = findGroupByIdOrThrow(groupId);
         Teacher teacher = findTeacherByIdOrThrow(authMember);
         group.changeNameByTeacher(groupNameChangeRequestDto.getGroupName(), teacher);
+    }
+
+    private Group findGroupByIdOrThrow(UUID groupId) {
+        return groupRepository.findByIdWithTeacher(groupId)
+                              .orElseThrow(() -> new ResourceNotFoundException("그룹을 찾을 수 없습니다."));
     }
 
     private Teacher findTeacherByIdOrThrow(AuthMember authMember) {

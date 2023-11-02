@@ -56,10 +56,7 @@ public class GroupJoinUseCase {
     }
 
     private Group findGroupByIdOrThrow(UUID groupId) {
-        Group group = groupRepository.findByIdWithGroupStudents(groupId);
-        if (group == null) {
-            throw new ResourceNotFoundException("그룹을 찾을 수 없습니다.");
-        }
-        return group;
+        return groupRepository.findByIdWithGroupStudents(groupId)
+                              .orElseThrow(() -> new ResourceNotFoundException("그룹을 찾을 수 없습니다."));
     }
 }

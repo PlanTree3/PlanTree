@@ -11,4 +11,6 @@ public interface NestRepository {
     Optional<Nest> findByIdWithParent(UUID nestId);
 
     Optional<Nest> findByIdWithStudent(UUID nestId);
+
+    Optional<Nest> findByIdWithStudentAndParent(UUID nestId);
 }

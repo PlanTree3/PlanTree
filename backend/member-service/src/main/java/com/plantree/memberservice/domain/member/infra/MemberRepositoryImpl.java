@@ -37,4 +37,9 @@ public class MemberRepositoryImpl implements MemberRepository {
     public Optional<Member> findById(UUID memberId) {
         return Optional.ofNullable(memberQueryRepository.findByIdWithRoles(memberId));
     }
+
+    @Override
+    public Optional<Member> findByIdWithGroup(UUID memberId) {
+        return Optional.ofNullable(memberQueryRepository.findByIdWithGroup(memberId));
+    }
 }

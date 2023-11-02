@@ -29,6 +29,12 @@ public class Student {
     @Column(name = "student_id")
     private Long id;
 
+    @Column
+    private String name;
+
+    @Column
+    private String profileImageUrl;
+
     @OneToMany(mappedBy = "student")
     private List<GroupStudent> studentGroups = new ArrayList<>();
 
@@ -41,6 +47,8 @@ public class Student {
     private Member member;
 
     public Student(Member member) {
+        this.name = member.getName();
+        this.profileImageUrl = member.getProfileImageUrl();
         this.member = member;
         this.member.setStudent(this);
     }
@@ -57,5 +65,13 @@ public class Student {
 
     public void setNest(Nest nest) {
         this.nest = nest;
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void changeProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }

@@ -33,4 +33,15 @@ public class NestQueryRepository {
                               .where(nest.id.eq(nestId))
                               .fetchOne();
     }
+
+    public Nest findByIdWithStudentAndParent(UUID nestId) {
+        return jpaQueryFactory.selectFrom(nest)
+                              .leftJoin(nest.students, student)
+                              .fetchJoin()
+                              .innerJoin(nest.parents, parent)
+                              .fetchJoin()
+                              .where(nest.id.eq(nestId))
+                              .distinct()
+                              .fetchOne();
+    }
 }
