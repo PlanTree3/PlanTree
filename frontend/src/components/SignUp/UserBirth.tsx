@@ -8,7 +8,7 @@ import { LiaBirthdayCakeSolid } from 'react-icons/lia'
 import '../DatePickerStyle.css'
 
 const UserBirth = () => {
-  const [inputDate, setInputDate] = useState(null)
+  const [inputDate, setInputDate] = useState(new Date())
 
   const setDate = (date: Date) => {
     setInputDate(date)
@@ -22,7 +22,6 @@ const UserBirth = () => {
         dateFormat="yyyy-MM-dd"
         selected={inputDate}
         shouldCloseOnSelect
-        placeholderText="생일을 입력하세요!"
         onChange={setDate}
         disabledKeyboardNavigation
       />
