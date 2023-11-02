@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import QR from 'qrcode.react'
+// import QR from 'qrcode.react'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
@@ -78,19 +78,19 @@ const AdminGroupPage: React.FC = () => {
   }
 
   // 일단 QR 임시
-  const createQr = () => {
-    return (
-      <QR
-        value="https://www.naver.com/"
-        size={500}
-        id="basic"
-        level="H"
-        includeMargin={false} //QR 테두리 여부
-        bgColor="green"
-        fgColor="black"
-      />
-    )
-  }
+  // const createQr = () => {
+  //   return (
+  //     <QR
+  //       value="https://www.naver.com/"
+  //       size={500}
+  //       id="basic"
+  //       level="H"
+  //       includeMargin={false} //QR 테두리 여부
+  //       bgColor="green"
+  //       fgColor="black"
+  //     />
+  //   )
+  // }
   //여기부터는 페이지 넘기면서 조회하는 것 임시
   const GroupsPerPage = 5
   const dummyData = {

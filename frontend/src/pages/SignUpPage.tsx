@@ -2,7 +2,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 // import required modules
 import { Mousewheel, Pagination } from 'swiper/modules'
-import { UserBirth, UserName, UserProfileImg, UserRule } from '@/components'
+import { UserBirth, UserName, UserProfileImg, UserRole } from '@/components'
 // style
 // Import Swiper styles
 import 'swiper/css'
@@ -27,7 +27,7 @@ const SignUpPage = () => {
         <UserBirth />
       </SwiperSlide>
       <SwiperSlide>
-        <UserRule />
+        <UserRole />
       </SwiperSlide>
       <SwiperSlide>
         <UserProfileImg />
