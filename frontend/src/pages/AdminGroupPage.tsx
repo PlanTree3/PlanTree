@@ -5,8 +5,14 @@ import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
 import { authApi } from '@/apis'
+import { GroupRequest } from '@/types/GroupAdminType'
 
 const AdminGroupPage: React.FC = () => {
+  //useState들
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [inputGroupName, setInputGroupName] = useState('')
+
   // 모달 관련
   const [isOpen, setIsOpen] = useState(false)
   const openModal = () => {
@@ -29,11 +35,9 @@ const AdminGroupPage: React.FC = () => {
     //   alert('그룹 이름을 지정해주세요')
     //   return
     // }
-     // 그룹 생성 API 호출
-     const data: AxiosRequestConfig = {
-      data: {
-        groupName: inputGroupName,
-      },
+    // 그룹 생성 API 호출
+    const data: GroupRequest = {
+      groupName: inputGroupName,
     }
     try {
       const response = await authApi.post('api/member-service/group', data)
@@ -45,7 +49,6 @@ const AdminGroupPage: React.FC = () => {
       console.error('그룹 생성에 실패했습니다.')
     }
   }
-
 
   // 일단 QR 임시
   const createQr = () => {
@@ -63,7 +66,7 @@ const AdminGroupPage: React.FC = () => {
   }
   //여기부터는 페이지 넘기면서 조회하는 것 임시
   const GroupsPerPage = 5
-  const dummyData: AcceptResponse = {
+  const dummyData = {
     statusCode: 200,
     message: '수락 성공',
     data: {
@@ -79,9 +82,6 @@ const AdminGroupPage: React.FC = () => {
       ],
     },
   }
-
-  const [currentPage, setCurrentPage] = useState(1)
-  const [inputGroupName, setInputGroupName] = useState('')
 
   const indexOfLastGroup = currentPage * GroupsPerPage
   const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
@@ -126,7 +126,7 @@ const AdminGroupPage: React.FC = () => {
         ))}
       </div>
       <Button className="primary" onClick={openModal} label="그룹 생성하기" />
-      <Modal>
+      <Modal
         isOpen={isOpen}
         onClose={closeModal}
         content={
@@ -138,15 +138,15 @@ const AdminGroupPage: React.FC = () => {
               onChange={(e) => setInputGroupName(e.target.value)}
               onKeyDown={handleEnterKeyPress}
             />
-            {/* <button onClick={handleCreateGroup} disabled={isCreatingGroup}>
-              생성하기
-            </button>
-            <button onClick={closeModal} disabled={isCreatingGroup}>
-              취소
-            </button> */}
+            <Button
+              className="primary"
+              label="생성하기"
+              onClick={handleCreateGroup}
+            />
+            <Button className="primary" label="취소" onClick={closeModal} />
           </div>
         }
-      </Modal>
+      />
     </div>
   )
 }
