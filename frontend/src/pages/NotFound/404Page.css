@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found-page-container {
+  background-image: url(../../../public/404.gif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.not-found-page-content {
+  background-image: url(../../../public/cloud.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 30%;
+  width: 40%;
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found-page-text {
+  margin-top: 10vh;
+  text-align: center;
+}
