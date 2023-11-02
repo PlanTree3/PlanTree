@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import StudentGroupPage from './pages/StudentGroupPage.tsx'
+import AdminGroupPage from './pages/AdminGroupPage.tsx'
 import {
   Home,
   LoginPage,
@@ -7,6 +8,7 @@ import {
   SignUpPage,
   MainPage,
   ForestPage,
+  WeeklyBudsPage,
 } from './pages'
 
 const RoutesComponent = () => (
@@ -15,9 +17,11 @@ const RoutesComponent = () => (
     <Route path="/login" element={<LoginPage />} />
     <Route path="/oauth" element={<OauthRedirectPage />} />
     <Route path="/studentGroup" element={<StudentGroupPage />} />
+    <Route path="/adminGroup" element={<AdminGroupPage />} />
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="/main" element={<MainPage />} />
     <Route path="/forest" element={<ForestPage />} />
+    <Route path="budsTest" element={<WeeklyBudsPage />} />
   </Routes>
 )
 

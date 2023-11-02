@@ -45,6 +45,7 @@ module.exports = {
         peerDependencies: true,
       },
     ],
+    '@typescript-eslint/no-explicit-any': 'warn',
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'react-hooks/rules-of-hooks': 'error',
