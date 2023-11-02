@@ -7,6 +7,11 @@ export type GroupResponse = {
   }
 }
 
+//그룹 생성(요청)
+export type GroupRequest = {
+  groupName: string
+}
+
 // 그룹 이름 수정 (응답)
 export type UpdateGroupNameResponse = {
   statusCode: number
