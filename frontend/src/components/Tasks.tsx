@@ -1,6 +1,6 @@
 import { COLUMN_NAMES } from '@/types/DnDType'
 
-const { DEFAULT, MONDAY, TUESDAY, WEDNESDAY } = COLUMN_NAMES
+const { DEFAULT, MONDAY, TUESDAY, WEDNESDAY, FRIDAY_FINISH } = COLUMN_NAMES
 
 export const seedsList = [
   { seedId: 1, seedName: 'Item 1', dayOfWeek: DEFAULT, branchId: 1 },
@@ -13,6 +13,7 @@ export const budsList = [
   { budId: 1, budName: '기정', dayOfWeek: MONDAY },
   { budId: 2, budName: '예지', dayOfWeek: TUESDAY },
   { budId: 3, budName: '연재', dayOfWeek: WEDNESDAY },
+  { budId: 4, budName: '영석', dayOfWeek: FRIDAY_FINISH },
 ]
 
 export const branchList = [

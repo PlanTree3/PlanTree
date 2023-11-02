@@ -42,7 +42,8 @@ export type ColumnName =
   | 'WEDNESDAY_FINISH'
   | 'THURSDAY_FINISH'
   | 'FRIDAY_FINISH'
-export const COLUMN_NAMES: { [K in ColumnName]: string } = {
+
+export const COLUMN_NAMES: { [key in ColumnName]: string } = {
   DEFAULT: '',
   MONDAY: '월요일',
   TUESDAY: '화요일',
@@ -54,6 +55,14 @@ export const COLUMN_NAMES: { [K in ColumnName]: string } = {
   WEDNESDAY_FINISH: '수요일 끝',
   THURSDAY_FINISH: '목요일 끝',
   FRIDAY_FINISH: '금요일 끝',
+}
+
+export const DAY_NAMES: { [key: string]: string } = {
+  '1': '월요일',
+  '2': '화요일',
+  '3': '수요일',
+  '4': '목요일',
+  '5': '금요일',
 }
 
 export const ITEM_TYPE = 'BOARD_VIEW'

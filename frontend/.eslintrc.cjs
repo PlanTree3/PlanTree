@@ -66,6 +66,7 @@ module.exports = {
     'spaced-comment': 'off',
     'import/extensions': 'off',
     'import/prefer-default-export': 'off',
+    '@typescript-eslint/no-explicit-any': 'off'
   },
   ignorePatterns: ['.eslintrc.cjs'],
 }
