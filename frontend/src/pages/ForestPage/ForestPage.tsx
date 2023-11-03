@@ -12,6 +12,10 @@ import 'swiper/css/pagination'
 
 let forests = [
   {
+    forestName: '놀러오세요 주영의 숲',
+    year: 2020,
+  },
+  {
     forestName: '놀러오세요 도현의 숲',
     year: 2021,
   },
