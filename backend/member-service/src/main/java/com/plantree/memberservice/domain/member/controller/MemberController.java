@@ -1,7 +1,6 @@
 package com.plantree.memberservice.domain.member.controller;
 
-import com.plantree.memberservice.domain.member.application.NameChangeUseCase;
-import com.plantree.memberservice.domain.member.application.ProfileImageChangeUseCase;
+import com.plantree.memberservice.domain.member.application.MemberModifyUseCase;
 import com.plantree.memberservice.domain.member.dto.NameChangeRequestDto;
 import com.plantree.memberservice.domain.member.dto.ProfileImageChangeRequestDto;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
@@ -21,8 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final ProfileImageChangeUseCase profileImageChangeUseCase;
-    private final NameChangeUseCase nameChangeUseCase;
+    private final MemberModifyUseCase memberModifyUseCase;
 
     @GetMapping("/health-check")
     public ResponseEntity<?> healthCheck(@JwtLoginMember AuthMember authMember) {
@@ -32,14 +30,14 @@ public class MemberController {
     @PatchMapping("/profile-image")
     public ResponseEntity<?> changeProfileImage(@JwtLoginMember AuthMember authMember,
             @RequestBody ProfileImageChangeRequestDto profileImageChangeRequestDto) {
-        profileImageChangeUseCase.changeProfileImage(authMember, profileImageChangeRequestDto);
+        memberModifyUseCase.changeProfileImage(authMember, profileImageChangeRequestDto);
         return HttpResponse.ok(HttpStatus.OK, "프로필 이미지 수정 성공");
     }
 
     @PatchMapping("/name")
     public ResponseEntity<?> changeName(@JwtLoginMember AuthMember authMember,
             @RequestBody NameChangeRequestDto nameChangeRequestDto) {
-        nameChangeUseCase.changeName(authMember, nameChangeRequestDto);
+        memberModifyUseCase.changeName(authMember, nameChangeRequestDto);
         return HttpResponse.ok(HttpStatus.OK, "이름 수정 성공");
     }
 }
