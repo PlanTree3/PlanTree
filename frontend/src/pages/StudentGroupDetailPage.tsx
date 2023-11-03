@@ -37,6 +37,14 @@ const StudentGroupDetailPage = () => {
           <text>신기정</text>
         </div>
       </div>
+      <div className="studentBox">
+        <div className="circle-image">
+          <img src={gijeong1} alt="" />/
+        </div>
+        <div>
+          <text>신기정</text>
+        </div>
+      </div>
     </div>
   )
 }

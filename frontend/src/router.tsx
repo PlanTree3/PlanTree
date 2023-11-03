@@ -2,7 +2,8 @@ import { Route, Routes } from 'react-router-dom'
 import StudentGroupPage from './pages/StudentGroupPage.tsx'
 import StudentGroupDetailPage from './pages/StudentGroupDetailPage.tsx'
 import AdminGroupDetailPage from './pages/AdminGroupDetailPage.tsx'
-import AdminGroupTabPage from './pages/AdminGroupTabPage.tsx'
+// import AdminGroupTabPage from './pages/AdminGroupTabPage.tsx'
+import AdminGroupPage from './pages/AdminGroupPage.tsx'
 import AdminNestPage from './pages/AdminNestPage.tsx'
 
 import {
@@ -25,7 +26,8 @@ const RoutesComponent = () => (
     <Route path="/studentGroup" element={<StudentGroupPage />} />
     <Route path="/studentGroupDetail" element={<StudentGroupDetailPage />} />
     <Route path="/adminNest" element={<AdminNestPage />} />
-    <Route path="/adminGroupTab" element={<AdminGroupTabPage />} />
+    {/* <Route path="/adminGroupTab" element={<AdminGroupTabPage />} /> */}
+    <Route path="/adminGroup" element={<AdminGroupPage />} />
     <Route path="/adminGroupDetail" element={<AdminGroupDetailPage />} />
 
     <Route path="/signUp" element={<SignUpPage />} />

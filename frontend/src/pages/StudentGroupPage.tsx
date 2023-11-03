@@ -1,9 +1,9 @@
 // import React, { useEffect, useState } from 'react';
-
+// import axios from 'axios';
+import { Link } from 'react-router-dom'
 import chick from '../../public/chick.png'
 import forest from '../../public/forest_tmp.png'
 import './GroupPage.css'
-// import axios from 'axios';
 // import StudentGroupPageResponse from '../types/GroupStudentType'
 
 // const tmpData = [
@@ -79,12 +79,15 @@ const StudentGroupPage = () => {
         </div>
         <text>내 그룹 확인하기</text>
         <div className="flex-container">
-          <img className="forest" src={forest} alt="" />
-          <img className="forest" src={forest} alt="" />
-          <img className="forest" src={forest} alt="" />
-          <img className="forest" src={forest} alt="" />
-          <img className="forest" src={forest} alt="" />
-          <img className="forest" src={forest} alt="" />
+          <Link to="/studentGroupDetail">
+            <img className="forest" src={forest} alt="" />
+          </Link>
+          <Link to="/studentGroupDetail">
+            <img className="forest" src={forest} alt="" />
+          </Link>
+          <Link to="/studentGroupDetail">
+            <img className="forest" src={forest} alt="" />
+          </Link>
         </div>
       </div>
     </div>
