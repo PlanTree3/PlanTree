@@ -1,0 +1,8 @@
+export { default as Home } from '@/pages/Home'
+export { default as LoginPage } from '@/pages/LoginPage'
+export { default as OauthRedirectPage } from '@/pages/OauthRedirectPage'
+export { default as MainPage } from '@/pages/MainPage'
+export { default as SignUpPage } from '@/pages/SignUpPage'
+export { default as ForestPage } from '@/pages/ForestPage'
+export { default as WeeklyBudsPage } from '@/pages/WeeklyBudsPage'
+export { default as NotFoundPage } from '@/pages/NotFound/404Page'

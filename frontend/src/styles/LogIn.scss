@@ -1,0 +1,11 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.social_login_button {
+  @apply w-56;
+}
+
+.social_login_img {
+  @apply w-10;
+}
