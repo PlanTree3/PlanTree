@@ -18,7 +18,7 @@ const SignUpPage = () => {
       keyboard
       modules={[Mousewheel, Pagination]}
       className="mySwiper"
-      style={{ height: '500px' }}
+      style={{ height: '700px', width: '100%' }}
     >
       <SwiperSlide>
         <UserName />
