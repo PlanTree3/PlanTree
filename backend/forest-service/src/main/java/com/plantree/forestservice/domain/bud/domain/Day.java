@@ -7,7 +7,6 @@ import lombok.Getter;
 public enum Day {
     MON("MON"), TUE("TUE"), WED("WED"), THU("THU"), FRI("FRI"), SAT("SAT"), SUN("SUN");
 
-    @Getter
     private final String day;
 
     Day(String day){

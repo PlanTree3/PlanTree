@@ -13,6 +13,7 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -44,7 +45,8 @@ public class Bud extends BaseTimeEntity {
     @Column
     private UUID studentId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "branch_id")
     private Branch branch;
 
     @OneToMany(mappedBy = "bud", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

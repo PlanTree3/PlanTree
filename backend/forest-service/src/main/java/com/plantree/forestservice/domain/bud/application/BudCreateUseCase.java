@@ -6,10 +6,8 @@ import com.plantree.forestservice.domain.bud.application.repository.BudRepositor
 import com.plantree.forestservice.domain.bud.domain.Bud;
 import com.plantree.forestservice.domain.bud.domain.Day;
 import com.plantree.forestservice.domain.tree.application.repository.TreeRepository;
-import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
 import com.plantree.forestservice.global.exception.Branch.BranchNotFoundException;
-import com.plantree.forestservice.global.exception.Tree.TreeNotFoundException;
 import com.plantree.forestservice.global.util.AuthMemberValidator;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
