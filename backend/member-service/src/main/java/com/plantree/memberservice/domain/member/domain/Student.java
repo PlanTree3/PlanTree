@@ -74,4 +74,8 @@ public class Student {
     public void changeProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
     }
+
+    public void leaveNest() {
+        this.nest = null;
+    }
 }

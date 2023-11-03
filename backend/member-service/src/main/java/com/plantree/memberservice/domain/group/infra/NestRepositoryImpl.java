@@ -35,4 +35,9 @@ public class NestRepositoryImpl implements NestRepository {
     public Optional<Nest> findByIdWithStudentAndParent(UUID nestId) {
         return Optional.ofNullable(nestQueryRepository.findByIdWithStudentAndParent(nestId));
     }
+
+    @Override
+    public void delete(Nest nest) {
+        nestJpaRepository.delete(nest);
+    }
 }

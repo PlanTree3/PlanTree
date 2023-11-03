@@ -51,4 +51,10 @@ public class GroupRepositoryImpl implements GroupRepository {
     public List<Group> findTeacherGroupsByMemberId(UUID memberId) {
         return groupQueryRepository.findTeacherGroupsByMemberId(memberId);
     }
+
+    @Override
+    public void delete(Group group) {
+        groupJpaRepository.delete(group);
+    }
+
 }

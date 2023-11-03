@@ -25,13 +25,12 @@ public class JwtValidator {
         this.accessKey = Keys.hmacShaKeyFor(accessEncodeByte);
     }
 
-    public boolean validateAccessToken(String accessToken) {
+    public void validateAccessToken(String accessToken) {
         try {
             Jwts.parserBuilder()
                 .setSigningKey(accessKey)
                 .build()
                 .parseClaimsJws(accessToken);
-            return true;
         } catch (ExpiredJwtException e) {
             throw new TokenExpiredException();
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
