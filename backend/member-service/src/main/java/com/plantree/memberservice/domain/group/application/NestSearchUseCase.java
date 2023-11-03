@@ -3,11 +3,16 @@ package com.plantree.memberservice.domain.group.application;
 import com.plantree.memberservice.domain.group.application.client.ForestServiceClient;
 import com.plantree.memberservice.domain.group.application.repository.NestRepository;
 import com.plantree.memberservice.domain.group.domain.Nest;
+import com.plantree.memberservice.domain.group.dto.IsParentOfStudentResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoListResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoResponseDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountListResponseDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountRequestDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountResponseDto;
+import com.plantree.memberservice.domain.group.dto.request.IsParentOfStudentRequestDto;
+import com.plantree.memberservice.domain.member.application.repository.MemberRepository;
+import com.plantree.memberservice.domain.member.domain.Member;
+import com.plantree.memberservice.domain.member.domain.Parent;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
 import com.plantree.memberservice.global.exception.ResourceNotFoundException;
 import java.util.List;
@@ -21,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class NestSearchUseCase {
 
+    private final MemberRepository memberRepository;
     private final NestRepository nestRepository;
     private final ForestServiceClient forestServiceClient;
 
@@ -32,6 +38,30 @@ public class NestSearchUseCase {
                 new BudCountRequestDto(nest));
         List<StudentInfoResponseDto> studentInfos = alignStudentInfosByStudentId(nest, budCounts);
         return new StudentInfoListResponseDto(studentInfos);
+    }
+
+    public IsParentOfStudentResponseDto getIsParentOfStudent(
+            IsParentOfStudentRequestDto isParentOfStudentRequestDto) {
+        Member member = findMemberWithNestParentById(isParentOfStudentRequestDto.getStudentId());
+        return new IsParentOfStudentResponseDto(
+                validateIsParentOfStudent(member, isParentOfStudentRequestDto.getParentId()));
+    }
+
+    private boolean validateIsParentOfStudent(Member member, UUID parentId) {
+        return member.getStudent()
+                     .getNest()
+                     .getParents()
+                     .stream()
+                     .map(
+                             Parent::getMember)
+                     .anyMatch(m -> m.getId()
+                                     .equals(parentId));
+    }
+
+    private Member findMemberWithNestParentById(UUID studentId) {
+        return memberRepository.findByIdWithNestParent(studentId)
+                               .orElseThrow(() -> new ResourceNotFoundException(
+                                       "멤버를 찾을 수 없습니다."));
     }
 
     private Nest findNestWithStudentsById(UUID nestId) {

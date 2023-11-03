@@ -120,4 +120,10 @@ public class Group extends BaseTimeEntity {
             throw new UnauthorizedException("그룹 선생님이 아닙니다.");
         }
     }
+
+    public boolean getIsGroupTeacherByMemberId(UUID memberId) {
+        return this.teacher.getMember()
+                           .getId()
+                           .equals(memberId);
+    }
 }

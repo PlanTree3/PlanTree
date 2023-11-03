@@ -42,4 +42,14 @@ public class MemberRepositoryImpl implements MemberRepository {
     public Optional<Member> findByIdWithGroup(UUID memberId) {
         return Optional.ofNullable(memberQueryRepository.findByIdWithGroup(memberId));
     }
+
+    @Override
+    public Optional<Member> findByIdWithGroupTeacher(UUID studentId) {
+        return Optional.ofNullable(memberQueryRepository.findByIdWithGroupTeacher(studentId));
+    }
+
+    @Override
+    public Optional<Member> findByIdWithNestParent(UUID studentId) {
+        return Optional.ofNullable(memberQueryRepository.findByIdWithNestParent(studentId));
+    }
 }

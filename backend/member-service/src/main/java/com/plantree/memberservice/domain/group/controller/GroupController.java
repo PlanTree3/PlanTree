@@ -9,6 +9,8 @@ import com.plantree.memberservice.domain.group.dto.request.GroupCreateRequestDto
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinAcceptRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinRefuseRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupNameChangeRequestDto;
+import com.plantree.memberservice.domain.group.dto.request.IsTeacherOfGroupRequestDto;
+import com.plantree.memberservice.domain.group.dto.request.IsTeacherOfStudentRequestDto;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
 import com.plantree.memberservice.global.config.webmvc.JwtLoginMember;
 import com.plantree.memberservice.global.dto.HttpResponse;
@@ -106,4 +108,25 @@ public class GroupController {
         groupDeleteUseCase.deleteGroup(groupId, authMember);
         return HttpResponse.ok(HttpStatus.OK, "삭제 성공");
     }
+
+    @GetMapping("/{groupId}/student-id")
+    public ResponseEntity<?> searchStudentIds(@PathVariable UUID groupId) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                groupSearchUseCase.searchStudentIds(groupId));
+    }
+
+    @GetMapping("/student/check-leader")
+    public ResponseEntity<?> getIsTeacherOfStudent(
+            @RequestBody IsTeacherOfStudentRequestDto isTeacherOfStudentRequestDto) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                groupSearchUseCase.getIsTeacherOfStudent(isTeacherOfStudentRequestDto));
+    }
+
+    @GetMapping("/{groupId}/check-leader")
+    public ResponseEntity<?> getIsTeacherOfGroup(@PathVariable UUID groupId,
+            @RequestBody IsTeacherOfGroupRequestDto isTeacherOfGroupRequestDto) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                groupSearchUseCase.getIsTeacherOfGroup(groupId, isTeacherOfGroupRequestDto));
+    }
+
 }
