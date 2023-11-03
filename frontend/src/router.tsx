@@ -15,6 +15,7 @@ import {
   ForestPage,
   WeeklyBudsPage,
   NotFoundPage,
+  ForestDetailPage,
 } from './pages'
 
 const RoutesComponent = () => (
@@ -33,6 +34,7 @@ const RoutesComponent = () => (
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="/main" element={<MainPage />} />
     <Route path="/forest" element={<ForestPage />} />
+    <Route path="/forest/:id" element={<ForestDetailPage />} />
     <Route path="budsTest" element={<WeeklyBudsPage />} />
     <Route path="*" element={<NotFoundPage />} />
   </Routes>

@@ -43,15 +43,17 @@ const WeeklyBudsPage = () => {
       <div>
         <div>
           {filteredSeeds
-            .filter((item) => item.dayOfWeek === columnName)
-            .map((item, index) => {
+            .filter((seed) => seed.dayOfWeek === columnName)
+            .map((seed, index) => {
               return (
-                <div key={item.seedId}>
+                <div key={seed.seedId}>
                   <MovableItem
-                    id={item.seedId}
-                    budName={item.seedName}
+                    id={seed.seedId}
+                    idType="seed"
+                    budName={seed.seedName}
+                    comments={seed.comments}
                     index={index}
-                    dayOfWeek={item.dayOfWeek}
+                    dayOfWeek={seed.dayOfWeek}
                     moveCardHandler={moveCardHandler}
                   />
                 </div>
@@ -66,7 +68,9 @@ const WeeklyBudsPage = () => {
                 <div key={bud.budId}>
                   <MovableItem
                     id={bud.budId}
+                    idType="bud"
                     budName={bud.budName}
+                    comments={bud.comments}
                     index={index}
                     dayOfWeek={bud.dayOfWeek}
                     moveCardHandler={moveCardHandler}

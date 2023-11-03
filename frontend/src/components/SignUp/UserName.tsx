@@ -1,6 +1,10 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addName } from '@/stores/features/signupSlice'
 
 const UserName = () => {
+  const nameCheck = useSelector((state: any) => state.signup.name)
+  const dispatch = useDispatch()
   const [inputName, setInputName] = useState<string>('')
   const [inputCount, setInputCount] = useState<number>(0)
 
@@ -13,6 +17,7 @@ const UserName = () => {
     if (value.length >= 0 && value.length <= 10) {
       setInputName(value)
       setInputCount(value.length)
+      dispatch(addName(value))
     }
     setInputCount(value.length)
   }
