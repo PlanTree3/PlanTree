@@ -1,6 +1,7 @@
 package com.plantree.memberservice.domain.group.controller;
 
 import com.plantree.memberservice.domain.group.application.NestCreateUseCase;
+import com.plantree.memberservice.domain.group.application.NestDeleteUseCase;
 import com.plantree.memberservice.domain.group.application.NestJoinUseCase;
 import com.plantree.memberservice.domain.group.application.NestModifyUseCase;
 import com.plantree.memberservice.domain.group.application.NestSearchUseCase;
@@ -13,6 +14,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +32,7 @@ public class NestController {
     private final NestModifyUseCase nestModifyUseCase;
     private final NestJoinUseCase nestJoinUseCase;
     private final NestSearchUseCase nestSearchUseCase;
+    private final NestDeleteUseCase nestDeleteUseCase;
 
     @PostMapping
     public ResponseEntity<?> createNest(@JwtLoginMember AuthMember authMember,
@@ -58,5 +61,12 @@ public class NestController {
             @JwtLoginMember AuthMember authMember) {
         return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
                 nestSearchUseCase.searchNestStudents(nestId, authMember));
+    }
+
+    @DeleteMapping("/{nestId}")
+    public ResponseEntity<?> deleteNest(@PathVariable UUID nestId,
+            @JwtLoginMember AuthMember authMember) {
+        nestDeleteUseCase.deleteNest(nestId, authMember);
+        return HttpResponse.ok(HttpStatus.OK, "삭제 성공");
     }
 }

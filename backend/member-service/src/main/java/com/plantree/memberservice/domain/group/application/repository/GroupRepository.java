@@ -21,4 +21,5 @@ public interface GroupRepository {
 
     List<Group> findTeacherGroupsByMemberId(UUID memberId);
 
+    void delete(Group group);
 }

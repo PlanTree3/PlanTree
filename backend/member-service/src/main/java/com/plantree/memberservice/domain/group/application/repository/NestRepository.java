@@ -13,4 +13,6 @@ public interface NestRepository {
     Optional<Nest> findByIdWithStudent(UUID nestId);
 
     Optional<Nest> findByIdWithStudentAndParent(UUID nestId);
+
+    void delete(Nest nest);
 }

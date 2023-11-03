@@ -73,4 +73,8 @@ public class Parent {
     public void changeProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
     }
+
+    public void leaveNest() {
+        this.nest = null;
+    }
 }

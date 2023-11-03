@@ -1,6 +1,7 @@
 package com.plantree.memberservice.domain.group.controller;
 
 import com.plantree.memberservice.domain.group.application.GroupCreateUseCase;
+import com.plantree.memberservice.domain.group.application.GroupDeleteUseCase;
 import com.plantree.memberservice.domain.group.application.GroupJoinUseCase;
 import com.plantree.memberservice.domain.group.application.GroupModifyUseCase;
 import com.plantree.memberservice.domain.group.application.GroupSearchUseCase;
@@ -15,6 +16,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,7 @@ public class GroupController {
     private final GroupModifyUseCase groupModifyUseCase;
     private final GroupJoinUseCase groupJoinUseCase;
     private final GroupSearchUseCase groupSearchUseCase;
+    private final GroupDeleteUseCase groupDeleteUseCase;
 
     @PostMapping
     public ResponseEntity<?> createGroup(@JwtLoginMember AuthMember authMember,
@@ -95,5 +98,12 @@ public class GroupController {
             @JwtLoginMember AuthMember authMember) {
         return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
                 groupSearchUseCase.searchGroupStudents(groupId, authMember));
+    }
+
+    @DeleteMapping("/{groupId}")
+    public ResponseEntity<?> deleteGroup(@PathVariable UUID groupId,
+            @JwtLoginMember AuthMember authMember) {
+        groupDeleteUseCase.deleteGroup(groupId, authMember);
+        return HttpResponse.ok(HttpStatus.OK, "삭제 성공");
     }
 }

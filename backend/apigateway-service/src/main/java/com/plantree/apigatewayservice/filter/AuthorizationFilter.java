@@ -28,7 +28,7 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             String requestUri = originRequest.getURI()
                                              .getPath();
             String httpMethod = originRequest.getMethodValue();
-            
+
             if (isCookieNotRequired(requestUri, httpMethod)) {
                 return chain.filter(exchange);
             }
@@ -37,6 +37,9 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             HttpCookie refreshTokenCookie = getCookieByName(originRequest, REFRESH_TOKEN);
             if (accessTokenCookie == null || refreshTokenCookie == null) {
                 throw new AuthenticationFailException("쿠키가 없습니다.");
+            }
+            if (requestUri.equals("/member/refresh") && httpMethod.equals("POST")) {
+                return chain.filter(exchange);
             }
 
             String accessToken = accessTokenCookie.getValue();

@@ -82,4 +82,9 @@ public class Nest extends BaseTimeEntity {
             throw new UnauthorizedException("둥지 부모님이 아닙니다.");
         }
     }
+
+    public void disconnectStudentsAndParents() {
+        this.parents.forEach(Parent::leaveNest);
+        this.students.forEach(Student::leaveNest);
+    }
 }
