@@ -2,9 +2,9 @@ export interface ItemState {
   budId: number
   budName: string
   dayOfWeek: string
-  // comments: Comment
+  comments: CommentType[] | null
 }
-export interface Comment {
+export interface CommentType {
   commentId: number
   userId: number
   userName: string
@@ -19,7 +19,9 @@ export interface ColumnProps {
 
 export interface MovableItemProps {
   id: number
+  idType: string
   budName: string
+  comments: CommentType[] | null
   index: number
   moveCardHandler: (dragIndex: number, hoverIndex: number) => void
   dayOfWeek: string
