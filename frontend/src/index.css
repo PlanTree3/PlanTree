@@ -54,3 +54,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.block {
+  display: block;
+}
