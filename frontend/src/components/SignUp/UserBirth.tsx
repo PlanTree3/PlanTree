@@ -6,13 +6,16 @@ import { ko } from 'date-fns/esm/locale'
 
 import { LiaBirthdayCakeSolid } from 'react-icons/lia'
 import '../DatePickerStyle.css'
+import { useDispatch } from 'react-redux'
+import { addBirthday } from '@/stores/features/signupSlice'
 
 const UserBirth = () => {
   const [inputDate, setInputDate] = useState(new Date())
+  const dispatch = useDispatch()
 
   const setDate = (date: Date) => {
     setInputDate(date)
-    console.log(inputDate)
+    dispatch(addBirthday(date))
   }
 
   return (
