@@ -5,6 +5,7 @@ import com.plantree.memberservice.domain.group.application.NestDeleteUseCase;
 import com.plantree.memberservice.domain.group.application.NestJoinUseCase;
 import com.plantree.memberservice.domain.group.application.NestModifyUseCase;
 import com.plantree.memberservice.domain.group.application.NestSearchUseCase;
+import com.plantree.memberservice.domain.group.dto.request.IsParentOfStudentRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestNameChangeRequestDto;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
@@ -68,5 +69,12 @@ public class NestController {
             @JwtLoginMember AuthMember authMember) {
         nestDeleteUseCase.deleteNest(nestId, authMember);
         return HttpResponse.ok(HttpStatus.OK, "삭제 성공");
+    }
+
+    @GetMapping("/check-parent")
+    public ResponseEntity<?> getIsParentOfStudent(
+            @RequestBody IsParentOfStudentRequestDto isParentOfStudentRequestDto) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                nestSearchUseCase.getIsParentOfStudent(isParentOfStudentRequestDto));
     }
 }
