@@ -1,37 +1,28 @@
 // import { useState } from 'react'
-import { ReactDOM } from 'react-dom'
-import Modal from 'react-modal'
+import './SignUp.scss'
+import { userLogin } from '@/apis/member'
 
 const UserProfileImg = () => {
-  const [inputProfileImg, setInputProfileImg] = useState<string>('')
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  // const [inputProfileImg, setInputProfileImg] = useState<string>('')
+  // const [modalIsOpen, setModalIsOpen] = useState(false)
 
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-    },
+  const saveUser = () => {
+    // 임시로 userLogin 호출
+    userLogin('이것은 임시입니다')
   }
 
-  const openModal = () => {
-    setModalIsOpen(true)
-  }
-
-  const closeModal = () => [setModalIsOpen(false)]
   return (
-    <>
-      <div>
-        <button onClick={openModal}>모달 열기</button>
-        <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-          <h2>모달 제목</h2>
-          <button onClick={closeModal}>닫기</button>
-        </Modal>
+    <div className="w-8/12 h-3/5 relative">
+      <div className="bg-no-repeat w-full h-full bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]">
+        <div className="rounded-full border-slate-950">학생</div>
+        <div>이름</div>
+        <div>나이</div>
+        <div>생일</div>
       </div>
-    </>
+      <button className="absolute right-0" onClick={saveUser}>
+        지금부터 숲을 가꿔보자!
+      </button>
+    </div>
   )
 }
 
