@@ -4,6 +4,7 @@ const initialState: any = {
   name: null,
   birthday: null,
   role: null,
+  profileImg: null,
 }
 
 export const signupSlice = createSlice({
@@ -19,8 +20,12 @@ export const signupSlice = createSlice({
     addRole: (state, action: PayloadAction<string>) => {
       state.role = action.payload
     },
+    addProfileImg: (state, action: PayloadAction<string>) => {
+      state.profileImg = action.payload
+    },
   },
 })
 
-export const { addName, addBirthday, addRole } = signupSlice.actions
+export const { addName, addBirthday, addRole, addProfileImg } =
+  signupSlice.actions
 export default signupSlice.reducer
