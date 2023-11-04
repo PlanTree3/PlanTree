@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
+import './GroupPage.css'
 
 // type StudentList = {
 //   students: GroupStudentListResponse;
@@ -35,7 +36,7 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
     content: {
       className: 'custom-content',
     },
-  };
+  }
 
   return (
     <div>
@@ -52,14 +53,15 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
           onClick={() => setModalIsOpen(true)}
         />
         <ReactModal
-          isOpen={modalIsOpen}
-          onRequestClose={() => setModalIsOpen(false)}
-          style={customModalStyles}
+          isOpen
           ariaHideApp={false}
-          contentLabel="Pop up Message"
-          shouldCloseOnOverlayClick={false}
+          onRequestClose={() => setModalIsOpen(false)}
+          className="w-[50%] h-[58vh] mt-[10%] m-auto bg-bgColor text-lg rounded-[10px] drop-shadow-lg"
         >
-          wow
+          <h1 className="flex justify-center h-[20%] items-center text-2xl bg-lightGreen rounded-t-[10px]">
+            가지 일괄 등록
+          </h1>
+          <div className="p-[5%]">가지가지</div>
         </ReactModal>
       </div>
       {/* <div className="box-border h-2/3 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
