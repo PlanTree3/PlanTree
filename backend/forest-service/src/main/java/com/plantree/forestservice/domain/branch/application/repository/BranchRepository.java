@@ -16,8 +16,6 @@ public interface BranchRepository {
 
     void deleteById(UUID id);
 
-    List<BranchProjectionDto> findBranchesByTreeId(UUID treeId);
-
-    List<BranchResDto> findBranches(UUID treeId);
+    List<Branch> findBranchesByTreeId(UUID treeId);
 
 }

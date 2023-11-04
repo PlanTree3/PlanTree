@@ -13,21 +13,17 @@ public class BranchResDto {
 
     private UUID branchId;
     private String branchName;
-//    private List<BudResDto> buds;
+    private List<BudResDto> buds;
     private Long totalBudCount;
-//    private Long completedBudCount;
+    private Long completedBudCount;
 
     @QueryProjection
-    public BranchResDto(Branch branch,
-//            List<Bud> buds,
-            Long totalBudCount
-//            , Long completedBudCount
-    ) {
+    public BranchResDto(Branch branch) {
         this.branchId = branch.getId();
         this.branchName = branch.getName();
-//        this.buds = buds.stream().map(bud -> new BudResDto(bud)).collect(Collectors.toList());;
-        this.totalBudCount = totalBudCount;
-//        this.completedBudCount = completedBudCount;
+        this.buds = branch.getBuds().stream().map(bud -> new BudResDto(bud)).collect(Collectors.toList());
+        this.totalBudCount = branch.getBuds().stream().count();
+        this.completedBudCount = branch.getBuds().stream().filter(bud -> bud.isComplete()).count();
     }
 
 }

@@ -23,12 +23,11 @@ public class TreeController {
     private final TreeSearchUseCase treeSearchUseCase;
 
     @GetMapping("/tree/{treeId}")
-    public List<BranchResDto> getTreeDetails(@PathVariable UUID treeId,
+    public ResponseEntity<?> getTreeDetails(@PathVariable UUID treeId,
             @JwtLoginMember AuthMember authMember) {
 
-//        return HttpResponse.okWithData(HttpStatus.OK, "나무의 상세 화면입니다.",
-//                treeSearchUseCase.findTreeDetails(treeId, authMember));
-        return treeSearchUseCase.findBranches(treeId);
+        return HttpResponse.okWithData(HttpStatus.OK, "나무의 상세 화면입니다.",
+                treeSearchUseCase.findTreeDetails(treeId, authMember));
 
     }
 

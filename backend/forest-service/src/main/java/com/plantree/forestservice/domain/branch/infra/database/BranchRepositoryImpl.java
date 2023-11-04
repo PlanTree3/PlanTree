@@ -35,14 +35,8 @@ public class BranchRepositoryImpl implements BranchRepository {
         branchJpaRepository.deleteById(id);
     }
 
-    public List<BranchProjectionDto> findBranchesByTreeId(UUID treeId){
+    public List<Branch> findBranchesByTreeId(UUID treeId){
         return branchQueryRepository.findBranchesByTreeId(treeId);
     }
-
-    @Override
-    public List<BranchResDto> findBranches(UUID treeId) {
-        return branchQueryRepository.findBranches(treeId);
-    }
-
 
 }

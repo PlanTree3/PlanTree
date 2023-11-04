@@ -29,28 +29,16 @@ public class TreeSearchUseCase {
     private final BudRepository budRepository;
     private final AuthMemberValidator authMemberValidator;
 
-//    public TreeDetailsResDto findTreeDetails(UUID treeId, AuthMember authMember) {
-//        Tree tree = treeRepository.findById(treeId).orElseThrow(TreeNotFoundException::new);
-//        authMemberValidator.validateAuthMember(tree.getStudentId(), authMember);
-//
-//        List<BranchProjectionDto> branchProjectionDtos = branchRepository.findBranchesByTreeId(treeId);
-//
-//        List<BranchResDto> branchResDtos = branchProjectionDtos.stream().map(dto -> {
-//            List<BudResDto> buds = dto.getBranch().getBuds().stream().map(bud -> new BudResDto(bud))
-//                    .collect(Collectors.toList());
-//            int totalBudCount = dto.getTotalBudCount();
-//            int completedBudCount = dto.getCompletedBudCount();
-//            return new BranchResDto(dto.getBranch(), buds, totalBudCount, completedBudCount);
-//        }).collect(Collectors.toList());
-//
-//        return new TreeDetailsResDto(tree, branchResDtos);
-//
-//    }
+    public TreeDetailsResDto findTreeDetails(UUID treeId, AuthMember authMember) {
 
-    public List<BranchResDto> findBranches(UUID treeId){
-        System.out.println("여기다--------------------------------------------");
-        List<BranchResDto> branch = branchRepository.findBranches(treeId);
-        System.out.println("여기이이ㅣ잉");
-        return branch;
+        Tree tree = treeRepository.findById(treeId).orElseThrow(TreeNotFoundException::new);
+        authMemberValidator.validateAuthMember(tree.getStudentId(), authMember);
+
+        List<Branch> branches = branchRepository.findBranchesByTreeId(treeId);
+        List<BranchResDto> branchResDto = branches.stream().map(branch -> new BranchResDto(branch)).collect(Collectors.toList());
+
+        return new TreeDetailsResDto(tree, branchResDto);
+
     }
+
 }
