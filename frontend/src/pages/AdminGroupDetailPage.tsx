@@ -28,6 +28,15 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
   //   }
   // };
 
+  const customModalStyles = {
+    overlay: {
+      className: 'custom-overlay',
+    },
+    content: {
+      className: 'custom-content',
+    },
+  };
+
   return (
     <div>
       <div className="flex flex-row">
@@ -37,8 +46,12 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
           alt=""
           // onClick={}
         />
-        <Button label="가지 일괄 등록" className="primary" onClick={} />
-        <Modal
+        <Button
+          label="가지 일괄 등록"
+          className="primary"
+          onClick={() => setModalIsOpen(true)}
+        />
+        <ReactModal
           isOpen={modalIsOpen}
           onRequestClose={() => setModalIsOpen(false)}
           style={customModalStyles}
@@ -47,7 +60,7 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
           shouldCloseOnOverlayClick={false}
         >
           wow
-        </Modal>
+        </ReactModal>
       </div>
       {/* <div className="box-border h-2/3 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
     {currentStudents.map((student) => (
