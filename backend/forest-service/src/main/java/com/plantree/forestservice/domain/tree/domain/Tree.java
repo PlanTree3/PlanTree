@@ -35,7 +35,7 @@ public class Tree extends BaseTimeEntity {
     @Column(name = "tree_id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "student_id")
+    @Column(name = "student_id", columnDefinition = "BINARY(16)")
     private UUID studentId;
 
     @Column
@@ -48,7 +48,7 @@ public class Tree extends BaseTimeEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "forest_id")
+    @JoinColumn(name = "forest_id", columnDefinition = "BINARY(16)")
     private Forest forest;
 
     @OneToMany(mappedBy = "tree", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

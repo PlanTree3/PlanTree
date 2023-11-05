@@ -27,7 +27,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class BranchQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;

@@ -42,7 +42,7 @@ public class Bud extends BaseTimeEntity {
     @Column
     private boolean isComplete;
 
-    @Column
+    @Column(columnDefinition = "BINARY(16)")
     private UUID studentId;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -7,4 +7,6 @@ import java.util.UUID;
 public interface TreeRepository {
     Tree save(Tree tree);
     Optional<Tree> findById(UUID id);
+
+    Optional<Tree> findCurrentTreeByMemberId(UUID memberId);
 }
