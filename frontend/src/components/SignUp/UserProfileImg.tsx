@@ -25,7 +25,10 @@ const UserProfileImg = () => {
     'tiger',
   ]
 
-  const nameCheck = useSelector((state: any) => state.signup.profileImg)
+  const userName = useSelector((state: any) => state.signup.name)
+  const userBirth = useSelector((state: any) => state.signup.birthday)
+  const userRole = useSelector((state: any) => state.signup.role)
+  const userProfileImg = useSelector((state: any) => state.signup.profileImg)
 
   const saveUser = () => {
     // 임시로 userLogin 호출
@@ -70,7 +73,18 @@ const UserProfileImg = () => {
       heightAuto: true,
       didOpen: () => openModal(),
       willClose: () => closeModal(),
+
+      showCancelButton: true,
+      confirmButtonText: '선택',
+      cancelButtonText: '취소',
+
+      reverseButtons: true,
     })
+    // .then((result) => {
+    //   if (result.isConfirmed) {
+    //     setIsProfileImg(true)
+    //   }
+    // })
   }
 
   return (
@@ -80,7 +94,7 @@ const UserProfileImg = () => {
           <LuImagePlus />
         </button>
         <div className="profileImg">
-          {isProfileImg && isModalOpen ? (
+          {isProfileImg || isModalOpen ? (
             <img
               className="showProfileImg"
               src={inputProfileImg}
