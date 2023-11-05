@@ -6,7 +6,10 @@ const RenewalGoogleLogin = () => {
   const googleSocialLogin = useGoogleLogin({
     onSuccess: (codeResponse) => {
       console.log(codeResponse)
-      // axios.post()
+      const data = {
+        oauthProvider: 'GOOGLE',
+        idToken: codeResponse,
+      }
     },
     flow: 'auth-code',
   })

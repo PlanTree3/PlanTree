@@ -1,9 +1,8 @@
 import React, { ChangeEvent, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addName } from '@/stores/features/signupSlice'
 
 const UserName = () => {
-  const nameCheck = useSelector((state: any) => state.signup.name)
   const dispatch = useDispatch()
   const [inputName, setInputName] = useState<string>('')
   const [inputCount, setInputCount] = useState<number>(0)

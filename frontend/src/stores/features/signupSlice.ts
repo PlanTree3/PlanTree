@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: any = {
+  oauthProvider: null,
   name: null,
   birthday: null,
   role: null,
@@ -11,6 +12,9 @@ export const signupSlice = createSlice({
   name: 'signup',
   initialState,
   reducers: {
+    addOauthProvider: (state, action: PayloadAction<string>) => {
+      state.oauthProvider = action.payload
+    },
     addName: (state, action: PayloadAction<string>) => {
       state.name = action.payload
     },
@@ -26,6 +30,11 @@ export const signupSlice = createSlice({
   },
 })
 
-export const { addName, addBirthday, addRole, addProfileImg } =
-  signupSlice.actions
+export const {
+  addOauthProvider,
+  addName,
+  addBirthday,
+  addRole,
+  addProfileImg,
+} = signupSlice.actions
 export default signupSlice.reducer

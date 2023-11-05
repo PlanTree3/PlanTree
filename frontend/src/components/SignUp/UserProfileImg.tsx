@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './SignUp.scss'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -25,14 +25,24 @@ const UserProfileImg = () => {
     'tiger',
   ]
 
+  const oauthProvider = useSelector((state: any) => state.signup.oauthProvider)
   const userName = useSelector((state: any) => state.signup.name)
   const userBirth = useSelector((state: any) => state.signup.birthday)
   const userRole = useSelector((state: any) => state.signup.role)
   const userProfileImg = useSelector((state: any) => state.signup.profileImg)
 
+  // 객체에 담아서 백에 보내주자!
+  const data = {
+    oauthProvider,
+    name: userName,
+    birthDate: userBirth,
+    role: userRole,
+    profileImageUrl: userProfileImg,
+  }
+
   const saveUser = () => {
-    // 임시로 userLogin 호출
-    userSignup('이것은 임시입니다')
+    console.log(data)
+    userSignup(data)
   }
 
   const chooseProfileImg = (url: string) => {
