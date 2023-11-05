@@ -10,6 +10,7 @@ import { addProfileImg } from '@/stores/features/signupSlice'
 const UserProfileImg = () => {
   const [inputProfileImg, setInputProfileImg] = useState<string>('')
   const [isProfileImg, setIsProfileImg] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const MySwal = withReactContent(Swal)
   const dispatch = useDispatch()
   const imgList: string[] = [
@@ -37,6 +38,14 @@ const UserProfileImg = () => {
     dispatch(addProfileImg(url))
   }
 
+  const openModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(true)
+  }
+
   const moveProfileImg = () => {
     const content = (
       <div>
@@ -58,23 +67,29 @@ const UserProfileImg = () => {
       title: '당신의 원픽은?',
       html: content,
       width: 800,
+      heightAuto: true,
+      didOpen: () => openModal(),
+      willClose: () => closeModal(),
     })
   }
 
   return (
     <div className="w-8/12 h-3/5 relative">
       <div className="flex bg-no-repeat w-full h-full bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]">
-        <button className="profileImg" onClick={() => moveProfileImg()}>
-          {isProfileImg ? (
+        <button className="addImgBtn" onClick={() => moveProfileImg()}>
+          <LuImagePlus />
+        </button>
+        <div className="profileImg">
+          {isProfileImg && isModalOpen ? (
             <img
-              className="p-0 w-full h-full"
+              className="showProfileImg"
               src={inputProfileImg}
               alt={inputProfileImg}
             />
           ) : (
-            <LuImagePlus size="40" />
+            <div className="profilePlaceholder">프로필 사진을 선택하세요!</div>
           )}
-        </button>
+        </div>
         <span>
           <div className="rounded-full border-slate-950">학생</div>
           <div>이름</div>
