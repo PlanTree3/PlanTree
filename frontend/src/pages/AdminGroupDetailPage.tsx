@@ -17,6 +17,13 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
   // const endIndex = startIndex + studentsPerPage;
   // const currentStudents = students.slice(startIndex, endIndex);
 
+  const openModal = () => {
+    setModalIsOpen(true)
+  }
+
+  const closeModal = () => {
+    setModalIsOpen(false)
+  }
   // const previousPage = () => {
   //   if (page > 1) {
   //     setPage(page - 1);
@@ -29,14 +36,14 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
   //   }
   // };
 
-  const customModalStyles = {
-    overlay: {
-      className: 'custom-overlay',
-    },
-    content: {
-      className: 'custom-content',
-    },
-  }
+  // const customModalStyles = {
+  //   overlay: {
+  //     className: 'custom-overlay',
+  //   },
+  //   content: {
+  //     className: 'custom-content',
+  //   },
+  // }
 
   return (
     <div>
@@ -50,15 +57,36 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
         <Button
           label="가지 일괄 등록"
           className="primary"
-          onClick={() => setModalIsOpen(true)}
+          onClick={openModal}
         />
         <ReactModal
-          isOpen
+          isOpen={modalIsOpen}
           ariaHideApp={false}
-          onRequestClose={() => setModalIsOpen(false)}
-          className="w-[50%] h-[58vh] mt-[10%] m-auto bg-bgColor text-lg rounded-[10px] drop-shadow-lg"
+          onRequestClose={closeModal}
+          style={{
+            overlay: {
+              backgroundColor: 'rgba(0, 0, 0, 0.4)',
+              width: '100%',
+              height: '100vh',
+              zIndex: 10,
+              top: 0,
+              left: 0,
+            },
+            content: {
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '30%',
+              height: '30%',
+              border: '2px solid #000',
+              borderRadius: '10px',
+              overflow: 'auto',
+              background: '#F5F5DC',
+              boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
+            },
+          }}
         >
-          <h1 className="flex justify-center h-[20%] items-center text-2xl bg-lightGreen rounded-t-[10px]">
+          <h1 className="flex justify-center h-[20%] items-center text-2xl bg-lime-100 rounded-[10px]">
             가지 일괄 등록
           </h1>
           <div className="p-[5%]">가지가지</div>
