@@ -46,7 +46,6 @@ public class BudCommentCreateUseCase {
         return BudCommentResDto.builder()
                 .name(resDto.getNames().get(authMember.getMemberId()))
                 .role(authMember.getRole().name())
-                .content(content)
                 .budComment(budComment)
                 .build();
     }

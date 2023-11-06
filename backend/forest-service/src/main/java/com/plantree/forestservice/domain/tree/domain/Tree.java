@@ -75,4 +75,7 @@ public class Tree extends BaseTimeEntity {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();
     }
 
+    public void updateName(String name) {
+        this.name = name;
+    }
 }

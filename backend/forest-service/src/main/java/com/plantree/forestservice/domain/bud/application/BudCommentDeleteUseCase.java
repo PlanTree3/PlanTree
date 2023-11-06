@@ -18,7 +18,6 @@ public class BudCommentDeleteUseCase {
 
     private final BudCommentRepository budCommentRepository;
 
-
     @Transactional
     public void deleteComment(UUID treeId, UUID budId, Long commentId, AuthMember authMember) {
         BudComment budComment = budCommentRepository.findById(commentId)

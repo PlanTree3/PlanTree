@@ -27,7 +27,6 @@ public class BudCommentSearchUseCase {
     private final BudRepository budRepository;
     private final MemberServiceClient memberServiceClient;
 
-    @Transactional
     public BudCommentSearchResDto findComments(UUID treeId, UUID budId, AuthMember authMember) {
 
         List<BudComment> budComments = budCommentRepository.findBudCommentsByBudId(budId);
