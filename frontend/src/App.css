@@ -3,13 +3,14 @@
   height: 300px;
 }
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding-right: 100;
+.main-container {
+  @apply flex h-[90vh];
 }
-
-body {
-  background-color: #f5f1e3;
+.main-page-viewer {
+  background-image: url('/public/sketchbook.png');
+  background-size: 100% 100%;
+  @apply w-[90%] p-5 pl-[8vw];
+}
+.main-side-bar {
+  @apply w-[10%] space-y-3;
 }

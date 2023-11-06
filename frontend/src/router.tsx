@@ -11,7 +11,7 @@ import {
   WeeklyBudsPage,
   NotFoundPage,
   ForestDetailPage,
-  MyPage
+  MyPage,
 } from './pages'
 
 const RoutesComponent = () => (
