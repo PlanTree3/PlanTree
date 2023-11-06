@@ -34,8 +34,9 @@ public class BranchQueryRepository {
         return jpaQueryFactory.selectDistinct(branch)
                 .from(branch)
                 .where(branch.tree.id.eq(treeId))
-                .leftJoin(branch.buds, bud).fetchJoin()
-                .leftJoin(branch.seeds, seed).fetchJoin()
+                .leftJoin(branch.buds, bud)
+                .fetchJoin()
+                .leftJoin(branch.seeds, seed)
                 .groupBy(branch.id, bud.id, seed.id)
                 .fetch();
     }

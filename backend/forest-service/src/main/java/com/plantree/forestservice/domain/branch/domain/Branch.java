@@ -22,11 +22,13 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Table(name = "branch")
 @Getter
 @NoArgsConstructor
+@BatchSize(size = 100)
 public class Branch extends BaseTimeEntity {
 
     private static String[] colors = new String[] {"230044", "E32244", "4499FF"};
@@ -51,9 +53,11 @@ public class Branch extends BaseTimeEntity {
     @JoinColumn(name = "tree_id")
     private Tree tree;
 
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Seed> seeds = new ArrayList<>();
 
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Bud> buds = new ArrayList<>();
 
