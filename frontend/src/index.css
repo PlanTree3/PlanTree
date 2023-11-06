@@ -11,7 +11,7 @@
 }
 
 body {
-  font-family: 'SeoulHangangM';
+  @apply px-3 flex flex-col justify-center font-['SeoulHangangM'] bg-['#f5f1e3'];
 }
 
 a {
@@ -53,8 +53,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
-
-.block {
-  display: block;
 }
