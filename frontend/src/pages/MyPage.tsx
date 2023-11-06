@@ -44,7 +44,7 @@ const MyPage = () => {
 
   const moveProfileImg = () => {
     const content = (
-      <div>
+      <div className="mb-3.5">
         {imgList.map((img: string) => (
           <button
             className="selectImg"
@@ -54,7 +54,7 @@ const MyPage = () => {
             }}
           >
             <img
-              className="selectImg"
+              className="selectImg m-0"
               src={`src/asset/profile/${img}.jpg`}
               alt={img}
             />
@@ -65,10 +65,11 @@ const MyPage = () => {
 
     MySwal.fire({
       html: content,
-      width: 800,
-      heightAuto: true,
-
+      width: 250,
+      heightAuto: false,
+      position: 'center',
       showConfirmButton: false,
+      padding: 0,
     })
   }
 
