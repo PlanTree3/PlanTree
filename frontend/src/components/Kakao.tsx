@@ -37,22 +37,21 @@ const Kakao = () => {
     } else {
       navigate('/main')
     }
-    catch (error: any) {
-      Swal.fire({
-        title: `${error.message} 로 서버와 통신에 실패했습니다.`,
-        width: 600,
-        customClass: {
-          confirmButton: 'btn btn-primary',
-        },
-        buttonsStyling: false,
-        confirmButtonText: 'Home 으로 이동',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate('/')
-        }
-      })
-    }
-
+    // catch (error: any) {
+    //   Swal.fire({
+    //     title: `${error.message} 로 서버와 통신에 실패했습니다.`,
+    //     width: 600,
+    //     customClass: {
+    //       confirmButton: 'btn btn-primary',
+    //     },
+    //     buttonsStyling: false,
+    //     confirmButtonText: 'Home 으로 이동',
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       navigate('/')
+    //     }
+    //   })
+    // }
   }
 
   const handleLoginFailure = (error: unknown) => {
