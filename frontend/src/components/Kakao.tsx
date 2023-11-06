@@ -15,7 +15,7 @@ const Kakao = () => {
   const kakaoKey = import.meta.env.VITE_PUBLIC_KAKAO_CLIENT_ID
   const dispatch = useDispatch()
 
-  const handleLoginSuccess = async (response: unknown) => {
+  const handleLoginSuccess = async (response: any) => {
     console.log('로그인 성공', response)
     const data = {
       oauthProvider: 'KAKAO',
