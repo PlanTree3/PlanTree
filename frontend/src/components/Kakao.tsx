@@ -7,6 +7,8 @@ import { addOauthProvider } from '@/stores/features/signupSlice'
 import kakaoBtn from '../asset/login_btn/kakaotalk_sharing_btn_small.png'
 import '../styles/LogIn.scss'
 import { userLogin } from '@/apis/member'
+import Swal from "sweetalert2";
+import { AxiosError } from "axios";
 
 const Kakao = () => {
   const navigate = useNavigate()
@@ -35,10 +37,26 @@ const Kakao = () => {
     } else {
       navigate('/main')
     }
+    catch (error: any) {
+      Swal.fire({
+        title: `${error.message} 로 서버와 통신에 실패했습니다.`,
+        width: 600,
+        customClass: {
+          confirmButton: 'btn btn-primary',
+        },
+        buttonsStyling: false,
+        confirmButtonText: 'Home 으로 이동',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/')
+        }
+      })
+    }
+
   }
 
   const handleLoginFailure = (error: unknown) => {
-    console.log('로그인 실패', error)
+    console.log('소셜 로그인 실패', error)
   }
 
   return (
