@@ -13,8 +13,8 @@
 }
 
 .circle-image {
-  width: 200px;
-  height: 200px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -36,8 +36,8 @@
 .forest {
   width: auto; 
   height: auto;
-  max-width: 100%; 
-  max-height: 100%; 
+  max-width: 50%; 
+  /* max-height: 50%;  */
   /* flex: 0 0 calc(25% - 10px); */
   margin: 5px;
 }
@@ -50,6 +50,7 @@
 .groupInfo {
   margin-bottom: 5px;
   margin-right: 10px;
+  font-size: larger;
 }
 
 .groupItem {
@@ -57,6 +58,14 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.groupRequest {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .groupLeader {

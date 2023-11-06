@@ -30,8 +30,8 @@ const AdminNestPage = () => {
   // }
   return (
     <div>
-      <h2>예지의 푸릇푸릇한 둥지</h2>
-      <h2>그룹장: 정도현</h2>
+      <div className="font-semibold text-2xl">예지의 푸릇푸릇한 둥지</div>
+      <h2 className="font-semibold text-l">그룹장: 정도현</h2>
       <div className="studentBox">
         <div className="circle-image">
           <img src={yeji1} alt="" />/
