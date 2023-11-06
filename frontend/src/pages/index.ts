@@ -8,3 +8,4 @@ export { default as ForestDetailPage } from '@/pages/ForestDetailPage/ForestDeta
 export { default as WeeklyBudsPage } from '@/pages/WeeklyBudsPage'
 export { default as NotFoundPage } from '@/pages/NotFound/404Page'
 export { default as MyPage } from '@/pages/MyPage'
+export { default as QuestPage } from '@/pages/QuestPage'
