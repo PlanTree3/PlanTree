@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { FiPlusCircle } from 'react-icons/fi'
@@ -26,6 +27,7 @@ const MyPage = () => {
     'sheep',
     'tiger',
   ]
+  const navigate = useNavigate()
 
   useEffect(() => {
     const persistedState = localStorage.getItem('persist:user')
@@ -45,7 +47,11 @@ const MyPage = () => {
       <div>
         {imgList.map((img: string) => (
           <button
-            onClick={() => chooseProfileImg(`src/asset/profile/${img}.jpg`)}
+            className="selectImg"
+            onClick={() => {
+              chooseProfileImg(`src/asset/profile/${img}.jpg`)
+              MySwal.close() // 모달을 닫음
+            }}
           >
             <img
               className="selectImg"
@@ -58,16 +64,11 @@ const MyPage = () => {
     )
 
     MySwal.fire({
-      title: '당신의 원픽은?',
       html: content,
       width: 800,
       heightAuto: true,
 
-      showCancelButton: true,
-      confirmButtonText: '선택',
-      cancelButtonText: '취소',
-
-      reverseButtons: true,
+      showConfirmButton: false,
     })
   }
 
