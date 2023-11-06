@@ -21,3 +21,11 @@
 .profilePlaceholder {
   @apply text-xs text-slate-400 text-center not-italic w-full h-fit;
 }
+
+.title {
+  @apply text-center;
+}
+
+.info {
+  @apply flex justify-between;
+}

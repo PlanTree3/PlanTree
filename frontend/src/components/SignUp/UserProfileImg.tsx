@@ -114,11 +114,13 @@ const UserProfileImg = () => {
             <div className="profilePlaceholder">프로필 사진을 선택하세요!</div>
           )}
         </div>
-        <span>
+        <span className="w-3/5">
           <div className="rounded-full border-slate-950">학생</div>
-          <div>
-            <span>이름</span>
-            <span>{userName}</span>
+          <div className="info">
+            <div className="title">이름</div>
+            {/* <span>{userName}</span> */}
+            {/* 일단 대충 레이아웃 잡기용 */}
+            <div>정예지</div>
           </div>
           <div>나이</div>
           <div>생일</div>
