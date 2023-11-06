@@ -11,7 +11,7 @@
 }
 
 body {
-  @apply px-3 flex flex-col justify-center font-['SeoulHangangM'] bg-['#f5f1e3'];
+  @apply px-3 flex flex-col justify-center font-['SeoulHangangM'] bg-[#f5f1e3];
 }
 
 a {
