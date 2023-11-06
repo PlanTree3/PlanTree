@@ -13,6 +13,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.16",
     "@react-oauth/google": "^0.11.1",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/qrcode.react": "^1.0.4",

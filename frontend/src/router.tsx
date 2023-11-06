@@ -17,6 +17,7 @@ import {
   NotFoundPage,
   ForestDetailPage,
   MyPage,
+  QuestPage,
 } from './pages'
 
 const RoutesComponent = () => (
@@ -38,6 +39,7 @@ const RoutesComponent = () => (
     <Route path="/forest/:id" element={<ForestDetailPage />} />
     <Route path="budsTest" element={<WeeklyBudsPage />} />
     <Route path="/mypage" element={<MyPage />} />
+    <Route path="/quest" element={<QuestPage />} />
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
 )
