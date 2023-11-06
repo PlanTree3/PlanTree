@@ -17,7 +17,7 @@ public class BudCommentResDto {
     private String content;
 
     @Builder
-    public BudCommentResDto(BudComment budComment, String name, String role, String content){
+    public BudCommentResDto(BudComment budComment, String name, String role){
         this.createdAt = budComment.getCreatedAt();
         this.modifiedAt = budComment.getModifiedAt();
         this.issuerId = budComment.getWriterId();
