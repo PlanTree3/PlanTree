@@ -35,9 +35,18 @@ const AdminGroupRequestPage = () => {
   // }
   return (
     <div>
-      <div className="font-semibold text-2xl">'현재 그룹 이름'의 대기 목록</div>
+      <div className="flex flex-row">
+        <div className="font-semibold text-2xl">
+          '현재 그룹 이름'의 대기 목록
+        </div>
+        <div className="ml-4">
+          <Link to="/adminGroupDetail">
+            <Button label="그룹으로 돌아가기" className="gray" />
+          </Link>
+        </div>
+      </div>
+      <br />
       <div className="studentListBox">
-
         <div>
           <div className="groupRequest">
             <p className="groupInfo">1</p>

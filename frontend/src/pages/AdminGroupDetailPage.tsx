@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 // import axios from 'axios';
+import { Link } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
@@ -81,6 +82,9 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
           className="primary"
           onClick={openModal}
         />
+        <Link to="/adminGroupRequest">
+          <Button label="가입요청 리스트 확인하기" className="gray" />
+        </Link>
         <ReactModal
           isOpen={modalIsOpen}
           ariaHideApp={false}
