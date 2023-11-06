@@ -3,7 +3,12 @@ import createSagaMiddleware from 'redux-saga'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer, persistStore } from 'redux-persist'
 import rootSaga from '@/stores/services/rootSaga'
-import { branchReducer, userReducer, signupReducer } from '@/stores/features'
+import {
+  branchReducer,
+  userReducer,
+  signupReducer,
+  questReducer,
+} from '@/stores/features'
 
 const persistConfig = {
   key: 'user',
@@ -18,6 +23,7 @@ export const store = configureStore({
     user: persistedUserReducer,
     branch: branchReducer,
     signup: signupReducer,
+    quest: questReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(sagaMiddleware),
