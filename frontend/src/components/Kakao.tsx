@@ -7,8 +7,8 @@ import { addOauthProvider } from '@/stores/features/signupSlice'
 import kakaoBtn from '../asset/login_btn/kakaotalk_sharing_btn_small.png'
 import '../styles/LogIn.scss'
 import { userLogin } from '@/apis/member'
-import Swal from "sweetalert2";
-import { AxiosError } from "axios";
+// import Swal from "sweetalert2";
+// import { AxiosError } from "axios";
 
 const Kakao = () => {
   const navigate = useNavigate()
