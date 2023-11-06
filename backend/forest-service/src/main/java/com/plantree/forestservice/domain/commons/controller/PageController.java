@@ -21,10 +21,20 @@ public class PageController {
     private final CommonsSearchUseCase commonsSearchUseCase;
 
     @GetMapping("/main/{memberId}")
-    public ResponseEntity<?> findMainPage(@PathVariable UUID memberId, @JwtLoginMember AuthMember authMember) {
+    public ResponseEntity<?> findMainPage(@PathVariable UUID memberId,
+            @JwtLoginMember AuthMember authMember) {
 
         return HttpResponse.okWithData(HttpStatus.OK, "메인 페이지 정보입니다.",
                 commonsSearchUseCase.findMainPage(memberId, authMember));
+
+    }
+
+    @GetMapping("/tree/{treeId}")
+    public ResponseEntity<?> findTodoPage(@PathVariable UUID treeId,
+            @JwtLoginMember AuthMember authMember) {
+
+        return HttpResponse.okWithData(HttpStatus.OK, "일정 등록 페이지 정보입니다.",
+                commonsSearchUseCase.findTodoPage(treeId, authMember));
 
     }
 

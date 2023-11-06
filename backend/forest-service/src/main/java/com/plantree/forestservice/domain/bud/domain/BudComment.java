@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,4 +34,14 @@ public class BudComment extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Bud bud;
 
+    @Builder
+    public BudComment(String content, UUID writerId, Bud bud){
+        this.content = content;
+        this.writerId = writerId;
+        this.bud = bud;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }

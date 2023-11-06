@@ -15,4 +15,5 @@ public interface BudRepository {
 
     List<Bud> findCurrentBudsByMemberId(UUID memberId);
 
+    Bud getReferenceById(UUID budId);
 }
