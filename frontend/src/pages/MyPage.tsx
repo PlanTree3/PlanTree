@@ -11,7 +11,21 @@ const MyPage = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const [userData, setUserData] = useState<UserData>([])
+  const [inputProfileImg, setInputProfileImg] = useState<string>(
+    userData.profileImage,
+  )
   const MySwal = withReactContent(Swal)
+  const imgList: string[] = [
+    'bear',
+    'cat',
+    'frog',
+    'monkey',
+    'pig',
+    'rabit',
+    'rat',
+    'sheep',
+    'tiger',
+  ]
 
   useEffect(() => {
     const persistedState = localStorage.getItem('persist:user')
@@ -21,6 +35,10 @@ const MyPage = () => {
       setUserData(data)
     }
   }, [])
+
+  const chooseProfileImg = (url: string) => {
+    setInputProfileImg(url)
+  }
 
   const moveProfileImg = () => {
     const content = (
@@ -44,8 +62,6 @@ const MyPage = () => {
       html: content,
       width: 800,
       heightAuto: true,
-      didOpen: () => openModal(),
-      willClose: () => closeModal(),
 
       showCancelButton: true,
       confirmButtonText: '선택',
@@ -69,12 +85,12 @@ const MyPage = () => {
         <div className="status">학생</div>
         <div className="profileImgBox">
           <img
-            src={userData.profileImage}
+            src={inputProfileImg}
             alt="유저이미지"
             className="mypage-image-container"
           />
           <button className="addImgBtn" onClick={() => moveProfileImg()}>
-            <FiPlusCircle class="plusCircle" />
+            <FiPlusCircle />
           </button>
         </div>
         <div className="nanum mypage-nickname">{userData.nickname}</div>
