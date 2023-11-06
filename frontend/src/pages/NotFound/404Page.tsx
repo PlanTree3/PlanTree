@@ -4,7 +4,7 @@ import notFound from '../../../public/404.gif'
 const NotFoundPage = () => {
   return (
     <div className="container">
-      <img src={notFound} alt="" />
+      <img src={notFound} alt="" style={{ borderRadius: '30px' }} />
       {/* <div className="not-found-page-container">
       <div className="not-found-page-content">
         <div className="not-found-page-text">
