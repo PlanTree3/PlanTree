@@ -13,11 +13,13 @@ public class CommonsTodoBudResDto {
     private String branchColor;
     private UUID budId;
     private String budName;
+    private int commentCount;
     private Day dayOfWeek;
 
     public CommonsTodoBudResDto(Bud bud, String color){
         this.budId = bud.getId();
         this.budName = bud.getName();
+        this.commentCount = bud.getBudComments().size();
         this.dayOfWeek = bud.getDay();
     }
 

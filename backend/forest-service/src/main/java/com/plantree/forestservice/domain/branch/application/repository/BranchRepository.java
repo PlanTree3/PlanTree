@@ -1,8 +1,6 @@
 package com.plantree.forestservice.domain.branch.application.repository;
 
 import com.plantree.forestservice.domain.branch.domain.Branch;
-import com.plantree.forestservice.domain.branch.dto.BranchProjectionDto;
-import com.plantree.forestservice.domain.tree.dto.BranchResDto;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,6 +14,7 @@ public interface BranchRepository {
 
     void deleteById(UUID id);
 
-    List<Branch> findBranchesByTreeId(UUID treeId);
+    List<Branch> findBranchesWithBudsByTreeId(UUID treeId);
 
+    List<Branch> findBranchesWithBudsAndSeedsByTreeId(UUID treeId);
 }

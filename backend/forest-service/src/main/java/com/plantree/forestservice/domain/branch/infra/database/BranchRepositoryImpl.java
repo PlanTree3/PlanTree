@@ -2,10 +2,8 @@ package com.plantree.forestservice.domain.branch.infra.database;
 
 import com.plantree.forestservice.domain.branch.application.repository.BranchRepository;
 import com.plantree.forestservice.domain.branch.domain.Branch;
-import com.plantree.forestservice.domain.branch.dto.BranchProjectionDto;
 import com.plantree.forestservice.domain.branch.infra.database.jpa.BranchJpaRepository;
 import com.plantree.forestservice.domain.branch.infra.database.querydsl.BranchQueryRepository;
-import com.plantree.forestservice.domain.tree.dto.BranchResDto;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,8 +33,14 @@ public class BranchRepositoryImpl implements BranchRepository {
         branchJpaRepository.deleteById(id);
     }
 
-    public List<Branch> findBranchesByTreeId(UUID treeId){
-        return branchQueryRepository.findBranchesByTreeId(treeId);
+    @Override
+    public List<Branch> findBranchesWithBudsByTreeId(UUID treeId){
+        return branchQueryRepository.findBranchesWithBudsByTreeId(treeId);
+    }
+
+    @Override
+    public List<Branch> findBranchesWithBudsAndSeedsByTreeId(UUID treeId){
+        return branchQueryRepository.findBranchesWithBudsAndSeedsByTreeId(treeId);
     }
 
 }
