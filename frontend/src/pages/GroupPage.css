@@ -18,6 +18,14 @@
   border-radius: 50%;
   overflow: hidden;
 }
+.circle-imageS {
+  /* width: 10%;
+  height: 10%; */
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+}
 
 .circle-image img {
   width: 100%;

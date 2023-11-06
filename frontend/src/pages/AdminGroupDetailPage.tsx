@@ -12,6 +12,7 @@ import './GroupPage.css'
 const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
   const [page, setPage] = useState(1)
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [inputValue, setInputValue] = useState('')
   // const studentsPerPage = 5;
   // const startIndex = (page - 1) * studentsPerPage;
   // const endIndex = startIndex + studentsPerPage;
@@ -22,6 +23,14 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
   }
 
   const closeModal = () => {
+    setModalIsOpen(false)
+  }
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value)
+  }
+
+  const handleCreateBranch = () => {
     setModalIsOpen(false)
   }
   // const previousPage = () => {
@@ -76,8 +85,8 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: '30%',
-              height: '30%',
+              width: '40%',
+              height: '40%',
               border: '2px solid #000',
               borderRadius: '10px',
               overflow: 'auto',

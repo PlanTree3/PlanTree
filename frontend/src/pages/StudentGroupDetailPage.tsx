@@ -7,6 +7,27 @@ import yeji1 from '../../public/yeji1.png'
 import gijeong1 from '../../public/gijeong1.png'
 
 const StudentGroupDetailPage = () => {
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const GroupsPerPage = 5
+  // const indexOfLastGroup = currentPage * GroupsPerPage
+  // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
+  // const currentGroups = dummyData.data.groups.slice(
+  //   indexOfFirstGroup,
+  //   indexOfLastGroup,
+  // )
+
+  // const totalPages = Math.ceil(dummyData.data.groups.length / GroupsPerPage)
+
+  // const pageNumbers = []
+  // for (let i = 1; i <= totalPages; i += 1) {
+  //   pageNumbers.push(i)
+  // }
+
+  // const changePage = (page: number) => {
+  //   setCurrentPage(page)
+  // }
+
   return (
     <div>
       <Link to="/studentGroup">
@@ -22,27 +43,39 @@ const StudentGroupDetailPage = () => {
         </div>
       </div>
       <div className="studentBox">
-        <div className="circle-image">
+        <div className="circle-imageS">
           <img src={yeji1} alt="" />/
         </div>
-        <div>
+        <div className="flex flex items-center">
           <text>정예지</text>
         </div>
-      </div>
-      <div className="studentBox">
-        <div className="circle-image">
-          <img src={gijeong1} alt="" />/
-        </div>
-        <div>
-          <text>신기정</text>
+        <div className="ms-6 flex-col flex justify-center ">
+          <text>달성도</text>
+          <text>12/25</text>
         </div>
       </div>
       <div className="studentBox">
-        <div className="circle-image">
+        <div className="circle-imageS">
           <img src={gijeong1} alt="" />/
         </div>
-        <div>
+        <div className="flex flex items-center">
           <text>신기정</text>
+        </div>
+        <div className="ms-6 flex-col flex justify-center ">
+          <text>달성도</text>
+          <text>12/25</text>
+        </div>
+      </div>
+      <div className="studentBox">
+        <div className="circle-imageS">
+          <img src={gijeong1} alt="" />/
+        </div>
+        <div className="flex flex items-center ">
+          <text>신기정</text>
+        </div>
+        <div className="ms-6 flex-col flex justify-center ">
+          <text>달성도</text>
+          <text>12/25</text>
         </div>
       </div>
     </div>

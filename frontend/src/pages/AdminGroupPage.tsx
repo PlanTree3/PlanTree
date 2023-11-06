@@ -11,7 +11,6 @@ import Rooster from '../../public/Rooster.png'
 
 const AdminGroupPage: React.FC = () => {
   //useState들
-
   const [currentPage, setCurrentPage] = useState(1)
   const [inputGroupName, setInputGroupName] = useState('')
   const [isOpen, setIsOpen] = useState(false)
@@ -133,9 +132,8 @@ const AdminGroupPage: React.FC = () => {
   return (
     <div>
       <div>
-        <text>내 둥지 확인하기</text>
-        <br />
-        <Link to="/adminNest">
+        {/* 이 부분은 학부모/ 교사가 분리되며 필요 없어짐 온전하게 그룹 */}
+        {/* <Link to="/adminNest">
           <button className="box-border w-2/3 p-5 border-4 bg-amber-400 rounded-3xl">
             <div className="flex flex-row">
               <img className="chick flex flex-start" src={Rooster} alt="" />
@@ -148,7 +146,7 @@ const AdminGroupPage: React.FC = () => {
               </div>
             </div>
           </button>
-        </Link>
+        </Link> */}
       </div>
       <hr />
       <h2>내 그룹 확인하기</h2>
