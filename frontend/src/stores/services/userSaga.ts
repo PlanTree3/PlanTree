@@ -10,7 +10,7 @@ import { FetchUserDataResponse } from '@/types/UserType'
 // import { PayloadAction } from '@reduxjs/toolkit'
 import {
   fetchUserData,
-  fetchUserDataSuccess,
+  saveUserData,
   fetchUserLogout,
   successUserLogout,
 } from '@/stores/features/userSlice'
@@ -29,7 +29,7 @@ function* fetchUserDataSaga(): Generator<
     try {
       const response: AxiosResponse<unknown> = yield call(fetchUserDataAPI)
       if (response.data) {
-        yield put(fetchUserDataSuccess(response.data))
+        yield put(saveUserData(response.data))
         break
       }
     } catch (error) {

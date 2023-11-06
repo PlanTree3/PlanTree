@@ -2,15 +2,20 @@ import KakaoLogin from 'react-kakao-login'
 import { useNavigate } from 'react-router-dom' // 라우팅 컴포넌트 밖에서 라우팅을 제어하기 위해 사용
 // 주로 함수 내에서 페이지 이동을 제어해야할 경우 사용한다.
 // useHistory -> useNavigate
+import { useDispatch } from 'react-redux'
+import { addOauthProvider } from '@/stores/features/signupSlice'
 import kakaoBtn from '../asset/login_btn/kakaotalk_sharing_btn_small.png'
 import '../styles/LogIn.scss'
 import { userLogin } from '@/apis/member'
+// import Swal from "sweetalert2";
+// import { AxiosError } from "axios";
 
 const Kakao = () => {
   const navigate = useNavigate()
   const kakaoKey = import.meta.env.VITE_PUBLIC_KAKAO_CLIENT_ID
+  const dispatch = useDispatch()
 
-  const handleLoginSuccess = async (response: unknown) => {
+  const handleLoginSuccess = async (response: any) => {
     console.log('로그인 성공', response)
     const data = {
       oauthProvider: 'KAKAO',
@@ -27,14 +32,30 @@ const Kakao = () => {
     const loginResult = await userLogin(data)
 
     if (loginResult) {
+      dispatch(addOauthProvider('KAKAO'))
       navigate('/signUp')
     } else {
       navigate('/main')
     }
+    // catch (error: any) {
+    //   Swal.fire({
+    //     title: `${error.message} 로 서버와 통신에 실패했습니다.`,
+    //     width: 600,
+    //     customClass: {
+    //       confirmButton: 'btn btn-primary',
+    //     },
+    //     buttonsStyling: false,
+    //     confirmButtonText: 'Home 으로 이동',
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       navigate('/')
+    //     }
+    //   })
+    // }
   }
 
   const handleLoginFailure = (error: unknown) => {
-    console.log('로그인 실패', error)
+    console.log('소셜 로그인 실패', error)
   }
 
   return (
