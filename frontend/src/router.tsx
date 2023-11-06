@@ -5,6 +5,7 @@ import AdminGroupDetailPage from './pages/AdminGroupDetailPage.tsx'
 // import AdminGroupTabPage from './pages/AdminGroupTabPage.tsx'
 import AdminGroupPage from './pages/AdminGroupPage.tsx'
 import AdminNestPage from './pages/AdminNestPage.tsx'
+import AdminGroupRequestPage from './pages/AdminGroupRequestPage.tsx'
 
 import {
   Home,
@@ -31,6 +32,7 @@ const RoutesComponent = () => (
     {/* <Route path="/adminGroupTab" element={<AdminGroupTabPage />} /> */}
     <Route path="/adminGroup" element={<AdminGroupPage />} />
     <Route path="/adminGroupDetail" element={<AdminGroupDetailPage />} />
+    <Route path="/adminGroupRequest" element={<AdminGroupRequestPage />} />
 
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="/main" element={<MainPage />} />

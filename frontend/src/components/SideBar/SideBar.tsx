@@ -1,4 +1,5 @@
 import './SideBar.css'
+import bell from '../../../public/bell.png'
 
 const SideBar = () => {
   return (
@@ -7,6 +8,7 @@ const SideBar = () => {
       <div className="post-it">home</div>
       <div className="post-it">home</div>
       <div className="post-it">home</div>
+      <img src={bell} alt="" />
     </>
   )
 }

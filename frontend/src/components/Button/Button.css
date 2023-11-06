@@ -46,6 +46,12 @@
   border: #8595a9;
 }
 
+.red {
+  background-color: #EE7279;
+  color: #fff;
+  border: #EE7279;
+}
+
 .button {
   cursor: pointer;
 }

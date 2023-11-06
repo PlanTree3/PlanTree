@@ -50,6 +50,7 @@
 .groupInfo {
   margin-bottom: 5px;
   margin-right: 10px;
+  font-size: larger;
 }
 
 .groupItem {
@@ -57,6 +58,14 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.groupRequest {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .groupLeader {
