@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './SignUp.scss'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
