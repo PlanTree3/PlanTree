@@ -13,6 +13,10 @@ export const branchSlice = createSlice({
   name: 'branch',
   initialState,
   reducers: {
+    getBranchData: (state, action) => {
+      console.log(state)
+      console.log(action)
+    },
     addBuds: (state, action) => {
       state.buds = action.payload
     },
@@ -25,5 +29,5 @@ export const branchSlice = createSlice({
   },
 })
 
-export const { addBuds, addSeeds, addBranches } = branchSlice.actions
+export const { getBranchData, addBuds, addSeeds, addBranches } = branchSlice.actions
 export default branchSlice.reducer

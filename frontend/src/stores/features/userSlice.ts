@@ -1,18 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { UserData } from '@/types/UserType'
 
-interface UserState {
+export interface UserState {
   isLoading: boolean
   isLoggedIn: boolean
-  userData: UserData | null
+  userData: UserData
   accessToken: string | null
   refreshToken: string | null
   error: Error | null
 }
+const defaultUser: UserData = {
+  id: 192874278348,
+  nickname: '요 정 출 현',
+  email: 'testman@ssafy.com',
+  profileImage: 'https://i.ibb.co/822DPdb/rabbit.jpg',
+}
 const initialState: UserState = {
   isLoading: true,
   isLoggedIn: false,
-  userData: null,
+  userData: defaultUser,
   accessToken: null,
   refreshToken: null,
   error: null,
@@ -26,18 +32,15 @@ export const userSlice = createSlice({
       state.isLoading = true
     },
     fetchReUserData: () => {},
-    fetchUserDataSuccess: (state, action: PayloadAction<unknown>) => {
-      console.log(state)
-      console.log(action.payload)
-    },
-    fetchReUserDataSuccess: (state, action) => {
-      console.log(state)
-      console.log(action.payload)
+    saveUserData: (state, action: PayloadAction<any>) => {
+      const { nickname, profileImage } = action.payload
+      state.userData.nickname = nickname
+      state.userData.profileImage = profileImage
     },
     fetchUserLogout: () => {},
     successUserLogout: (state) => {
       state.isLoggedIn = false
-      state.userData = null
+      state.userData = defaultUser
       state.accessToken = null
       state.refreshToken = null
     },
@@ -46,7 +49,7 @@ export const userSlice = createSlice({
 
 export const {
   fetchUserData,
-  fetchUserDataSuccess,
+  saveUserData,
   fetchUserLogout,
   successUserLogout,
 } = userSlice.actions
