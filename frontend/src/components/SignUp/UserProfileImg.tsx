@@ -116,7 +116,10 @@ const UserProfileImg = () => {
         </div>
         <span>
           <div className="rounded-full border-slate-950">학생</div>
-          <div>이름</div>
+          <div>
+            <span>이름</span>
+            <span>{userName}</span>
+          </div>
           <div>나이</div>
           <div>생일</div>
         </span>
