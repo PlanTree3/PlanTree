@@ -4,6 +4,8 @@ import com.plantree.forestservice.domain.tree.application.repository.TreeReposit
 import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.plantree.forestservice.domain.tree.infra.database.jpa.TreeJpaRepository;
 import com.plantree.forestservice.domain.tree.infra.database.querydsl.TreeQueryRepository;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,17 @@ public class TreeRepositoryImpl implements TreeRepository {
     @Override
     public Optional<Tree> findCurrentTreeByMemberId(UUID memberId) {
         return Optional.ofNullable(treeQueryRepository.findCurrentTreeByMemberId(memberId));
+    }
+
+    @Override
+    public List<Tree> findTreesByForestIdAndPeriod(UUID forestId, LocalDate startedAt,
+            LocalDate endedAt) {
+        return treeQueryRepository.findTreesByForestIdAndPeriod(forestId, startedAt, endedAt);
+    }
+
+    @Override
+    public List<Tree> findTreesByStudentIds(List<UUID> studentIds) {
+        return treeQueryRepository.findTreesByStudentIds(studentIds);
     }
 
 }

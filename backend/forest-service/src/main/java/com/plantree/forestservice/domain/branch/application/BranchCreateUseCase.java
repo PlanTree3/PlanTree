@@ -10,6 +10,7 @@ import com.plantree.forestservice.global.openFeign.MemberServiceClient;
 import com.plantree.forestservice.global.util.AuthMemberValidator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,17 +27,17 @@ public class BranchCreateUseCase {
 
     @Transactional
     public Branch createBranch(UUID treeId, AuthMember authMember,
-            String name) {
+            String name, String color) {
 
         Tree tree = treeRepository.findById(treeId).orElseThrow(TreeNotFoundException::new);
         authMemberValidator.validateAuthMember(tree.getStudentId(), authMember);
 
         return branchRepository.save(Branch.builder()
                 .name(name)
+                .color(color)
                 .issuerId(authMember.getMemberId())
                 .studentId(tree.getStudentId())
                 .build());
-
     }
 
     @Transactional
@@ -45,10 +46,15 @@ public class BranchCreateUseCase {
         authMemberValidator.isGroupLeader(groupId, authMember);
         List<UUID> studentIds = memberServiceClient.getGroupMembers(groupId).getStudentIds();
 
-        //todo 현재 트리를 가져와서 가지를 하나씩 추가해주는 로직
-//        studentIds.stream().map(studentId -> {
-//
-//        });
+        List<Tree> trees = treeRepository.findTreesByStudentIds(studentIds);
 
+        List<Branch> branches = trees.stream().map(tree -> Branch.builder()
+                .name(name)
+                .issuerId(authMember.getMemberId())
+                .studentId(tree.getStudentId())
+                .tree(tree)
+                .build()).collect(Collectors.toList());
+
+        branchRepository.saveAll(branches);
     }
 }

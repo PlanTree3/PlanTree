@@ -5,6 +5,7 @@ import com.plantree.forestservice.domain.bud.domain.Bud;
 import com.plantree.forestservice.domain.bud.domain.QBud;
 import com.plantree.forestservice.domain.tree.domain.QTree;
 import com.plantree.forestservice.domain.tree.domain.Tree;
+import com.plantree.forestservice.global.util.DateHelper;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -23,6 +24,7 @@ public class BudQueryRepository {
     private final QTree tree = QTree.tree;
     private final QBranch branch = QBranch.branch;
     private final QBud bud = QBud.bud;
+    private final DateHelper dateHelper;
 
     public List<Bud> findCurrentBudsByMemberId(UUID memberId) {
         return jpaQueryFactory.select(bud)
@@ -32,7 +34,7 @@ public class BudQueryRepository {
     }
 
     public List<Bud> findCurrentBudsByMemberIds(List<UUID> memberIds) {
-        LocalDate nextSunday = findNextSunday();
+        LocalDate nextSunday = dateHelper.findNextSunday();
 
         return jpaQueryFactory.selectFrom(bud)
                 .where(bud.studentId.in(memberIds)
@@ -41,22 +43,15 @@ public class BudQueryRepository {
     }
 
     private JPQLQuery<Tree> findCurrentTrees(List<UUID> memberIds) {
-        LocalDate nextSunday = findNextSunday();
+        LocalDate nextSunday = dateHelper.findNextSunday();
         return JPAExpressions.selectFrom(tree)
                 .where(tree.studentId.in(memberIds).and(tree.endedAt.eq(nextSunday)));
     }
 
     private JPQLQuery<Tree> findCurrentTree(UUID memberId) {
-        LocalDate nextSunday = findNextSunday();
+        LocalDate nextSunday = dateHelper.findNextSunday();
         return JPAExpressions.selectFrom(tree)
                 .where(tree.studentId.eq(memberId).and(tree.endedAt.eq(nextSunday)));
     }
-
-    private LocalDate findNextSunday() {
-        LocalDate now = LocalDate.now();
-        DayOfWeek currentDayOfWeek = now.getDayOfWeek();
-        return now.plusDays(DayOfWeek.SUNDAY.getValue() - currentDayOfWeek.getValue());
-    }
-
 
 }

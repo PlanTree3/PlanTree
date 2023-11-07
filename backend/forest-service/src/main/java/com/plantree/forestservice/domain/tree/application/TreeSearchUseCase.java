@@ -33,7 +33,8 @@ public class TreeSearchUseCase {
         authMemberValidator.validateAuthMember(tree.getStudentId(), authMember);
 
         List<Branch> branches = branchRepository.findBranchesWithBudsByTreeId(treeId);
-        List<BranchResDto> branchResDto = branches.stream().map(branch -> new BranchResDto(branch)).collect(Collectors.toList());
+        List<BranchResDto> branchResDto = branches.stream().map(branch -> new BranchResDto(branch))
+                .collect(Collectors.toList());
 
         return new TreeDetailsResDto(tree, branchResDto);
 

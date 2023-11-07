@@ -43,4 +43,9 @@ public class BranchRepositoryImpl implements BranchRepository {
         return branchQueryRepository.findBranchesWithBudsAndSeedsByTreeId(treeId);
     }
 
+    @Override
+    public void saveAll(List<Branch> branches) {
+        branchJpaRepository.saveAll(branches);
+    }
+
 }

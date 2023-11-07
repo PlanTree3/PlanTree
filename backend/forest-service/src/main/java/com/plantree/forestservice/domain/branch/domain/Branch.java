@@ -64,6 +64,15 @@ public class Branch extends BaseTimeEntity {
     private List<Bud> buds = new ArrayList<>();
 
     @Builder
+    public Branch(String name, String color, UUID studentId, UUID issuerId, Tree tree) {
+        this.name = name;
+        this.studentId = studentId;
+        this.issuerId = issuerId;
+        this.tree = tree;
+        this.color = color;
+    }
+
+    @Builder
     public Branch(String name, UUID studentId, UUID issuerId, Tree tree) {
         this.name = name;
         this.studentId = studentId;
