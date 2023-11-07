@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+const currentDate = new Date()
+
 const initialState: any = {
   oauthProvider: null,
-  name: null,
-  birthday: null,
-  role: null,
-  profileImg: null,
+  name: '정예지',
+  birthday: currentDate,
+  role: '학생',
+  profileImg: 'srcassetprofile\bear.jpg',
 }
 
 export const signupSlice = createSlice({
