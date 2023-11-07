@@ -1,0 +1,16 @@
+.tree-page {
+  @apply space-y-3 h-full overflow-y-auto;
+
+  &-tree {
+    @apply flex justify-center;
+  }
+  &-title {
+    @apply text-xl;
+  }
+  &-chart-container {
+    @apply flex justify-around;
+  }
+  &-chart {
+    @apply text-center max-h-full w-[30%];
+  }
+}
