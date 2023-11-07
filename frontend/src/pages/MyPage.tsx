@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { FiPlusCircle } from 'react-icons/fi'
@@ -27,7 +26,6 @@ const MyPage = () => {
     'sheep',
     'tiger',
   ]
-  const navigate = useNavigate()
 
   useEffect(() => {
     const persistedState = localStorage.getItem('persist:user')
