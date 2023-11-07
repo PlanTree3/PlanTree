@@ -31,6 +31,35 @@ const UserProfileImg = () => {
   const userRole = useSelector((state: any) => state.signup.role)
   const userProfileImg = useSelector((state: any) => state.signup.profileImg)
 
+  // userBirth로부터 나이 추출
+  const currentDate = new Date()
+  const userAge = currentDate.getFullYear() - userBirth.getFullYear()
+
+  // userBirth로부터 month, day 추출
+  const userBirthMonth = userBirth.getMonth() + 1
+  const userBirthDay = userBirth.getDate()
+
+  // userRole 한국어 패치
+  const userRoleKo = () => {
+    let role = ''
+
+    switch (userRole) {
+      case 'STUDENT':
+        role = '학생'
+        break
+      case 'TEACHER':
+        role = '선생님'
+        break
+      case 'PARENT':
+        role = '학부모'
+        break
+      default:
+        role = ''
+    }
+
+    return role
+  }
+
   // 객체에 담아서 백에 보내주자!
   const data = {
     oauthProvider,
@@ -114,16 +143,28 @@ const UserProfileImg = () => {
             <div className="profilePlaceholder">프로필 사진을 선택하세요!</div>
           )}
         </div>
-        <span className="w-3/5">
-          <div className="rounded-full border-slate-950">학생</div>
-          <div className="info">
-            <div className="title">이름</div>
-            {/* <span>{userName}</span> */}
-            {/* 일단 대충 레이아웃 잡기용 */}
-            <div>정예지</div>
+        <span className="w-3/5 flex">
+          <div className="mx-3 w-max h-min bg-teal-200 border-2 rounded-full border-zinc-950">
+            <div className="mx-4 text-xs">{userRoleKo()}</div>
           </div>
-          <div>나이</div>
-          <div>생일</div>
+          <div className="w-2/6">
+            <div className="title">이름</div>
+            <div className="title">나이</div>
+            <div className="title">생일</div>
+          </div>
+          <div className="w-3/6">
+            <div className="content">
+              <div>{userName}</div>
+            </div>
+            <div className="content">
+              <div>{userAge}세</div>
+            </div>
+            <div className="content">
+              <div>
+                {userBirthMonth}월 {userBirthDay}일
+              </div>
+            </div>
+          </div>
         </span>
       </div>
       <button className="absolute right-0" onClick={saveUser}>
