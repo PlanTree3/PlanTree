@@ -1,4 +1,5 @@
 import qs from 'qs'
+import googleBtn from '../asset/login_btn/web_light_sq_na@4x.png'
 
 const Google = () => {
   const AUTHORIZE_URI = 'https://accounts.google.com/o/oauth2/v2/auth'
@@ -20,7 +21,9 @@ const Google = () => {
       {/* <GoogleOAuthProvider clientId={googleKey}>
        <RenewalGoogleLogin />
      </GoogleOAuthProvider> */}
-      <a href={loginUrl}>dldldl</a>
+      <a href={loginUrl}>
+        <img src={googleBtn} alt="googleLogin" />
+      </a>
     </div>
   )
 }
