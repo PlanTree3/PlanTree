@@ -31,7 +31,9 @@ import org.hibernate.annotations.BatchSize;
 @BatchSize(size = 100)
 public class Branch extends BaseTimeEntity {
 
-    private static String[] colors = new String[] {"230044", "E32244", "4499FF"};
+    private static String[] colors = new String[]{"FFC1CC", "FFDAAF", "FFFFBA", "CAFFBF",
+            "AFDFFF", "9ABAFF", "D7AAFF", "FFACE4", "A7FFC4", "ECD4FF"
+    };
 
     @Id
     @Column(name = "branch_id", columnDefinition = "BINARY(16)")
@@ -62,7 +64,7 @@ public class Branch extends BaseTimeEntity {
     private List<Bud> buds = new ArrayList<>();
 
     @Builder
-    public Branch(String name, UUID studentId, UUID issuerId, Tree tree){
+    public Branch(String name, UUID studentId, UUID issuerId, Tree tree) {
         this.name = name;
         this.studentId = studentId;
         this.issuerId = issuerId;
@@ -75,7 +77,7 @@ public class Branch extends BaseTimeEntity {
         return colors[random.nextInt(colors.length)];
     }
 
-    public void updateName(String name){
+    public void updateName(String name) {
         this.name = name;
     }
 
