@@ -13,9 +13,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -23,14 +22,18 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Table(name = "branch")
 @Getter
 @NoArgsConstructor
+@BatchSize(size = 100)
 public class Branch extends BaseTimeEntity {
 
-    private static String[] colors = new String[] {"230044", "E32244", "4499FF"};
+    private static String[] colors = new String[]{"FFC1CC", "FFDAAF", "FFFFBA", "CAFFBF",
+            "AFDFFF", "9ABAFF", "D7AAFF", "FFACE4", "A7FFC4", "ECD4FF"
+    };
 
     @Id
     @Column(name = "branch_id", columnDefinition = "BINARY(16)")
@@ -48,17 +51,29 @@ public class Branch extends BaseTimeEntity {
     @Column
     private UUID issuerId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tree_id")
     private Tree tree;
 
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Seed> seeds = new ArrayList<>();
 
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Bud> buds = new ArrayList<>();
 
     @Builder
-    public Branch(String name, UUID studentId, UUID issuerId, Tree tree){
+    public Branch(String name, String color, UUID studentId, UUID issuerId, Tree tree) {
+        this.name = name;
+        this.studentId = studentId;
+        this.issuerId = issuerId;
+        this.tree = tree;
+        this.color = color;
+    }
+
+    @Builder
+    public Branch(String name, UUID studentId, UUID issuerId, Tree tree) {
         this.name = name;
         this.studentId = studentId;
         this.issuerId = issuerId;
@@ -71,7 +86,7 @@ public class Branch extends BaseTimeEntity {
         return colors[random.nextInt(colors.length)];
     }
 
-    public void updateName(String name){
+    public void updateName(String name) {
         this.name = name;
     }
 

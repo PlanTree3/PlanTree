@@ -35,7 +35,7 @@ public class Forest extends BaseTimeEntity {
     @Column(name = "forest_id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "student_id")
+    @Column(name = "student_id", columnDefinition = "BINARY(16)")
     private UUID studentId;
 
     @Column(name = "started_at")

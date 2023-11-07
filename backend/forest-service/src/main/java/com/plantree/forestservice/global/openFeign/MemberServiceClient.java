@@ -7,6 +7,8 @@ import com.plantree.forestservice.global.openFeign.dto.CheckTeacherResDto;
 import com.plantree.forestservice.global.openFeign.dto.CheckNestParentReqDto;
 import com.plantree.forestservice.global.openFeign.dto.CheckNestParentResDto;
 import com.plantree.forestservice.global.openFeign.dto.GetGroupMembersResDto;
+import com.plantree.forestservice.global.openFeign.dto.GetNamesFromMemberIdReqDto;
+import com.plantree.forestservice.global.openFeign.dto.GetNamesFromMemberIdResDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +24,14 @@ public interface MemberServiceClient {
     public CheckTeacherResDto checkTeacher(@RequestBody CheckTeacherReqDto checkTeacherReqDto);
 
     @GetMapping("/student/check-parent")
-    public CheckNestParentResDto checkNestParent(@RequestBody CheckNestParentReqDto checkNestParentReqDto);
+    public CheckNestParentResDto checkNestParent(
+            @RequestBody CheckNestParentReqDto checkNestParentReqDto);
 
     @GetMapping("/group/{groupId}/check-leader")
-    public CheckGroupLeaderResDto checkGroupLeader(@RequestBody CheckGroupLeaderReqDto checkGroupLeaderReqDto);
+    public CheckGroupLeaderResDto checkGroupLeader(
+            @RequestBody CheckGroupLeaderReqDto checkGroupLeaderReqDto);
 
+    @GetMapping("/member/name")
+    public GetNamesFromMemberIdResDto getNamesFromMember(
+            @RequestBody GetNamesFromMemberIdReqDto getNamesFromMemberIdReqDto);
 }

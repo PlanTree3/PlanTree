@@ -2,7 +2,6 @@ package com.plantree.forestservice.domain.branch.application;
 
 import com.plantree.forestservice.domain.branch.application.repository.BranchRepository;
 import com.plantree.forestservice.domain.branch.domain.Branch;
-import com.plantree.forestservice.domain.branch.dto.BranchNameUpdateReqDto;
 import com.plantree.forestservice.domain.tree.application.repository.TreeRepository;
 import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
