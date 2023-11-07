@@ -11,7 +11,7 @@ export { handleComment } from '@/components/Branch/Comments'
 export { default as MovableItem } from '@/components/Branch/MovableItem'
 
 // Chart
-export { DoughnutChart } from '@/components/Charts'
+export { BarChart, DoughnutChart, PieChart } from '@/components/Charts'
 
 // ForestCard
 export { default as ForestCard } from '@/components/ForestCard/ForestCard'
