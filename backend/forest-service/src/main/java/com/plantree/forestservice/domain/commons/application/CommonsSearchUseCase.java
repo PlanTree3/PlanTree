@@ -39,9 +39,10 @@ public class CommonsSearchUseCase {
     @Transactional
     public CommonsMainPageResDto findMainPage(UUID memberId, AuthMember authMember) {
 
-        Tree tree = treeRepository.findCurrentTreeByMemberId(memberId).orElseThrow(TreeNotFoundException::new);
+        Tree tree = treeRepository.findCurrentTreeByMemberId(memberId)
+                .orElseThrow(TreeNotFoundException::new);
         List<Bud> currentBuds = budRepository.findCurrentBudsByMemberId(memberId);
-//        authMemberValidator.validateAuthMember(memberId, authMember);
+        authMemberValidator.validateAuthMember(memberId, authMember);
 
         long score = currentBuds.stream().filter(bud -> bud.isComplete()).count() * 100;
 
@@ -79,7 +80,8 @@ public class CommonsSearchUseCase {
             }
         }
 
-        CommonsMainDaysResDto commonsMainDaysResDto = new CommonsMainDaysResDto(MON, TUE, WED, THU, FRI);
+        CommonsMainDaysResDto commonsMainDaysResDto = new CommonsMainDaysResDto(MON, TUE, WED, THU,
+                FRI);
         return new CommonsMainPageResDto(tree, commonsMainDaysResDto, score);
 
     }
@@ -90,15 +92,21 @@ public class CommonsSearchUseCase {
         List<Branch> branches = branchRepository.findBranchesWithBudsAndSeedsByTreeId(treeId);
         List<CommonsTodoBudResDto> budResDtos = new ArrayList<>();
 
-        List<CommonsTodoBranchResDto> branchResDtos = branches.stream().map(branch -> {
-            List<CommonsTodoSeedResDto> seedResDtos = branch.getSeeds().stream().map(seed -> {
-                return new CommonsTodoSeedResDto(seed);
-            }).collect(Collectors.toList());
-            branch.getBuds().stream().map(bud -> budResDtos.add(new CommonsTodoBudResDto(bud, branch.getColor())));
-            return new CommonsTodoBranchResDto(branch, seedResDtos);
+        List<CommonsTodoBranchResDto> getBranchResDtoFromBranch = branches.stream().map(branch -> {
+
+            List<CommonsTodoSeedResDto> makeSeedResDtosFromEachBranch = branch.getSeeds().stream()
+                    .map(seed -> new CommonsTodoSeedResDto(seed)).collect(Collectors.toList());
+
+            branch.getBuds().forEach(bud -> {
+                        budResDtos.add(new CommonsTodoBudResDto(bud, branch, branch.getColor()));
+                    }
+            );
+
+            return new CommonsTodoBranchResDto(branch, makeSeedResDtosFromEachBranch);
+
         }).collect(Collectors.toList());
 
-        return new CommonsTodoPageResDto(branchResDtos, budResDtos);
+        return new CommonsTodoPageResDto(getBranchResDtoFromBranch, budResDtos);
 
     }
 }

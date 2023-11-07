@@ -1,5 +1,6 @@
 package com.plantree.forestservice.domain.tree.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDate;
@@ -10,7 +11,11 @@ import lombok.Getter;
 public class TreeDetailsResDto {
 
     private String treeName;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startedAt;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endedAt;
     private List<BranchResDto> branches;
 
