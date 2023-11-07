@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom' // 라우팅 컴포넌트 밖에�
 // 주로 함수 내에서 페이지 이동을 제어해야할 경우 사용한다.
 // useHistory -> useNavigate
 import { useDispatch } from 'react-redux'
-import { addOauthProvider } from '@/stores/features/signupSlice'
+import { addIdToken, addOauthProvider } from '@/stores/features/signupSlice'
 import kakaoBtn from '../asset/login_btn/kakaotalk_sharing_btn_small.png'
 import '../styles/LogIn.scss'
 import { userLogin } from '@/apis/member'
@@ -33,6 +33,7 @@ const Kakao = () => {
 
     if (loginResult) {
       dispatch(addOauthProvider('KAKAO'))
+      dispatch(addIdToken(response.response.id_token))
       navigate('/signUp')
     } else {
       navigate('/main')

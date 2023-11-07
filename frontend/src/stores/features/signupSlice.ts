@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 const currentDate = new Date()
 
 const initialState: any = {
+  idToken: '',
   oauthProvider: null,
   name: '정예지',
   birthday: currentDate,
@@ -14,6 +15,9 @@ export const signupSlice = createSlice({
   name: 'signup',
   initialState,
   reducers: {
+    addIdToken: (state, action: PayloadAction<string>) => {
+      state.idToken = action.payload
+    },
     addOauthProvider: (state, action: PayloadAction<string>) => {
       state.oauthProvider = action.payload
     },
@@ -33,6 +37,7 @@ export const signupSlice = createSlice({
 })
 
 export const {
+  addIdToken,
   addOauthProvider,
   addName,
   addBirthday,

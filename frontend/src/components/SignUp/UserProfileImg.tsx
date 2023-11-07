@@ -26,6 +26,7 @@ const UserProfileImg = () => {
   ]
 
   const oauthProvider = useSelector((state: any) => state.signup.oauthProvider)
+  const idToken = useSelector((state: any) => state.signup.idToken)
   const userName = useSelector((state: any) => state.signup.name)
   const userBirth = useSelector((state: any) => state.signup.birthday)
   const userRole = useSelector((state: any) => state.signup.role)
@@ -62,6 +63,7 @@ const UserProfileImg = () => {
 
   // 객체에 담아서 백에 보내주자!
   const data = {
+    idToken,
     oauthProvider,
     name: userName,
     birthDate: userBirth,
