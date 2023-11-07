@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+// import axios from 'axios'
 import { Link } from 'react-router-dom'
-// import axios from 'axios';
 import './GroupPage.css'
-import Seal from '../../public/Seal.png'
+import Button from '@/components/Button/Button'
 import yeji1 from '../../public/yeji1.png'
 import gijeong1 from '../../public/gijeong1.png'
+import forest from '../../public/forest_tmp.png'
 
-const StudentGroupDetailPage = () => {
+const AdminNestPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
-
   const GroupsPerPage = 5
+
   // const indexOfLastGroup = currentPage * GroupsPerPage
   // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
   // const currentGroups = dummyData.data.groups.slice(
@@ -27,23 +28,12 @@ const StudentGroupDetailPage = () => {
   // const changePage = (page: number) => {
   //   setCurrentPage(page)
   // }
-
   return (
     <div>
-      <Link to="/studentGroup">
-        <div className="arrow">
-          <div className="pt-6">목록으로 돌아가기</div>
-        </div>
-      </Link>
-      <h2>떡잎초 3학년 1반</h2>
-      <div className="flex flex-row">
-        <img className="h-40" src={Seal} alt="" />
-        <div className="groupLeader">
-          <text>그룹장: 정도현</text>
-        </div>
-      </div>
+      <div className="font-semibold text-2xl">예지의 푸릇푸릇한 둥지</div>
+      <h2 className="font-semibold text-l">그룹장: 정도현</h2>
       <div className="studentBox">
-        <div className="circle-imageS">
+        <div className="circle-image">
           <img src={yeji1} alt="" />/
         </div>
         <div className="flex flex items-center">
@@ -53,9 +43,14 @@ const StudentGroupDetailPage = () => {
           <text>달성도</text>
           <text>12/25</text>
         </div>
+        <div>
+          <Link to="/forest/1">
+            <img className="forest" src={forest} alt="" />
+          </Link>
+        </div>
       </div>
       <div className="studentBox">
-        <div className="circle-imageS">
+        <div className="circle-image">
           <img src={gijeong1} alt="" />/
         </div>
         <div className="flex flex items-center">
@@ -65,21 +60,14 @@ const StudentGroupDetailPage = () => {
           <text>달성도</text>
           <text>12/25</text>
         </div>
-      </div>
-      <div className="studentBox">
-        <div className="circle-imageS">
-          <img src={gijeong1} alt="" />/
-        </div>
-        <div className="flex flex items-center ">
-          <text>신기정</text>
-        </div>
-        <div className="ms-6 flex-col flex justify-center ">
-          <text>달성도</text>
-          <text>12/25</text>
+        <div>
+          <Link to="/forest/1">
+            <img className="forest" src={forest} alt="" />
+          </Link>
         </div>
       </div>
     </div>
   )
 }
 
-export default StudentGroupDetailPage
+export default AdminNestPage

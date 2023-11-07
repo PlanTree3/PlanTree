@@ -1,8 +1,12 @@
 .xxsmall {
-  width: 8vw;
+  width: 7vw;
   height: 3vh;
-  font-size: 1.2vw;
+  font-size: 1vw;
   border-radius: 4px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .xsmall {
@@ -44,6 +48,12 @@
   background-color: #8595a9;
   color: #fff;
   border: #8595a9;
+}
+
+.red {
+  background-color: #EE7279;
+  color: #fff;
+  border: #EE7279;
 }
 
 .button {

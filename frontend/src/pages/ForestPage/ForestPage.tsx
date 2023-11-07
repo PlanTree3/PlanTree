@@ -58,7 +58,6 @@ const ForestPage = () => {
           slidesPerView={1}
           mousewheel
           modules={[Mousewheel]}
-          style={{ height: '500px' }}
           onSlideChange={slideChange}
           initialSlide={selected}
         >

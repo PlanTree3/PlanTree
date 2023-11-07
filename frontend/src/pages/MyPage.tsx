@@ -4,6 +4,8 @@ import '@/styles/fontList.scss'
 import '@/styles/profile.scss'
 
 const MyPage = () => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const [userData, setUserData] = useState<UserData>([])
   useEffect(() => {
     const persistedState = localStorage.getItem('persist:user')

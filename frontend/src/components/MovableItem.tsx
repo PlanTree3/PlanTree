@@ -24,6 +24,7 @@ const MovableItem = ({
   index,
   moveCardHandler,
   dayOfWeek,
+  color,
 }: MovableItemProps) => {
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
@@ -79,6 +80,7 @@ const MovableItem = ({
             budId: maxId + 1,
             budName,
             dayOfWeek: point,
+            color,
           }
           const newBuds = [...buds, newItem]
           dispatch(addBuds(newBuds))
@@ -139,7 +141,11 @@ const MovableItem = ({
     })
   }
   return (
-    <div ref={ref} className="dnd_movable-item" style={{ opacity }}>
+    <div
+      ref={ref}
+      className="dnd_movable-item"
+      style={{ opacity, backgroundColor: color }}
+    >
       {idType === 'bud' && (
         <div>
           {budName}
@@ -153,7 +159,7 @@ const MovableItem = ({
       )}
       {idType === 'seed' && (
         <div>
-          {budName} + 1
+          {budName}
           <button onClick={() => removeSeed(id)} className="dnd_delete-btn">
             X
           </button>

@@ -9,6 +9,7 @@ import { COLUMN_NAMES } from '@/types/DnDType'
 import MovableItem from '@/components/MovableItem'
 import Column from '../components/Column.tsx'
 import '@/styles/branch.scss'
+import Swal from "sweetalert2";
 
 const WeeklyBudsPage = () => {
   const navigate = useNavigate()
@@ -16,6 +17,7 @@ const WeeklyBudsPage = () => {
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const buds = useSelector((state: RootState) => state.branch.buds)
   const branches = useSelector((state: RootState) => state.branch.branches)
+  const [colors, setColors] = useState('')
   const [newText, setNewText] = useState('')
   const [newTitle, setNewTitle] = useState('')
   const [selectedBranchId, setSelectedBranchId] = useState(0)
@@ -55,6 +57,7 @@ const WeeklyBudsPage = () => {
                     index={index}
                     dayOfWeek={seed.dayOfWeek}
                     moveCardHandler={moveCardHandler}
+                    color={seed.color}
                   />
                 </div>
               )
@@ -74,6 +77,7 @@ const WeeklyBudsPage = () => {
                     index={index}
                     dayOfWeek={bud.dayOfWeek}
                     moveCardHandler={moveCardHandler}
+                    color={bud.color}
                   />
                 </div>
               )
@@ -103,29 +107,56 @@ const WeeklyBudsPage = () => {
     setNewTitle(event.target.value)
   }
   const createItem = () => {
-    const maxId = seeds.length + 90873
-    const newItem = {
-      seedId: maxId,
-      seedName: newText,
-      dayOfWeek: DEFAULT,
-      branchId: selectedBranchId,
+    if (selectedBranchId) {
+      const maxId = seeds.length + 90873
+      const newItem = {
+        seedId: maxId,
+        seedName: newText,
+        dayOfWeek: DEFAULT,
+        branchId: selectedBranchId,
+        color: colors,
+      }
+      const newSeeds = [...seeds, newItem]
+      dispatch(addSeeds(newSeeds))
+      setNewText('')
+    } else {
+      Swal.fire({
+        title: '가지를 선택해 주세요',
+        icon: 'warning',
+        iconColor: 'red',
+      })
     }
-    const newSeeds = [...seeds, newItem]
-    dispatch(addSeeds(newSeeds))
-    setNewText('')
+  }
+  const getRandomPastelColor = () => {
+    const pastelColors: string[] = [
+      '#FFC1CC',
+      '#FFDAAF',
+      '#FFFFBA',
+      '#CAFFBF',
+      '#AFDFFF',
+      '#9ABAFF',
+      '#D7AAFF',
+      '#FFACE4',
+      '#A7FFC4',
+      '#ECD4FF',
+    ]
+    const randomIndex: number = Math.floor(Math.random() * pastelColors.length)
+    return pastelColors[randomIndex]
   }
   const createBranch = () => {
-    const maxId = seeds.length + 927343
+    const maxId = branches.length + 927343
     const newItem = {
       branchId: maxId,
       branchName: newTitle,
+      color: getRandomPastelColor(),
     }
     const newBranches = [...branches, newItem]
     dispatch(addBranches(newBranches))
-    setNewText('')
+    setNewTitle('')
   }
-  const handleBranchSelect = (branchId: number) => {
+  const handleBranchSelect = (branchId: number, color: string) => {
     setSelectedBranchId(branchId)
+    setColors(color)
   }
   const handleMainPage = () => {
     navigate('/main')
@@ -146,12 +177,14 @@ const WeeklyBudsPage = () => {
               {branches.map((branch) => (
                 <button
                   key={branch.branchId}
-                  onClick={() => handleBranchSelect(branch.branchId)}
+                  onClick={() =>
+                    handleBranchSelect(branch.branchId, branch.color)
+                  }
                   style={{
                     backgroundColor:
                       selectedBranchId === branch.branchId
-                        ? 'blue'
-                        : 'transparent',
+                        ? 'gray'
+                        : branch.color,
                     color:
                       selectedBranchId === branch.branchId ? 'white' : 'black',
                   }}
@@ -162,7 +195,11 @@ const WeeklyBudsPage = () => {
             </div>
           </div>
           <div
-            style={{ alignItems: 'center', textAlign: 'center', display: 'flex' }}
+            style={{
+              alignItems: 'center',
+              textAlign: 'center',
+              display: 'flex',
+            }}
           >
             <div
               className="dnd_container"

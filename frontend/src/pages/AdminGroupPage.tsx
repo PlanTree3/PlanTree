@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
-// import QR from 'qrcode.react'
+import QR from 'qrcode.react'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
 import { authApi, groupCreate } from '@/apis'
 import { GroupRequest } from '@/types/GroupAdminType'
+import Rooster from '../../public/Rooster.png'
 
 const AdminGroupPage: React.FC = () => {
   //useState들
-
   const [currentPage, setCurrentPage] = useState(1)
   const [inputGroupName, setInputGroupName] = useState('')
   const [isOpen, setIsOpen] = useState(false)
@@ -78,19 +79,19 @@ const AdminGroupPage: React.FC = () => {
   }
 
   // 일단 QR 임시
-  // const createQr = () => {
-  //   return (
-  //     <QR
-  //       value="https://www.naver.com/"
-  //       size={500}
-  //       id="basic"
-  //       level="H"
-  //       includeMargin={false} //QR 테두리 여부
-  //       bgColor="green"
-  //       fgColor="black"
-  //     />
-  //   )
-  // }
+  const createQr = () => {
+    return (
+      <QR
+        value="https://www.naver.com/"
+        size={500}
+        id="basic"
+        level="H"
+        includeMargin={false} //QR 테두리 여부
+        bgColor="green"
+        fgColor="black"
+      />
+    )
+  }
   //여기부터는 페이지 넘기면서 조회하는 것 임시
   const GroupsPerPage = 5
   const dummyData = {
@@ -130,7 +131,25 @@ const AdminGroupPage: React.FC = () => {
 
   return (
     <div>
-      <h2>2023 3학년 1반</h2>
+      <div>
+        {/* 이 부분은 학부모/ 교사가 분리되며 필요 없어짐 온전하게 그룹 */}
+        {/* <Link to="/adminNest">
+          <button className="box-border w-2/3 p-5 border-4 bg-amber-400 rounded-3xl">
+            <div className="flex flex-row">
+              <img className="chick flex flex-start" src={Rooster} alt="" />
+              <div className="flex items-center text-white tracking-widest">
+                여기는 그룹이름임
+                <br />
+                둥지장동지:
+                <br />
+                병아리 동지:
+              </div>
+            </div>
+          </button>
+        </Link> */}
+      </div>
+      <hr />
+      <h2>내 그룹 확인하기</h2>
       <div className="studentListBox">
         <h3>번호 그룹명 시작일 인원</h3>
         {currentGroups.map((group, index: number) => (

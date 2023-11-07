@@ -25,6 +25,7 @@ export interface MovableItemProps {
   index: number
   moveCardHandler: (dragIndex: number, hoverIndex: number) => void
   dayOfWeek: string
+  color: string
 }
 
 export interface DragItem {

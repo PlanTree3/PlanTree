@@ -2,8 +2,8 @@ import { COLUMN_NAMES, CommentType } from '@/types/DnDType'
 
 const { DEFAULT, MONDAY, TUESDAY, WEDNESDAY, FRIDAY_FINISH } = COLUMN_NAMES
 export const branchList = [
-  { branchId: 1, branchName: 'ssafy' },
-  { branchId: 2, branchName: '삼성' },
+  { branchId: 1, branchName: 'ssafy', color: '#FFFFBA' },
+  { branchId: 2, branchName: '삼성', color: '#D7AAFF' },
 ]
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const comments_1: CommentType[] = [
@@ -60,6 +60,7 @@ export const seedsList = [
     dayOfWeek: DEFAULT,
     branchId: 1,
     comments: null,
+    color: '#FFFFBA',
   },
   {
     seedId: 2,
@@ -67,6 +68,7 @@ export const seedsList = [
     dayOfWeek: DEFAULT,
     branchId: 1,
     comments: null,
+    color: '#FFFFBA',
   },
   {
     seedId: 3,
@@ -74,6 +76,7 @@ export const seedsList = [
     dayOfWeek: DEFAULT,
     branchId: 2,
     comments: null,
+    color: '#D7AAFF',
   },
   {
     seedId: 4,
@@ -81,11 +84,36 @@ export const seedsList = [
     dayOfWeek: DEFAULT,
     branchId: 2,
     comments: null,
+    color: '#D7AAFF',
   },
 ]
 export const budsList = [
-  { budId: 1, budName: '기정', dayOfWeek: MONDAY, comments: comments_1 },
-  { budId: 2, budName: '예지', dayOfWeek: TUESDAY, comments: null },
-  { budId: 3, budName: '연재', dayOfWeek: WEDNESDAY, comments: comments_2 },
-  { budId: 4, budName: '영석', dayOfWeek: FRIDAY_FINISH, comments: null },
+  {
+    budId: 1,
+    budName: '기정',
+    dayOfWeek: MONDAY,
+    comments: comments_1,
+    color: '#A7FFC4',
+  },
+  {
+    budId: 2,
+    budName: '예지',
+    dayOfWeek: TUESDAY,
+    comments: null,
+    color: '#9ABAFF',
+  },
+  {
+    budId: 3,
+    budName: '연재',
+    dayOfWeek: WEDNESDAY,
+    comments: comments_2,
+    color: '#9ABAFF',
+  },
+  {
+    budId: 4,
+    budName: '영석',
+    dayOfWeek: FRIDAY_FINISH,
+    comments: null,
+    color: '#D7AAFF',
+  },
 ]
