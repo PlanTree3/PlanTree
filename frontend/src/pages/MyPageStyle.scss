@@ -1,0 +1,11 @@
+.profileImgBox {
+  @apply justify-center w-3/4 flex;
+}
+
+.addImgBtn {
+  @apply rounded-none mt-6 p-0 bg-inherit w-6 h-6 ml-1 hover:border-0; /* hover:border-0 클래스 유지 */
+}
+
+.selectImg {
+  @apply w-12 h-12;
+}
