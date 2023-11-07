@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { branchList, budsList, seedsList } from '@/components/Tasks'
+import { branchList, budsList, seedsList } from '@/components/Branch/Tasks'
 
 const initialState = {
   // seeds: null,

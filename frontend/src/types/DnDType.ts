@@ -23,7 +23,7 @@ export interface MovableItemProps {
   budName: string
   comments: CommentType[] | null
   index: number
-  moveCardHandler: (dragIndex: number, hoverIndex: number) => void
+  moveHandler: (dragIndex: number, hoverIndex: number) => void
   dayOfWeek: string
   color: string
 }

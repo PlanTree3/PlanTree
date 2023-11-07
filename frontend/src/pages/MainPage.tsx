@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import { COLUMN_NAMES, DAY_NAMES } from '@/types/DnDType'
 import { RootState } from '@/stores/store'
 import { addBuds } from '@/stores/features/branchSlice.ts'
+import '@/styles/main/mainStyle.scss'
+import peroro from '@/asset/test/4.webp'
 
 const MainPage = () => {
   const dispatch = useDispatch()
@@ -97,31 +99,72 @@ const MainPage = () => {
   return (
     <>
       <div>
-        <div>42 번 째 나무</div>
-        <div>
+        <div className="main-tree-check">42 번 째 나무</div>
+        <div className="main-date">
           {monthToday} / {dayToday}
         </div>
       </div>
-      <div>
-        <button onClick={() => sendDays(MONDAY)}>{MONDAY}</button>
-        <button onClick={() => sendDays(TUESDAY)}>{TUESDAY}</button>
-        <button onClick={() => sendDays(WEDNESDAY)}>{WEDNESDAY}</button>
-        <button onClick={() => sendDays(THURSDAY)}>{THURSDAY}</button>
-        <button onClick={() => sendDays(FRIDAY)}>{FRIDAY}</button>
-      </div>
-      {message ? (
-        <div>{message}</div>
-      ) : (
-        <div>
-          <div>To Do</div>
-          <div title={selectDay}>{returnItemsForColumn(selectDay)}</div>
-          <div title={selectDay} style={{ color: 'red' }}>
-            {returnFinishedItemsForColumn(`${selectDay} 끝`)}
+      <div className="main-box-container">
+        <div className="main-arch-container">
+          <button
+            id="monday"
+            onClick={() => sendDays(MONDAY)}
+            className="main-day-btn"
+          >
+            월
+          </button>
+          <button
+            id="tuesday"
+            onClick={() => sendDays(TUESDAY)}
+            className="main-day-btn"
+          >
+            화
+          </button>
+          <button
+            id="wednesday"
+            onClick={() => sendDays(WEDNESDAY)}
+            className="main-day-btn"
+          >
+            수
+          </button>
+          <button
+            id="thursday"
+            onClick={() => sendDays(THURSDAY)}
+            className="main-day-btn"
+          >
+            목
+          </button>
+          <button
+            id="friday"
+            onClick={() => sendDays(FRIDAY)}
+            className="main-day-btn"
+          >
+            금
+          </button>
+          <div className="main-tree-container">
+            <img src={peroro} alt="샘플이미지" className="main-tree-img" />
           </div>
         </div>
-      )}
-      <div>
-        <button onClick={handleBranchPage}>상세 등록 페이지 이동</button>
+        <div>
+          {dayToday === 0 || (dayToday === 6 && <button>회고하러 가기</button>)}
+          {message ? (
+            <div>
+              <div>To Do</div>
+              <div>{message}</div>
+            </div>
+          ) : (
+            <div>
+              <div>To Do</div>
+              <div title={selectDay}>{returnItemsForColumn(selectDay)}</div>
+              <div title={selectDay} style={{ color: 'red' }}>
+                {returnFinishedItemsForColumn(`${selectDay} 끝`)}
+              </div>
+            </div>
+          )}
+          <div>
+            <button onClick={handleBranchPage}>상세 등록 페이지 이동</button>
+          </div>
+        </div>
       </div>
     </>
   )
