@@ -19,6 +19,7 @@ import {
   ForestDetailPage,
   MyPage,
   QuestPage,
+  TreePage,
 } from './pages'
 
 const RoutesComponent = () => (
@@ -39,6 +40,7 @@ const RoutesComponent = () => (
     <Route path="/main" element={<MainPage />} />
     <Route path="/forest" element={<ForestPage />} />
     <Route path="/forest/:id" element={<ForestDetailPage />} />
+    <Route path="/tree/:id" element={<TreePage />} />
     <Route path="budsTest" element={<WeeklyBudsPage />} />
     <Route path="/mypage" element={<MyPage />} />
     <Route path="/quest" element={<QuestPage />} />
