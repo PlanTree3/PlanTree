@@ -4,7 +4,9 @@ import com.plantree.forestservice.domain.branch.domain.QBranch;
 import com.plantree.forestservice.domain.bud.domain.Bud;
 import com.plantree.forestservice.domain.bud.domain.QBud;
 import com.plantree.forestservice.domain.tree.domain.QTree;
+import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -23,14 +25,38 @@ public class BudQueryRepository {
     private final QBud bud = QBud.bud;
 
     public List<Bud> findCurrentBudsByMemberId(UUID memberId) {
-        LocalDate now = LocalDate.now();
-        DayOfWeek currentDayOfWeek = now.getDayOfWeek();
-        LocalDate nextSunday = now.plusDays(DayOfWeek.SUNDAY.getValue() - currentDayOfWeek.getValue());
-
         return jpaQueryFactory.select(bud)
                 .from(bud)
-                .where(bud.branch.tree.eq(JPAExpressions.selectFrom(tree)
-                        .where(tree.studentId.eq(memberId).and(tree.endedAt.eq(nextSunday)))))
+                .where(bud.branch.tree.eq(findCurrentTree(memberId)))
                 .fetch();
     }
+
+    public List<Bud> findCurrentBudsByMemberIds(List<UUID> memberIds) {
+        LocalDate nextSunday = findNextSunday();
+
+        return jpaQueryFactory.selectFrom(bud)
+                .where(bud.studentId.in(memberIds)
+                        .and(bud.branch.tree.in(findCurrentTrees(memberIds))))
+                .fetch();
+    }
+
+    private JPQLQuery<Tree> findCurrentTrees(List<UUID> memberIds) {
+        LocalDate nextSunday = findNextSunday();
+        return JPAExpressions.selectFrom(tree)
+                .where(tree.studentId.in(memberIds).and(tree.endedAt.eq(nextSunday)));
+    }
+
+    private JPQLQuery<Tree> findCurrentTree(UUID memberId) {
+        LocalDate nextSunday = findNextSunday();
+        return JPAExpressions.selectFrom(tree)
+                .where(tree.studentId.eq(memberId).and(tree.endedAt.eq(nextSunday)));
+    }
+
+    private LocalDate findNextSunday() {
+        LocalDate now = LocalDate.now();
+        DayOfWeek currentDayOfWeek = now.getDayOfWeek();
+        return now.plusDays(DayOfWeek.SUNDAY.getValue() - currentDayOfWeek.getValue());
+    }
+
+
 }
