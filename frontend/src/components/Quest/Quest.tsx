@@ -15,12 +15,14 @@ import {
   confirmQuest,
   deleteQuest,
 } from '@/stores/features/questSlice'
+import '@/styles/quest/questStyle.scss'
 
 interface QuestProps {
   questStatus: string
   deleteState: boolean
 }
 
+// eslint-disable-next-line react/prop-types
 const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
   const [open, setOpen] = useState<null | number>(null)
   const dispatch = useDispatch()
@@ -68,9 +70,10 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
   }
   return (
     <>
-      <div>
+      <div className="quest-container">
         {filteredQuests.map((quest: any) => (
           <div
+            className="quest-container-inner"
             key={quest.questId}
             role="button" // 니 역할은 이제 버튼이여
             tabIndex={0}
@@ -133,10 +136,10 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
             <img
               src={getQuestImage(quest)}
               alt="퀘스트이미지"
-              style={{ width: '5vw' }}
+              className="quest-img"
             />
-            <p>{quest.questTitle}</p>
-            <p>{quest.createdAt}</p>
+            <p className="quest-item-title">{quest.questTitle}</p>
+            <p className="quest-item-created">{quest.createdAt}</p>
           </div>
         ))}
       </div>

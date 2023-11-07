@@ -26,6 +26,7 @@ const UserProfileImg = () => {
   ]
 
   const oauthProvider = useSelector((state: any) => state.signup.oauthProvider)
+  const idToken = useSelector((state: any) => state.signup.idToken)
   const userName = useSelector((state: any) => state.signup.name)
   const userBirth = useSelector((state: any) => state.signup.birthday)
   const userRole = useSelector((state: any) => state.signup.role)
@@ -62,6 +63,7 @@ const UserProfileImg = () => {
 
   // 객체에 담아서 백에 보내주자!
   const data = {
+    idToken,
     oauthProvider,
     name: userName,
     birthDate: userBirth,
@@ -85,7 +87,7 @@ const UserProfileImg = () => {
       <div className="mb-3.5">
         {imgList.map((img: string) => (
           <button
-            className="selectImg"
+            className="selectImg p-0 mx-1"
             onClick={() => {
               chooseProfileImg(`src/asset/profile/${img}.jpg`)
               MySwal.close()
@@ -104,17 +106,12 @@ const UserProfileImg = () => {
     MySwal.fire({
       title: '프로필 사진을 골라 주세요',
       html: content,
-      width: 250,
+      width: 300,
       heightAuto: false,
       position: 'center',
       showConfirmButton: false,
       padding: 0,
     })
-    // .then((result) => {
-    //   if (result.isConfirmed) {
-    //     setIsProfileImg(true)
-    //   }
-    // })
   }
 
   return (
@@ -135,8 +132,8 @@ const UserProfileImg = () => {
           )}
         </div>
         <span className="w-3/5 flex">
-          <div className="mx-3 w-max h-min bg-teal-200 border-2 rounded-full border-zinc-950">
-            <div className="mx-4 text-xs">{userRoleKo()}</div>
+          <div className="mx-1 w-max h-min bg-teal-200 border-2 rounded-full border-zinc-950">
+            <div className="mx-1 text-xs">{userRoleKo()}</div>
           </div>
           <div className="w-2/6">
             <div className="title">이름</div>
