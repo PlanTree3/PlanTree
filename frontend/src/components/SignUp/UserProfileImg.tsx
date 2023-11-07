@@ -80,23 +80,19 @@ const UserProfileImg = () => {
     dispatch(addProfileImg(url))
   }
 
-  const openModal = () => {
-    setIsModalOpen(false)
-  }
-
-  const closeModal = () => {
-    setIsModalOpen(true)
-  }
-
   const moveProfileImg = () => {
     const content = (
-      <div>
+      <div className="mb-3.5">
         {imgList.map((img: string) => (
           <button
-            onClick={() => chooseProfileImg(`src/asset/profile/${img}.jpg`)}
+            className="selectImg"
+            onClick={() => {
+              chooseProfileImg(`src/asset/profile/${img}.jpg`)
+              MySwal.close()
+            }}
           >
             <img
-              className="selectImg"
+              className="selectImg m-0"
               src={`src/asset/profile/${img}.jpg`}
               alt={img}
             />
@@ -106,18 +102,13 @@ const UserProfileImg = () => {
     )
 
     MySwal.fire({
-      title: '당신의 원픽은?',
+      title: '프로필 사진을 골라 주세요',
       html: content,
-      width: 800,
-      heightAuto: true,
-      didOpen: () => openModal(),
-      willClose: () => closeModal(),
-
-      showCancelButton: true,
-      confirmButtonText: '선택',
-      cancelButtonText: '취소',
-
-      reverseButtons: true,
+      width: 250,
+      heightAuto: false,
+      position: 'center',
+      showConfirmButton: false,
+      padding: 0,
     })
     // .then((result) => {
     //   if (result.isConfirmed) {
