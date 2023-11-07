@@ -19,6 +19,7 @@ import {
   ForestDetailPage,
   MyPage,
   QuestPage,
+  OidcGoogle,
   TreePage,
 } from './pages'
 
@@ -37,6 +38,7 @@ const RoutesComponent = () => (
     <Route path="/adminGroupRequest" element={<AdminGroupRequestPage />} />
 
     <Route path="/signUp" element={<SignUpPage />} />
+    <Route path="/oidc/google" element={<OidcGoogle />} />
     <Route path="/main" element={<MainPage />} />
     <Route path="/forest" element={<ForestPage />} />
     <Route path="/forest/:id" element={<ForestDetailPage />} />
