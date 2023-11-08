@@ -2,7 +2,7 @@
   @apply space-y-3 h-full overflow-y-auto;
 
   &-tree {
-    @apply flex justify-center;
+    @apply h-4/5 flex justify-center;
   }
   &-title {
     @apply text-xl;

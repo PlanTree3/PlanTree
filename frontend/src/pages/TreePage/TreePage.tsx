@@ -1,4 +1,4 @@
-import { BarChart, DoughnutChart, PieChart } from '@/components'
+import { BarChart, DoughnutChart, PieChart, Tree } from '@/components'
 import './TreePage.scss'
 
 const TreePage = () => {
@@ -6,7 +6,7 @@ const TreePage = () => {
     <div className="tree-page">
       <div className="tree-page-title">언제부터 언제까지</div>
       <div className="tree-page-tree">
-        <img src="/public/plantree2.jpg" alt="" />
+        <Tree />
       </div>
       <div className="tree-page-title">통계</div>
       <div className="tree-page-chart-container">

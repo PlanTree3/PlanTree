@@ -15,6 +15,7 @@ export { BarChart, DoughnutChart, PieChart } from '@/components/Charts'
 
 // ForestCard
 export { default as ForestCard } from '@/components/ForestCard/ForestCard'
+export { default as Tree } from '@/components/Tree/Tree'
 
 //Sidebar
 export { default as SideBar } from '@/components/SideBar/SideBar'
