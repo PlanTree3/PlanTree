@@ -2,6 +2,7 @@ package com.plantree.memberservice.domain.member.domain;
 
 import com.plantree.memberservice.domain.group.domain.GroupStudent;
 import com.plantree.memberservice.domain.group.domain.Nest;
+import com.plantree.memberservice.global.exception.AlreadyNestingException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -28,6 +29,12 @@ public class Student {
     @Column(name = "student_id")
     private Long id;
 
+    @Column
+    private String name;
+
+    @Column
+    private String profileImageUrl;
+
     @OneToMany(mappedBy = "student")
     private List<GroupStudent> studentGroups = new ArrayList<>();
 
@@ -40,7 +47,35 @@ public class Student {
     private Member member;
 
     public Student(Member member) {
+        this.name = member.getName();
+        this.profileImageUrl = member.getProfileImageUrl();
         this.member = member;
         this.member.setStudent(this);
+    }
+
+    public void addStudentGroup(GroupStudent studentGroup) {
+        this.studentGroups.add(studentGroup);
+    }
+
+    public void checkAlreadyNesting() {
+        if (this.nest != null) {
+            throw new AlreadyNestingException();
+        }
+    }
+
+    public void setNest(Nest nest) {
+        this.nest = nest;
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void changeProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public void leaveNest() {
+        this.nest = null;
     }
 }

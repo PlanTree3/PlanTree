@@ -26,7 +26,7 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
         return (exchange, chain) -> {
             ServerHttpRequest originRequest = exchange.getRequest();
             String requestUri = originRequest.getURI()
-                    .getPath();
+                                             .getPath();
             String httpMethod = originRequest.getMethodValue();
 
             if (isCookieNotRequired(requestUri, httpMethod)) {
@@ -37,6 +37,9 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             HttpCookie refreshTokenCookie = getCookieByName(originRequest, REFRESH_TOKEN);
             if (accessTokenCookie == null || refreshTokenCookie == null) {
                 throw new AuthenticationFailException("쿠키가 없습니다.");
+            }
+            if (requestUri.equals("/member/refresh") && httpMethod.equals("POST")) {
+                return chain.filter(exchange);
             }
 
             String accessToken = accessTokenCookie.getValue();
@@ -50,19 +53,19 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             ServerHttpRequest modifiedRequest = mutateRequestAndSetHeaders(originRequest, memberId,
                     role);
             return chain.filter(exchange.mutate()
-                    .request(modifiedRequest)
-                    .build());
+                                        .request(modifiedRequest)
+                                        .build());
         };
     }
 
     private ServerHttpRequest mutateRequestAndSetHeaders(ServerHttpRequest originRequest,
             String memberId, String role) {
         return originRequest.mutate()
-                .headers(httpHeaders -> {
-                    httpHeaders.add("authMember", memberId);
-                    httpHeaders.add("role", role);
-                })
-                .build();
+                            .headers(httpHeaders -> {
+                                httpHeaders.add("authMember", memberId);
+                                httpHeaders.add("role", role);
+                            })
+                            .build();
     }
 
     private void veryfyAuthority(String role, String requestUri, String method) {
@@ -72,17 +75,17 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
     }
 
     private boolean isCookieNotRequired(String requestUri, String httpMethod) {
-        return httpMethod.equals("POST") && (requestUri.equals("/member-service/member")
-                || requestUri.equals("/member-service/member/login") || requestUri.equals(
-                "/member-service/dev/auth/login"));
+        return httpMethod.equals("POST") && (requestUri.equals("/member")
+                || requestUri.equals("/member/login") || requestUri.equals(
+                "/dev/auth/login"));
     }
 
     private HttpCookie getCookieByName(ServerHttpRequest request, String name) {
         if (request.getCookies()
-                .containsKey(ACCESS_TOKEN)) {
+                   .containsKey(ACCESS_TOKEN)) {
             return request.getCookies()
-                    .get(name)
-                    .get(0);
+                          .get(name)
+                          .get(0);
         }
         return null;
     }

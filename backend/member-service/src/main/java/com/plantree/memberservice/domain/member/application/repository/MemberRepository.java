@@ -14,4 +14,10 @@ public interface MemberRepository {
     Member save(Member member);
 
     Optional<Member> findById(UUID memberId);
+
+    Optional<Member> findByIdWithGroup(UUID memberId);
+
+    Optional<Member> findByIdWithGroupTeacher(UUID studentId);
+
+    Optional<Member> findByIdWithNestParent(UUID studentId);
 }
