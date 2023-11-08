@@ -1,13 +1,27 @@
-import { GoogleOAuthProvider } from '@react-oauth/google'
-import RenewalGoogleLogin from './RenewalGoogleLogin.tsx'
+import qs from 'qs'
+import googleBtn from '../asset/login_btn/web_light_sq_na@4x.png'
 
 const Google = () => {
-  const googleKey = import.meta.env.VITE_PUBLIC_GOOGLE_CLIENT_ID
+  const AUTHORIZE_URI = 'https://accounts.google.com/o/oauth2/v2/auth'
+  const GoggleQuery = qs.stringify({
+    client_id: import.meta.env.VITE_PUBLIC_GOOGLE_CLIENT_ID,
+    redirect_uri: 'http://localhost:3000/oidc/google',
+    response_type: 'token id_token',
+    scope: 'openid profile email',
+    nonce:
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15),
+  })
+
+  const loginUrl = `${AUTHORIZE_URI}?${GoggleQuery}`
+  console.log(import.meta.env.VITE_PUBLIC_GOOGLE_CLIENT_ID)
 
   return (
-    <GoogleOAuthProvider clientId={googleKey}>
-      <RenewalGoogleLogin />
-    </GoogleOAuthProvider>
+    <div>
+      <a href={loginUrl}>
+        <img src={googleBtn} alt="googleLogin" />
+      </a>
+    </div>
   )
 }
 

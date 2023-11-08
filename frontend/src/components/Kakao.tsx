@@ -7,6 +7,7 @@ import { addIdToken, addOauthProvider } from '@/stores/features/signupSlice'
 import kakaoBtn from '../asset/login_btn/kakaotalk_sharing_btn_small.png'
 import '../styles/LogIn.scss'
 import { userLogin } from '@/apis/member'
+import { loginCheck } from '@/stores/features/userSlice'
 // import Swal from "sweetalert2";
 // import { AxiosError } from "axios";
 
@@ -36,6 +37,7 @@ const Kakao = () => {
       dispatch(addIdToken(response.response.id_token))
       navigate('/signUp')
     } else {
+      dispatch(loginCheck())
       navigate('/main')
     }
     // catch (error: any) {
