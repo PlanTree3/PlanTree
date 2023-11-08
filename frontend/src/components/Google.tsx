@@ -18,9 +18,6 @@ const Google = () => {
 
   return (
     <div>
-      {/* <GoogleOAuthProvider clientId={googleKey}>
-       <RenewalGoogleLogin />
-     </GoogleOAuthProvider> */}
       <a href={loginUrl}>
         <img src={googleBtn} alt="googleLogin" />
       </a>
