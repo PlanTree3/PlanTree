@@ -4,11 +4,18 @@ import Swal from 'sweetalert2'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 import { ChangeEvent, useState } from 'react'
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import { RootState } from '@/stores/store'
 import { getRandomColor, ReturnItems } from '@/components'
 import { COLUMN_NAMES } from '@/types/DnDType'
 import { addBranches, addSeeds } from '@/stores/features/branchSlice'
 import Column from '@/components/Column'
+import plusIcon from '@/asset/btn/plusIcon.svg'
 
 const ItemPlacement = () => {
   const navigate = useNavigate()
@@ -19,6 +26,8 @@ const ItemPlacement = () => {
   const [newText, setNewText] = useState('')
   const [newTitle, setNewTitle] = useState('')
   const [selectedBranchId, setSelectedBranchId] = useState(0)
+  const [open, setOpen] = useState(false)
+  const [openSeed, setOpenSeed] = useState(false)
   const {
     DEFAULT,
     MONDAY,
@@ -52,6 +61,7 @@ const ItemPlacement = () => {
         const newSeeds = [...seeds, newItem]
         dispatch(addSeeds(newSeeds))
         setNewText('')
+        setOpenSeed(false)
       } else {
         Swal.fire({
           title: '씨앗의 이름은 2글자 이상이어야 합니다.',
@@ -78,6 +88,7 @@ const ItemPlacement = () => {
       const newBranches = [...branches, newItem]
       dispatch(addBranches(newBranches))
       setNewTitle('')
+      setOpen(false)
     } else {
       Swal.fire({
         title: '가지의 이름은 2글자 이상이어야 합니다.',
@@ -94,43 +105,103 @@ const ItemPlacement = () => {
     navigate('/main')
   }
 
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const handleClickOpenCreateSeed = () => {
+    setOpenSeed(true)
+  }
+  const handleCloseCreateSeed = () => {
+    setOpenSeed(false)
+  }
   return (
     <>
       <DndProvider backend={HTML5Backend}>
-        <div>
+        <div className="dnd-box-container">
           <div>
-            <input type="text" value={newTitle} onChange={handleValueTitle} />
-            <button onClick={createBranch}>가지 생성 버튼</button>
+            {branches.map((branch: any) => (
+              <button
+                key={branch.branchId}
+                onClick={() =>
+                  handleBranchSelect(branch.branchId, branch.color)
+                }
+                style={{
+                  backgroundColor:
+                    selectedBranchId === branch.branchId
+                      ? 'lightgray'
+                      : branch.color,
+                  color:
+                    selectedBranchId === branch.branchId ? 'white' : 'black',
+                }}
+              >
+                {branch.branchName}
+              </button>
+            ))}
+            <button className="dnd-add-btn" onClick={handleClickOpen}>
+              <img src={plusIcon} alt="추가" />
+            </button>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>가지 만들기</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  새로운 일정을 등록할 가지를 입력해주세요
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="가지 이름"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value={newTitle}
+                  onChange={handleValueTitle}
+                />
+              </DialogContent>
+              <DialogActions>
+                <button onClick={handleClose}>취소</button>
+                <button onClick={createBranch}>등록</button>
+              </DialogActions>
+            </Dialog>
           </div>
-          <div>
-            가지 리스트 :
-            <div>
-              {branches.map((branch: any) => (
-                <button
-                  key={branch.branchId}
-                  onClick={() =>
-                    handleBranchSelect(branch.branchId, branch.color)
-                  }
-                  style={{
-                    backgroundColor:
-                      selectedBranchId === branch.branchId
-                        ? 'lightgray'
-                        : branch.color,
-                    color:
-                      selectedBranchId === branch.branchId ? 'white' : 'black',
-                  }}
-                >
-                  {branch.branchName}
-                </button>
-              ))}
-            </div>
+          <div className="dnd-seed-outer-container">
+            {ReturnItems(DEFAULT, selectedBranchId)}
+            <button className="dnd-add-btn" onClick={handleClickOpenCreateSeed}>
+              <img src={plusIcon} alt="추가" />
+            </button>
+            <Dialog open={openSeed} onClose={handleCloseCreateSeed}>
+              <DialogTitle>씨앗 만들기</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  새로운 일정을 입력 해주세요!
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="씨앗 이름"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value={newText}
+                  onChange={handleValueText}
+                />
+              </DialogContent>
+              <DialogActions>
+                <button onClick={handleCloseCreateSeed}>취소</button>
+                <button onClick={createItem}>등록</button>
+              </DialogActions>
+            </Dialog>
           </div>
-          <div>
-            <div>
-              <input type="text" value={newText} onChange={handleValueText} />
-              <button onClick={createItem}>씨앗 생성</button>
-              <div>{ReturnItems(DEFAULT, selectedBranchId)}</div>
-            </div>
+          <div className="dnd_container">
+            <p>월</p>
+            <p>화</p>
+            <p>수</p>
+            <p>목</p>
+            <p>금</p>
           </div>
           <div className="dnd_container">
             <Column title={MONDAY} className="dnd_column dnd_column_shape1">
