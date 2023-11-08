@@ -10,7 +10,7 @@ const defaultUser: UserData = {
   id: 192874278348,
   role: '학생',
   nickname: '요 정 출 현',
-  profileImage: 'https://i.ibb.co/822DPdb/rabbit.jpg',
+  profileImage: 'src/asset/profile/rabbit.jpg',
 }
 const initialState: UserState = {
   isLoggedIn: false,

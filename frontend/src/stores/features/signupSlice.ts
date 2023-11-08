@@ -8,7 +8,7 @@ const initialState: any = {
   name: '정예지',
   birthday: currentDate,
   role: '학생',
-  profileImg: 'srcassetprofile\bear.jpg',
+  profileImg: 'src/asset/profile/bear.jpg',
 }
 
 export const signupSlice = createSlice({

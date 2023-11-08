@@ -10,7 +10,6 @@ import { addProfileImg } from '@/stores/features/signupSlice'
 const UserProfileImg = () => {
   const [inputProfileImg, setInputProfileImg] = useState<string>('')
   const [isProfileImg, setIsProfileImg] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const MySwal = withReactContent(Swal)
   const dispatch = useDispatch()
   const imgList: string[] = [
@@ -19,7 +18,7 @@ const UserProfileImg = () => {
     'frog',
     'monkey',
     'pig',
-    'rabit',
+    'rabbit',
     'rat',
     'sheep',
     'tiger',
@@ -121,7 +120,7 @@ const UserProfileImg = () => {
           <LuImagePlus />
         </button>
         <div className="profileImg">
-          {isProfileImg || isModalOpen ? (
+          {isProfileImg ? (
             <img
               className="showProfileImg"
               src={inputProfileImg}
