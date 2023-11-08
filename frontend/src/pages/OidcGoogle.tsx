@@ -27,6 +27,7 @@ const OidcGoogle = () => {
           const loginResult = await userLogin(data)
 
           if (loginResult) {
+            console.log('내가 왕이 될 상인가?')
             dispatch(addOauthProvider('GOOGLE'))
             dispatch(addIdToken(idToken))
             navigate('/signUp')

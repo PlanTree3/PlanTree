@@ -19,6 +19,7 @@ const UserBirth = () => {
   const setDate = (date: Date | null) => {
     if (date !== null) {
       setInputDate(date)
+      console.log(date, typeof date)
       dispatch(addBirthday(date))
     }
   }
