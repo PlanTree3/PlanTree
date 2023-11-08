@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import 'react-datepicker/dist/react-datepicker.css'
-import { ko } from 'date-fns/esm/locale'
 import { LiaBirthdayCakeSolid } from 'react-icons/lia'
 import '../DatePickerStyle.css' // CSS 스타일 파일을 가져오세요.
 import { useDispatch } from 'react-redux'
@@ -19,7 +18,6 @@ const UserBirth = () => {
   const setDate = (date: Date | null) => {
     if (date !== null) {
       setInputDate(date)
-      console.log(date, typeof date)
       dispatch(addBirthday(date))
     }
   }

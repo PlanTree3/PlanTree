@@ -3,15 +3,16 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import '@/styles/fontList.scss'
 import '@/styles/profile.scss'
 import './MyPageStyle.scss'
 
 const MyPage = () => {
   // const userName = useSelector((state: any) => state.user.nickname)
-  const userName = '정예지' // 임시데이터입니당
   // const userRole = useSelector((state: any) => state.user.role)
-  const userRole = 'TEACHER' // 임시 데이터입니당:)
+  const userName = '정예지'
+  const userRole = 'STUDENT'
   const userprofileImage = useSelector((state: any) => state.user.profileImage)
   const [inputProfileImg, setInputProfileImg] = useState<string>(
     userprofileImage || '',
@@ -100,8 +101,8 @@ const MyPage = () => {
 
   return (
     <div className="outer-box">
-      <div>
-        <div className="profileImgBox">
+      <div className="profileBox">
+        <div className="profileImgBox w-full m-0">
           <img
             src={inputProfileImg}
             alt="유저이미지"
@@ -111,19 +112,19 @@ const MyPage = () => {
             <FiPlusCircle />
           </button>
         </div>
-        <div>
+        <div className="profileImgBox pr-6 pt-3">
           {inputUserRole && (
             <div
-              className={`mx-1 w-max h-min border-2 rounded-full border-zinc-950 ${bgColorClass()}`}
+              className={`m-2 w-max h-min border-2 rounded-full border-zinc-950 ${bgColorClass()}`}
             >
-              <div className="mx-1 text-xs">{inputUserRole}</div>
+              <div className="mx-1 text-3xl">{inputUserRole}</div>
             </div>
           )}
           <div className="flex">
-            <div className="nanum p-0.5 rounded-full border-2 border-neutral-400 bg-gray-200">
+            <div className="text-5xl nanum">
               <div>{userName}</div>
             </div>
-            <div className="nanum pt-0.5">님</div>
+            <div className="nanum pt-2 pl-1 text-4xl content-end">님</div>
           </div>
         </div>
       </div>
