@@ -25,3 +25,9 @@ export { default as UserBirth } from '@/components/SignUp/UserBirth'
 export { default as UserName } from '@/components/SignUp/UserName'
 export { default as UserProfileImg } from '@/components/SignUp/UserProfileImg'
 export { default as UserRole } from '@/components/SignUp/UserRole'
+
+// Tutorial
+export { default as Tutorial1 } from '@/components/Tutorial/Tutorial1'
+export { default as Tutorial2 } from '@/components/Tutorial/Tutorial2'
+export { default as Tutorial3 } from '@/components/Tutorial/Tutorial3'
+export { default as LogIn } from '@/components/Tutorial/LogIn'

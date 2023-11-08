@@ -1,24 +1,37 @@
-import { useNavigate } from 'react-router-dom'
-import Button from '@/components/Button/Button'
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react'
+// import required modules
+import { Mousewheel, Pagination } from 'swiper/modules'
+import { Tutorial1, Tutorial2, Tutorial3, LogIn } from '@/components'
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/pagination'
+import './SlideStyle.css'
 
 const Home = () => {
-  const navigate = useNavigate()
-  const handleLogin = () => {
-    navigate('/login')
-  }
-  const handleForest = () => {
-    navigate('/forest')
-  }
   return (
-    <>
-      <h1 className="text-5xl text-blue-300 font-bold">Hey!</h1>
-      <button onClick={handleLogin}>로그인 페이지로</button>
-      <Button
-        className="primary"
-        onClick={handleForest}
-        label="예쁜 카드를 보러 가요"
-      />
-    </>
+    <Swiper
+      pagination={{ clickable: true }}
+      scrollbar={{ draggable: true }}
+      mousewheel
+      keyboard
+      modules={[Mousewheel, Pagination]}
+      className="mySwiper"
+      style={{ height: '700px', width: '100%' }}
+    >
+      <SwiperSlide>
+        <Tutorial1 />
+      </SwiperSlide>
+      <SwiperSlide>
+        <Tutorial2 />
+      </SwiperSlide>
+      <SwiperSlide>
+        <Tutorial3 />
+      </SwiperSlide>
+      <SwiperSlide>
+        <LogIn />
+      </SwiperSlide>
+    </Swiper>
   )
 }
 
