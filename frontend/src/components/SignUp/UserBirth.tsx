@@ -36,6 +36,7 @@ const UserBirth = () => {
             }}
             format="yyyy-MM-dd"
             defaultValue={inputDate}
+            onChange={setDate}
           />
         </DemoContainer>
       </LocalizationProvider>
