@@ -31,12 +31,14 @@ const Kakao = () => {
     // true면 signIn으로 라우팅해
     // 일단 이 함수는 true, false를 return하게 하자!
     const loginResult = await userLogin(data)
+    console.log('로그인 결과', loginResult)
 
     if (loginResult) {
       dispatch(addOauthProvider('KAKAO'))
       dispatch(addIdToken(response.response.id_token))
       navigate('/signUp')
     } else {
+      console.log('어라 이거부터 실행되나???')
       dispatch(loginCheck())
       navigate('/main')
     }

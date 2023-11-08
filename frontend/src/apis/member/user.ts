@@ -8,7 +8,9 @@ const userBaseUrl = 'api/member-service/member'
 const userLogin = async (data: unknown): Promise<AxiosResponse> => {
   return api
     .post(`${userBaseUrl}/login`, data)
-    .then((res) => res.data.isNewMember)
+    .then((res) => {
+      return res.data.data.newMember
+    })
     .catch((error) => {
       throw error
     })
