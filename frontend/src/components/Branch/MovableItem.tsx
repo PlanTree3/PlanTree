@@ -113,25 +113,28 @@ const MovableItem = ({
       style={{ opacity, backgroundColor: color }}
     >
       {idType === 'bud' && (
-        <div>
+        <div
+          role="button"
+          onClick={() => handleComment(comments)}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              handleComment(comments)
+            }
+          }}
+        >
           {budName}
-          <button
-            onClick={() => handleComment(comments)}
-            className="dnd_delete-btn"
-          >
-            +
-          </button>
-          <button onClick={() => removeBud(id)} className="dnd_delete-btn">
-            X
-          </button>
+          {/*<button onClick={() => removeBud(id)} className="dnd_delete-btn">*/}
+          {/*  X*/}
+          {/*</button>*/}
         </div>
       )}
       {idType === 'seed' && (
         <div>
           {budName}
-          <button onClick={() => removeSeed(id)} className="dnd_delete-btn">
-            X
-          </button>
+          {/*<button onClick={() => removeSeed(id)} className="dnd_delete-btn">*/}
+          {/*  X*/}
+          {/*</button>*/}
         </div>
       )}
     </div>
