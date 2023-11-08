@@ -17,6 +17,8 @@
     "@mui/material": "^5.14.16",
     "@mui/x-date-pickers": "^6.18.0",
     "@react-oauth/google": "^0.11.1",
+    "@react-three/drei": "^9.88.11",
+    "@react-three/fiber": "^8.15.10",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/qrcode.react": "^1.0.4",
     "@types/react-modal": "^3.16.2",
@@ -50,6 +52,7 @@
     "sweetalert2-react-content": "^5.0.7",
     "swiper": "^11.0.3",
     "swiper-react": "^1.0.0",
+    "three": "^0.158.0",
     "vite-plugin-eslint": "^1.8.1"
   },
   "devDependencies": {
