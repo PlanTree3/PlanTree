@@ -5,8 +5,6 @@ export interface UserState {
   isLoading: boolean
   isLoggedIn: boolean
   userData: UserData
-  accessToken: string | null
-  refreshToken: string | null
   error: Error | null
 }
 const defaultUser: UserData = {
@@ -19,8 +17,6 @@ const initialState: UserState = {
   isLoading: true,
   isLoggedIn: false,
   userData: defaultUser,
-  accessToken: null,
-  refreshToken: null,
   error: null,
 }
 
@@ -28,6 +24,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    loginCheck: (state) => {
+      state.isLoggedIn = true
+    },
     fetchUserData: (state) => {
       state.isLoading = true
     },
@@ -41,13 +40,13 @@ export const userSlice = createSlice({
     successUserLogout: (state) => {
       state.isLoggedIn = false
       state.userData = defaultUser
-      state.accessToken = null
-      state.refreshToken = null
+      localStorage.clear()
     },
   },
 })
 
 export const {
+  loginCheck,
   fetchUserData,
   saveUserData,
   fetchUserLogout,
