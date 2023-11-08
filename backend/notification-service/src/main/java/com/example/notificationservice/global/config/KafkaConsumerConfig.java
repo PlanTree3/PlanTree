@@ -18,7 +18,7 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 @RequiredArgsConstructor
 public class KafkaConsumerConfig {
 
-    private KafkaProperty kafkaProperty;
+    private final KafkaProperty kafkaProperty;
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
