@@ -19,10 +19,7 @@ import {
   ForestDetailPage,
   MyPage,
   QuestPage,
-<<<<<<< HEAD
-=======
   OidcGoogle,
->>>>>>> 7b402d4cc918984bc8088ef8fb6c38b42dafc4d7
   TreePage,
 } from './pages'
 
