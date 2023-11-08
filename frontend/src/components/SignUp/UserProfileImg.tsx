@@ -7,20 +7,23 @@ import { useDispatch, useSelector } from 'react-redux'
 import { LuImagePlus } from 'react-icons/lu'
 import { userSignup } from '@/apis/member'
 import { addProfileImg } from '@/stores/features/signupSlice'
+import { loginCheck } from '@/stores/features/userSlice'
 
 const UserProfileImg = () => {
   const oauthProvider =
     useSelector((state: any) => state.signup.oauthProvider) ?? 'kakao'
   const idToken = useSelector((state: any) => state.signup.idToken) ?? 123123
   const userName = useSelector((state: any) => state.signup.name) ?? '요정예지'
-  const birthString = useSelector((state: any) => state.signup.userBirth)
-  const userBirth = new Date(birthString) ?? '2023-01-01'
+  const userBirth =
+    useSelector((state: any) => state.signup.birthday) ?? new Date()
 
   const userRole = useSelector((state: any) => state.signup.role) ?? 'STUDENT'
 
   const navigate = useNavigate()
 
-  const [inputProfileImg, setInputProfileImg] = useState<string>('')
+  const [inputProfileImg, setInputProfileImg] = useState<string>(
+    'src/asset/profile/bear.jpg',
+  )
   const [isProfileImg, setIsProfileImg] = useState<boolean>(false)
   const [inputUserRole, setInputUserRole] = useState<string>('')
   const [bgColor, setBgColor] = useState<string>('')
@@ -79,6 +82,7 @@ const UserProfileImg = () => {
   const saveUser = () => {
     console.log(data)
     userSignup(data)
+    dispatch(loginCheck())
     localStorage.clear()
     navigate('/main')
   }
