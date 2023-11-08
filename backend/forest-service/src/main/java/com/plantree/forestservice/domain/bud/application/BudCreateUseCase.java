@@ -29,15 +29,15 @@ public class BudCreateUseCase {
             AuthMember authMember) {
 
         Branch branch = branchRepository.findById(branchId)
-                .orElseThrow(BranchNotFoundException::new);
+                                        .orElseThrow(BranchNotFoundException::new);
         authMemberValidator.checkAuthMemberFromTreeId(treeId, authMember);
 
         return budRepository.save(Bud.builder()
-                .name(name)
-                .day(dayOfWeek)
-                .studentId(authMember.getMemberId())
-                .branch(branch)
-                .build());
+                                     .name(name)
+                                     .day(dayOfWeek)
+                                     .studentId(authMember.getMemberId())
+                                     .branch(branch)
+                                     .build());
 
     }
 }

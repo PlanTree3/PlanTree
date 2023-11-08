@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BudCountResponseDto {
 
-    private UUID StudentId;
+    private UUID studentId;
     private int totalBudCount;
     private int completedBudCount;
 

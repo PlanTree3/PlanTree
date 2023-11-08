@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class FCMInitializer {
 
-    private FCMProperty fcmProperty;
+    private final FCMProperty fcmProperty;
 
     @PostConstruct
     public void initialize() {
