@@ -1,7 +1,7 @@
 export interface UserData {
   id: number
+  role: string
   nickname: string
-  email: string
   profileImage: string
 }
 export interface FetchUserDataResponse {

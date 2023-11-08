@@ -10,12 +10,11 @@ import { FetchUserDataResponse } from '@/types/UserType'
 // import { PayloadAction } from '@reduxjs/toolkit'
 import {
   loginCheck,
-  fetchUserData,
   saveUserData,
   fetchUserLogout,
   successUserLogout,
 } from '@/stores/features/userSlice'
-import { fetchUserDataAPI, LogoutAPI } from '@/apis/userApi'
+import { userInfo, userLogout } from '@/apis/member/user'
 import { handleTokenError } from '@/stores/services/tokenEventSaga'
 
 function* fetchUserDataSaga(): Generator<
@@ -28,7 +27,7 @@ function* fetchUserDataSaga(): Generator<
   let retries = 0
   while (retries < maxRetries) {
     try {
-      const response: AxiosResponse<unknown> = yield call(fetchUserDataAPI)
+      const response: AxiosResponse<unknown> = yield call(userInfo)
       if (response.data) {
         yield put(saveUserData(response.data))
         break
@@ -48,7 +47,7 @@ function* fetchUserLogoutSaga(): Generator<
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  const response: AxiosResponse<unknown> = yield call(LogoutAPI)
+  const response: AxiosResponse<unknown> = yield call(userLogout)
   if (response) {
     yield put(successUserLogout())
     sessionStorage.clear()

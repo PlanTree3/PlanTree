@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '@/apis/member'
 import { addIdToken, addOauthProvider } from '@/stores/features/signupSlice'
+import { loginCheck } from '@/stores/features/userSlice'
 
 const OidcGoogle = () => {
   const dispatch = useDispatch()
@@ -30,6 +31,7 @@ const OidcGoogle = () => {
             dispatch(addIdToken(idToken))
             navigate('/signUp')
           } else {
+            dispatch(loginCheck())
             navigate('/main')
           }
         } catch (error) {
