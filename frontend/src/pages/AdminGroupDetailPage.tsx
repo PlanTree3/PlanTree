@@ -5,6 +5,7 @@ import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
 import './GroupPage.css'
+import { groupCreate } from '@/apis'
 
 // type StudentList = {
 //   students: GroupStudentListResponse;
@@ -47,10 +48,20 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
     // api
     setModalIsOpen(false)
   }
-  const handleGroupName = () => {
-    // api
+  const handleGroupName = async () => {
+    const data = {
+      groupName: inputGroupName,
+    };
+    try {
+      const groupId = '1'
+      const response = await groupCreate(groupId, data);
+      console.log('그룹이름 업뎃', response);
+    } catch (error) {
+      console.error('그룹이름 업뎃 에러', error);
+    }
     setPencilModalIsOpen(false)
   }
+
   // const previousPage = () => {
   //   if (page > 1) {
   //     setPage(page - 1);

@@ -35,7 +35,7 @@ const AdminGroupPage: React.FC = () => {
     axios
       .post(
         // 'http://localhost:8000/api/member-service/group',
-        'http://localhost:8000/api/member-service/dev/auth/login?oauthId=jyTeacher',
+        'http://k9a302a.p.ssafy.io/api/member-service/dev/auth/login?oauthId=jyTeacher',
       )
       .then((response) => {
         console.log('성공', response)
