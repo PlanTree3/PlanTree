@@ -9,6 +9,7 @@ import axios, { AxiosResponse } from 'axios'
 import { FetchUserDataResponse } from '@/types/UserType'
 // import { PayloadAction } from '@reduxjs/toolkit'
 import {
+  loginCheck,
   fetchUserData,
   saveUserData,
   fetchUserLogout,
@@ -55,6 +56,6 @@ function* fetchUserLogoutSaga(): Generator<
 }
 
 export default function* watchFetchUserData() {
-  yield takeLatest(fetchUserData.type, fetchUserDataSaga)
+  yield takeLatest(loginCheck.type, fetchUserDataSaga)
   yield takeLatest(fetchUserLogout.type, fetchUserLogoutSaga)
 }
