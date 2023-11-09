@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // import axios from 'axios';
 import { Link } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
 import './GroupPage.css'
-import { groupCreate } from '@/apis'
+import { groupCreate, groupStudents } from '@/apis'
 
 // type StudentList = {
 //   students: GroupStudentListResponse;
@@ -48,19 +48,35 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
     // api
     setModalIsOpen(false)
   }
+
+  // 그룹이름 수정
   const handleGroupName = async () => {
     const data = {
       groupName: inputGroupName,
-    };
+    }
     try {
       const groupId = '1'
-      const response = await groupCreate(groupId, data);
-      console.log('그룹이름 업뎃', response);
+      const response = await groupCreate(groupId, data)
+      console.log('그룹이름 업뎃', response)
     } catch (error) {
-      console.error('그룹이름 업뎃 에러', error);
+      console.error('그룹이름 업뎃 에러', error)
     }
     setPencilModalIsOpen(false)
   }
+  // 교사의 그룹 학생 리스트 조회
+  const handleGetGroupDetail = async () => {
+    console.log('1')
+    try {
+      console.log('2')
+      const response = await groupStudents
+      console.log('Response:', response)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+  useEffect(() => {
+    handleGetGroupDetail()
+  }, [])
 
   // const previousPage = () => {
   //   if (page > 1) {

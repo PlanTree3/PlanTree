@@ -5,7 +5,7 @@ import QR from 'qrcode.react'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
-import { authApi, groupCreate } from '@/apis'
+import { authApi, groupCreate, teacherGroupList } from '@/apis'
 import { GroupRequest } from '@/types/GroupAdminType'
 import Rooster from '../../public/Rooster.png'
 
@@ -30,20 +30,20 @@ const AdminGroupPage: React.FC = () => {
     }
   }
   // 임시 (뒤에 학생/교사/학부모) -> useState에 넣기
-  useEffect(() => {
-    // API 요청을 보내는 부분
-    axios
-      .post(
-        // 'http://localhost:8000/api/member-service/group',
-        'http://k9a302a.p.ssafy.io/api/member-service/dev/auth/login?oauthId=jyTeacher',
-      )
-      .then((response) => {
-        console.log('성공', response)
-      })
-      .catch((error) => {
-        console.error('오류', error)
-      })
-  }, [])
+  // useEffect(() => {
+  //   // API 요청을 보내는 부분
+  //   axios
+  //     .post(
+  //       // 'http://localhost:8000/api/member-service/group',
+  //       'http://k9a302a.p.ssafy.io/api/member-service/dev/auth/login?oauthId=jyTeacher',
+  //     )
+  //     .then((response) => {
+  //       console.log('성공', response)
+  //     })
+  //     .catch((error) => {
+  //       console.error('오류', error)
+  //     })
+  // }, [])
 
   //그룹생성
 
@@ -60,23 +60,39 @@ const AdminGroupPage: React.FC = () => {
     } catch (error) {
       console.error('Error:', error)
     }
-
-    // }
-    // 그룹 생성 API 호출
-    //   const data: GroupRequest = {
-    //     groupName: inputGroupName,
-    //   }
-    //   try {
-    //     const response = await authApi.post('api/member-service/group', data)
-    //     console.log(data)
-    //     if (response.status === 201) {
-    //       console.log('그룹 생성에 성공했습니다.')
-    //       closeModal()
-    //     }
-    //   } catch (error) {
-    //     console.error('그룹 생성에 실패했습니다.', error)
-    //   }
   }
+
+  // 그룹 리스트 조회
+  const handleGetGroupList = async () => {
+    console.log('1')
+    try {
+      console.log('2')
+      const response = await teacherGroupList
+      console.log('Response:', response)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  useEffect(() => {
+    handleGetGroupList()
+  }, [])
+
+  // }
+  // 그룹 생성 API 호출
+  //   const data: GroupRequest = {
+  //     groupName: inputGroupName,
+  //   }
+  //   try {
+  //     const response = await authApi.post('api/member-service/group', data)
+  //     console.log(data)
+  //     if (response.status === 201) {
+  //       console.log('그룹 생성에 성공했습니다.')
+  //       closeModal()
+  //     }
+  //   } catch (error) {
+  //     console.error('그룹 생성에 실패했습니다.', error)
+  //   }
 
   // 일단 QR 임시
   const createQr = () => {
@@ -189,7 +205,11 @@ const AdminGroupPage: React.FC = () => {
               label="생성하기"
               onClick={handleCreateGroup}
             />
-            <Button className="primary" label="취소" onClick={closeModal} />
+            <Button
+              className="primary ml-4"
+              label="취소"
+              onClick={closeModal}
+            />
           </div>
         }
       />

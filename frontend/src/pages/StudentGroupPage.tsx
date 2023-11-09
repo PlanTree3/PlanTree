@@ -4,22 +4,25 @@ import { Link } from 'react-router-dom'
 import chick from '../../public/chick.png'
 import forest from '../../public/forest_tmp.png'
 import './GroupPage.css'
+import { userGroupList } from '@/apis'
+import { useEffect, useState } from 'react'
 // import StudentGroupPageResponse from '../types/GroupStudentType'
 
 const StudentGroupPage = () => {
-  // const [data, setData] = useState<StudentGroupPageResponse | null>(null);
-
-  // useEffect(() => {
-  // const apiUrl = 'API URL자리임';
-  //   axios
-  //     .get<StudentGroupPageResponse>(apiUrl)
-  //     .then((response) => {
-  //       setData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
+  // 학생의 그룹, 둥지 정보 조회
+  const handleGetList = async () => {
+    console.log('1')
+    try {
+      console.log('2')
+      const response = await userGroupList
+      console.log('Response:', response)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+  useEffect(() => {
+    handleGetList()
+  }, [])
 
   return (
     // <div className="sketchbook">

@@ -60,7 +60,6 @@ const groupStudents = async (groupId: number) => {
     .then((res) => res)
     .catch((err) => err)
 }
-
 export {
   groupCreate,
   groupNameUpdate,
