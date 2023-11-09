@@ -22,7 +22,7 @@ const UserProfileImg = () => {
   const navigate = useNavigate()
 
   const [inputProfileImg, setInputProfileImg] = useState<string>(
-    'src/asset/profile/bear.jpg',
+    'public/profile/bear.jpg',
   )
   const [isProfileImg, setIsProfileImg] = useState<boolean>(false)
   const [inputUserRole, setInputUserRole] = useState<string>('')

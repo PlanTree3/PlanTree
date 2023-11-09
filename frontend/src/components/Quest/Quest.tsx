@@ -7,9 +7,9 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material'
-import questImgNew from '../../../public/asset/test/questIcon_new.png'
-import questImgDefault from '../../../public/asset/test/questIcon_defalut.png'
-import questImgBlack from '../../../public/asset/test/questIcon_black.png'
+import questImgNew from '../../../public/test/questIcon_new.png'
+import questImgDefault from '../../../public/test/questIcon_defalut.png'
+import questImgBlack from '../../../public/test/questIcon_black.png'
 import {
   checkQuest,
   confirmQuest,
