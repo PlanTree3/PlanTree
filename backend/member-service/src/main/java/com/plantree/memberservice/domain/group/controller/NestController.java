@@ -5,6 +5,7 @@ import com.plantree.memberservice.domain.group.application.NestDeleteUseCase;
 import com.plantree.memberservice.domain.group.application.NestJoinUseCase;
 import com.plantree.memberservice.domain.group.application.NestModifyUseCase;
 import com.plantree.memberservice.domain.group.application.NestSearchUseCase;
+import com.plantree.memberservice.domain.group.dto.IsParentOfStudentResponseDto;
 import com.plantree.memberservice.domain.group.dto.request.IsParentOfStudentRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestNameChangeRequestDto;
@@ -71,10 +72,9 @@ public class NestController {
         return HttpResponse.ok(HttpStatus.OK, "삭제 성공");
     }
 
-    @GetMapping("/check-parent")
-    public ResponseEntity<?> getIsParentOfStudent(
+    @PostMapping("/check-parent")
+    public IsParentOfStudentResponseDto getIsParentOfStudent(
             @RequestBody IsParentOfStudentRequestDto isParentOfStudentRequestDto) {
-        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
-                nestSearchUseCase.getIsParentOfStudent(isParentOfStudentRequestDto));
+        return nestSearchUseCase.getIsParentOfStudent(isParentOfStudentRequestDto);
     }
 }

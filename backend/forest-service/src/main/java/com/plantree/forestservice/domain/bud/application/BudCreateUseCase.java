@@ -11,6 +11,7 @@ import com.plantree.forestservice.global.exception.Branch.BranchNotFoundExceptio
 import com.plantree.forestservice.global.util.AuthMemberValidator;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ public class BudCreateUseCase {
     private final BranchRepository branchRepository;
     private final TreeRepository treeRepository;
     private final AuthMemberValidator authMemberValidator;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Transactional
     public Bud createBud(UUID treeId, UUID branchId, String name, Day dayOfWeek,
@@ -31,6 +33,9 @@ public class BudCreateUseCase {
         Branch branch = branchRepository.findById(branchId)
                                         .orElseThrow(BranchNotFoundException::new);
         authMemberValidator.checkAuthMemberFromTreeId(treeId, authMember);
+
+//        System.out.println("kafka send messages");
+//        kafkaTemplate.send("test", "message");
 
         return budRepository.save(Bud.builder()
                                      .name(name)

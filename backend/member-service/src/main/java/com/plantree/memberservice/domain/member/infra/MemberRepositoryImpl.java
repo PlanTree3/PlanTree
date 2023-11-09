@@ -5,6 +5,7 @@ import com.plantree.memberservice.domain.member.domain.Member;
 import com.plantree.memberservice.domain.member.domain.OauthProvider;
 import com.plantree.memberservice.domain.member.infra.jpa.MemberJpaRepository;
 import com.plantree.memberservice.domain.member.infra.query.MemberQueryRepository;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,8 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public Optional<Member> findByOauthProviderAndOauthId(OauthProvider oauthProvider,
             String oauthId) {
-        return memberJpaRepository.findByOauthProviderAndOauthId(oauthProvider, oauthId);
+        return Optional.ofNullable(
+                memberQueryRepository.findByOauthProviderAndOauthId(oauthProvider, oauthId));
     }
 
     @Override
@@ -51,5 +53,10 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public Optional<Member> findByIdWithNestParent(UUID studentId) {
         return Optional.ofNullable(memberQueryRepository.findByIdWithNestParent(studentId));
+    }
+
+    @Override
+    public List<Member> findByIdIn(List<UUID> memberIds) {
+        return memberQueryRepository.findByIdIn(memberIds);
     }
 }
