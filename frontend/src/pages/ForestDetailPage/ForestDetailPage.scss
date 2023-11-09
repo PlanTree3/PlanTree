@@ -1,0 +1,31 @@
+.forest-detail-page-container {
+  @apply space-y-3 h-full flex flex-col;
+}
+
+.forest-detail-date-input {
+  @apply flex justify-between;
+}
+
+.forest-detail {
+  &-title {
+    @apply text-2xl;
+  }
+  &-filter {
+    @apply space-x-3;
+  }
+  &-tree-container {
+    @apply grid grid-cols-2 gap-3 h-full overflow-y-auto;
+  }
+  &-tree-box {
+    @apply flex border-solid border-2 rounded-lg p-3 space-x-3 border-green-500;
+  }
+  &-tree {
+    @apply w-1/2 flex items-center;
+  }
+  &-chart {
+    @apply w-1/2;
+    &-title {
+      @apply flex justify-between items-center;
+    }
+  }
+}

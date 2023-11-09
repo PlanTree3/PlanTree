@@ -1,0 +1,75 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.main-tree-check {
+  font-size: 3vw;
+  font-weight: bold;
+}
+.main-date {
+  font-size: 2vw;
+}
+.main-box-container {
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+}
+.main-arch-container {
+  position: relative;
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+
+.main-day-btn {
+  background-color: #FFACE4;
+  border-radius: 100%;
+  width: 4vw;
+  height: 4vw;
+  font-size: 1vw;
+  font-weight: bold;
+  position: absolute;
+  transform-origin: bottom;
+}
+
+/* 개별 버튼에 대한 위치 설정 */
+#monday {
+  left: 7%;
+  top: 29vh;
+}
+#tuesday {
+  left: 22%;
+  top: 12vh;
+}
+#wednesday {
+  left: 50%;
+  top: 5vh;
+}
+#thursday {
+  left: 78%;
+  top: 12vh;
+}
+#friday {
+  left: 93%;
+  top: 29vh;
+}
+
+.main-tree-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 25vw;
+  height: 25vw;
+  border-radius: 100%;
+  border: 1vw solid slategrey;
+  top: 18vh;
+  align-content: center;
+  align-items: center;
+  left: 25%;
+}
+.main-tree-img {
+  position: relative;
+  width: 23vw;
+  height: 23vw;
+  border-radius: 100%;
+  border: 1vw solid seashell;
+}
