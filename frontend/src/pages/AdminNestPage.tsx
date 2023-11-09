@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react'
+// import React, { useState, useEffect } from 'react'
 // import axios from 'axios'
 import { Link } from 'react-router-dom'
 import './GroupPage.css'
-import Button from '@/components/Button/Button'
+// import Button from '@/components/Button/Button'
 import yeji1 from '../../public/yeji1.png'
 import gijeong1 from '../../public/gijeong1.png'
 import forest from '../../public/forest_tmp.png'
 
 const AdminNestPage = () => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const GroupsPerPage = 5
+  // const [currentPage, setCurrentPage] = useState(1)
+  // const GroupsPerPage = 5
 
   // const indexOfLastGroup = currentPage * GroupsPerPage
   // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage

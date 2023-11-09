@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import axios from 'axios'
-import QR from 'qrcode.react'
+// import QR from 'qrcode.react'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
-import { authApi, groupCreate } from '@/apis'
-import { GroupRequest } from '@/types/GroupAdminType'
-import Rooster from '../../public/Rooster.png'
+import { groupCreate } from '@/apis'
+// import { GroupRequest } from '@/types/GroupAdminType'
+// import Rooster from '../../public/Rooster.png'
 
 const AdminGroupPage: React.FC = () => {
   //useState들
@@ -79,19 +79,19 @@ const AdminGroupPage: React.FC = () => {
   }
 
   // 일단 QR 임시
-  const createQr = () => {
-    return (
-      <QR
-        value="https://www.naver.com/"
-        size={500}
-        id="basic"
-        level="H"
-        includeMargin={false} //QR 테두리 여부
-        bgColor="green"
-        fgColor="black"
-      />
-    )
-  }
+  // const createQr = () => {
+  //   return (
+  //     <QR
+  //       value="https://www.naver.com/"
+  //       size={500}
+  //       id="basic"
+  //       level="H"
+  //       includeMargin={false} //QR 테두리 여부
+  //       bgColor="green"
+  //       fgColor="black"
+  //     />
+  //   )
+  // }
   //여기부터는 페이지 넘기면서 조회하는 것 임시
   const GroupsPerPage = 5
   const dummyData = {
@@ -154,6 +154,7 @@ const AdminGroupPage: React.FC = () => {
         <h3>번호 그룹명 시작일 인원</h3>
         {currentGroups.map((group, index: number) => (
           <div>
+            {/* eslint-disable-next-line react/no-array-index-key */}
             <div key={index} className="groupItem">
               <p className="groupInfo">{index + 1 + (currentPage - 1) * 5} </p>
               <p className="groupInfo">{group.groupName} </p>
