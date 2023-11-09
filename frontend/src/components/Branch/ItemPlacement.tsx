@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -17,10 +16,8 @@ import { addBranches, addSeeds } from '@/stores/features/branchSlice'
 import Column from '@/components/Column'
 import plusIcon from '@/asset/btn/plusIcon.svg'
 import writeIcon from '@/asset/btn/writeIcon.svg'
-import deleteIcon from '@/asset/btn/deleteIcon.svg'
 
 const ItemPlacement = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const branches = useSelector((state: RootState) => state.branch.branches)
@@ -102,9 +99,6 @@ const ItemPlacement = () => {
   const handleBranchSelect = (branchId: number, color: string) => {
     setSelectedBranchId(branchId)
     setColors(color)
-  }
-  const handleMainPage = () => {
-    navigate('/main')
   }
 
   const handleClickOpen = () => {
