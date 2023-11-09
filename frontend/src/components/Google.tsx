@@ -1,5 +1,6 @@
 import qs from 'qs'
 import googleBtn from '../asset/login_btn/web_light_sq_na@4x.png'
+import '../styles/LogIn.scss'
 
 const Google = () => {
   const AUTHORIZE_URI = 'https://accounts.google.com/o/oauth2/v2/auth'
@@ -17,7 +18,7 @@ const Google = () => {
   console.log(import.meta.env.VITE_PUBLIC_GOOGLE_CLIENT_ID)
 
   return (
-    <div>
+    <div className="social_login_Gbutton">
       <a href={loginUrl}>
         <img src={googleBtn} alt="googleLogin" />
       </a>

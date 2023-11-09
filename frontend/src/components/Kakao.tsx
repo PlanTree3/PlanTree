@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom' // 라우팅 컴포넌트 밖에�
 // useHistory -> useNavigate
 import { useDispatch } from 'react-redux'
 import { addIdToken, addOauthProvider } from '@/stores/features/signupSlice'
-import kakaoBtn from '../asset/login_btn/kakaotalk_sharing_btn_small.png'
 import '../styles/LogIn.scss'
 import { userLogin } from '@/apis/member'
 import { loginCheck } from '@/stores/features/userSlice'
@@ -38,7 +37,6 @@ const Kakao = () => {
       dispatch(addIdToken(response.response.id_token))
       navigate('/signUp')
     } else {
-      console.log('어라 이거부터 실행되나???')
       dispatch(loginCheck())
       navigate('/main')
     }
@@ -72,10 +70,9 @@ const Kakao = () => {
         <button className="social_login_button" onClick={onClick}>
           <img
             className="social_login_img"
-            src={kakaoBtn}
+            src="src/asset/login_btn/kakaotalk_sharing_btn_small.png"
             alt="카카오 로그인"
           />
-          <span>카카오로 로그인</span>
         </button>
       )}
     />

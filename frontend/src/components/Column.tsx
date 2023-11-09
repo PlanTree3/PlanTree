@@ -9,7 +9,6 @@ const Column = ({ children, className, title }: ColumnProps) => {
   })
   return (
     <div ref={drop} className={className}>
-      {title}
       {children}
     </div>
   )
