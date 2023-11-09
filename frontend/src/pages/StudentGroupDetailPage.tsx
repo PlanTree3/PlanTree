@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 // import axios from 'axios';
 import './GroupPage.css'
@@ -7,9 +6,9 @@ import yeji1 from '../../public/yeji1.png'
 import gijeong1 from '../../public/gijeong1.png'
 
 const StudentGroupDetailPage = () => {
-  const [currentPage, setCurrentPage] = useState(1)
+  // const [currentPage, setCurrentPage] = useState(1)
 
-  const GroupsPerPage = 5
+  // const GroupsPerPage = 5
   // const indexOfLastGroup = currentPage * GroupsPerPage
   // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
   // const currentGroups = dummyData.data.groups.slice(

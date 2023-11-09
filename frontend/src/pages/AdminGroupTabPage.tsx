@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+// import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 // import axios from 'axios';
 import Rooster from '../../public/Rooster.png'
 import Seal from '../../public/Seal.png'
 import './GroupPage.css'
-import AdminGroupPage from './AdminGroupPage'
+// import AdminGroupPage from './AdminGroupPage'
 
 const AdminGroupTabPage = () => {
   return (
