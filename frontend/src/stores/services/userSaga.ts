@@ -7,7 +7,6 @@ import {
 } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { FetchUserDataResponse } from '@/types/UserType'
-// import { PayloadAction } from '@reduxjs/toolkit'
 import {
   loginCheck,
   saveUserData,
@@ -18,30 +17,19 @@ import { userInfo, userLogout } from '@/apis/member/user'
 import { handleTokenError } from '@/stores/services/tokenEventSaga'
 
 function* fetchUserDataSaga(): Generator<
-  // action: PayloadAction<FetchUserDataPayload>,
   CallEffect | PutEffect,
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  const maxRetries = 2
-  let retries = 0
-  while (retries < maxRetries) {
-    try {
-      const response: AxiosResponse<unknown> = yield call(userInfo)
-      if (response.data) {
-        yield put(saveUserData(response.data))
-        break
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        yield* handleTokenError(error)
-        retries += 1
-      } else {
-        break
-      }
-    }
+  console.log('사가 실행되고 있음???')
+  const response: AxiosResponse<unknown> = yield call(userInfo)
+  if (response.data) {
+    console.log('data: ', response.data)
+    // 여기서 saveUserData 액션을 dispatch 합니다.
+    yield put(saveUserData(response.data))
   }
 }
+
 function* fetchUserLogoutSaga(): Generator<
   CallEffect | PutEffect,
   void,
@@ -54,7 +42,7 @@ function* fetchUserLogoutSaga(): Generator<
   }
 }
 
-export default function* watchFetchUserData() {
+export function* watchFetchUserData() {
   yield takeLatest(loginCheck.type, fetchUserDataSaga)
   yield takeLatest(fetchUserLogout.type, fetchUserLogoutSaga)
 }

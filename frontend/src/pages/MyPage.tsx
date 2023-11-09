@@ -9,10 +9,8 @@ import '@/styles/profile.scss'
 import './MyPageStyle.scss'
 
 const MyPage = () => {
-  // const userName = useSelector((state: any) => state.user.nickname)
-  // const userRole = useSelector((state: any) => state.user.role)
-  const userName = '정예지'
-  const userRole = 'STUDENT'
+  const userName = useSelector((state: any) => state.user.nickname)
+  const userRole = useSelector((state: any) => state.user.role)
   const userprofileImage = useSelector((state: any) => state.user.profileImage)
   const [inputProfileImg, setInputProfileImg] = useState<string>(
     userprofileImage || '',
