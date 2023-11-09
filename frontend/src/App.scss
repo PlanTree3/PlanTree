@@ -7,8 +7,10 @@
   @apply flex h-[90vh];
 }
 .main-page-viewer {
+  z-index: 3;
   background-image: url('/public/sketchbook.png');
   background-size: 100% 100%;
+  margin-left: 5vw;
   @apply w-[90%] p-5 pl-[8vw];
 }
 

@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 // import axios from 'axios';
 import ReactModal from 'react-modal'
-import './SideBar.css'
+import './SideBar.scss'
+import { Link } from 'react-router-dom'
 import bell from '../../../public/bell.png'
+import post1 from '@/asset/sidebar/01_red.png'
+import post2 from '@/asset/sidebar/02_orange.png'
+import post3 from '@/asset/sidebar/03_yellow.png'
+import post4 from '@/asset/sidebar/04_gress.png'
+import post5 from '@/asset/sidebar/05_sky.png'
 
 const SideBar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -16,11 +22,37 @@ const SideBar = () => {
   }
   return (
     <>
-      <div className="post-it">home</div>
-      <div className="post-it">home</div>
-      <div className="post-it">home</div>
-      <div className="post-it">home</div>
-      <img src={bell} alt="" onClick={openModal} />
+      <div className="sidebar-btn">
+        <Link to="/" className="sidebar-btn-deco">
+          <button>
+            <img src={post1} alt="Home" className="btn-deco" />
+          </button>
+        </Link>
+        <Link to="/main" className="sidebar-btn-deco">
+          <button>
+            <img src={post2} alt="Main" className="btn-deco" />
+          </button>
+        </Link>
+        <Link to="/branch" className="sidebar-btn-deco">
+          <button>
+            <img src={post3} alt="Branch" className="btn-deco" />
+          </button>
+        </Link>
+        <Link to="/mypage" className="sidebar-btn-deco">
+          <button>
+            <img src={post4} alt="Mypage" className="btn-deco" />
+          </button>
+        </Link>
+        <Link to="/quest" className="sidebar-btn-deco">
+          <button>
+            <img src={post5} alt="Quest" className="btn-deco" />
+          </button>
+        </Link>
+      </div>
+      <button onClick={openModal} className="sidebar-bell">
+        <img src={bell} alt="알람" className="sidebar-bell-img" />
+      </button>
+
       <ReactModal
         isOpen={modalIsOpen}
         ariaHideApp={false}
