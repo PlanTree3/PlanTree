@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 // import { Link } from 'react-router-dom'
-import axios from 'axios'
+// import axios from 'axios'
 // import QR from 'qrcode.react'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
-import { authApi, groupCreate, teacherGroupList } from '@/apis'
-import { GroupRequest } from '@/types/GroupAdminType'
-import Rooster from '../../public/Rooster.png'
+// import { authApi, groupCreate, teacherGroupList } from '@/apis'
+// import { GroupRequest } from '@/types/GroupAdminType'
 
 const AdminGroupPage: React.FC = () => {
   //useState들

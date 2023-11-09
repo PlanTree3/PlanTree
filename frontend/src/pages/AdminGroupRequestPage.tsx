@@ -3,17 +3,47 @@
 import { Link } from 'react-router-dom'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
+import { groupJoinAccept, groupJoinRefuse } from '@/apis'
 
 const AdminGroupRequestPage = () => {
   // const [currentPage, setCurrentPage] = useState(1)
   // const GroupsPerPage = 5
 
+  //그룹 가입 수락
+  const memberId = 1
+  const data = { memberId: memberId }
+  const handleGroupAccept = async () => {
+    console.log('1')
+    try {
+      console.log('2')
+      const response = await groupJoinAccept(data)
+      console.log('Response:', response)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  //그룹 가입 거절
+  // const data = { memberId: memberId }
+  const handleGroupRefuse = async () => {
+    console.log('1')
+    try {
+      console.log('2')
+      const response = await groupJoinRefuse(data)
+      console.log('Response:', response)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
   const handleNo = () => {
     console.log('nonono')
+    handleGroupRefuse()
   }
 
   const handleYes = () => {
     console.log('yes!!')
+    handleGroupAccept()
   }
 
   // const indexOfLastGroup = currentPage * GroupsPerPage

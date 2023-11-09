@@ -45,6 +45,14 @@ const groupJoinAccept = async (groupId: number) => {
     .catch((err) => console.log(err))
 }
 
+// 그룹 가입 거절
+const groupJoinRefuse = async (groupId: number) => {
+  authApi
+    .patch(`${groupBaseUrl}/${groupId}/join-refuse`)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
+}
+
 // 학생의 그룹 상세
 const groupDetail = async (groupId: number) => {
   return authApi
@@ -66,6 +74,7 @@ export {
   groupDelete,
   groupJoinRequest,
   groupJoinAccept,
+  groupJoinRefuse,
   groupDetail,
   groupStudents,
 }
