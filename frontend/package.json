@@ -52,8 +52,7 @@
     "sweetalert2-react-content": "^5.0.7",
     "swiper": "^11.0.3",
     "swiper-react": "^1.0.0",
-    "three": "^0.158.0",
-    "vite-plugin-eslint": "^1.8.1"
+    "three": "^0.158.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.200",
@@ -80,6 +79,7 @@
     "sass": "^1.69.5",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-eslint": "^1.8.1"
   }
 }
