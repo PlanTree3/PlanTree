@@ -5,6 +5,9 @@ import com.plantree.memberservice.domain.group.application.GroupDeleteUseCase;
 import com.plantree.memberservice.domain.group.application.GroupJoinUseCase;
 import com.plantree.memberservice.domain.group.application.GroupModifyUseCase;
 import com.plantree.memberservice.domain.group.application.GroupSearchUseCase;
+import com.plantree.memberservice.domain.group.dto.GroupStudentIdsResponseDto;
+import com.plantree.memberservice.domain.group.dto.IsTeacherOfGroupResponseDto;
+import com.plantree.memberservice.domain.group.dto.IsTeacherOfStudentResponseDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinAcceptRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinRefuseRequestDto;
@@ -109,24 +112,21 @@ public class GroupController {
         return HttpResponse.ok(HttpStatus.OK, "삭제 성공");
     }
 
-    @GetMapping("/{groupId}/student-id")
-    public ResponseEntity<?> searchStudentIds(@PathVariable UUID groupId) {
-        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
-                groupSearchUseCase.searchStudentIds(groupId));
+    @PostMapping("/{groupId}/student-id")
+    public GroupStudentIdsResponseDto searchStudentIds(@PathVariable UUID groupId) {
+        return groupSearchUseCase.searchStudentIds(groupId);
     }
 
-    @GetMapping("/student/check-leader")
-    public ResponseEntity<?> getIsTeacherOfStudent(
+    @PostMapping("/student/check-leader")
+    public IsTeacherOfStudentResponseDto getIsTeacherOfStudent(
             @RequestBody IsTeacherOfStudentRequestDto isTeacherOfStudentRequestDto) {
-        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
-                groupSearchUseCase.getIsTeacherOfStudent(isTeacherOfStudentRequestDto));
+        return groupSearchUseCase.getIsTeacherOfStudent(isTeacherOfStudentRequestDto);
     }
 
-    @GetMapping("/{groupId}/check-leader")
-    public ResponseEntity<?> getIsTeacherOfGroup(@PathVariable UUID groupId,
+    @PostMapping("/{groupId}/check-leader")
+    public IsTeacherOfGroupResponseDto getIsTeacherOfGroup(@PathVariable UUID groupId,
             @RequestBody IsTeacherOfGroupRequestDto isTeacherOfGroupRequestDto) {
-        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
-                groupSearchUseCase.getIsTeacherOfGroup(groupId, isTeacherOfGroupRequestDto));
+        return groupSearchUseCase.getIsTeacherOfGroup(groupId, isTeacherOfGroupRequestDto);
     }
 
 }

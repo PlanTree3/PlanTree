@@ -5,7 +5,9 @@ import com.plantree.memberservice.domain.group.domain.Nest;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lombok.Getter;
 
+@Getter
 public class BudCountRequestDto {
 
     private List<UUID> studentIds;
