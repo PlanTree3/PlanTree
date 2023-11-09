@@ -11,7 +11,7 @@ const ReturnItems = (columnName: string, selectedBranchId: number) => {
       selectedBranchId === null || seed.branchId === selectedBranchId,
   )
   return (
-    <div className="dnd-seed-inner-container">
+    <>
       {filteredSeeds
         .filter((seed: any) => seed.dayOfWeek === columnName)
         .map((seed: any, index: number) => {
@@ -46,7 +46,7 @@ const ReturnItems = (columnName: string, selectedBranchId: number) => {
             />
           )
         })}
-    </div>
+    </>
   )
 }
 

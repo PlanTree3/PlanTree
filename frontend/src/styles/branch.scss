@@ -31,40 +31,31 @@
 }
 
 .dnd-seed-outer-container {
-  width: 78vw;
+  width: 75vw;
   //background-color: #8595a9;
   border-radius: 1vw;
   display: grid;
-}
-
-.dnd-seed-inner-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  margin: 1vh 1vw;
-  gap: 0.5vw
-}
-
-.dnd-seed-outer-container>.dnd-seed-inner-container {
-  justify-content: flex-start;
+  margin-bottom: 10vh;
+  min-height: 8vh;
+  grid-template-columns: repeat(auto-fill, minmax(8vw, 1fr));
+  padding: 1vw;
 }
 
 .dnd_container {
   display: flex;
   flex-direction: row;
+  width: 98%;
   justify-content: space-around;
-  //background-color: #EE7279;
+  margin-bottom: 3vh;
 }
 
 .dnd_column {
-  min-height: 10vh;
+  min-height: 20vh;
   width: 14vw;
-  margin: 0.5vw;
+  padding: 1vw;
   border-radius: 1vw;
-  //box-shadow: 0.3vw 0.3vh 0.5vw rgba(0, 0, 0, 0.5);
   display: flex;
-  //justify-content: center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -96,7 +87,7 @@
   border-radius: 1vw;
   height: 3vh;
   width: 5vw;
-  margin: 0.2vh 0.2vw;
+  margin: 1vh 0.5vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,13 +105,48 @@
   display: block;
 }
 
-.dnd-add-btn {
+.dnd-branch-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8vw, 1fr));
+  margin: 5vh 0;
+}
+
+.dnd-add-branch-btn {
   //background-color: red;
   display: flex;
   width: 4vw;
-  height: 4vh;
+  height: 5vh;
 }
-.dnd-add-btn > img {
+
+.dnd-add-branch-btn > img {
+  width: 2vw;
+  height: 2vh;
+  align-items: center;
+}
+
+.dnd-branch-btn {
+  position: relative;
+  display: flex;
+  width: 10vw;
+  height: 5vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.dnd-create-btn-box{
+  grid-template-columns: repeat(auto-fill, minmax(5vw, 1fr));
+  display: grid;
+  justify-content: end;
+  align-items: start;
+}
+.dnd-add-seed-btn {
+  display: flex;
+  align-items: center;
+  background-color: lightgray;
+  width: 4vw;
+  height: 5vh;
+}
+.dnd-add-branch-btn > img {
   width: 2vw;
   height: 2vh;
 }
