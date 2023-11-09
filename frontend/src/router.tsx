@@ -43,7 +43,7 @@ const RoutesComponent = () => (
     <Route path="/forest" element={<ForestPage />} />
     <Route path="/forest/:id" element={<ForestDetailPage />} />
     <Route path="/tree/:id" element={<TreePage />} />
-    <Route path="budsTest" element={<WeeklyBudsPage />} />
+    <Route path="/branch" element={<WeeklyBudsPage />} />
     <Route path="/mypage" element={<MyPage />} />
     <Route path="/quest" element={<QuestPage />} />
     <Route path="*" element={<NotFoundPage />} />
