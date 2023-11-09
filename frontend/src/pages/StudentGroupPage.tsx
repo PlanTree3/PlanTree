@@ -1,11 +1,10 @@
-// import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react'
 // import axios from 'axios';
 import { Link } from 'react-router-dom'
 import chick from '../../public/chick.png'
 import forest from '../../public/forest_tmp.png'
 import './GroupPage.css'
 import { userGroupList } from '@/apis'
-import { useEffect, useState } from 'react'
 // import StudentGroupPageResponse from '../types/GroupStudentType'
 
 const StudentGroupPage = () => {

@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import '@/styles/fontList.scss'
 import '@/styles/profile.scss'
 import './MyPageStyle.scss'
@@ -110,6 +110,7 @@ const MyPage = () => {
             alt="유저이미지"
             className="w-2/5 h-2/5 mypage-image-container"
           />
+          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <button className="addImgBtn" onClick={() => moveProfileImg()}>
             <FiPlusCircle />
           </button>

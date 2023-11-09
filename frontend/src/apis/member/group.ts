@@ -4,9 +4,9 @@ import { authApi } from '@/apis'
 const groupBaseUrl = 'api/member-service/group'
 
 // 그룹 생성
-const groupCreate = async (
-  data: AxiosRequestConfig,
-): Promise<AxiosResponse> => {
+const groupCreate = async (data: {
+  groupName: string
+}): Promise<AxiosResponse> => {
   return authApi
     .post(`${groupBaseUrl}`, data)
     .then((res) => res.data)

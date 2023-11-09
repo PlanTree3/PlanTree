@@ -11,8 +11,9 @@ import { groupCreate, groupStudents } from '@/apis'
 //   students: GroupStudentListResponse;
 // };
 
-const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
-  const [page, setPage] = useState(1)
+const AdminGroupDetailPage: React.FC<any> = ({ students }) => {
+  // const [page, setPage] = useState(1)
+  console.log(students)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [pencilModalIsOpen, setPencilModalIsOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
@@ -37,10 +38,14 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
     setPencilModalIsOpen(false)
   }
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: {
+    target: { value: React.SetStateAction<string> }
+  }) => {
     setInputValue(e.target.value)
   }
-  const handleGroupNameInputChange = (e) => {
+  const handleGroupNameInputChange = (e: {
+    target: { value: React.SetStateAction<string> }
+  }) => {
     setInputGroupName(e.target.value)
   }
 
@@ -102,7 +107,9 @@ const AdminGroupDetailPage: React.FC<StudentList> = ({ students }) => {
   return (
     <div>
       <div className="flex flex-row">
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
         <div className="font-semibold text-2xl"> '현재 그룹 이름'의 그룹원</div>
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
         <img className="mx-4" src={pencil} alt="" onClick={openPencilModal} />
         <Button
           label="가지 일괄 등록"

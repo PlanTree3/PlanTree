@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 // import axios from 'axios';
 import './GroupPage.css'
 import Seal from '../../public/Seal.png'
-import yeji1 from '../../public/yeji1.png'
-import gijeong1 from '../../public/gijeong1.png'
+// import yeji1 from '../../public/yeji1.png'
+// import gijeong1 from '../../public/gijeong1.png'
 import { groupDetail } from '@/apis'
 
 const StudentGroupDetailPage = () => {
-  const [currentPage, setCurrentPage] = useState(1)
+  // const [currentPage, setCurrentPage] = useState(1)
 
-  const GroupsPerPage = 5
+  // const GroupsPerPage = 5
 
   //학생의 그룹 상세 조회
   const handleGetGroupDetail = async () => {
@@ -27,6 +27,7 @@ const StudentGroupDetailPage = () => {
   useEffect(() => {
     handleGetGroupDetail()
   }, [])
+
   // const indexOfLastGroup = currentPage * GroupsPerPage
   // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
   // const currentGroups = dummyData.data.groups.slice(

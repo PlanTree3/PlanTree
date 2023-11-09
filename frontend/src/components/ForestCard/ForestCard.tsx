@@ -1,4 +1,4 @@
-import Atropos from 'atropos/react'
+import { Atropos } from 'atropos/react'
 import './ForestCard.css'
 import { useNavigate } from 'react-router-dom'
 import skyImage from '../../../public/atropos/sun-3588618_1280.jpg'

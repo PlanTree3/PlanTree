@@ -12,11 +12,11 @@ import { nestNameUpdate, nestStudents } from '@/apis'
 
 const AdminNestPage = () => {
   const [page, setPage] = useState(1)
-  const [currentPage, setCurrentPage] = useState(1)
   const [pencilModalIsOpen, setPencilModalIsOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [inputNestName, setInputNestName] = useState('')
-  const GroupsPerPage = 5
+  // const [currentPage, setCurrentPage] = useState(1)
+  // const GroupsPerPage = 5
 
   // const indexOfLastGroup = currentPage * GroupsPerPage
   // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
