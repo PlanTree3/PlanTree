@@ -1,5 +1,5 @@
 import qs from 'qs'
-import googleBtn from '../asset/login_btn/web_light_sq_na@4x.png'
+import googleBtn from '../../public/asset/login_btn/web_light_sq_na@4x.png'
 import '../styles/LogIn.scss'
 
 const Google = () => {

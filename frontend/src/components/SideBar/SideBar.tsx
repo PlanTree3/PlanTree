@@ -3,12 +3,12 @@ import { useState } from 'react'
 import ReactModal from 'react-modal'
 import './SideBar.scss'
 import { Link } from 'react-router-dom'
+import post2 from '../../../public/asset/sidebar/02_orange.png'
+import post3 from '../../../public/asset/sidebar/03_yellow.png'
+import post4 from '../../../public/asset/sidebar/04_gress.png'
+import post5 from '../../../public/asset/sidebar/05_sky.png'
+import post1 from '../../../public/asset/sidebar/01_red.png'
 import bell from '../../../public/bell.png'
-import post1 from '@/asset/sidebar/01_red.png'
-import post2 from '@/asset/sidebar/02_orange.png'
-import post3 from '@/asset/sidebar/03_yellow.png'
-import post4 from '@/asset/sidebar/04_gress.png'
-import post5 from '@/asset/sidebar/05_sky.png'
 
 const SideBar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
