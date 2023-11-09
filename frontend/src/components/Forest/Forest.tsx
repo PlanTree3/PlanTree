@@ -1471,7 +1471,7 @@ const Forest = () => {
     <Canvas
       camera={{
         fov: 75,
-        position: [37, 0, 0],
+        position: [100, 0, 0],
       }}
     >
       <Suspense fallback={null}>
