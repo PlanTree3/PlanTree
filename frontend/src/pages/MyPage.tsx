@@ -18,6 +18,7 @@ const MyPage = () => {
   const [inputUserRole, setInputUserRole] = useState<string>('')
 
   const MySwal = withReactContent(Swal)
+  // const navigate = useNavigate()
 
   const imgList: string[] = [
     'bear',
@@ -97,6 +98,10 @@ const MyPage = () => {
     }
   }
 
+  //   const moveTutorial = () => {
+  // navigate('')
+  //   }
+
   return (
     <div className="outer-box">
       <div className="profileBox">
@@ -127,10 +132,10 @@ const MyPage = () => {
         </div>
       </div>
       <div className="m-1">
-        <button className="mypage-button">이번 주 통계 보기</button>
-        <button className="mypage-button">전체 통계 보기</button>
-        <button className="mypage-button">가정 통신문 보기</button>
-        <button className="mypage-button">Plan Tree 100% 활용하기</button>
+        <button className="mypageButton">이번 주 통계 보기</button>
+        <button className="mypageButton">전체 통계 보기</button>
+        <button className="mypageButton">가정 통신문 보기</button>
+        <button className="mypageButton">Plan Tree 100% 활용하기</button>
       </div>
     </div>
   )
