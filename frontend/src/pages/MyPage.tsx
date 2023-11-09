@@ -110,6 +110,7 @@ const MyPage = () => {
             alt="유저이미지"
             className="w-2/5 h-2/5 mypage-image-container"
           />
+          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <button className="addImgBtn" onClick={() => moveProfileImg()}>
             <FiPlusCircle />
           </button>
