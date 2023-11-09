@@ -7,10 +7,9 @@ export interface UserState {
   error: Error | null
 }
 const defaultUser: UserData = {
-  id: 192874278348,
-  role: '학생',
-  nickname: '요 정 출 현',
-  profileImage: 'src/asset/profile/rabbit.jpg',
+  role: 'STUDENT',
+  name: '요 정 출 현',
+  profileImageUrl: 'src/asset/profile/rabbit.jpg',
 }
 const initialState: UserState = {
   isLoggedIn: false,
@@ -23,10 +22,14 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     loginCheck: (state) => {
+      console.log('여기는 userSlice의 loginCheck')
+
       state.isLoggedIn = true
     },
     fetchReUserData: () => {},
     saveUserData: (state, action: PayloadAction<any>) => {
+      console.log('여기는 userSlice의 saveUserData')
+
       state.userData = action.payload
     },
     fetchUserLogout: () => {},
