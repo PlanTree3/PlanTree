@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { FiPlusCircle } from 'react-icons/fi'
@@ -18,7 +18,6 @@ const MyPage = () => {
   const [inputUserRole, setInputUserRole] = useState<string>('')
 
   const MySwal = withReactContent(Swal)
-  // const navigate = useNavigate()
 
   const imgList: string[] = [
     'bear',

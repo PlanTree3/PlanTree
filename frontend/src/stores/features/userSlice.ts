@@ -22,14 +22,10 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     loginCheck: (state) => {
-      console.log('여기는 userSlice의 loginCheck')
-
       state.isLoggedIn = true
     },
     fetchReUserData: () => {},
     saveUserData: (state, action: PayloadAction<any>) => {
-      console.log('여기는 userSlice의 saveUserData')
-
       state.userData = action.payload
     },
     fetchUserLogout: () => {},
