@@ -124,17 +124,17 @@ const MovableItem = ({
           }}
         >
           {budName}
-          {/*<button onClick={() => removeBud(id)} className="dnd_delete-btn">*/}
-          {/*  X*/}
-          {/*</button>*/}
+          <button onClick={() => removeBud(id)} className="dnd_delete-btn">
+            X
+          </button>
         </div>
       )}
       {idType === 'seed' && (
         <div>
           {budName}
-          {/*<button onClick={() => removeSeed(id)} className="dnd_delete-btn">*/}
-          {/*  X*/}
-          {/*</button>*/}
+          <button onClick={() => removeSeed(id)} className="dnd_delete-btn">
+            X
+          </button>
         </div>
       )}
     </div>
