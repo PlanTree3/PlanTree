@@ -1,3 +1,7 @@
-.tutorialImg {
-  @apply w-96 h-20 flex;
+.tutorialColAlign {
+  @apply grid grid-cols-2;
 }
+
+// .tutorialRowAlign {
+//   @apply grid grid-rows-1;
+// }
