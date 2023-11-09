@@ -2,9 +2,19 @@
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import { Suspense } from 'react'
+import { GLTF } from 'three-stdlib'
 
-export const Model = (props: any) => {
-  const { nodes, materials } = useGLTF('/tree/scene.gltf')
+type GLTFResult = GLTF & {
+  nodes: {
+    Icosphere_Material001_0: THREE.Mesh
+  }
+  materials: {
+    ['Material.001']: THREE.MeshStandardMaterial
+  }
+}
+
+export const Model = (props: JSX.IntrinsicElements['group']) => {
+  const { nodes, materials } = useGLTF('/models/tree/scene.gltf') as GLTFResult
   return (
     <group {...props} dispose={null}>
       <mesh
