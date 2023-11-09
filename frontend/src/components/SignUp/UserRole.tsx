@@ -6,7 +6,6 @@ const UserRole = () => {
   const dispatch = useDispatch()
 
   const rolesEO: string[] = ['STUDENT', 'PARENT', 'TEACHER']
-  const rolesKO: string[] = ['학생', '학부모', '선생님']
 
   const setRole = (role: string) => {
     dispatch(addRole(role))
