@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 // import axios from 'axios'
 import { Link } from 'react-router-dom'
+import ReactModal from 'react-modal'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
+import pencil from '../../public/pencil.png'
 import Modal from '@/components/Button/Modal'
 import yeji1 from '../../public/yeji1.png'
 import gijeong1 from '../../public/gijeong1.png'
 import forest from '../../public/forest_tmp.png'
-import { divide } from 'lodash'
+// import { divide } from 'lodash'
 import { nestNameUpdate, nestStudents } from '@/apis'
 
 const AdminNestPage = () => {
@@ -85,6 +87,7 @@ const AdminNestPage = () => {
   return (
     <div>
       <div className="font-semibold text-2xl">예지의 푸릇푸릇한 둥지</div>
+      <img className="mx-4" src={pencil} alt="" onClick={openPencilModal} />
       <h2 className="font-semibold text-l">그룹장: 정도현</h2>
       <div className="studentBox">
         <div className="circle-image">
