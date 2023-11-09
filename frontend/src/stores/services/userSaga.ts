@@ -5,56 +5,40 @@ import {
   CallEffect,
   PutEffect,
 } from 'redux-saga/effects'
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { FetchUserDataResponse } from '@/types/UserType'
-// import { PayloadAction } from '@reduxjs/toolkit'
 import {
-  fetchUserData,
+  loginCheck,
   saveUserData,
   fetchUserLogout,
   successUserLogout,
 } from '@/stores/features/userSlice'
-import { fetchUserDataAPI, LogoutAPI } from '@/apis/userApi'
-import { handleTokenError } from '@/stores/services/tokenEventSaga'
+import { userInfo, userLogout } from '@/apis/member/user'
 
 function* fetchUserDataSaga(): Generator<
-  // action: PayloadAction<FetchUserDataPayload>,
   CallEffect | PutEffect,
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  const maxRetries = 2
-  let retries = 0
-  while (retries < maxRetries) {
-    try {
-      const response: AxiosResponse<unknown> = yield call(fetchUserDataAPI)
-      if (response.data) {
-        yield put(saveUserData(response.data))
-        break
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        yield* handleTokenError(error)
-        retries += 1
-      } else {
-        break
-      }
-    }
+  const response: AxiosResponse<unknown> = yield call(userInfo)
+  if (response.data) {
+    yield put(saveUserData(response.data))
   }
 }
+
 function* fetchUserLogoutSaga(): Generator<
   CallEffect | PutEffect,
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  const response: AxiosResponse<unknown> = yield call(LogoutAPI)
+  const response: AxiosResponse<unknown> = yield call(userLogout)
   if (response) {
     yield put(successUserLogout())
     sessionStorage.clear()
   }
 }
 
-export default function* watchFetchUserData() {
-  yield takeLatest(fetchUserData.type, fetchUserDataSaga)
+export function* watchFetchUserData() {
+  yield takeLatest(loginCheck.type, fetchUserDataSaga)
   yield takeLatest(fetchUserLogout.type, fetchUserLogoutSaga)
 }

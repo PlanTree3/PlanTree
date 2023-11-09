@@ -1,5 +1,5 @@
 .profileImgBox {
-  @apply justify-center ml-5 w-3/4 flex;
+  @apply justify-center flex;
 }
 
 .addImgBtn {
@@ -8,4 +8,12 @@
 
 .selectImg {
   @apply w-16 h-16;
+}
+
+.profileBox {
+  @apply border-slate-950;
+}
+
+.mypageButton {
+  @apply w-fit;
 }

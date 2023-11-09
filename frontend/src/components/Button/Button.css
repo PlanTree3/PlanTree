@@ -4,9 +4,6 @@
   font-size: 1vw;
   border-radius: 4px;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .xsmall {
@@ -51,9 +48,9 @@
 }
 
 .red {
-  background-color: #EE7279;
+  background-color: #ee7279;
   color: #fff;
-  border: #EE7279;
+  border: #ee7279;
 }
 
 .button {

@@ -1,20 +1,40 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DoughnutChart } from '@/components'
 import './ForestDetailPage.scss'
 import Button from '@/components/Button/Button'
 
 const ForestDetailPage = () => {
+  const [startedAt, setStartedAt] = useState('')
+  const [endedAt, setEndedAt] = useState('')
   const navigate = useNavigate()
   const handleTreeBox = (treeId: number) => {
     navigate(`/tree/${treeId}`)
   }
+
+  const startedAtOnChange = (e: any) => {
+    setStartedAt(e.target.value)
+  }
+  const endedAtOnChange = (e: any) => {
+    setEndedAt(e.target.value)
+  }
+
+  const handleSearchBtn = () => {
+    console.log(startedAt, endedAt)
+  }
+
   return (
     <div className="forest-detail-page-container">
       <div className="forest-detail-date-input">
         <div className="forest-detail-title">나의 나무</div>
-        <div>
-          <input type="date" id="start" /> 부터
-          <input type="date" id="end" /> 까지
+        <div className="forest-detail-filter">
+          <input type="date" id="start" onChange={startedAtOnChange} /> 부터
+          <input type="date" id="end" onChange={endedAtOnChange} /> 까지
+          <Button
+            label="검색하기"
+            className="xxsmall"
+            onClick={handleSearchBtn}
+          />
         </div>
       </div>
       <div className="forest-detail-tree-container">
@@ -25,7 +45,7 @@ const ForestDetailPage = () => {
           </div>
           <div className="forest-detail-chart">
             <div className="forest-detail-chart-title">
-              나나무
+              <div className="text-lg">나나무</div>
               <Button
                 label="자세히 보기"
                 onClick={() => handleTreeBox(1)}
