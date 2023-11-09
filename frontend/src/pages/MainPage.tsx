@@ -2,11 +2,11 @@ import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import peroro from '../../public/asset/test/4.webp'
 import { COLUMN_NAMES, DAY_NAMES } from '@/types/DnDType'
 import { RootState } from '@/stores/store'
 import { addBuds } from '@/stores/features/branchSlice.ts'
 import '@/styles/main/mainStyle.scss'
-import peroro from '@/asset/test/4.webp'
 
 const MainPage = () => {
   const dispatch = useDispatch()

@@ -9,7 +9,7 @@ export interface UserState {
 const defaultUser: UserData = {
   role: 'STUDENT',
   name: '요 정 출 현',
-  profileImageUrl: 'src/asset/profile/rabbit.jpg',
+  profileImageUrl: 'public/asset/profile/rabbit.jpg',
 }
 const initialState: UserState = {
   isLoggedIn: false,
