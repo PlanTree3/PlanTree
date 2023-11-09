@@ -9,13 +9,13 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
+import plusIcon from '../../../public/asset/btn/plusIcon.svg'
+import writeIcon from '../../../public/asset/btn/writeIcon.svg'
 import { RootState } from '@/stores/store'
 import { getRandomColor, ReturnItems } from '@/components'
 import { COLUMN_NAMES } from '@/types/DnDType'
 import { addBranches, addSeeds } from '@/stores/features/branchSlice'
 import Column from '@/components/Column'
-import plusIcon from '@/asset/btn/plusIcon.svg'
-import writeIcon from '@/asset/btn/writeIcon.svg'
 
 const ItemPlacement = () => {
   const dispatch = useDispatch()
