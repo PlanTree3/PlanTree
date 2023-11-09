@@ -1,15 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './SignUp.scss'
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom'
 import withReactContent from 'sweetalert2-react-content'
 import { useDispatch, useSelector } from 'react-redux'
 import { LuImagePlus } from 'react-icons/lu'
 import { userSignup } from '@/apis/member'
 import { addProfileImg } from '@/stores/features/signupSlice'
+import { loginCheck } from '@/stores/features/userSlice'
 
 const UserProfileImg = () => {
-  const [inputProfileImg, setInputProfileImg] = useState<string>('')
+  const oauthProvider =
+    useSelector((state: any) => state.signup.oauthProvider) ?? 'kakao'
+  const idToken = useSelector((state: any) => state.signup.idToken) ?? 123123
+  const userName = useSelector((state: any) => state.signup.name) ?? '요정예지'
+  const userBirth =
+    useSelector((state: any) => state.signup.birthday) ?? new Date()
+
+  const userRole = useSelector((state: any) => state.signup.role) ?? 'STUDENT'
+
+  const navigate = useNavigate()
+
+  const [inputProfileImg, setInputProfileImg] = useState<string>(
+    'src/asset/profile/bear.jpg',
+  )
   const [isProfileImg, setIsProfileImg] = useState<boolean>(false)
+  const [inputUserRole, setInputUserRole] = useState<string>('')
+  const [bgColor, setBgColor] = useState<string>('')
   const MySwal = withReactContent(Swal)
   const dispatch = useDispatch()
   const imgList: string[] = [
@@ -18,18 +35,11 @@ const UserProfileImg = () => {
     'frog',
     'monkey',
     'pig',
-    'rabit',
+    'rabbit',
     'rat',
     'sheep',
     'tiger',
   ]
-
-  const oauthProvider = useSelector((state: any) => state.signup.oauthProvider)
-  const idToken = useSelector((state: any) => state.signup.idToken)
-  const userName = useSelector((state: any) => state.signup.name)
-  const userBirth = useSelector((state: any) => state.signup.birthday)
-  const userRole = useSelector((state: any) => state.signup.role)
-  const userProfileImg = useSelector((state: any) => state.signup.profileImg)
 
   // userBirth로부터 나이 추출
   const currentDate = new Date()
@@ -40,24 +50,23 @@ const UserProfileImg = () => {
   const userBirthDay = userBirth.getDate()
 
   // userRole 한국어 패치
-  const userRoleKo = () => {
-    let role = ''
-
+  const showUserRole = () => {
     switch (userRole) {
       case 'STUDENT':
-        role = '학생'
+        setInputUserRole('학생')
+        setBgColor('bg-teal-200')
         break
       case 'TEACHER':
-        role = '선생님'
+        setInputUserRole('선생님')
+        setBgColor('bg-amber-400')
         break
       case 'PARENT':
-        role = '학부모'
+        setInputUserRole('학부모')
+        setBgColor('bg-lime-400')
         break
       default:
-        role = ''
+        break
     }
-
-    return role
   }
 
   // 객체에 담아서 백에 보내주자!
@@ -67,12 +76,15 @@ const UserProfileImg = () => {
     name: userName,
     birthDate: userBirth,
     role: userRole,
-    profileImageUrl: userProfileImg,
+    profileImageUrl: inputProfileImg,
   }
 
   const saveUser = () => {
     console.log(data)
     userSignup(data)
+    dispatch(loginCheck())
+    localStorage.clear()
+    navigate('/main')
   }
 
   const chooseProfileImg = (url: string) => {
@@ -113,6 +125,10 @@ const UserProfileImg = () => {
     })
   }
 
+  useEffect(() => {
+    showUserRole()
+  }, [userRole])
+
   return (
     <div className="w-8/12 h-3/5 relative">
       <div className="flex bg-no-repeat w-full h-full bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]">
@@ -131,8 +147,10 @@ const UserProfileImg = () => {
           )}
         </div>
         <span className="w-3/5 flex">
-          <div className="mx-1 w-max h-min bg-teal-200 border-2 rounded-full border-zinc-950">
-            <div className="mx-1 text-xs">{userRoleKo()}</div>
+          <div
+            className={`mx-1 w-max h-min border-2 rounded-full border-zinc-950 ${bgColor}`}
+          >
+            <div className="mx-1 text-xs">{inputUserRole}</div>
           </div>
           <div className="w-2/6">
             <div className="title">이름</div>

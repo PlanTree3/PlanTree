@@ -10,19 +10,25 @@ import {
   questReducer,
 } from '@/stores/features'
 
-const persistConfig = {
+const userPersistConfig = {
   key: 'user',
   storage,
 }
 
-const persistedUserReducer = persistReducer(persistConfig, userReducer)
+const signupPersistConfig = {
+  key: 'signup',
+  storage,
+}
+
+const persistedUserReducer = persistReducer(userPersistConfig, userReducer)
+const persistSignupReducer = persistReducer(signupPersistConfig, signupReducer)
 
 const sagaMiddleware = createSagaMiddleware()
 export const store = configureStore({
   reducer: {
     user: persistedUserReducer,
     branch: branchReducer,
-    signup: signupReducer,
+    signup: persistSignupReducer,
     quest: questReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -31,6 +37,6 @@ export const store = configureStore({
 
 sagaMiddleware.run(rootSaga)
 
-export const persistor = persistStore(store)
+export const persistor: any = persistStore(store)
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

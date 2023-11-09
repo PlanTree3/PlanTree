@@ -1,9 +1,6 @@
 import { useRef } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import { addBuds, addSeeds } from '@/stores/features/branchSlice'
 import {
   DragItem,
@@ -15,6 +12,7 @@ import {
 } from '@/types/DnDType'
 import '@/styles/branch.scss'
 import { RootState } from '@/stores/store'
+import { handleComment } from '@/components'
 
 const MovableItem = ({
   id,
@@ -22,7 +20,7 @@ const MovableItem = ({
   idType,
   comments,
   index,
-  moveCardHandler,
+  moveHandler,
   dayOfWeek,
   color,
 }: MovableItemProps) => {
@@ -60,7 +58,7 @@ const MovableItem = ({
       const hoverClientY = clientOffset.y - hoverBoundingRect.top
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return
-      moveCardHandler(dragIndex, hoverIndex)
+      moveHandler(dragIndex, hoverIndex)
       // eslint-disable-next-line no-param-reassign
       item.index = hoverIndex
     },
@@ -101,44 +99,12 @@ const MovableItem = ({
   const opacity = isDragging ? 0.4 : 1
   drag(drop(ref))
   const removeSeed = (itemId: number) => {
-    const updatedItems = seeds.filter((item) => item.seedId !== itemId)
+    const updatedItems = seeds.filter((item: any) => item.seedId !== itemId)
     dispatch(addSeeds(updatedItems))
   }
   const removeBud = (itemId: number) => {
-    const updatedItems = buds.filter((item) => item.budId !== itemId)
+    const updatedItems = buds.filter((item: any) => item.budId !== itemId)
     dispatch(addBuds(updatedItems))
-  }
-  const MySwal = withReactContent(Swal)
-  const navigate = useNavigate()
-  const handleCommentClick = (commentId: number) => {
-    navigate(`/comments/${commentId}`)
-    Swal.close()
-  }
-  const handleComment = () => {
-    const content = (
-      <div>
-        {comments?.map((comment) => (
-          <div key={comment.commentId}>
-            <br />
-            <button onClick={() => handleCommentClick(comment.commentId)}>
-              {comment.title} : {comment.userName}
-            </button>
-            <br />
-          </div>
-        ))}
-      </div>
-    )
-
-    MySwal.fire({
-      title: 'Comments',
-      html: content,
-      width: 600,
-      customClass: {
-        confirmButton: 'btn btn-primary',
-      },
-      buttonsStyling: false,
-      confirmButtonText: 'Close',
-    })
   }
   return (
     <div
@@ -147,11 +113,17 @@ const MovableItem = ({
       style={{ opacity, backgroundColor: color }}
     >
       {idType === 'bud' && (
-        <div>
+        <div
+          role="button"
+          onClick={() => handleComment(comments)}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              handleComment(comments)
+            }
+          }}
+        >
           {budName}
-          <button onClick={() => handleComment()} className="dnd_delete-btn">
-            +
-          </button>
           <button onClick={() => removeBud(id)} className="dnd_delete-btn">
             X
           </button>

@@ -8,8 +8,13 @@ const userBaseUrl = 'api/member-service/member'
 const userLogin = async (data: unknown): Promise<AxiosResponse> => {
   return api
     .post(`${userBaseUrl}/login`, data)
-    .then((res) => res.data.isNewMember)
-    .catch((error) => {throw error})
+    .then((res) => {
+      console.log(res)
+      return res.data.data.newMember
+    })
+    .catch((error) => {
+      throw error
+    })
 }
 
 // 회원가입
@@ -18,6 +23,16 @@ const userSignup = async (data: unknown): Promise<AxiosResponse> => {
     .post(`${userBaseUrl}`, data)
     .then((res) => res.data.memberId)
     .catch((err) => err)
+}
+
+// 유저 정보 받아오기
+const userInfo = async (): Promise<AxiosResponse> => {
+  return api
+    .get(`${userBaseUrl}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      throw error
+    })
 }
 
 // 토큰 리프레쉬
@@ -64,6 +79,7 @@ const userLogout = async () => authApi.post(`${userBaseUrl}`)
 export {
   userLogin,
   userSignup,
+  userInfo,
   userRefresh,
   userImageUpdate,
   userNameUpdate,

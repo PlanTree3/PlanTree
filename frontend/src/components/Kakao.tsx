@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom' // 라우팅 컴포넌트 밖에�
 // useHistory -> useNavigate
 import { useDispatch } from 'react-redux'
 import { addIdToken, addOauthProvider } from '@/stores/features/signupSlice'
-import kakaoBtn from '../asset/login_btn/kakaotalk_sharing_btn_small.png'
 import '../styles/LogIn.scss'
 import { userLogin } from '@/apis/member'
+import { loginCheck } from '@/stores/features/userSlice'
 // import Swal from "sweetalert2";
 // import { AxiosError } from "axios";
 
@@ -30,12 +30,14 @@ const Kakao = () => {
     // true면 signIn으로 라우팅해
     // 일단 이 함수는 true, false를 return하게 하자!
     const loginResult = await userLogin(data)
+    console.log('로그인 결과', loginResult)
 
     if (loginResult) {
       dispatch(addOauthProvider('KAKAO'))
       dispatch(addIdToken(response.response.id_token))
       navigate('/signUp')
     } else {
+      dispatch(loginCheck())
       navigate('/main')
     }
     // catch (error: any) {
@@ -68,10 +70,9 @@ const Kakao = () => {
         <button className="social_login_button" onClick={onClick}>
           <img
             className="social_login_img"
-            src={kakaoBtn}
+            src="src/asset/login_btn/kakaotalk_sharing_btn_small.png"
             alt="카카오 로그인"
           />
-          <span>카카오로 로그인</span>
         </button>
       )}
     />
