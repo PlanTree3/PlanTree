@@ -26,6 +26,12 @@ public class Teacher {
     @Column(name = "teacher_id")
     private Long id;
 
+    @Column
+    private String name;
+
+    @Column
+    private String profileImageUrl;
+
     @OneToMany(mappedBy = "teacher")
     private List<Group> groups = new ArrayList<>();
 
@@ -34,6 +40,8 @@ public class Teacher {
     private Member member;
 
     public Teacher(Member member) {
+        this.name = member.getName();
+        this.profileImageUrl = member.getProfileImageUrl();
         this.member = member;
         this.member.setTeacher(this);
     }
@@ -45,5 +53,13 @@ public class Teacher {
                            .build();
         this.groups.add(group);
         return group;
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void changeProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }

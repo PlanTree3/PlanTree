@@ -4,11 +4,16 @@ import react from '@vitejs/plugin-react'
 // eslintPlugin()
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), ],
+  plugins: [react()],
   resolve: {
     alias: [{ find: '@', replacement: '/src' }],
   },
   server: {
     port: 3000,
+  },
+  build: {
+    rollupOptions: {
+      external: ['./src/main.tsx'],
+    },
   },
 })

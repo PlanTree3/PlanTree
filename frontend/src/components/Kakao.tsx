@@ -9,7 +9,7 @@ import { userLogin } from '@/apis/member'
 import { loginCheck } from '@/stores/features/userSlice'
 // import Swal from "sweetalert2";
 // import { AxiosError } from "axios";
-import kakaoBTN from '../../public/asset/login_btn/kakaotalk_sharing_btn_small.png'
+import kakaoBTN from '../../public/login_btn/kakaotalk_sharing_btn_small.png'
 
 const Kakao = () => {
   const navigate = useNavigate()

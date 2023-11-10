@@ -9,8 +9,8 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import plusIcon from '../../../public/asset/btn/plusIcon.svg'
-import writeIcon from '../../../public/asset/btn/writeIcon.svg'
+import plusIcon from '../../../public/btn/plusIcon.svg'
+import writeIcon from '../../../public/btn/writeIcon.svg'
 import { RootState } from '@/stores/store'
 import { getRandomColor, ReturnItems } from '@/components'
 import { COLUMN_NAMES } from '@/types/DnDType'
@@ -58,7 +58,12 @@ const ItemPlacement = () => {
           color: colors,
         }
         const newSeeds = [...seeds, newItem]
-        dispatch(addSeeds(newSeeds))
+        const { seedId, ...createdItem } = newItem
+        const data = {
+          newSeeds,
+          createdItem
+        }
+        dispatch(addSeeds(data))
         setNewText('')
         setOpenSeed(false)
       } else {
@@ -85,7 +90,12 @@ const ItemPlacement = () => {
         color: getRandomColor(),
       }
       const newBranches = [...branches, newItem]
-      dispatch(addBranches(newBranches))
+      const { branchId, ...createdItem } = newItem
+      const data = {
+        newBranches,
+        createdItem
+      }
+      dispatch(addBranches(data))
       setNewTitle('')
       setOpen(false)
     } else {

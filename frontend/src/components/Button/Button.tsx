@@ -3,7 +3,9 @@ import './Button.css'
 
 interface ButtonProps {
   label: string | JSX.Element
+  // eslint-disable-next-line react/require-default-props
   className?: string
+  // eslint-disable-next-line react/require-default-props
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
