@@ -113,8 +113,7 @@ const MovableItem = ({
       style={{ opacity, backgroundColor: color }}
     >
       {idType === 'bud' && (
-        <div
-          role="button"
+        <button
           onClick={() => handleComment(comments)}
           tabIndex={0}
           onKeyDown={(e) => {
@@ -127,7 +126,7 @@ const MovableItem = ({
           <button onClick={() => removeBud(id)} className="dnd_delete-btn">
             X
           </button>
-        </div>
+        </button>
       )}
       {idType === 'seed' && (
         <div>

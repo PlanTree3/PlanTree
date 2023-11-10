@@ -13,7 +13,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['/src/main.tsx'],
+      external: ['./src/main.tsx'],
     },
   },
 })
