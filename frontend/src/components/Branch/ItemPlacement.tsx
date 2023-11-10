@@ -58,7 +58,12 @@ const ItemPlacement = () => {
           color: colors,
         }
         const newSeeds = [...seeds, newItem]
-        dispatch(addSeeds(newSeeds))
+        const { seedId, ...createdItem } = newItem
+        const data = {
+          newSeeds,
+          createdItem
+        }
+        dispatch(addSeeds(data))
         setNewText('')
         setOpenSeed(false)
       } else {
@@ -85,7 +90,12 @@ const ItemPlacement = () => {
         color: getRandomColor(),
       }
       const newBranches = [...branches, newItem]
-      dispatch(addBranches(newBranches))
+      const { branchId, ...createdItem } = newItem
+      const data = {
+        newBranches,
+        createdItem
+      }
+      dispatch(addBranches(data))
       setNewTitle('')
       setOpen(false)
     } else {

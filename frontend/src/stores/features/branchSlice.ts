@@ -21,10 +21,14 @@ export const branchSlice = createSlice({
       state.buds = action.payload
     },
     addSeeds: (state, action) => {
-      state.seeds = action.payload
+      state.seeds = action.payload.newSeeds
+      console.log("검증 : ", action.payload.newSeeds)
+      console.log("서버로 보낼 애 : ", action.payload.createdItem)
     },
     addBranches: (state, action) => {
-      state.branches = action.payload
+      state.branches = action.payload.newBranches
+      console.log("검증 : ", action.payload.newBranches)
+      console.log("서버로 보낼 애 : ", action.payload.createdItem)
     },
   },
 })

@@ -11,6 +11,7 @@ const apiInstance = () => {
       'Content-Type': 'application/json;charset=UTF-8',
       Accept: 'application/json,',
     },
+    withCredentials: true,
   })
   return instance
 }
