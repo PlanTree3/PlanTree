@@ -19,6 +19,14 @@ const nestNameUpdate = async (nestId: number, data: AxiosRequestConfig) => {
     .catch((err) => console.log(err))
 }
 
+// 둥지 조회
+const nestCheck = async () => {
+  authApi
+    .get(`${nestBaseUrl}/parent-nest`)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
+}
+
 // 그룹 삭제
 const nestDelete = async (nestId: number) => {
   authApi
@@ -67,4 +75,5 @@ export {
   nestJoinAccept,
   nestDetail,
   nestStudents,
+  nestCheck,
 }

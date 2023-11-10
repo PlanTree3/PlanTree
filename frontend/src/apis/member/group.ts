@@ -64,7 +64,7 @@ const groupDetail = async (groupId: number) => {
 // 그룹 학생 리스트 조회
 const groupStudents = async (groupId: number) => {
   return authApi
-    .get(`${groupBaseUrl}/${groupId}/student`)
+    .get(`${groupBaseUrl}/group/${groupId}/student`)
     .then((res) => res)
     .catch((err) => err)
 }

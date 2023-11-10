@@ -67,7 +67,7 @@ const userGroupList = async () => {
 // 선생의 그룹 리스트 조회
 const teacherGroupList = async () => {
   return authApi
-    .get(`${memberBaseUrl}/teacher-group`)
+    .get(`${memberBaseUrl}/group/teacher-group`)
     .then((res) => res)
     .catch((err) => err)
 }

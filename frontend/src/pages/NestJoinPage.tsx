@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { groupJoinRequest } from '@/apis'
+import { nestJoinRequest } from '@/apis'
 // import axios from 'axios';
 
 const GroupJoinPage: React.FC<any> = ({ groupId }) => {
@@ -8,7 +8,7 @@ const GroupJoinPage: React.FC<any> = ({ groupId }) => {
     console.log('1')
     try {
       console.log('2')
-      const response = await groupJoinRequest(groupId)
+      const response = await nestJoinRequest(groupId)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)
@@ -17,13 +17,13 @@ const GroupJoinPage: React.FC<any> = ({ groupId }) => {
   const navi = useNavigate()
   useEffect(() => {
     handleGroupJoin().then(() => {
-      navi('/studentGroup')
+      navi('/')
     })
   }, [])
 
   return (
     <div>
-      <div>그룹 가입요청이 보내졌습니다.</div>
+      <div>둥지에 가입되었습니다.</div>
     </div>
   )
 }

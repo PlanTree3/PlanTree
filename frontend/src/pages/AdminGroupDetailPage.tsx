@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 // import axios from 'axios';
 import QR from 'qrcode.react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
@@ -91,6 +91,8 @@ const AdminGroupDetailPage: React.FC<any> = ({ groupId }) => {
   useEffect(() => {
     handleGetGroupDetail()
   }, [])
+
+  const navi = useNavigate()
 
   // const previousPage = () => {
   //   if (page > 1) {
@@ -234,7 +236,7 @@ const AdminGroupDetailPage: React.FC<any> = ({ groupId }) => {
         >
           <h1> QR을 찍어 그룹원을 추가해 보세요.</h1>
           <QR
-            value={`https://k9a302a.p.ssafy.io/api/member-service/group/${groupId}/join-request`}
+            value={navi('/groupJoin')}
             size={300}
             id="qr-gen"
             includeMargin={false}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 // import axios from 'axios'
 import { Link } from 'react-router-dom'
+import QR from 'qrcode.react'
 import ReactModal from 'react-modal'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
@@ -10,12 +11,13 @@ import yeji1 from '../../public/yeji1.png'
 import gijeong1 from '../../public/gijeong1.png'
 import forest from '../../public/forest_tmp.png'
 // import { divide } from 'lodash'
-import { nestNameUpdate, nestStudents } from '@/apis'
+import { nestCreate, nestNameUpdate, nestStudents } from '@/apis'
 
 const AdminNestPage = () => {
   const [page, setPage] = useState(1)
   const [pencilModalIsOpen, setPencilModalIsOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [createModalisOpen, setCreateModalisOpen] = useState(false)
   const [inputNestName, setInputNestName] = useState('')
   // const [currentPage, setCurrentPage] = useState(1)
   // const GroupsPerPage = 5
@@ -43,6 +45,14 @@ const AdminNestPage = () => {
   const closeModal = () => {
     setIsOpen(false)
   }
+
+  const openCreateModal = () => {
+    setCreateModalisOpen(true)
+  }
+  const closeCreateModal = () => {
+    setCreateModalisOpen(false)
+  }
+
   const openPencilModal = () => {
     setPencilModalIsOpen(true)
   }
@@ -54,14 +64,29 @@ const AdminNestPage = () => {
   const handleNestNameInputChange = (e) => {
     setInputNestName(e.target.value)
   }
+  //둥지 생성
+  const data = { groupName: inputNestName }
+  const handleCreateNest = async () => {
+    console.log('여기까진??')
+    try {
+      console.log('이것도 되지?')
+      const response = await nestCreate(data)
+      console.log('Response:', response)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+    setIsOpen(false)
+  }
 
+  // 둥지 조회
+
+  // 둥지 이름 변경
   const handleNestName = async () => {
     const data = {
       nestName: inputNestName,
     }
     try {
-      const nestId = '1'
-      const response = await nestNameUpdate(data)
+      const response = await nestNameUpdate(nestId, data)
       console.log('둥지이름 업뎃', response)
     } catch (error) {
       console.error('둥지이름 업뎃 에러', error)
@@ -74,7 +99,7 @@ const AdminNestPage = () => {
     console.log('1')
     try {
       console.log('2')
-      const response = await nestStudents()
+      const response = await nestStudents(nestId)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)
@@ -167,6 +192,31 @@ const AdminNestPage = () => {
         />
         <Button onClick={handleNestName} className="primary" label="저장" />
       </ReactModal>
+      <Modal
+        isOpen={createModalisOpen}
+        onClose={closeCreateModal}
+        content={
+          <div>
+            <div>그룹명을 입력해주세요</div>
+            <input
+              placeholder="ex. 2023 3학년 2반"
+              maxLength={50}
+              onChange={(e) => setInputNestName(e.target.value)}
+              onKeyDown={handleNestNameInputChange}
+            />
+            <Button
+              className="primary"
+              label="생성하기"
+              onClick={handleCreateNest}
+            />
+            <Button
+              className="primary ml-4"
+              label="취소"
+              onClick={closeModal}
+            />
+          </div>
+        }
+      />
     </div>
   )
 }

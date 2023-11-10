@@ -6,6 +6,7 @@ import AdminGroupDetailPage from './pages/AdminGroupDetailPage.tsx'
 import AdminGroupPage from './pages/AdminGroupPage.tsx'
 import AdminNestPage from './pages/AdminNestPage.tsx'
 import AdminGroupRequestPage from './pages/AdminGroupRequestPage.tsx'
+import GroupJoinPage from './pages/GroupJoinPage.tsx'
 
 import {
   Home,
@@ -37,7 +38,7 @@ const RoutesComponent = () => (
     <Route path="/adminGroupDetail" element={<AdminGroupDetailPage />} />
     <Route path="/adminGroupRequest" element={<AdminGroupRequestPage />} />
     {/* QR 연결 페이지 **그룹/둥지 아이디 덧붙여야함 */}
-    <Route path="/groupJoin" element={<AdminGroupRequestPage />} />
+    <Route path="/groupJoin" element={<GroupJoinPage />} />
 
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="/oidc/google" element={<OidcGoogle />} />
