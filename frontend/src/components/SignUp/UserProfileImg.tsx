@@ -118,7 +118,7 @@ const UserProfileImg = () => {
     MySwal.fire({
       title: '프로필 사진을 골라 주세요',
       html: content,
-      width: 300,
+      width: '27%',
       heightAuto: false,
       position: 'center',
       showConfirmButton: false,
