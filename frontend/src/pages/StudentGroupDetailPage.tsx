@@ -1,14 +1,33 @@
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 // import axios from 'axios';
 import './GroupPage.css'
 import Seal from '../../public/Seal.png'
-import yeji1 from '../../public/yeji1.png'
-import gijeong1 from '../../public/gijeong1.png'
+// import yeji1 from '../../public/yeji1.png'
+// import gijeong1 from '../../public/gijeong1.png'
+import { groupDetail } from '@/apis'
 
 const StudentGroupDetailPage = () => {
   // const [currentPage, setCurrentPage] = useState(1)
 
   // const GroupsPerPage = 5
+
+  //학생의 그룹 상세 조회
+  const handleGetGroupDetail = async () => {
+    console.log('1')
+    try {
+      console.log('2')
+      const response = await groupDetail
+      console.log('Response:', response)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  useEffect(() => {
+    handleGetGroupDetail()
+  }, [])
+
   // const indexOfLastGroup = currentPage * GroupsPerPage
   // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
   // const currentGroups = dummyData.data.groups.slice(
@@ -42,9 +61,9 @@ const StudentGroupDetailPage = () => {
         </div>
       </div>
       <div className="studentBox">
-        <div className="circle-imageS">
+        {/* <div className="circle-imageS">
           <img src={yeji1} alt="" />/
-        </div>
+        </div> */}
         <div className="flex flex items-center">
           <text>정예지</text>
         </div>
@@ -54,9 +73,9 @@ const StudentGroupDetailPage = () => {
         </div>
       </div>
       <div className="studentBox">
-        <div className="circle-imageS">
+        {/* <div className="circle-imageS">
           <img src={gijeong1} alt="" />/
-        </div>
+        </div> */}
         <div className="flex flex items-center">
           <text>신기정</text>
         </div>
@@ -66,9 +85,9 @@ const StudentGroupDetailPage = () => {
         </div>
       </div>
       <div className="studentBox">
-        <div className="circle-imageS">
+        {/* <div className="circle-imageS">
           <img src={gijeong1} alt="" />/
-        </div>
+        </div> */}
         <div className="flex flex items-center ">
           <text>신기정</text>
         </div>
