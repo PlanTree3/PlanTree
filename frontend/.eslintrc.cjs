@@ -36,6 +36,7 @@ module.exports = {
     'jsx-a11y',
   ],
   rules: {
+    'react/no-array-index-key': 'off',
     'no-console': 'off',
     'import/no-extraneous-dependencies': [
       'error',

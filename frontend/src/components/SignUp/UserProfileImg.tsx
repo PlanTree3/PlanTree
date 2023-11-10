@@ -96,17 +96,18 @@ const UserProfileImg = () => {
   const moveProfileImg = () => {
     const content = (
       <div className="mb-3.5">
-        {imgList.map((img: string) => (
+        {imgList.map((img: string, index: number) => (
           <button
+            key={index}
             className="selectImg p-0 mx-1"
             onClick={() => {
-              chooseProfileImg(`public/asset/profile/${img}.jpg`)
+              chooseProfileImg(`/profile/${img}.jpg`)
               MySwal.close()
             }}
           >
             <img
               className="selectImg m-0"
-              src={`public/asset/profile/${img}.jpg`}
+              src={`/profile/${img}.jpg`}
               alt={img}
             />
           </button>
