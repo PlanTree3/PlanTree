@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 // import { Link } from 'react-router-dom'
 // import axios from 'axios'
-// import QR from 'qrcode.react'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
-// import { authApi, groupCreate, teacherGroupList } from '@/apis'
+import { groupCreate, teacherGroupList } from '@/apis'
 // import { GroupRequest } from '@/types/GroupAdminType'
 
 const AdminGroupPage: React.FC = () => {
@@ -51,7 +50,7 @@ const AdminGroupPage: React.FC = () => {
   // } else {
   const data = { groupName: inputGroupName }
   const handleCreateGroup = async () => {
-    console.log('여기까진 됌??')
+    console.log('여기까진??')
     try {
       console.log('이것도 되지?')
       const response = await groupCreate(data)
@@ -66,7 +65,7 @@ const AdminGroupPage: React.FC = () => {
     console.log('1')
     try {
       console.log('2')
-      const response = await teacherGroupList
+      const response = await teacherGroupList()
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)

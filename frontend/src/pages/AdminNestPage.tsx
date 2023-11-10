@@ -74,7 +74,7 @@ const AdminNestPage = () => {
     console.log('1')
     try {
       console.log('2')
-      const response = await nestStudents
+      const response = await nestStudents()
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)
@@ -129,6 +129,44 @@ const AdminNestPage = () => {
         onClose={closeModal}
         content={<div>QR을 찍어 둥지에 가입해보세요!</div>}
       />
+      <ReactModal
+        isOpen={pencilModalIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closePencilModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            width: '100%',
+            height: '100vh',
+            zIndex: 10,
+            top: 0,
+            left: 0,
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '40%',
+            height: '40%',
+            border: '2px solid #000',
+            borderRadius: '10px',
+            overflow: 'auto',
+            background: '#F5F5DC',
+            boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
+          },
+        }}
+      >
+        <h1 className="flex justify-center h-[20%] items-center text-2xl bg-lime-100 rounded-[10px]">
+          그룹 이름 변경
+        </h1>
+        <input
+          type="text"
+          value={inputNestName}
+          onChange={handleNestNameInputChange}
+          placeholder="그룹 이름을 수정하세요"
+        />
+        <Button onClick={handleNestName} className="primary" label="저장" />
+      </ReactModal>
     </div>
   )
 }
