@@ -3,6 +3,7 @@ package com.plantree.apigatewayservice.filter;
 import com.plantree.apigatewayservice.exception.AuthenticationFailException;
 import com.plantree.apigatewayservice.jwt.JwtValidator;
 import io.jsonwebtoken.Claims;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpCookie;
@@ -10,6 +11,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class AuthorizationFilter extends AbstractGatewayFilterFactory<AuthorizationFilter.Config> {
 
     private final JwtValidator jwtValidator;
@@ -28,6 +30,7 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             String requestUri = originRequest.getURI()
                                              .getPath();
             String httpMethod = originRequest.getMethodValue();
+            log.info("API 요청 : " + requestUri, "Method : " + httpMethod);
 
             if (isCookieNotRequired(requestUri, httpMethod)) {
                 return chain.filter(exchange);
@@ -77,7 +80,7 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
     private boolean isCookieNotRequired(String requestUri, String httpMethod) {
         return httpMethod.equals("POST") && (requestUri.equals("/member")
                 || requestUri.equals("/member/login") || requestUri.equals(
-                "/dev/auth/login"));
+                "/member-service/dev/auth/login"));
     }
 
     private HttpCookie getCookieByName(ServerHttpRequest request, String name) {
