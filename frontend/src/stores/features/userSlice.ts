@@ -27,6 +27,7 @@ export const userSlice = createSlice({
     fetchReUserData: () => {},
     saveUserData: (state, action: PayloadAction<any>) => {
       state.userData = action.payload
+      console.log("유저 정보", action.payload)
     },
     fetchUserLogout: () => {},
     successUserLogout: (state) => {

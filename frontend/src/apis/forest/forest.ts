@@ -1,6 +1,6 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { authApi } from '@/apis'
-import { branchApiUrl, seedApiUrl, treeApiUrl } from '@/utils'
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { authApi } from "@/apis";
+import { branchApiUrl, scheduleUrl, seedApiUrl, treeApiUrl } from "@/utils";
 
 const baseUrl = 'api/forest-service'
 const forestBaseUrl = 'api/forest-service/forest'
@@ -11,6 +11,16 @@ const mainPageApi = async (memberId: string): Promise<AxiosResponse> => {
     .get(`${baseUrl}/main/${memberId}`)
     .then((res) => res)
     .catch((err) => err)
+}
+
+const myMainPageApi = async (): Promise<AxiosResponse> => {
+  return authApi
+    .get(`${baseUrl}/commons/main`)
+    .then((response) => {
+      console.log(response)
+      return response
+    })
+    .catch((error) => error)
 }
 
 // 숲 조회
@@ -39,16 +49,29 @@ const treeDetail = async (forestId: number, treeId: number) => {
     .catch((err) => err)
 }
 
+
+// 일정 조회
+const getSchedule = async (treeId: string) => {
+  try {
+    return await authApi.get(`${scheduleUrl(treeId)}`); // 오류가 없을 경우 응답을 반환
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
 // 가지 추가
 const branchCreate = async (
-  forestId: number,
-  treeId: number,
-  data: unknown,
+  treeId: string,
+  data: any,
 ) => {
-  authApi
-    .post(`${treeApiUrl(forestId, treeId)}/branch`, data)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+  return authApi
+    .post(`${treeApiUrl(treeId)}/branch`, data)
+    .then((response) => {
+      console.log(response)
+      return response
+    })
+    .catch()
 }
 
 // 그룹원 가지 일괄등록
@@ -99,6 +122,7 @@ const seedDelete = async (
 }
 
 export {
+  myMainPageApi,
   mainPageApi,
   forestGetApi,
   treeList,
@@ -108,4 +132,5 @@ export {
   seedCreate,
   seedNameUpdate,
   seedDelete,
+  getSchedule,
 }

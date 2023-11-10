@@ -18,14 +18,15 @@ export interface ColumnProps {
 }
 
 export interface MovableItemProps {
-  id: number
+  branchId : string
+  id: string
   idType: string
   budName: string
   comments: CommentType[] | null
   index: number
   moveHandler: (dragIndex: number, hoverIndex: number) => void
   dayOfWeek: string
-  color: string
+  branchColor: string
 }
 
 export interface DragItem {
