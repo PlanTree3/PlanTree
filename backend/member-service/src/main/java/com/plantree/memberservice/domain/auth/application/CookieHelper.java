@@ -15,9 +15,9 @@ public class CookieHelper {
             String accessToken) {
         ResponseCookie accessTokenCookie = ResponseCookie.from(ACCESS_TOKEN_NAME, accessToken)
                                                          .path("/")
-                                                         .sameSite("None")
-                                                         .httpOnly(true)
-                                                         .secure(true)
+//                                                         .sameSite("None")
+//                                                         .httpOnly(true)
+//                                                         .secure(true)
                                                          .maxAge(TOKEN_MAX_AGE)
                                                          .build();
         httpServletResponse.addHeader("Set-Cookie", accessTokenCookie.toString());
@@ -27,9 +27,9 @@ public class CookieHelper {
             String refreshToken) {
         ResponseCookie refreshTokenCookie = ResponseCookie.from(REFRESH_TOKEN_NAME, refreshToken)
                                                           .path("/")
-                                                          .sameSite("None")
-                                                          .httpOnly(true)
-                                                          .secure(true)
+//                                                          .sameSite("None")
+//                                                          .httpOnly(true)
+//                                                          .secure(true)
                                                           .maxAge(TOKEN_MAX_AGE)
                                                           .build();
         httpServletResponse.addHeader("Set-Cookie", refreshTokenCookie.toString());
