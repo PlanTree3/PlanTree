@@ -21,6 +21,7 @@ import {
   QuestPage,
   OidcGoogle,
   TreePage,
+  Tutorial,
 } from './pages'
 
 const RoutesComponent = () => (
@@ -47,6 +48,8 @@ const RoutesComponent = () => (
     <Route path="/mypage" element={<MyPage />} />
     <Route path="/quest" element={<QuestPage />} />
     <Route path="*" element={<NotFoundPage />} />
+
+    <Route path="/tutorial" element={<Tutorial />} />
   </Routes>
 )
 

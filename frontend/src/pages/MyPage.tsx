@@ -1,9 +1,19 @@
 import { useEffect, useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Mousewheel, Pagination } from 'swiper/modules'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
-// import { useNavigate } from 'react-router-dom'
+// import { noticeList } from '@/apis/communication/notice'
+import {
+  Tutorial1,
+  Tutorial2,
+  Tutorial3,
+  BarChart,
+  DoughnutChart,
+  PieChart,
+} from '@/components'
 import '@/styles/fontList.scss'
 import '@/styles/profile.scss'
 import './MyPageStyle.scss'
@@ -52,6 +62,7 @@ const MyPage = () => {
     setInputUserRole(showUserRole())
   }, [userRole]) // userRole이 변경될 때만 실행
 
+  // 프로필 이미지 모달
   const moveProfileImg = () => {
     const content = (
       <div className="mb-3.5">
@@ -76,7 +87,7 @@ const MyPage = () => {
 
     MySwal.fire({
       html: content,
-      width: 300,
+      width: '27%',
       heightAuto: false,
       position: 'center',
       showConfirmButton: false,
@@ -97,9 +108,136 @@ const MyPage = () => {
     }
   }
 
-  //   const moveTutorial = () => {
-  // navigate('')
-  //   }
+  // 튜토리얼 모달
+  const moveTutorial = () => {
+    const content = (
+      <Swiper
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        mousewheel
+        keyboard
+        modules={[Mousewheel, Pagination]}
+        className="mySwiper"
+        style={{ height: '500px', width: '100%' }}
+      >
+        <SwiperSlide>
+          <Tutorial1 />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Tutorial2 />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Tutorial3 />
+        </SwiperSlide>
+      </Swiper>
+    )
+
+    MySwal.fire({
+      title: 'Plan Tree 100% 활용하기',
+      html: content,
+      position: 'center',
+      width: '70%',
+      heightAuto: false,
+      padding: 0,
+      confirmButtonText: '확인',
+    })
+  }
+
+  // 가정통신문 모달
+  const moveNewsList = () => {
+    // 여기서 개인의 가정통신문 불러오는 axios 만들기
+    interface Notice {
+      title: string
+      groupName: string
+      date: Date
+    }
+    // const newsList: Notice[] = noticeList()
+    const newsList: Notice[] = [
+      {
+        title: '플젝이',
+        groupName: '벌써',
+        date: new Date(),
+      },
+    ]
+
+    const newsListDate = (date: Date) => {
+      const year = date.getFullYear()
+      const month = date.getMonth()
+      const day = date.getDate()
+
+      return [year, month, day].join('-')
+    }
+
+    const content = (
+      <table className="table-fixed">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>그룹명</th>
+            <th>날짜</th>
+          </tr>
+        </thead>
+        <tbody>
+          {newsList.map((news, idx) => {
+            return (
+              <tr>
+                <td>{idx}</td>
+                <td>{news.title}</td>
+                <td>{news.groupName}</td>
+                <td>{newsListDate(news.date)}</td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    )
+
+    MySwal.fire({
+      title: '가정통신문 보기',
+      html: content,
+      position: 'center',
+      width: '70%',
+      heightAuto: false,
+      padding: 0,
+      confirmButtonText: '확인',
+    })
+  }
+
+  // 이번 주 통계 보기
+  const moveChart = () => {
+    const content = (
+      <div className="grid grid-cols-3">
+        <div>
+          <BarChart />
+        </div>
+        <div>
+          <DoughnutChart
+            centerText="87%"
+            chartData={{
+              data: [87, 13],
+            }}
+          />
+        </div>
+        <div>
+          <PieChart />
+        </div>
+      </div>
+    )
+
+    MySwal.fire({
+      title: '이번주 통계 보기',
+      html: content,
+      position: 'center',
+      width: '70%',
+      heightAuto: false,
+      padding: 0,
+      confirmButtonText: '확인',
+      customClass: {
+        confirmButton: 'w-2/4 h-2/6', // 새로운 클래스 이름을 지정합니다.
+      },
+    })
+  }
 
   return (
     <div className="outer-box">
@@ -132,10 +270,15 @@ const MyPage = () => {
         </div>
       </div>
       <div className="m-1">
-        <button className="mypageButton">이번 주 통계 보기</button>
-        <button className="mypageButton">전체 통계 보기</button>
-        <button className="mypageButton">가정 통신문 보기</button>
-        <button className="mypageButton">Plan Tree 100% 활용하기</button>
+        <button className="mypageButton" onClick={moveChart}>
+          이번 주 통계 보기
+        </button>
+        <button className="mypageButton" onClick={moveNewsList}>
+          가정 통신문 보기
+        </button>
+        <button className="mypageButton" onClick={moveTutorial}>
+          Plan Tree 100% 활용하기
+        </button>
       </div>
     </div>
   )
