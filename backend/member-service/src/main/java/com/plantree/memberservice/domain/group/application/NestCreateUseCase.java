@@ -26,7 +26,6 @@ public class NestCreateUseCase {
                                         .orElseThrow(() -> new ResourceNotFoundException(
                                                 "멤버를 찾을 수 없습니다."))
                                         .getParent();
-        parent.checkAlreadyNesting();
         Nest nest = parent.createNest(nestCreateRequestDto.getNestName());
         nestRepository.save(nest);
         return new NestCreateResponseDto(nest.getId());

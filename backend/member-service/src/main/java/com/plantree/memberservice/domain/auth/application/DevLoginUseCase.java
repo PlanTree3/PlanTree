@@ -1,6 +1,8 @@
 package com.plantree.memberservice.domain.auth.application;
 
 import com.plantree.memberservice.domain.auth.application.jwt.JwtProvider;
+import com.plantree.memberservice.domain.auth.dto.client.TreeCreateRequestDto;
+import com.plantree.memberservice.domain.group.application.client.ForestServiceClient;
 import com.plantree.memberservice.domain.member.application.repository.MemberRepository;
 import com.plantree.memberservice.domain.member.domain.Member;
 import com.plantree.memberservice.domain.member.domain.OauthProvider;

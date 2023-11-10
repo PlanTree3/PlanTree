@@ -98,11 +98,29 @@ public class Member extends BaseTimeEntity {
         }
     }
 
-    public void changeProfileImage(String profileImageUrl) {
+    public void changeProfileImageUrl(String profileImageUrl) {
+        if (this.parent != null) {
+            this.parent.changeProfileImageUrl(name);
+        }
+        if (this.student != null) {
+            this.student.changeProfileImageUrl(name);
+        }
+        if (this.teacher != null) {
+            this.teacher.changeProfileImageUrl(name);
+        }
         this.profileImageUrl = profileImageUrl;
     }
 
     public void changeName(String name) {
+        if (this.parent != null) {
+            this.parent.changeName(name);
+        }
+        if (this.student != null) {
+            this.student.changeName(name);
+        }
+        if (this.teacher != null) {
+            this.teacher.changeName(name);
+        }
         this.name = name;
     }
 

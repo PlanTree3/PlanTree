@@ -1,7 +1,7 @@
 package com.plantree.memberservice.domain.member.domain;
 
 import com.plantree.memberservice.domain.group.domain.Nest;
-import com.plantree.memberservice.global.exception.ParentAlreadyNestingException;
+import com.plantree.memberservice.global.exception.AlreadyNestingException;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +25,12 @@ public class Parent {
     @Column(name = "parent_id")
     private Long id;
 
+    @Column
+    private String name;
+
+    @Column
+    private String profileImageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nest_id")
     private Nest nest;
@@ -34,11 +40,14 @@ public class Parent {
     private Member member;
 
     public Parent(Member member) {
+        this.name = member.getName();
+        this.profileImageUrl = member.getProfileImageUrl();
         this.member = member;
         this.member.setParent(this);
     }
 
     public Nest createNest(String name) {
+        checkAlreadyNesting();
         Nest nest = Nest.builder()
                         .name(name)
                         .parent(this)
@@ -49,7 +58,23 @@ public class Parent {
 
     public void checkAlreadyNesting() {
         if (this.nest != null) {
-            throw new ParentAlreadyNestingException();
+            throw new AlreadyNestingException();
         }
+    }
+
+    public void setNest(Nest nest) {
+        this.nest = nest;
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void changeProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public void leaveNest() {
+        this.nest = null;
     }
 }
