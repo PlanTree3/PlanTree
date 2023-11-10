@@ -55,7 +55,7 @@ const ItemPlacement = () => {
           seedName: newText,
           dayOfWeek: DEFAULT,
           branchId: selectedBranchId,
-          color: colors,
+          branchColor: colors,
         }
         const newSeeds = [...seeds, newItem]
         const { seedId, ...createdItem } = newItem
@@ -199,6 +199,7 @@ const ItemPlacement = () => {
               }}
             >
               {branch.branchName}
+              {branch.color}
             </button>
           ))}
         </div>

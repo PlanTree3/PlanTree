@@ -10,7 +10,7 @@ const LogIn = () => {
   // }
   const loginTest = () => {
     const testURL =
-      'http://k9a302a.p.ssafy.io/api/member-service/dev/auth/login?oauthId=ysStudent'
+      'https://k9a302a.p.ssafy.io/api/member-service/dev/auth/login?oauthId=ysStudent'
     axios
       .post(testURL, null, {
         withCredentials: true,

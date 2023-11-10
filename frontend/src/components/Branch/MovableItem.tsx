@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { useDispatch, useSelector } from 'react-redux'
-import { addBuds, addSeeds } from '@/stores/features/branchSlice'
+import { addBuds, moveBuds, removeBuds, removeSeeds } from "@/stores/features/branchSlice";
 import {
   DragItem,
   ItemState,
@@ -15,6 +15,7 @@ import { RootState } from '@/stores/store'
 import { handleComment } from '@/components'
 
 const MovableItem = ({
+  branchId,
   id,
   budName,
   idType,
@@ -22,13 +23,13 @@ const MovableItem = ({
   index,
   moveHandler,
   dayOfWeek,
-  color,
+  branchColor,
 }: MovableItemProps) => {
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const buds = useSelector((state: RootState) => state.branch.buds)
   const changeItemColumn = (
-    currentItem: { index: number; budName: string; budId: number },
+    currentItem: { index: number; budName: string; budId: number; branchId: number },
     columnName: string,
   ) => {
     const updatedItems = buds.map((e: ItemState) => {
@@ -37,7 +38,17 @@ const MovableItem = ({
       }
       return e
     })
-    dispatch(addBuds(updatedItems))
+    const newBuds = updatedItems
+    const createdItem = {
+      branchId: currentItem.branchId,
+      budId: currentItem.budId,
+      dayOfWeek: columnName
+    }
+    const data = {
+      newBuds,
+      createdItem
+    }
+    dispatch(moveBuds(data))
   }
   const ref = useRef<HTMLDivElement>(null)
   const [, drop] = useDrop<DragItem>({
@@ -67,21 +78,27 @@ const MovableItem = ({
   type DropPoint = { dropEffect: string; name: string }
   const [{ isDragging }, drag] = useDrag({
     type: ITEM_TYPE,
-    item: { index, budName, dayOfWeek, id },
+    item: { index, budName, dayOfWeek, id, branchId },
     end: (item, monitor) => {
       const dropResult: DropPoint | null = monitor.getDropResult()
       if (dropResult) {
         const point = dropResult.name as ColumnName
         const maxId = Math.floor(Math.random() * 1000 + 2000)
         if (dayOfWeek === COLUMN_NAMES.DEFAULT) {
-          const newItem = {
+          const newItem: any = {
             budId: maxId + 1,
+            branchColor,
             budName,
             dayOfWeek: point,
-            color,
+            branchId,
           }
+          const { budId, color: newColor, ...createdItem } = newItem
           const newBuds = [...buds, newItem]
-          dispatch(addBuds(newBuds))
+          const data = {
+            newBuds,
+            createdItem
+          }
+          dispatch(addBuds(data))
         } else {
           const newItem = {
             ...item,
@@ -98,19 +115,27 @@ const MovableItem = ({
   })
   const opacity = isDragging ? 0.4 : 1
   drag(drop(ref))
-  const removeSeed = (itemId: number) => {
+  const removeSeed = (itemId: string) => {
     const updatedItems = seeds.filter((item: any) => item.seedId !== itemId)
-    dispatch(addSeeds(updatedItems))
+    const data = {
+      newSeeds: updatedItems,
+      createdItem: itemId
+    }
+    dispatch(removeSeeds(data))
   }
-  const removeBud = (itemId: number) => {
+  const removeBud = (itemId: string) => {
     const updatedItems = buds.filter((item: any) => item.budId !== itemId)
-    dispatch(addBuds(updatedItems))
+    const data = {
+      newBuds: updatedItems,
+      createdItem: itemId
+    }
+      dispatch(removeBuds(data))
   }
   return (
     <div
       ref={ref}
       className="dnd_movable-item"
-      style={{ opacity, backgroundColor: color }}
+      style={{ opacity, backgroundColor: branchColor }}
     >
       {idType === 'bud' && (
         <button

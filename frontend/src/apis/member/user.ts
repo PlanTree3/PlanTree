@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios'
 import { api, authApi } from '@/apis'
+import { useNavigate } from 'react-router-dom'
+import Swal from "sweetalert2";
 
 const memberBaseUrl = 'api/member-service'
 const userBaseUrl = 'api/member-service/member'
@@ -36,9 +38,18 @@ const userInfo = async (): Promise<AxiosResponse> => {
 
 // 토큰 리프레쉬
 const userRefresh = async () => {
+  const navigate = useNavigate()
   authApi
     .post(`${userBaseUrl}/refresh`)
-    .then((res) => console.log(res))
+    .then((res) => {
+      console.log(res)
+      Swal.fire({
+        title: '로그인 정보가 만료되어 메인으로 돌아갑니다.',
+        icon: "info",
+        iconColor: "red",
+      })
+      navigate('/main')
+    })
     .catch((err) => console.log(err))
 }
 
