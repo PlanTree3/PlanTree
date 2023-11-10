@@ -1,8 +1,18 @@
 import { AxiosResponse } from 'axios'
+import Swal from 'sweetalert2'
 import { api, authApi } from '@/apis'
 
 const memberBaseUrl = 'api/member-service'
 const userBaseUrl = 'api/member-service/member'
+
+const showLogInErrorModal = () => {
+  Swal.fire({
+    icon: 'error',
+    title: '로그인 오류',
+    text: '로그인을 다시 해주세요',
+    confirmButtonText: '확인',
+  })
+}
 
 // 로그인
 const userLogin = async (data: unknown): Promise<AxiosResponse> => {
@@ -12,7 +22,8 @@ const userLogin = async (data: unknown): Promise<AxiosResponse> => {
       return res.data.data.newMember
     })
     .catch((error) => {
-      throw error
+      showLogInErrorModal()
+      return error
     })
 }
 

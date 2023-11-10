@@ -2,7 +2,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 // import required modules
 import { Mousewheel, Pagination } from 'swiper/modules'
-import { Tutorial1, Tutorial2, Tutorial3, LogIn } from '@/components'
+import { Tutorial1, Tutorial2, Tutorial3,  LogIn} from '@/components'
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
