@@ -10,25 +10,25 @@ import './SlideStyle.css'
 
 const TutorialPage = () => {
   return (
-    <Swiper
-      pagination={{ clickable: true }}
-      scrollbar={{ draggable: true }}
-      mousewheel
-      keyboard
-      modules={[Mousewheel, Pagination]}
-      className="mySwiper"
-      style={{ height: '700px', width: '100%' }}
-    >
-      <SwiperSlide>
-        <Tutorial1 />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Tutorial2 />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Tutorial3 />
-      </SwiperSlide>
-    </Swiper>
+    <div className="p-2">
+      <Swiper
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        mousewheel
+        keyboard
+        modules={[Mousewheel, Pagination]}
+      >
+        <SwiperSlide>
+          <Tutorial1 />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Tutorial2 />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Tutorial3 />
+        </SwiperSlide>
+      </Swiper>
+    </div>
   )
 }
 

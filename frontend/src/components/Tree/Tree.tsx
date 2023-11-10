@@ -2,7 +2,7 @@
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Suspense } from 'react'
-import { BigTree, Fruit, MediumTree, SmallTree } from './models'
+import { BigTree, Fruit, Log, MediumTree, SmallTree } from './models'
 
 interface TreeProps {
   degree: number
@@ -12,7 +12,7 @@ const Tree = ({ degree }: TreeProps) => {
   return (
     <Canvas
       camera={{
-        position: [50, 50, 0],
+        position: [30, 50, 0],
       }}
     >
       <Suspense fallback={null}>
@@ -25,7 +25,8 @@ const Tree = ({ degree }: TreeProps) => {
           position={[0, 0, 0]}
           castShadow
         />
-        {degree <= 50 && <SmallTree />}
+        {degree <= 20 && <Log />}
+        {degree > 20 && degree <= 50 && <SmallTree />}
         {degree > 50 && degree < 100 && <MediumTree />}
         {degree === 100 && <BigTree />}
         <Fruit degree={degree} />

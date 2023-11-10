@@ -30,7 +30,7 @@ const FruitModel = ({ degree }: FruitProps) => {
 
   return (
     <>
-      {(degree <= 50 || degree === 100) && (
+      {degree > 20 && degree <= 50 && (
         <group>
           <group position={[12, 13, 1]} rotation={[-Math.PI / 2, 0, 0]}>
             <mesh
