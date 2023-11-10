@@ -36,7 +36,7 @@ const Tree = ({ degree }: TreeProps) => {
           minPolarAngle={Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
           minAzimuthAngle={Math.PI / 2.7}
-          maxAzimuthAngle={Math.PI / 1.9}
+          maxAzimuthAngle={Math.PI / 1.7}
         />
       </Suspense>
     </Canvas>
