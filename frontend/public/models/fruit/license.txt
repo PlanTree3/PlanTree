@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wumpa Fruit
+* source:	https://sketchfab.com/3d-models/wumpa-fruit-058451af54264f028c5c297e9d45eaa3
+* author:	caseyhameljames (https://sketchfab.com/caseyhameljames)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wumpa Fruit" (https://sketchfab.com/3d-models/wumpa-fruit-058451af54264f028c5c297e9d45eaa3) by caseyhameljames (https://sketchfab.com/caseyhameljames) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
