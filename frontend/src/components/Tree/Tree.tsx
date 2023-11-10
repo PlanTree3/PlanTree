@@ -30,7 +30,7 @@ const Tree = ({ degree }: TreeProps) => {
         {degree === 100 && <BigTree />}
         <Fruit degree={degree} />
         <OrbitControls
-          enablePan
+          enablePan={false}
           enableZoom={false}
           enableRotate
           minPolarAngle={Math.PI / 2}
