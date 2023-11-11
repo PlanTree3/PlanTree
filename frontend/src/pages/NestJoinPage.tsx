@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { nestJoinRequest } from '@/apis'
 // import axios from 'axios';
 
-const GroupJoinPage: React.FC<any> = ({ groupId }) => {
+const NestJoinPage: React.FC<any> = ({ groupId }) => {
   const handleGroupJoin = async () => {
     console.log('1')
     try {
@@ -28,4 +28,4 @@ const GroupJoinPage: React.FC<any> = ({ groupId }) => {
   )
 }
 
-export default GroupJoinPage
+export default NestJoinPage

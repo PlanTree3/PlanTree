@@ -6,25 +6,25 @@ import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
 import './GroupPage.css'
-import { groupCreate, groupDelete, groupNameUpdate, groupStudents } from '@/apis'
+import { groupDelete, groupNameUpdate, groupStudents } from '@/apis'
 
-// type StudentList = {
-//   students: GroupStudentListResponse;
-// };
 
 const AdminGroupDetailPage: React.FC<any> = () => {
   const { groupId, groupName } = useParams();
-
+  
+  const [currentPage, setCurrentPage] = useState(1)
   const [page, setPage] = useState(1)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [QrmodalIsOpen, setQrModalIsOpen] = useState(false)
   const [pencilModalIsOpen, setPencilModalIsOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
   const [inputGroupName, setInputGroupName] = useState(groupName)
-  // const studentsPerPage = 5;
-  // const startIndex = (page - 1) * studentsPerPage;
-  // const endIndex = startIndex + studentsPerPage;
-  // const currentStudents = students.slice(startIndex, endIndex);
+  const [studentsData, setStudentsData] = useState<any>(null)
+
+  const studentsPerPage = 5;
+  const startIndex = (page - 1) * studentsPerPage;
+  const endIndex = startIndex + studentsPerPage;
+  const currentStudents = studentsData.slice(startIndex, endIndex);
 
   const openModal = () => {
     setModalIsOpen(true)
@@ -81,11 +81,11 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   // 교사의 그룹 학생 리스트 조회
   const handleGetGroupDetail = async () => {
-    console.log('11')
     try {
-      console.log('22')
+      console.log('그룹 학생 리스트 조회')
       const response = await groupStudents(groupId)
       console.log('Response:', response)
+      setStudentsData(response.data)
     } catch (error) {
       console.error('Error:', error)
     }
@@ -108,26 +108,18 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   const navi = useNavigate()
 
-  // const previousPage = () => {
-  //   if (page > 1) {
-  //     setPage(page - 1);
-  //   }
-  // };
+  const totalPages = studentsData?.groups
+    ? Math.ceil(studentsData.students.length / studentsPerPage)
+    : 0
 
-  // const nextPage = () => {
-  //   if (endIndex < students.length) {
-  //     setPage(page + 1);
-  //   }
-  // };
+  const pageNumbers = []
+  for (let i = 1; i <= totalPages; i += 1) {
+    pageNumbers.push(i)
+  }
 
-  // const customModalStyles = {
-  //   overlay: {
-  //     className: 'custom-overlay',
-  //   },
-  //   content: {
-  //     className: 'custom-content',
-  //   },
-  // }
+  const changePage = (page: number) => {
+    setCurrentPage(page)
+  }
 
   return (
     <div>
@@ -257,8 +249,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           /> */}
         </ReactModal>
       </div>
-      {/* <div className="box-border h-2/3 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
-    {currentStudents.map((student) => (
+      <div className="box-border h-2/3 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
+    {currentStudents.map((student: any) => (
           <div key={student.studentId} className="student-box">
             <p>학생 ID: {student.studentId}</p>
             <p>학생 이름: {student.studentName}</p>
@@ -266,7 +258,14 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             <p>전체 버드 수: {student.totalBudCount}</p>
           </div>
         ))}
-      </div> */}
+      </div>
+      <div className="pagination">
+        {pageNumbers.map((number) => (
+          <button key={number} onClick={() => changePage(number)}>
+            {number}
+          </button>
+        ))}
+      </div>
       <Button className='red' onClick={handleGroupDelete} label="그룹 삭제하기" />
     </div>
   )

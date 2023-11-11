@@ -82,10 +82,10 @@ const StudentGroupPage = () => {
           <div>
             {/* eslint-disable-next-line react/no-array-index-key */}
             <div key={index} className="groupItem">
-              {/* <Link to="/studentGroupDetail"> */}
+              <Link to={`/studentGroupDetail/${group.groupId}`}>
               <img className="forest" src={forest} alt="" />
               <p className="groupInfo">{group.groupName} </p>
-              {/* </Link> */}
+              </Link>
             </div>
           </div>
         ))}

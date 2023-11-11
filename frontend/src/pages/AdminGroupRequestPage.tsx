@@ -10,13 +10,12 @@ const AdminGroupRequestPage = () => {
   // const GroupsPerPage = 5
 
   //그룹 가입 수락
-  const memberId = 1
-  const data = { memberId: memberId }
+  const data1 = { memberId: memberId }
   const handleGroupAccept = async () => {
     console.log('1')
     try {
       console.log('2')
-      const response = await groupJoinAccept(data)
+      const response = await groupJoinAccept(data1)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)
@@ -24,12 +23,12 @@ const AdminGroupRequestPage = () => {
   }
 
   //그룹 가입 거절
-  // const data = { memberId: memberId }
+  const data2 = { memberId: memberId }
   const handleGroupRefuse = async () => {
     console.log('1')
     try {
       console.log('2')
-      const response = await groupJoinRefuse(data)
+      const response = await groupJoinRefuse(data2)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)

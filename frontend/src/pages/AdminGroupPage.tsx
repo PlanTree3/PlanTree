@@ -96,7 +96,7 @@ const AdminGroupPage: React.FC = () => {
         {currentGroups?.map((group: any, index: number) => (
           <div>
             {/* eslint-disable-next-line react/no-array-index-key */}
-              <Link to={`/adminGroupDetail/${group.groupId}/${group.groupName}`}>
+              <Link to={`/adminGroupDetail/${group.groupId}`}>
             <div key={index} className="groupItem">
               <p className="groupInfo">{index + 1 + (currentPage - 1) * 5} </p>
               <p className="groupInfo">{group.groupName} </p>
