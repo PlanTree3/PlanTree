@@ -7,7 +7,7 @@ import { COLUMN_NAMES, DAY_NAMES } from '@/types/DnDType'
 import { RootState } from '@/stores/store'
 import { addBuds } from '@/stores/features/branchSlice.ts'
 import '@/styles/main/mainStyle.scss'
-import { getMainData } from "@/stores/features/mainSlice.ts";
+import { getMainData } from '@/stores/features/mainSlice.ts'
 
 const MainPage = () => {
   const dispatch = useDispatch()
