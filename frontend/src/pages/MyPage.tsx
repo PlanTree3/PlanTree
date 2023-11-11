@@ -19,12 +19,12 @@ import '@/styles/profile.scss'
 import './MyPageStyle.scss'
 
 const MyPage = () => {
-  const userName = useSelector((state: any) => state.user.nickname)
-  const userRole = useSelector((state: any) => state.user.role)
-  const userprofileImage = useSelector((state: any) => state.user.profileImage)
-  const [inputProfileImg, setInputProfileImg] = useState<string>(
-    userprofileImage || '',
+  const userName = useSelector((state: any) => state.user.userData.name)
+  const userRole = useSelector((state: any) => state.user.userData.role)
+  const userprofileImage = useSelector(
+    (state: any) => state.user.userData.profileImageUrl,
   )
+  const [inputProfileImg, setInputProfileImg] = useState<string>('')
   const [inputUserRole, setInputUserRole] = useState<string>('')
 
   const MySwal = withReactContent(Swal)
@@ -60,7 +60,8 @@ const MyPage = () => {
 
   useEffect(() => {
     setInputUserRole(showUserRole())
-  }, [userRole]) // userRole이 변경될 때만 실행
+    setInputProfileImg(userprofileImage)
+  }, []) // userRole이 변경될 때만 실행
 
   // 프로필 이미지 모달
   const moveProfileImg = () => {

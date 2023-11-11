@@ -22,6 +22,7 @@ const userLogin = async (data: unknown): Promise<AxiosResponse> => {
       return res.data.data.newMember
     })
     .catch((error) => {
+      console.log(error)
       showLogInErrorModal()
       return error
     })
@@ -39,9 +40,11 @@ const userSignup = async (data: unknown): Promise<AxiosResponse> => {
 const userInfo = async (): Promise<AxiosResponse> => {
   return api
     .get(`${userBaseUrl}`)
-    .then((res) => res.data)
+    .then((res) => {
+      return res.data
+    })
     .catch((error) => {
-      throw error
+      console.log(error)
     })
 }
 

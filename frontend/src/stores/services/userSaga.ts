@@ -22,6 +22,7 @@ function* fetchUserDataSaga(): Generator<
 > {
   const response: AxiosResponse<unknown> = yield call(userInfo)
   if (response.data) {
+    console.log('saga의: ', response.data)
     yield put(saveUserData(response.data))
   }
 }
