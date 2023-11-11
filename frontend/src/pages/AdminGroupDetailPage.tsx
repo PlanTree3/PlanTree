@@ -82,7 +82,7 @@ const AdminGroupDetailPage: React.FC<any> = ({ groupId }) => {
     console.log('1')
     try {
       console.log('2')
-      const response = await groupStudents
+      const response = await groupStudents(groupId)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)

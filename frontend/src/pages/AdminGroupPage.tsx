@@ -64,24 +64,8 @@ const AdminGroupPage: React.FC = () => {
     handleGetGroupList()
   }, [])
 
-  //여기부터는 페이지 넘기면서 조회하는 것 임시
+  //여기부터는 페이지 넘기면서 조회하는 것
   const GroupsPerPage = 5
-  // const dummyData = {
-  //   statusCode: 200,
-  //   message: '수락 성공',
-  //   data: {
-  //     groups: [
-  //       { groupName: '그룹1', createdAt: '2023-01-15', studentCount: 10 },
-  //       { groupName: '그룹2', createdAt: '2023-02-20', studentCount: 15 },
-  //       { groupName: '그룹3', createdAt: '2023-03-10', studentCount: 8 },
-  //       { groupName: '그룹4', createdAt: '2023-04-05', studentCount: 12 },
-  //       { groupName: '그룹5', createdAt: '2023-05-18', studentCount: 20 },
-  //       { groupName: '그룹6', createdAt: '2023-06-22', studentCount: 7 },
-  //       { groupName: '그룹7', createdAt: '2023-07-09', studentCount: 13 },
-  //       { groupName: '그룹8', createdAt: '2023-08-12', studentCount: 18 },
-  //     ],
-  //   },
-  // }
 
   const indexOfLastGroup = currentPage * GroupsPerPage
   const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
