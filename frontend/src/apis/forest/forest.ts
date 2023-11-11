@@ -1,6 +1,6 @@
-import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { authApi } from "@/apis";
-import { branchApiUrl, scheduleUrl, seedApiUrl, treeApiUrl } from "@/utils";
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { authApi } from '@/apis'
+import { branchApiUrl, scheduleUrl, seedApiUrl, treeApiUrl } from '@/utils'
 
 const baseUrl = 'api/forest-service'
 const forestBaseUrl = 'api/forest-service/forest'
@@ -42,18 +42,17 @@ const treeList = async (forestId: number, data: AxiosRequestConfig) => {
 }
 
 // 나무 상세
-const treeDetail = async (forestId: number, treeId: number) => {
+const treeDetail = async (treeId: string) => {
   return authApi
-    .get(`${treeApiUrl(forestId, treeId)}`)
+    .get(`${treeApiUrl(treeId)}`)
     .then((res) => res)
     .catch((err) => err)
 }
 
-
 // 일정 조회
 const getSchedule = async (treeId: string) => {
   try {
-    return await authApi.get(`${scheduleUrl(treeId)}`); // 오류가 없을 경우 응답을 반환
+    return await authApi.get(`${scheduleUrl(treeId)}`) // 오류가 없을 경우 응답을 반환
   } catch (error) {
     console.error(error)
     throw error
@@ -61,10 +60,7 @@ const getSchedule = async (treeId: string) => {
 }
 
 // 가지 추가
-const branchCreate = async (
-  treeId: string,
-  data: any,
-) => {
+const branchCreate = async (treeId: string, data: any) => {
   return authApi
     .post(`${treeApiUrl(treeId)}/branch`, data)
     .then((response) => {
@@ -83,40 +79,29 @@ const branchGroupCreate = async (groupId: string, data: unknown) => {
 }
 
 // 씨앗 추가
-const seedCreate = async (
-  forestId: number,
-  treeId: number,
-  branchId: number,
-  data: unknown,
-) => {
-  authApi
-    .post(`${branchApiUrl(forestId, treeId, branchId)}/seed`, data)
-    .then((res) => console.log(res))
+const seedCreate = async (treeId: string, branchId: string, data: any) => {
+  return authApi
+    .post(`${branchApiUrl(treeId, branchId)}/seed`, data)
+    .then((res) => res)
     .catch((err) => console.log(err))
 }
 
 // 씨앗 이름 수정
 const seedNameUpdate = async (
-  forestId: number,
-  treeId: number,
-  branchId: number,
-  seedId: number,
-  data: unknown,
+  treeId: string,
+  branchId: string,
+  seedId: string,
+  data: any,
 ) => {
   authApi
-    .patch(`${seedApiUrl(forestId, treeId, branchId, seedId)}`, data)
+    .patch(`${seedApiUrl(treeId, branchId, seedId)}`, data)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
 }
 // 씨앗 삭제
-const seedDelete = async (
-  forestId: number,
-  treeId: number,
-  branchId: number,
-  seedId: number,
-) => {
+const seedDelete = async (treeId: string, branchId: string, seedId: string) => {
   authApi
-    .delete(`${seedApiUrl(forestId, treeId, branchId, seedId)}`)
+    .delete(`${seedApiUrl(treeId, branchId, seedId)}`)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
 }

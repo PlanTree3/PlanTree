@@ -7,7 +7,7 @@ export { default as getRandomColor } from '@/components/Branch/ColorFunc'
 export { MoveHandler } from '@/components/Branch/HandleBranch'
 export { default as ItemPlacement } from '@/components/Branch/ItemPlacement'
 export { default as ReturnItems } from '@/components/Branch/ReturnItems'
-export { handleComment } from '@/components/Branch/Comments'
+export { default as Comments } from '@/components/Branch/Comments'
 export { default as MovableItem } from '@/components/Branch/MovableItem'
 
 // Chart
