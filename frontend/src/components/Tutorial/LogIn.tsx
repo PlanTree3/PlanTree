@@ -8,6 +8,7 @@ const LogIn = () => {
   // const handleForest = () => {
   //   navigate('/forest')
   // }
+
   const loginTest = () => {
     const testURL =
       'https://k9a302a.p.ssafy.io/api/member-service/dev/auth/login?oauthId=ysStudent'
@@ -22,6 +23,7 @@ const LogIn = () => {
         console.log(error)
       })
   }
+
   const baseURL = import.meta.env.VITE_PUBLIC_SERVER_BASE_URL
   console.log(baseURL)
   return (

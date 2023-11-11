@@ -70,7 +70,7 @@ const UserProfileImg = () => {
   }
 
   // 객체에 담아서 백에 보내주자!
-  const data = {
+  const signUpData = {
     idToken,
     oauthProvider,
     name: userName,
@@ -80,10 +80,8 @@ const UserProfileImg = () => {
   }
 
   const saveUser = () => {
-    console.log(data)
-    userSignup(data)
+    userSignup(signUpData)
     dispatch(loginCheck())
-    localStorage.clear()
     navigate('/main')
   }
 

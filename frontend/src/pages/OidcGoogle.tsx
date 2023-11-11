@@ -16,7 +16,6 @@ const OidcGoogle = () => {
 
       if (idTokenMatch) {
         const idToken = idTokenMatch[1]
-        console.log('ID Token:', idToken)
 
         const data = {
           oauthProvider: 'GOOGLE',
