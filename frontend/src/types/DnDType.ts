@@ -1,12 +1,13 @@
 export interface ItemState {
-  budId: number
+  budId: string
   budName: string
   dayOfWeek: string
+  branchColor: string
   comments: CommentType[] | null
 }
 export interface CommentType {
-  commentId: number
-  userId: number
+  commentId: string
+  userId: string
   userName: string
   title: string
   text: string
@@ -18,11 +19,11 @@ export interface ColumnProps {
 }
 
 export interface MovableItemProps {
-  branchId : string
+  branchId: string
   id: string
   idType: string
   budName: string
-  comments: CommentType[] | null
+  commentCount: number
   index: number
   moveHandler: (dragIndex: number, hoverIndex: number) => void
   dayOfWeek: string
@@ -49,16 +50,21 @@ export type ColumnName =
 
 export const COLUMN_NAMES: { [key in ColumnName]: string } = {
   DEFAULT: '',
-  MONDAY: '월요일',
-  TUESDAY: '화요일',
-  WEDNESDAY: '수요일',
-  THURSDAY: '목요일',
-  FRIDAY: '금요일',
-  MONDAY_FINISH: '월요일 끝',
-  TUESDAY_FINISH: '화요일 끝',
-  WEDNESDAY_FINISH: '수요일 끝',
-  THURSDAY_FINISH: '목요일 끝',
-  FRIDAY_FINISH: '금요일 끝',
+
+  MONDAY: 'MON',
+  MONDAY_FINISH: 'MON_FINISH',
+
+  TUESDAY: 'TUE',
+  TUESDAY_FINISH: 'TUE_FINISH',
+
+  WEDNESDAY: 'WED',
+  WEDNESDAY_FINISH: 'WED_FINISH',
+
+  THURSDAY: 'TUH',
+  THURSDAY_FINISH: 'TUH_FINISH',
+
+  FRIDAY: 'FRI',
+  FRIDAY_FINISH: 'FRI_FINISH',
 }
 
 export const DAY_NAMES: { [key: string]: string } = {

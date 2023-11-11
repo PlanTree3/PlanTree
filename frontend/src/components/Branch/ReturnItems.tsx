@@ -22,7 +22,7 @@ const ReturnItems = (columnName: string, selectedBranchId: number) => {
               id={seed.seedId}
               idType="seed"
               budName={seed.seedName}
-              comments={seed.comments}
+              commentCount={seed.commentCount}
               index={index}
               dayOfWeek={seed.dayOfWeek}
               moveHandler={MoveHandler}
@@ -40,7 +40,7 @@ const ReturnItems = (columnName: string, selectedBranchId: number) => {
               id={bud.budId}
               idType="bud"
               budName={bud.budName}
-              comments={bud.comments}
+              commentCount={bud.commentCount}
               index={index}
               dayOfWeek={bud.dayOfWeek}
               moveHandler={MoveHandler}

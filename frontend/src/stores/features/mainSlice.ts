@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  treeId : null,
-  treeName: null,
-  weekly : {
+  treeId: '',
+  treeName: '',
+  weekly: {
     mon: null,
     tue: null,
     wed: null,
@@ -17,12 +17,12 @@ export const mainSlice = createSlice({
   initialState,
   reducers: {
     getMainData: () => {
-      console.log("진입 확인")
+      console.log('진입 확인')
     },
     storeIdName: (state, action) => {
       state.treeId = action.payload.treeId
       state.treeName = action.payload.treeName
-      console.log("나무 정보 확인", action.payload)
+      console.log('나무 정보 확인', action.payload)
     },
     storeWeeklyData: (state, action) => {
       state.weekly.mon = action.payload.mon
@@ -34,9 +34,5 @@ export const mainSlice = createSlice({
   },
 })
 
-export const {
-  getMainData,
-  storeIdName,
-  storeWeeklyData,
-} = mainSlice.actions
+export const { getMainData, storeIdName, storeWeeklyData } = mainSlice.actions
 export default mainSlice.reducer

@@ -1,10 +1,17 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { useDispatch, useSelector } from 'react-redux'
-import { addBuds, moveBuds, removeBuds, removeSeeds } from "@/stores/features/branchSlice";
+import Swal from 'sweetalert2'
+import {
+  addBuds,
+  finishedBuds,
+  finishRejectBuds,
+  moveBuds,
+  removeBuds,
+  removeSeeds,
+} from '@/stores/features/branchSlice'
 import {
   DragItem,
-  ItemState,
   MovableItemProps,
   ITEM_TYPE,
   ColumnName,
@@ -12,14 +19,14 @@ import {
 } from '@/types/DnDType'
 import '@/styles/branch.scss'
 import { RootState } from '@/stores/store'
-import { handleComment } from '@/components'
+import { Comments } from '@/components'
 
 const MovableItem = ({
   branchId,
   id,
   budName,
   idType,
-  comments,
+  commentCount,
   index,
   moveHandler,
   dayOfWeek,
@@ -28,27 +35,54 @@ const MovableItem = ({
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const buds = useSelector((state: RootState) => state.branch.buds)
+  const [detailOpen, setDeailOpen] = useState(false)
   const changeItemColumn = (
-    currentItem: { index: number; budName: string; budId: number; branchId: number },
+    currentItem: any,
     columnName: string,
+    isFinishDay: boolean,
+    alreadyFinished: boolean,
   ) => {
-    const updatedItems = buds.map((e: ItemState) => {
+    const newBuds = buds.map((e: any) => {
       if (e.budId === currentItem.budId) {
         return { ...e, dayOfWeek: columnName }
       }
       return e
     })
-    const newBuds = updatedItems
     const createdItem = {
       branchId: currentItem.branchId,
       budId: currentItem.budId,
-      dayOfWeek: columnName
+      dayOfWeek: columnName,
     }
     const data = {
       newBuds,
-      createdItem
+      createdItem,
     }
-    dispatch(moveBuds(data))
+    if (alreadyFinished && isFinishDay) {
+      Swal.fire({
+        title: '이미 끝난 일정입니다.',
+        text: '일정을 수정하시려면 진행 중 단계로 먼저 옮기셔야 합니다.',
+        icon: 'warning',
+        iconColor: 'yellow',
+      })
+    } else if (alreadyFinished) {
+      Swal.fire({
+        title: '끝난 일정입니다.',
+        text: '정말로 다시 시작하시겠습니까?',
+        icon: 'warning',
+        iconColor: 'yellow',
+        showCancelButton: true,
+        cancelButtonText: '취소',
+        confirmButtonText: '확인',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(finishRejectBuds(data))
+        }
+      })
+    } else if (isFinishDay) {
+      dispatch(finishedBuds(data))
+    } else {
+      dispatch(moveBuds(data))
+    }
   }
   const ref = useRef<HTMLDivElement>(null)
   const [, drop] = useDrop<DragItem>({
@@ -84,28 +118,52 @@ const MovableItem = ({
       if (dropResult) {
         const point = dropResult.name as ColumnName
         const maxId = Math.floor(Math.random() * 1000 + 2000)
-        if (dayOfWeek === COLUMN_NAMES.DEFAULT) {
-          const newItem: any = {
-            budId: maxId + 1,
-            branchColor,
-            budName,
-            dayOfWeek: point,
-            branchId,
+        const isFinishDay =
+          Object.values(COLUMN_NAMES).includes(point) &&
+          point.includes('_FINISH')
+        const alreadyFinished =
+          Object.values(COLUMN_NAMES).includes(dayOfWeek) &&
+          dayOfWeek.includes('_FINISH')
+        console.log(isFinishDay)
+        const valuesArray = Object.values(COLUMN_NAMES)
+        const pointIndex = valuesArray.indexOf(point)
+        const dayOfWeekIndex = valuesArray.indexOf(dayOfWeek)
+        if (pointIndex === dayOfWeekIndex) {
+          /* TODO document why this block is empty */
+        } else if (pointIndex < dayOfWeekIndex && alreadyFinished) {
+          console.log(pointIndex)
+          Swal.fire({
+            title: '등록된 요일 이전으로 수정은 안돼요!',
+            text: '일정을 잘못 등록하셨다면, 삭제하고 다시 등록해주세요!',
+            icon: 'warning',
+            iconColor: 'red',
+          })
+        } else if (dayOfWeek === COLUMN_NAMES.DEFAULT) {
+          if (isFinishDay) {
+            alert('생성된 씨앗을 바로 끝낼 수는 없어요!')
+          } else {
+            const newItem: any = {
+              budId: maxId + 1,
+              branchColor,
+              budName,
+              dayOfWeek: point,
+              branchId,
+            }
+            const { budId, branchColor: newColor, ...createdItem } = newItem
+            const newBuds = [...buds, newItem]
+            const data = {
+              newBuds,
+              createdItem,
+            }
+            dispatch(addBuds(data))
           }
-          const { budId, color: newColor, ...createdItem } = newItem
-          const newBuds = [...buds, newItem]
-          const data = {
-            newBuds,
-            createdItem
-          }
-          dispatch(addBuds(data))
         } else {
           const newItem = {
             ...item,
             budId: id,
             dayOfWeek: point,
           }
-          changeItemColumn(newItem, point)
+          changeItemColumn(newItem, point, isFinishDay, alreadyFinished)
         }
       }
     },
@@ -119,7 +177,7 @@ const MovableItem = ({
     const updatedItems = seeds.filter((item: any) => item.seedId !== itemId)
     const data = {
       newSeeds: updatedItems,
-      createdItem: itemId
+      createdItem: itemId,
     }
     dispatch(removeSeeds(data))
   }
@@ -127,9 +185,16 @@ const MovableItem = ({
     const updatedItems = buds.filter((item: any) => item.budId !== itemId)
     const data = {
       newBuds: updatedItems,
-      createdItem: itemId
+      createdItem: itemId,
     }
-      dispatch(removeBuds(data))
+    dispatch(removeBuds(data))
+  }
+  const handleDetailBuds = () => {
+    setDeailOpen(true)
+  }
+  const closeDetailBuds = () => {
+    setDeailOpen(false)
+    console.log('????')
   }
   return (
     <div
@@ -138,20 +203,29 @@ const MovableItem = ({
       style={{ opacity, backgroundColor: branchColor }}
     >
       {idType === 'bud' && (
-        <button
-          onClick={() => handleComment(comments)}
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              handleComment(comments)
-            }
-          }}
-        >
-          {budName}
-          <button onClick={() => removeBud(id)} className="dnd_delete-btn">
-            X
+        <>
+          <button
+            onClick={() => handleDetailBuds()}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleDetailBuds()
+              }
+            }}
+          >
+            {budName}
+            <button onClick={() => removeBud(id)} className="dnd_delete-btn">
+              X
+            </button>
           </button>
-        </button>
+          <Comments
+            open={detailOpen}
+            handleClose={closeDetailBuds}
+            budId={id}
+            budName={budName}
+            commentCount={commentCount}
+          />
+        </>
       )}
       {idType === 'seed' && (
         <div>
