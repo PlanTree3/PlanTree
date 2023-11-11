@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react'
-// import axios from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 import QR from 'qrcode.react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate,useParams } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
 import './GroupPage.css'
-import { groupCreate, groupStudents } from '@/apis'
+import { groupCreate, groupDelete, groupNameUpdate, groupStudents } from '@/apis'
 
 // type StudentList = {
 //   students: GroupStudentListResponse;
 // };
 
-const AdminGroupDetailPage: React.FC<any> = ({ groupId }) => {
-  // const [page, setPage] = useState(1)
+const AdminGroupDetailPage: React.FC<any> = () => {
+  const { groupId, groupName } = useParams();
 
+  const [page, setPage] = useState(1)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [QrmodalIsOpen, setQrModalIsOpen] = useState(false)
   const [pencilModalIsOpen, setPencilModalIsOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
-  const [inputGroupName, setInputGroupName] = useState('')
+  const [inputGroupName, setInputGroupName] = useState(groupName)
   // const studentsPerPage = 5;
   // const startIndex = (page - 1) * studentsPerPage;
   // const endIndex = startIndex + studentsPerPage;
@@ -70,24 +71,37 @@ const AdminGroupDetailPage: React.FC<any> = ({ groupId }) => {
     }
     try {
       // const groupId = '1'
-      const response = await groupCreate(groupId, data)
+      const response = await groupNameUpdate(groupId, data)
       console.log('그룹이름 업뎃', response)
     } catch (error) {
       console.error('그룹이름 업뎃 에러', error)
     }
     setPencilModalIsOpen(false)
   }
+
   // 교사의 그룹 학생 리스트 조회
   const handleGetGroupDetail = async () => {
-    console.log('1')
+    console.log('11')
     try {
-      console.log('2')
+      console.log('22')
       const response = await groupStudents(groupId)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)
     }
   }
+  // 그룹 삭제
+  const handleGroupDelete = async () => {
+    console.log('11')
+    try {
+      console.log('22')
+      const response = await groupDelete(groupId)
+      console.log('Response:', response)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
   useEffect(() => {
     handleGetGroupDetail()
   }, [])
@@ -119,7 +133,7 @@ const AdminGroupDetailPage: React.FC<any> = ({ groupId }) => {
     <div>
       <div className="flex flex-row">
         {/* eslint-disable-next-line react/no-unescaped-entities */}
-        <div className="font-semibold text-2xl"> '현재 그룹 이름'의 그룹원</div>
+        <div className="font-semibold text-2xl"> {inputGroupName}의 그룹원</div>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
         <img className="mx-4" src={pencil} onClick={openPencilModal} />
         <Button
@@ -235,12 +249,12 @@ const AdminGroupDetailPage: React.FC<any> = ({ groupId }) => {
           }}
         >
           <h1> QR을 찍어 그룹원을 추가해 보세요.</h1>
-          <QR
+          {/* <QR
             value={navi('/groupJoin')}
             size={300}
             id="qr-gen"
             includeMargin={false}
-          />
+          /> */}
         </ReactModal>
       </div>
       {/* <div className="box-border h-2/3 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
@@ -253,6 +267,7 @@ const AdminGroupDetailPage: React.FC<any> = ({ groupId }) => {
           </div>
         ))}
       </div> */}
+      <Button className='red' onClick={handleGroupDelete} label="그룹 삭제하기" />
     </div>
   )
 }

@@ -14,15 +14,15 @@ const groupCreate = async (data: {
 }
 
 // 그룹 이름 수정
-const groupNameUpdate = async (groupId: number, data: AxiosRequestConfig) => {
+const groupNameUpdate = async (groupId: any, data: any) => {
   authApi
-    .patch(`${groupBaseUrl}/${groupId}`, data)
+    .patch(`${groupBaseUrl}/${groupId}/name`, data)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
 }
 
 // 그룹 삭제
-const groupDelete = async (groupId: number) => {
+const groupDelete = async (groupId: string) => {
   authApi
     .delete(`${groupBaseUrl}/${groupId}`)
     .then((res) => console.log(res))
@@ -62,9 +62,9 @@ const groupDetail = async (groupId: number) => {
 }
 
 // 그룹 학생 리스트 조회
-const groupStudents = async (groupId: number) => {
+const groupStudents = async (groupId: string) => {
   return authApi
-    .get(`${groupBaseUrl}/group/${groupId}/student`)
+    .get(`${groupBaseUrl}/${groupId}/student`)
     .then((res) => res)
     .catch((err) => err)
 }

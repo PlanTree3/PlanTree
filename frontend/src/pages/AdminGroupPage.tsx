@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-// import { Link } from 'react-router-dom'
-// import axios from 'axios'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
@@ -90,22 +90,22 @@ const AdminGroupPage: React.FC = () => {
   return (
     <div>
       <hr />
-      <h2>내 그룹 확인하기</h2>
+      <div>내 그룹 확인하기</div>
       <div className="studentListBox">
         <h3>번호 그룹명 시작일 인원</h3>
         {currentGroups?.map((group: any, index: number) => (
           <div>
             {/* eslint-disable-next-line react/no-array-index-key */}
+              <Link to={`/adminGroupDetail/${group.groupId}/${group.groupName}`}>
             <div key={index} className="groupItem">
-              {/* <Link> */}
               <p className="groupInfo">{index + 1 + (currentPage - 1) * 5} </p>
               <p className="groupInfo">{group.groupName} </p>
               <p className="groupInfo">
                 {group.createdAt[0]}-{group.createdAt[1]}-{group.createdAt[2]}{' '}
               </p>
               <p className="groupInfo">{group.studentCount} </p>
-              {/* </Link> */}
             </div>
+              </Link>
             <hr style={{ background: 'black', height: 1, border: 0 }} />
           </div>
         ))}

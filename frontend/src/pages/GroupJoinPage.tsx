@@ -16,9 +16,10 @@ const GroupJoinPage: React.FC<any> = ({ groupId }) => {
   }
   const navi = useNavigate()
   useEffect(() => {
-    handleGroupJoin().then(() => {
-      navi('/studentGroup')
-    })
+    handleGroupJoin()
+    // .then(() => {
+    //   navi('/studentGroup')
+    // })
   }, [])
 
   return (
