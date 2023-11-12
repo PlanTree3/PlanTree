@@ -131,6 +131,7 @@ const UserProfileImg = () => {
   return (
     <div className="w-8/12 h-3/5 relative">
       <div className="flex bg-no-repeat w-full h-full bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]">
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <button className="addImgBtn" onClick={() => moveProfileImg()}>
           <LuImagePlus />
         </button>
