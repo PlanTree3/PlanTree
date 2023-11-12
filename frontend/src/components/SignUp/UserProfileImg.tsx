@@ -99,13 +99,13 @@ const UserProfileImg = () => {
             key={index}
             className="selectImg p-0 mx-1"
             onClick={() => {
-              chooseProfileImg(`/profile/${img}.jpg`)
+              chooseProfileImg(`public/profile/${img}.jpg`)
               MySwal.close()
             }}
           >
             <img
               className="selectImg m-0"
-              src={`/profile/${img}.jpg`}
+              src={`public/profile/${img}.jpg`}
               alt={img}
             />
           </button>

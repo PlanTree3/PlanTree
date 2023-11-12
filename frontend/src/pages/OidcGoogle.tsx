@@ -43,7 +43,7 @@ const OidcGoogle = () => {
     fetchData()
   }, [])
 
-  return <div>잠시 쉬어가는 페이지입니다.</div>
+  return <div />
 }
 
 export default OidcGoogle

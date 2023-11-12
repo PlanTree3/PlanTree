@@ -21,6 +21,8 @@ const userLogin = async (data: unknown): Promise<AxiosResponse> => {
   return api
     .post(`${userBaseUrl}/login`, data)
     .then((res) => {
+      console.log(res.data.data.newMember)
+
       return res.data.data.newMember
     })
     .catch((error) => {
@@ -71,7 +73,7 @@ const userRefresh = async () => {
 const userImageUpdate = async (data: unknown) =>
   authApi
     .patch(`${userBaseUrl}/profile-image`, data)
-    .then((res) => res)
+    .then((res) => console.log(data))
     .catch((err) => console.log(err))
 
 // 이름 수정

@@ -9,7 +9,7 @@ export interface UserState {
 const defaultUser: UserData = {
   role: 'STUDENT',
   name: '요 정 출 현',
-  profileImageUrl: 'public/asset/profile/rabbit.jpg',
+  profileImageUrl: 'public/profile/rabbit.jpg',
 }
 const initialState: UserState = {
   isLoggedIn: false,
@@ -35,9 +35,21 @@ export const userSlice = createSlice({
       state.userData = defaultUser
       localStorage.clear()
     },
+    addProfileImageUrl: (state, action: PayloadAction<any>) => {
+      state.userData.profileImageUrl = action.payload
+      console.log(
+        'userSlice의 profileImgUrl입니다.: ',
+        state.userData.profileImageUrl,
+      )
+    },
   },
 })
 
-export const { loginCheck, saveUserData, fetchUserLogout, successUserLogout } =
-  userSlice.actions
+export const {
+  loginCheck,
+  saveUserData,
+  fetchUserLogout,
+  successUserLogout,
+  addProfileImageUrl,
+} = userSlice.actions
 export default userSlice.reducer
