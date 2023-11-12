@@ -63,6 +63,13 @@ public class GroupController {
         return HttpResponse.ok(HttpStatus.OK, "가입 신청 성공");
     }
 
+    @GetMapping("/{groupId}/join-request")
+    public ResponseEntity<?> searchJoinRequestList(@PathVariable("groupId") UUID groupId,
+            @JwtLoginMember AuthMember authMember) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                groupJoinUseCase.searchJoinRequestList(groupId, authMember));
+    }
+
     @PatchMapping("/{groupId}/join-accept")
     public ResponseEntity<?> acceptJoin(@PathVariable("groupId") UUID groupId,
             @JwtLoginMember AuthMember authMember,

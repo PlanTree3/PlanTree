@@ -22,5 +22,7 @@ public interface MemberRepository {
 
     Optional<Member> findByIdWithNestParent(UUID studentId);
 
+    Optional<Member> findByIdWithNestStudent(UUID parentId);
+
     List<Member> findByIdIn(List<UUID> memberIds);
 }

@@ -58,6 +58,12 @@ public class NestController {
         return HttpResponse.ok(HttpStatus.OK, "둥지 가입 신청 성공");
     }
 
+    @GetMapping("/parent-nest")
+    public ResponseEntity<?> searchParentNest(@JwtLoginMember AuthMember authMember) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                nestSearchUseCase.searchParentNest(authMember));
+    }
+
     @GetMapping("/{nestId}/student")
     public ResponseEntity<?> searchNestStudents(@PathVariable("nestId") UUID nestId,
             @JwtLoginMember AuthMember authMember) {

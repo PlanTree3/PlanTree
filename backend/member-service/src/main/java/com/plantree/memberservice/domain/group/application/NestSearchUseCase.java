@@ -4,6 +4,7 @@ import com.plantree.memberservice.domain.group.application.client.ForestServiceC
 import com.plantree.memberservice.domain.group.application.repository.NestRepository;
 import com.plantree.memberservice.domain.group.domain.Nest;
 import com.plantree.memberservice.domain.group.dto.IsParentOfStudentResponseDto;
+import com.plantree.memberservice.domain.group.dto.ParentNestResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoListResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoResponseDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountListResponseDto;
@@ -40,6 +41,19 @@ public class NestSearchUseCase {
         return new StudentInfoListResponseDto(studentInfos);
     }
 
+    @Transactional(readOnly = true)
+    public ParentNestResponseDto searchParentNest(AuthMember authMember) {
+        Member member = findMemberWithNestStudentById(authMember.getMemberId());
+        if (member.getParent()
+                  .getNest() == null) {
+            return new ParentNestResponseDto();
+        }
+        Nest nest = findNestWithParentById(member.getParent()
+                                                 .getNest()
+                                                 .getId());
+        return new ParentNestResponseDto(nest);
+    }
+
     public IsParentOfStudentResponseDto getIsParentOfStudent(
             IsParentOfStudentRequestDto isParentOfStudentRequestDto) {
         Member member = findMemberWithNestParentById(isParentOfStudentRequestDto.getStudentId());
@@ -52,16 +66,24 @@ public class NestSearchUseCase {
                      .getNest()
                      .getParents()
                      .stream()
-                     .map(
-                             Parent::getMember)
+                     .map(Parent::getMember)
                      .anyMatch(m -> m.getId()
                                      .equals(parentId));
     }
 
     private Member findMemberWithNestParentById(UUID studentId) {
         return memberRepository.findByIdWithNestParent(studentId)
-                               .orElseThrow(() -> new ResourceNotFoundException(
-                                       "멤버를 찾을 수 없습니다."));
+                               .orElseThrow(() -> new ResourceNotFoundException("멤버를 찾을 수 없습니다."));
+    }
+
+    private Member findMemberWithNestStudentById(UUID parentId) {
+        return memberRepository.findByIdWithNestStudent(parentId)
+                               .orElseThrow(() -> new ResourceNotFoundException("멤버를 찾을 수 없습니다."));
+    }
+
+    private Nest findNestWithParentById(UUID nestId) {
+        return nestRepository.findByIdWithParent(nestId)
+                             .orElseThrow(() -> new ResourceNotFoundException("둥지를 찾을 수 없습니다."));
     }
 
     private Nest findNestWithStudentsById(UUID nestId) {
