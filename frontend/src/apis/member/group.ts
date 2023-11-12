@@ -45,6 +45,14 @@ const groupJoinAccept = async (groupId: number) => {
     .catch((err) => console.log(err))
 }
 
+// 그룹 가입 거절
+const groupJoinRefuse = async (groupId: number) => {
+  authApi
+    .patch(`${groupBaseUrl}/${groupId}/join-refuse`)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
+}
+
 // 학생의 그룹 상세
 const groupDetail = async (groupId: number) => {
   return authApi
@@ -56,17 +64,17 @@ const groupDetail = async (groupId: number) => {
 // 그룹 학생 리스트 조회
 const groupStudents = async (groupId: number) => {
   return authApi
-    .get(`${groupBaseUrl}/${groupId}/student`)
+    .get(`${groupBaseUrl}/group/${groupId}/student`)
     .then((res) => res)
     .catch((err) => err)
 }
-
 export {
   groupCreate,
   groupNameUpdate,
   groupDelete,
   groupJoinRequest,
   groupJoinAccept,
+  groupJoinRefuse,
   groupDetail,
   groupStudents,
 }

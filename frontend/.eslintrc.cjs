@@ -69,6 +69,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'react/prop-types': 'off',
   },
   ignorePatterns: ['.eslintrc.cjs'],
 }
