@@ -87,9 +87,11 @@ const AdminNestPage = () => {
     try {
       const response = await nestCheck();
       console.log('둥지 조회', response);
+      console.log('둥지 조회2', response.data.data);
       if (response.data && response.data.data.nest) {
         setNestData(response.data.data.nest);
         setParentsData(response.data.data.nest.parents)
+        console.log('둥지 조회3', nestData);
         handleGetNestDetail()
       } else {
         setNestData(null);
@@ -128,9 +130,8 @@ const AdminNestPage = () => {
 
   //둥지의 학생 리스트 조회
   const handleGetNestDetail = async () => {
-    console.log('id확인', nestData.nestId)
-    const nestId = nestData.nestId
-    console.log('정보확인', nestData)
+    const nestId = nestData?.nestId;
+    console.log('정보확인', nestData, nestId)
     try {
       const response = await nestStudents(nestId)
       console.log('학생 리스트 조회', response)
@@ -140,8 +141,12 @@ const AdminNestPage = () => {
     }
   }
   useEffect(() => {
+    console.log('dd')
     handleNestCheck()
+    console.log('dddd')
   }, [])
+
+  const nestId = nestData?.nestId;
 
   return (
     <div>
@@ -179,7 +184,7 @@ const AdminNestPage = () => {
     <div>
       <div className="font-semibold text-2xl">{nestData.nestName}</div>
       <img className="mx-4" src={pencil} alt="" onClick={openPencilModal} />
-      <div className="font-semibold text-l">그룹장: </div>
+      <div className="font-semibold text-l">둥지장: </div>
       {parentsData.length > 0 ? (
     parentsData.map((parent: any) => (
       <p className="font-semibold text-l">{parent}</p> ))
@@ -218,7 +223,18 @@ const AdminNestPage = () => {
       <Modal
         isOpen={isOpen}
         onClose={closeModal}
-        content={<div>QR을 찍어 둥지에 가입해보세요!</div>}
+        content={
+        <div>
+        <div>QR을 찍어 둥지에 가입해보세요!</div>
+        <QR
+        // value={`https://k9a302a.p.ssafy.io/nestJoin/${nestId}`}
+        value={`https://http://localhost:3000/nestJoin/${nestId}`}
+        size={300}
+        id="qr-gen"
+        includeMargin={false}
+      />
+      </div>
+      }
       />
       <ReactModal
         isOpen={pencilModalIsOpen}

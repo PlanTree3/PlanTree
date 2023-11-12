@@ -1,29 +1,34 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { nestJoinRequest } from '@/apis'
 // import axios from 'axios';
 
-const NestJoinPage: React.FC<any> = ({ groupId }) => {
+const NestJoinPage: React.FC<any> = () => {
+
+  const { nestId } = useParams();
+
   const handleGroupJoin = async () => {
-    console.log('1')
     try {
-      console.log('2')
-      const response = await nestJoinRequest(groupId)
-      console.log('Response:', response)
+      const response = await nestJoinRequest(nestId)
+      console.log('둥지가입 응답:', response)
     } catch (error) {
-      console.error('Error:', error)
+      console.error('둥지가입 에러:', error)
     }
   }
-  const navi = useNavigate()
+  // const navi = useNavigate()
   useEffect(() => {
-    handleGroupJoin().then(() => {
-      navi('/')
-    })
+    handleGroupJoin()
+    // .then(() => {
+    //   navi('/')
+    // })
   }, [])
 
   return (
     <div>
       <div>둥지에 가입되었습니다.</div>
+      <Link to={'/main'}>
+      <div>메인으로 돌아가기</div>
+      </Link>
     </div>
   )
 }

@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { groupJoinRequest } from '@/apis'
 // import axios from 'axios';
 
-const GroupJoinPage: React.FC<any> = ({ groupId }) => {
+const GroupJoinPage: React.FC<any> = () => {
+  const { groupId } = useParams();
+
   const handleGroupJoin = async () => {
-    console.log('1')
     try {
-      console.log('2')
       const response = await groupJoinRequest(groupId)
-      console.log('Response:', response)
+      console.log('그룹가입신청 응답:', response)
     } catch (error) {
-      console.error('Error:', error)
+      console.error('그룹가입신청 Error:', error)
     }
   }
-  const navi = useNavigate()
+  // const navi = useNavigate()
   useEffect(() => {
     handleGroupJoin()
     // .then(() => {
@@ -24,7 +24,10 @@ const GroupJoinPage: React.FC<any> = ({ groupId }) => {
 
   return (
     <div>
-      <div>그룹 가입요청이 보내졌습니다.</div>
+      <div>그룹 가입이 신청되었습니다.</div>
+      <Link to={'/main'}>
+      <div>메인으로 돌아가기</div>
+      </Link>
     </div>
   )
 }

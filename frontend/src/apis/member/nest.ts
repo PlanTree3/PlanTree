@@ -51,7 +51,7 @@ const nestDetail = async (nestId: string) => {
     .catch((err) => err)
 }
 
-// 그룹 학생 리스트 조회
+// 둥지 학생 리스트 조회
 const nestStudents = async (nestId: string) => {
   return authApi
     .get(`${nestBaseUrl}/${nestId}/student`)

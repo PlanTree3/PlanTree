@@ -245,12 +245,13 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           }}
         >
           <h1> QR을 찍어 그룹원을 추가해 보세요.</h1>
-          {/* <QR
-            value={navi('/groupJoin')}
+          <QR
+            // value={`https://k9a302a.p.ssafy.io//groupJoin/${groupId}`}
+            value={`https://http://localhost:3000/groupJoin/${groupId}`}
             size={300}
             id="qr-gen"
             includeMargin={false}
-          /> */}
+          />
         </ReactModal>
       </div>
       <div className="box-border h-2/3 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
