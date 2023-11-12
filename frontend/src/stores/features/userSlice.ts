@@ -26,6 +26,7 @@ export const userSlice = createSlice({
     },
     fetchReUserData: () => {},
     saveUserData: (state, action: PayloadAction<any>) => {
+      state.isLoggedIn = true
       state.userData = action.payload
       console.log('유저 정보', action.payload)
     },
@@ -35,7 +36,7 @@ export const userSlice = createSlice({
       state.userData = defaultUser
       localStorage.clear()
     },
-    addProfileImageUrl: (state, action: PayloadAction<any>) => {
+    addProfileImageUrl: (state, action: PayloadAction<string>) => {
       state.userData.profileImageUrl = action.payload
       console.log(
         'userSlice의 profileImgUrl입니다.: ',

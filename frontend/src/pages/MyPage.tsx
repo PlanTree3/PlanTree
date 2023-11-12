@@ -4,7 +4,7 @@ import { Mousewheel, Pagination } from 'swiper/modules'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { FiPlusCircle } from 'react-icons/fi'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 // import { noticeList } from '@/apis/communication/notice'
 import {
   Tutorial1,
@@ -33,6 +33,8 @@ const MyPage = () => {
 
   const MySwal = withReactContent(Swal)
 
+  const dispatch = useDispatch()
+
   const imgList: string[] = [
     'bear',
     'cat',
@@ -47,14 +49,14 @@ const MyPage = () => {
 
   const chooseProfileImg = (url: string) => {
     setInputProfileImg(url)
-    addProfileImageUrl(url)
+    dispatch(addProfileImageUrl(url))
     console.log('mypage의 profileImg 변경입니다.: ', url)
 
-    const data = {
+    const profileImg = {
       profileImageUrl: url,
     }
 
-    userImageUpdate(data)
+    userImageUpdate(profileImg)
   }
 
   const showUserRole = () => {
@@ -72,7 +74,6 @@ const MyPage = () => {
 
   useEffect(() => {
     setInputUserRole(showUserRole())
-    // setInputProfileImg(userprofileImage)
   }, []) // userRole이 변경될 때만 실행
 
   // 프로필 이미지 모달
