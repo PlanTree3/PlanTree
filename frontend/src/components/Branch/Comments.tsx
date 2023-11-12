@@ -43,11 +43,12 @@ const Comments: React.FC<CommentsProps> = ({
   const treeId = useSelector((state: RootState) => state.main.treeId)
   const updateInfo = () => {
     const response: any = detailBuds(treeId, budId)
-    const data: Comment[] | null = response.data.comments ?? null
+    // api 404로 인한 주석처리
+    // const data: Comment[] | null = response.data.comments ?? null
     console.log(response)
-    if (data) {
-      setComments(data)
-    }
+    // if (data) {
+    //   setComments(data)
+    // }
   }
   useEffect(() => {
     updateInfo()
