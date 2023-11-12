@@ -7,6 +7,7 @@ import { COLUMN_NAMES, DAY_NAMES } from '@/types/DnDType'
 import { RootState } from '@/stores/store'
 import { addBuds } from '@/stores/features/branchSlice.ts'
 import '@/styles/main/mainStyle.scss'
+import { getMainData } from '@/stores/features/mainSlice.ts'
 
 const MainPage = () => {
   const dispatch = useDispatch()
@@ -20,6 +21,7 @@ const MainPage = () => {
   const [selectDay, setSelectDay] = useState('')
   const [message, setMessage] = useState('')
   useEffect(() => {
+    dispatch(getMainData())
     // 일요일(0) 또는 토요일(6)인 경우
     if (dayToday === 0 || dayToday === 6) {
       setMessage('오늘의 일정은 없습니다')

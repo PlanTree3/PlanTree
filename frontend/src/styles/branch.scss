@@ -3,13 +3,14 @@
 @import 'tailwindcss/utilities';
 
 .dnd-box-container {
-  max-height: 80vh; /* 또는 원하는 최대 높이 */
+  max-height: 100%; /* 또는 원하는 최대 높이 */
   overflow-y: auto; /* 내용이 넘칠 때 스크롤바 표시 */
+  overflow-x: hidden;
 }
 // 스크롤 바 높이
 .dnd-box-container::-webkit-scrollbar {
   height: 1vh;
-  width: 1vw;
+  width: 0.5vw;
 }
 
 // 스크롤 바 트랙 설정

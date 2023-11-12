@@ -1,24 +1,27 @@
-const baseUrl = 'api/forest-service/forest'
+const baseUrl = 'api/forest-service'
 
 // treeId로 끝나는 api url을 문자열 형태로 반환하는 함수
-const treeApiUrl = (forestId: number, treeId: number) =>
-  `${baseUrl}/${forestId}/tree/${treeId}`
+const treeApiUrl = (treeId: string) => `${baseUrl}/tree/${treeId}`
 
-const branchApiUrl = (forestId: number, treeId: number, branchId: number) =>
-  `${baseUrl}/${forestId}/tree/${treeId}/branch/${branchId}`
+const scheduleUrl = (treeId: string) => `${baseUrl}/commons/tree/${treeId}`
 
-const seedApiUrl = (
-  forestId: number,
-  treeId: number,
-  branchId: number,
-  seedId: number,
-) => `${baseUrl}/${forestId}/tree/${treeId}/branch/${branchId}/seed/${seedId}`
+const branchApiUrl = (treeId: string, branchId: string) =>
+  `${baseUrl}/tree/${treeId}/branch/${branchId}`
 
-const budApiUrl = (
-  forestId: number,
-  treeId: number,
-  branchId: number,
-  budId: number,
-) => `${baseUrl}/${forestId}/tree/${treeId}/branch/${branchId}/bud/${budId}`
+const seedApiUrl = (treeId: string, branchId: string, seedId: string) =>
+  `${baseUrl}/tree/${treeId}/branch/${branchId}/seed/${seedId}`
 
-export { treeApiUrl, branchApiUrl, seedApiUrl, budApiUrl }
+const budApiUrl = (treeId: string, branchId: string, budId: string) =>
+  `${baseUrl}/tree/${treeId}/branch/${branchId}/bud/${budId}`
+
+const commentApiUrl = (treeId: string, budId: string) =>
+  `${baseUrl}/tree/${treeId}/bud/${budId}`
+
+export {
+  treeApiUrl,
+  branchApiUrl,
+  seedApiUrl,
+  budApiUrl,
+  scheduleUrl,
+  commentApiUrl,
+}

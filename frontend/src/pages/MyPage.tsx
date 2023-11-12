@@ -19,6 +19,7 @@ import '@/styles/profile.scss'
 import './MyPageStyle.scss'
 import { userImageUpdate } from '@/apis'
 import { addProfileImageUrl } from '@/stores/features/userSlice'
+import Button from '@/components/Button/Button'
 
 const MyPage = () => {
   const userName = useSelector((state: any) => state.user.userData.name)
@@ -153,6 +154,9 @@ const MyPage = () => {
       heightAuto: false,
       padding: 0,
       confirmButtonText: '확인',
+      customClass: {
+        confirmButton: 'py-0', // 새로운 클래스 이름을 지정합니다.
+      },
     })
   }
 
@@ -214,6 +218,9 @@ const MyPage = () => {
       heightAuto: false,
       padding: 0,
       confirmButtonText: '확인',
+      customClass: {
+        confirmButton: 'py-0', // 새로운 클래스 이름을 지정합니다.
+      },
     })
   }
 
@@ -247,7 +254,7 @@ const MyPage = () => {
       padding: 0,
       confirmButtonText: '확인',
       customClass: {
-        confirmButton: 'w-2/4 h-2/6', // 새로운 클래스 이름을 지정합니다.
+        confirmButton: 'py-0', // 새로운 클래스 이름을 지정합니다.
       },
     })
   }
@@ -282,16 +289,22 @@ const MyPage = () => {
           </div>
         </div>
       </div>
-      <div className="m-1">
-        <button className="mypageButton" onClick={moveChart}>
-          이번 주 통계 보기
-        </button>
-        <button className="mypageButton" onClick={moveNewsList}>
-          가정 통신문 보기
-        </button>
-        <button className="mypageButton" onClick={moveTutorial}>
-          Plan Tree 100% 활용하기
-        </button>
+      <div className="mypage-btn-container">
+        <Button
+          className="long primary block"
+          label="이번 주 통계 보기"
+          onClick={moveChart}
+        />
+        <Button
+          className="long primary block"
+          label="가정 통신문 보기"
+          onClick={moveNewsList}
+        />
+        <Button
+          className="long primary block"
+          label="Plan Tree 100% 활용하기"
+          onClick={moveTutorial}
+        />
       </div>
     </div>
   )
