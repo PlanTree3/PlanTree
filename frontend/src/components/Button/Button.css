@@ -7,9 +7,9 @@
 }
 
 .xsmall {
-  width: 120px;
-  height: 40px;
-  font-size: 1rem;
+  width: 8vw;
+  height: 3vh;
+  font-size: 2vh;
   border-radius: 4px;
   padding: 0;
 }
@@ -33,6 +33,10 @@
   height: 60px;
   font-size: 1.5rem;
   border-radius: 8px;
+}
+
+.long {
+  @apply w-full rounded px-3;
 }
 
 .primary {

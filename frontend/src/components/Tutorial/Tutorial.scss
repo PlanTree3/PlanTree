@@ -1,3 +1,11 @@
 .tutorialImg {
   @apply w-96 h-20 flex;
+  img {
+    object-fit: cover;
+  }
+}
+
+.tutorial-2-container {
+  @apply grid;
+  grid-template-columns: 1fr 4fr;
 }

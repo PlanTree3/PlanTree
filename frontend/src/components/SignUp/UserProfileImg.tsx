@@ -70,7 +70,7 @@ const UserProfileImg = () => {
   }
 
   // 객체에 담아서 백에 보내주자!
-  const data = {
+  const signUpData = {
     idToken,
     oauthProvider,
     name: userName,
@@ -80,10 +80,8 @@ const UserProfileImg = () => {
   }
 
   const saveUser = () => {
-    console.log(data)
-    userSignup(data)
+    userSignup(signUpData)
     dispatch(loginCheck())
-    localStorage.clear()
     navigate('/main')
   }
 
@@ -101,13 +99,13 @@ const UserProfileImg = () => {
             key={index}
             className="selectImg p-0 mx-1"
             onClick={() => {
-              chooseProfileImg(`/profile/${img}.jpg`)
+              chooseProfileImg(`public/profile/${img}.jpg`)
               MySwal.close()
             }}
           >
             <img
               className="selectImg m-0"
-              src={`/profile/${img}.jpg`}
+              src={`public/profile/${img}.jpg`}
               alt={img}
             />
           </button>
@@ -133,6 +131,7 @@ const UserProfileImg = () => {
   return (
     <div className="w-8/12 h-3/5 relative">
       <div className="flex bg-no-repeat w-full h-full bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]">
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <button className="addImgBtn" onClick={() => moveProfileImg()}>
           <LuImagePlus />
         </button>

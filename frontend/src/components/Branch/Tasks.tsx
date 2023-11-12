@@ -19,7 +19,7 @@ export const comments_1: CommentType[] = [
     userId: 102,
     userName: '연재',
     title: 'Question',
-    text: 'I have a question about one of the points mentioned. Could someone clarify?'
+    text: 'I have a question about one of the points mentioned. Could someone clarify?',
   },
   {
     commentId: 3,
@@ -92,28 +92,28 @@ export const budsList = [
     budId: 1,
     budName: '기정',
     dayOfWeek: MONDAY,
-    comments: comments_1,
+    commentCount: 10,
     color: '#A7FFC4',
   },
   {
     budId: 2,
     budName: '예지',
     dayOfWeek: TUESDAY,
-    comments: null,
+    commentCount: 1,
     color: '#9ABAFF',
   },
   {
     budId: 3,
     budName: '연재',
     dayOfWeek: WEDNESDAY,
-    comments: comments_2,
+    commentCount: 3,
     color: '#9ABAFF',
   },
   {
     budId: 4,
     budName: '영석',
     dayOfWeek: FRIDAY_FINISH,
-    comments: null,
+    commentCount: 5,
     color: '#D7AAFF',
   },
 ]

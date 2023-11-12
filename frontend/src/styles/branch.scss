@@ -3,13 +3,14 @@
 @import 'tailwindcss/utilities';
 
 .dnd-box-container {
-  max-height: 80vh; /* 또는 원하는 최대 높이 */
+  max-height: 100%; /* 또는 원하는 최대 높이 */
   overflow-y: auto; /* 내용이 넘칠 때 스크롤바 표시 */
+  overflow-x: hidden;
 }
 // 스크롤 바 높이
 .dnd-box-container::-webkit-scrollbar {
   height: 1vh;
-  width: 1vw;
+  width: 0.5vw;
 }
 
 // 스크롤 바 트랙 설정
@@ -93,17 +94,39 @@
   align-items: center;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
   @apply truncate w-[10ch] text-center;
+  &-content {
+    display: grid;
+    gap: 0.3vw;
+    &-deleteBTN {
+      display: none;
+    }
+    &-name {
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    &:hover {
+      grid-template-columns: 1fr 1fr 1fr;
+      .dnd_movable-item-content-name {
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .dnd_movable-item-content-deleteBTN {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &-img {
+          width: 80%;
+          height: 80%;
+        }
+      }
+    }
+  }
 }
 
-.dnd_movable-item .dnd_delete-btn {
-  display: none;
-}
-
-.dnd_movable-item:hover .dnd_delete-btn {
-  //width: 0.1vw;
-  //height: 0.1vh;
-  display: block;
-}
 
 .dnd-branch-box {
   display: grid;

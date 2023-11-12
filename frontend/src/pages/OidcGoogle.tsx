@@ -16,7 +16,6 @@ const OidcGoogle = () => {
 
       if (idTokenMatch) {
         const idToken = idTokenMatch[1]
-        console.log('ID Token:', idToken)
 
         const data = {
           oauthProvider: 'GOOGLE',
@@ -44,7 +43,7 @@ const OidcGoogle = () => {
     fetchData()
   }, [])
 
-  return <div>잠시 쉬어가는 페이지입니다.</div>
+  return <div />
 }
 
 export default OidcGoogle

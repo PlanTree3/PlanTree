@@ -10,8 +10,9 @@
   font-style: normal;
 }
 
+html,
 body {
-  @apply px-3 flex flex-col justify-center font-['SeoulHangangM'] bg-[#f5f1e3];
+  @apply flex flex-col justify-center font-['SeoulHangangM'] bg-[#f5f1e3] h-[100%];
 }
 
 a {
