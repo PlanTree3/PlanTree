@@ -12,10 +12,7 @@ public class TeacherGroupListResponseDto {
 
     public TeacherGroupListResponseDto(List<Group> teacherGroups) {
         this.groups = teacherGroups.stream()
-                                   .map(group ->
-                                           new TeacherGroupResponseDto(group.getName(),
-                                                   group.getCreatedAt(), group.getGroupStudents()
-                                                                              .size()))
+                                   .map(TeacherGroupResponseDto::new)
                                    .collect(Collectors.toList());
     }
 }
