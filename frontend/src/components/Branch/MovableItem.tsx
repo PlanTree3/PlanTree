@@ -20,6 +20,8 @@ import {
 import '@/styles/branch.scss'
 import { RootState } from '@/stores/store'
 import { Comments } from '@/components'
+import delBTN from '../../../public/btn/deleteIcon.svg'
+import changeBTN from '../../../public/btn/writeIcon.svg'
 
 const MovableItem = ({
   branchId,
@@ -205,6 +207,7 @@ const MovableItem = ({
       {idType === 'bud' && (
         <>
           <button
+            className="dnd_movable-item-content"
             onClick={() => handleDetailBuds()}
             tabIndex={0}
             onKeyDown={(e) => {
@@ -213,9 +216,26 @@ const MovableItem = ({
               }
             }}
           >
-            {budName}
-            <button onClick={() => removeBud(id)} className="dnd_delete-btn">
-              X
+            <p className="dnd_movable-item-content-name">{budName}</p>
+            <button
+              // onClick={() => removeBud(id)}
+              className="dnd_movable-item-content-deleteBTN"
+            >
+              <img
+                src={changeBTN}
+                alt="수정버튼"
+                className="dnd_movable-item-content-deleteBTN-img"
+              />
+            </button>
+            <button
+              onClick={() => removeBud(id)}
+              className="dnd_movable-item-content-deleteBTN"
+            >
+              <img
+                src={delBTN}
+                alt="삭제버튼"
+                className="dnd_movable-item-content-deleteBTN-img"
+              />
             </button>
           </button>
           <Comments
@@ -228,12 +248,29 @@ const MovableItem = ({
         </>
       )}
       {idType === 'seed' && (
-        <div>
-          {budName}
-          <button onClick={() => removeSeed(id)} className="dnd_delete-btn">
-            X
+        <button className="dnd_movable-item-content">
+          <p className="dnd_movable-item-content-name">{budName}</p>
+          <button
+            // onClick={() => removeSeed(id)}
+            className="dnd_movable-item-content-deleteBTN"
+          >
+            <img
+              src={changeBTN}
+              alt="수정버튼"
+              className="dnd_movable-item-content-deleteBTN-img"
+            />
           </button>
-        </div>
+          <button
+            onClick={() => removeSeed(id)}
+            className="dnd_movable-item-content-deleteBTN"
+          >
+            <img
+              src={delBTN}
+              alt="삭제버튼"
+              className="dnd_movable-item-content-deleteBTN-img"
+            />
+          </button>
+        </button>
       )}
     </div>
   )
