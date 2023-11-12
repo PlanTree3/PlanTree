@@ -11,7 +11,7 @@ import yeji1 from '../../public/yeji1.png'
 import gijeong1 from '../../public/gijeong1.png'
 import forest from '../../public/forest_tmp.png'
 // import { divide } from 'lodash'
-import { nestCreate, nestNameUpdate, nestStudents } from '@/apis'
+import { nestCheck, nestCreate, nestDelete, nestNameUpdate, nestStudents } from '@/apis'
 
 const AdminNestPage = () => {
   const [page, setPage] = useState(1)
@@ -19,6 +19,8 @@ const AdminNestPage = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [createModalisOpen, setCreateModalisOpen] = useState(false)
   const [inputNestName, setInputNestName] = useState('')
+  const [studentData, setStudentData] = useState<any>(null)
+  const [nestData, setNestData] = useState<any>(null)
   // const [currentPage, setCurrentPage] = useState(1)
   // const GroupsPerPage = 5
 
@@ -78,7 +80,22 @@ const AdminNestPage = () => {
     setIsOpen(false)
   }
 
-  // 둥지 조회
+  // 둥지 조회(둥지의 유무를 먼저 확인)
+  const handleNestCheck = async () => {
+    try {
+      const response = await nestCheck();
+      console.log('둥지 조회', response);
+      // if (response.data && response.data.nest) {
+      //   // Nest exists
+      //   setNestData(response.data.nest);
+      // } else {
+      //   // Nest does not exist
+      //   setNestData(null);
+      // }
+    } catch (error) {
+      console.error('둥지 조회 에러', error);
+    }
+  };
 
   // 둥지 이름 변경
   const handleNestName = async () => {
@@ -94,6 +111,16 @@ const AdminNestPage = () => {
     setPencilModalIsOpen(false)
   }
 
+  //둥지 삭제
+  const handleNestDelete = async () => {
+    try {
+      const response = await nestDelete(nestId)
+      console.log('둥지 삭제', response)
+    } catch (error) {
+      console.error('둥지 삭제 에러', error)
+    }
+  }
+
   //둥지의 학생 리스트 조회
   const handleGetNestDetail = async () => {
     console.log('1')
@@ -106,6 +133,7 @@ const AdminNestPage = () => {
     }
   }
   useEffect(() => {
+    handleNestCheck()
     handleGetNestDetail()
   }, [])
 
@@ -149,6 +177,8 @@ const AdminNestPage = () => {
         </div>
       </div>
       <Button className="primary" onClick={openModal} label="둥지원 추가하기" />
+      <br/>
+      <Button className="red" onClick={handleNestDelete} label="둥지 삭제" />
       <Modal
         isOpen={isOpen}
         onClose={closeModal}

@@ -21,10 +21,10 @@ const nestNameUpdate = async (nestId: number, data: AxiosRequestConfig) => {
 
 // 둥지 조회
 const nestCheck = async () => {
-  authApi
+  return authApi
     .get(`${nestBaseUrl}/parent-nest`)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+    .then((res) => res)
+    .catch((err) => err)
 }
 
 // 그룹 삭제

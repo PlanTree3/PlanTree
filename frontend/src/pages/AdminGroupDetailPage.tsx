@@ -24,7 +24,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   const studentsPerPage = 5;
   const startIndex = (page - 1) * studentsPerPage;
   const endIndex = startIndex + studentsPerPage;
-  const currentStudents = studentsData.slice(startIndex, endIndex);
+  const currentStudents = studentsData?.slice(startIndex, endIndex) || [];
 
   const openModal = () => {
     setModalIsOpen(true)
@@ -250,15 +250,20 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         </ReactModal>
       </div>
       <div className="box-border h-2/3 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
-    {currentStudents.map((student: any) => (
-          <div key={student.studentId} className="student-box">
-            <p>학생 ID: {student.studentId}</p>
-            <p>학생 이름: {student.studentName}</p>
-            <p>진행한 버드 수: {student.completedBudCount}</p>
-            <p>전체 버드 수: {student.totalBudCount}</p>
-          </div>
-        ))}
+  {currentStudents.length > 0 ? (
+    currentStudents.map((student: any) => (
+      <div key={student.studentId} className="student-box">
+        <p>학생 ID: {student.studentId}</p>
+        <p>학생 이름: {student.studentName}</p>
+        <p>진행한 버드 수: {student.completedBudCount}</p>
+        <p>전체 버드 수: {student.totalBudCount}</p>
       </div>
+    ))
+  ) : (
+    <p>현재 그룹원이 없습니다.</p>
+  )}
+</div>
+
       <div className="pagination">
         {pageNumbers.map((number) => (
           <button key={number} onClick={() => changePage(number)}>
