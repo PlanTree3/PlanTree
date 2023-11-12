@@ -85,7 +85,7 @@ const userNameUpdate = async (data: unknown) =>
 // 그룹 둥지 리스트 조회(학생)
 const userGroupList = async () => {
   return authApi
-    .get(`${memberBaseUrl}/student-group`)
+    .get(`${memberBaseUrl}/group/student-group`)
     .then((res) => res)
     .catch((err) => err)
 }
