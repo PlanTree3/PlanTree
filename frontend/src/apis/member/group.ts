@@ -22,7 +22,7 @@ const groupNameUpdate = async (groupId: any, data: any) => {
 }
 
 // 그룹 삭제
-const groupDelete = async (groupId: string) => {
+const groupDelete = async (groupId: any) => {
   authApi
     .delete(`${groupBaseUrl}/${groupId}`)
     .then((res) => console.log(res))
@@ -30,7 +30,7 @@ const groupDelete = async (groupId: string) => {
 }
 
 // 그룹 가입 신청
-const groupJoinRequest = async (groupId: number) => {
+const groupJoinRequest = async (groupId: any) => {
   authApi
     .post(`${groupBaseUrl}/${groupId}/join-request`)
     .then((res) => console.log(res))
@@ -38,7 +38,7 @@ const groupJoinRequest = async (groupId: number) => {
 }
 
 // 그룹 가입 수락
-const groupJoinAccept = async (groupId: number) => {
+const groupJoinAccept = async (groupId: any) => {
   authApi
     .patch(`${groupBaseUrl}/${groupId}/join-accept`)
     .then((res) => console.log(res))
@@ -46,7 +46,7 @@ const groupJoinAccept = async (groupId: number) => {
 }
 
 // 그룹 가입 거절
-const groupJoinRefuse = async (groupId: number) => {
+const groupJoinRefuse = async (groupId: any) => {
   authApi
     .patch(`${groupBaseUrl}/${groupId}/join-refuse`)
     .then((res) => console.log(res))
@@ -54,7 +54,7 @@ const groupJoinRefuse = async (groupId: number) => {
 }
 
 // 학생의 그룹 상세
-const groupDetail = async (groupId: number) => {
+const groupDetail = async (groupId: any) => {
   return authApi
     .get(`${groupBaseUrl}/${groupId}`)
     .then((res) => res)
@@ -62,12 +62,21 @@ const groupDetail = async (groupId: number) => {
 }
 
 // 그룹 학생 리스트 조회
-const groupStudents = async (groupId: string) => {
+const groupStudents = async (groupId: any) => {
   return authApi
     .get(`${groupBaseUrl}/${groupId}/student`)
     .then((res) => res)
     .catch((err) => err)
 }
+
+// 그룹 가입 수락 대기 리스트 조회
+const groupStudentsRequest = async (groupId: any) => {
+  return authApi
+    .get(`${groupBaseUrl}/${groupId}/join-request`)
+    .then((res) => res)
+    .catch((err) => err)
+}
+
 export {
   groupCreate,
   groupNameUpdate,
@@ -77,4 +86,5 @@ export {
   groupJoinRefuse,
   groupDetail,
   groupStudents,
+  groupStudentsRequest,
 }

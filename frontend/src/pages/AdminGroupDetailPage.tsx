@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios, {AxiosRequestConfig} from 'axios';
 import QR from 'qrcode.react'
-import { Link, useNavigate,useParams } from 'react-router-dom'
+import { Link, useNavigate,useParams, useLocation } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
@@ -10,7 +10,9 @@ import { groupDelete, groupNameUpdate, groupStudents } from '@/apis'
 
 
 const AdminGroupDetailPage: React.FC<any> = () => {
-  const { groupId, groupName } = useParams();
+  const { groupId } = useParams();
+  const location = useLocation();
+  const groupName = location.state?.groupName || '';
   
   const [currentPage, setCurrentPage] = useState(1)
   const [page, setPage] = useState(1)
@@ -104,6 +106,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   useEffect(() => {
     handleGetGroupDetail()
+    // setInputValue(groupName)
+    console.log('그룹네임', groupName)
   }, [])
 
   const navi = useNavigate()
@@ -133,7 +137,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           className="primary"
           onClick={openModal}
         />
-        <Link to="/adminGroupRequest">
+         <Link to={`/adminGroupRequest/${groupId}`} state={{ groupName: inputGroupName }}>
           <Button label="가입요청 리스트 확인하기" className="gray" />
         </Link>
         <Button label="그룹원 추가하기" className="red" onClick={openQrModal} />

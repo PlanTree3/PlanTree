@@ -1,21 +1,34 @@
-// import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 // import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useParams, useLocation } from 'react-router-dom'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
-import { groupJoinAccept, groupJoinRefuse } from '@/apis'
+import { groupJoinAccept, groupJoinRefuse, groupStudentsRequest } from '@/apis'
 
 const AdminGroupRequestPage = () => {
-  // const [currentPage, setCurrentPage] = useState(1)
+  const { groupId } = useParams();
+  const location = useLocation();
+  const groupName = location.state?.groupName || '';
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [studentsData, setStudentsData] = useState<any>(null)
   // const GroupsPerPage = 5
 
-  //그룹 가입 수락
-  const data1 = { memberId: memberId }
-  const handleGroupAccept = async () => {
-    console.log('1')
+// 그룹 가입 수락 대기 리스트 조회
+  const handleGroupRequestList = async () => {
     try {
-      console.log('2')
-      const response = await groupJoinAccept(data1)
+      const response = await groupStudentsRequest(groupId)
+      console.log('Response:', response)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  //그룹 가입 수락
+  const handleGroupAccept = async () => {
+    const data = { memberId: memberId }
+    try {
+      const response = await groupJoinAccept(data)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)
@@ -23,17 +36,20 @@ const AdminGroupRequestPage = () => {
   }
 
   //그룹 가입 거절
-  const data2 = { memberId: memberId }
   const handleGroupRefuse = async () => {
-    console.log('1')
+    const data = { memberId: memberId }
     try {
-      console.log('2')
-      const response = await groupJoinRefuse(data2)
+      const response = await groupJoinRefuse(data)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)
     }
   }
+
+  useEffect(() => {
+    handleGroupRequestList()
+  }, [])
+
 
   const handleNo = () => {
     console.log('nonono')
@@ -66,10 +82,10 @@ const AdminGroupRequestPage = () => {
     <div>
       <div className="flex flex-row">
         <div className="font-semibold text-2xl">
-          '현재 그룹 이름'의 대기 목록
+          {groupName}의 대기 학생 목록
         </div>
         <div className="ml-4">
-          <Link to="/adminGroupDetail">
+          <Link to={`/adminGroupDetail/${groupId}`}>
             <Button label="그룹으로 돌아가기" className="gray" />
           </Link>
         </div>

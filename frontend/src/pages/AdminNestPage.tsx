@@ -90,9 +90,7 @@ const AdminNestPage = () => {
       if (response.data && response.data.data.nest) {
         setNestData(response.data.data.nest);
         setParentsData(response.data.data.nest.parents)
-        console.log(parentsData);
         handleGetNestDetail()
-        console.log('여기는?');
       } else {
         setNestData(null);
       }
@@ -107,6 +105,7 @@ const AdminNestPage = () => {
     const data = {
       nestName: inputNestName,
     }
+    console.log('inputNestName', inputNestName)
     try {
       const response = await nestNameUpdate(nestId, data)
       console.log('둥지이름 업뎃', response)
@@ -129,12 +128,12 @@ const AdminNestPage = () => {
 
   //둥지의 학생 리스트 조회
   const handleGetNestDetail = async () => {
+    console.log('id확인', nestData.nestId)
     const nestId = nestData.nestId
     console.log('정보확인', nestData)
     try {
-      console.log('학생 리스트 조회')
       const response = await nestStudents(nestId)
-      console.log('Response:', response)
+      console.log('학생 리스트 조회', response)
       setStudentsData(response.data.data.students)
     } catch (error) {
       console.error('Error:', error)

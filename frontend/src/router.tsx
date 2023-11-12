@@ -37,7 +37,7 @@ const RoutesComponent = () => (
     <Route path="/adminNest" element={<AdminNestPage />} />
     {/* <Route path="/adminGroupTab" element={<AdminGroupTabPage />} /> */}
     <Route path="/adminGroup" element={<AdminGroupPage />} />
-    <Route path="/adminGroupDetail/:groupId/:groupName" element={<AdminGroupDetailPage />} />
+    <Route path="/adminGroupDetail/:groupId" element={<AdminGroupDetailPage />} />
     <Route path="/adminGroupRequest/:groupId" element={<AdminGroupRequestPage />} />
     {/* QR 연결 페이지 **그룹/둥지 아이디 덧붙여야함 */}
     {/* <Route path="/groupJoin/:groupId" element={<GroupJoinPage />} /> */}
