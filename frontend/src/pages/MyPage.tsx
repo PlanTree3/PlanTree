@@ -17,6 +17,8 @@ import {
 import '@/styles/fontList.scss'
 import '@/styles/profile.scss'
 import './MyPageStyle.scss'
+import { userImageUpdate } from '@/apis'
+import { addProfileImageUrl } from '@/stores/features/userSlice'
 
 const MyPage = () => {
   const userName = useSelector((state: any) => state.user.userData.name)
@@ -24,7 +26,8 @@ const MyPage = () => {
   const userprofileImage = useSelector(
     (state: any) => state.user.userData.profileImageUrl,
   )
-  const [inputProfileImg, setInputProfileImg] = useState<string>('')
+  const [inputProfileImg, setInputProfileImg] =
+    useState<string>(userprofileImage)
   const [inputUserRole, setInputUserRole] = useState<string>('')
 
   const MySwal = withReactContent(Swal)
@@ -43,6 +46,14 @@ const MyPage = () => {
 
   const chooseProfileImg = (url: string) => {
     setInputProfileImg(url)
+    addProfileImageUrl(url)
+    console.log('mypage의 profileImg 변경입니다.: ', url)
+
+    const data = {
+      profileImageUrl: url,
+    }
+
+    userImageUpdate(data)
   }
 
   const showUserRole = () => {
@@ -60,17 +71,18 @@ const MyPage = () => {
 
   useEffect(() => {
     setInputUserRole(showUserRole())
-    setInputProfileImg(userprofileImage)
+    // setInputProfileImg(userprofileImage)
   }, []) // userRole이 변경될 때만 실행
 
   // 프로필 이미지 모달
   const moveProfileImg = () => {
     const content = (
-      <div className="mb-3.5">
+      <div>
+        {/* className="mb-3.5" */}
         {imgList.map((img: string) => (
           <button
             key={img}
-            className="selectImg p-0 mx-1"
+            // className="selectImg p-0 mx-1"
             onClick={() => {
               chooseProfileImg(`public/profile/${img}.jpg`)
               MySwal.close() // 모달을 닫음
