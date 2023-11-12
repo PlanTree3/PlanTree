@@ -4,7 +4,7 @@ import { authApi } from '@/apis'
 const nestBaseUrl = 'api/member-service/nest'
 
 // 둥지 생성
-const nestCreate = async (data: AxiosRequestConfig): Promise<string> => {
+const nestCreate = async (data: any): Promise<any> => {
   return authApi
     .post(`${nestBaseUrl}`, data)
     .then((res) => res.data)
@@ -12,7 +12,7 @@ const nestCreate = async (data: AxiosRequestConfig): Promise<string> => {
 }
 
 // 둥지 이름 수정
-const nestNameUpdate = async (nestId: number, data: AxiosRequestConfig) => {
+const nestNameUpdate = async (nestId: any, data: any) => {
   authApi
     .patch(`${nestBaseUrl}/${nestId}`, data)
     .then((res) => console.log(res))

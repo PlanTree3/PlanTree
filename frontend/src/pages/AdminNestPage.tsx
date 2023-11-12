@@ -17,30 +17,31 @@ const AdminNestPage = () => {
   const [page, setPage] = useState(1)
   const [pencilModalIsOpen, setPencilModalIsOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  const [createModalisOpen, setCreateModalisOpen] = useState(false)
+  // const [createModalisOpen, setCreateModalisOpen] = useState(false)
   const [inputNestName, setInputNestName] = useState('')
-  const [studentData, setStudentData] = useState<any>(null)
+  const [studentsData, setStudentsData] = useState<any>(null)
+  const [parentsData, setParentsData] = useState<any>(null)
   const [nestData, setNestData] = useState<any>(null)
-  // const [currentPage, setCurrentPage] = useState(1)
-  // const GroupsPerPage = 5
+  const [currentPage, setCurrentPage] = useState(1)
 
-  // const indexOfLastGroup = currentPage * GroupsPerPage
-  // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
-  // const currentGroups = dummyData.data.groups.slice(
-  //   indexOfFirstGroup,
-  //   indexOfLastGroup,
-  // )
+  
+  const studentsPerPage = 5;
+  const startIndex = (page - 1) * studentsPerPage;
+  const endIndex = startIndex + studentsPerPage;
+  const currentStudents = studentsData?.slice(startIndex, endIndex) || [];
 
-  // const totalPages = Math.ceil(dummyData.data.groups.length / GroupsPerPage)
+  const totalPages = studentsData?
+    Math.ceil(studentsData.length / studentsPerPage)
+    : 0
 
-  // const pageNumbers = []
-  // for (let i = 1; i <= totalPages; i += 1) {
-  //   pageNumbers.push(i)
-  // }
+  const pageNumbers = []
+  for (let i = 1; i <= totalPages; i += 1) {
+    pageNumbers.push(i)
+  }
+  const changePage = (page: number) => {
+    setCurrentPage(page)
+  }
 
-  // const changePage = (page: number) => {
-  //   setCurrentPage(page)
-  // }
   const openModal = () => {
     setIsOpen(true)
   }
@@ -48,12 +49,12 @@ const AdminNestPage = () => {
     setIsOpen(false)
   }
 
-  const openCreateModal = () => {
-    setCreateModalisOpen(true)
-  }
-  const closeCreateModal = () => {
-    setCreateModalisOpen(false)
-  }
+  // const openCreateModal = () => {
+  //   setCreateModalisOpen(true)
+  // }
+  // const closeCreateModal = () => {
+  //   setCreateModalisOpen(false)
+  // }
 
   const openPencilModal = () => {
     setPencilModalIsOpen(true)
@@ -66,6 +67,7 @@ const AdminNestPage = () => {
   const handleNestNameInputChange = (e) => {
     setInputNestName(e.target.value)
   }
+
   //둥지 생성
   const data = { groupName: inputNestName }
   const handleCreateNest = async () => {
@@ -85,13 +87,15 @@ const AdminNestPage = () => {
     try {
       const response = await nestCheck();
       console.log('둥지 조회', response);
-      // if (response.data && response.data.nest) {
-      //   // Nest exists
-      //   setNestData(response.data.nest);
-      // } else {
-      //   // Nest does not exist
-      //   setNestData(null);
-      // }
+      if (response.data && response.data.data.nest) {
+        setNestData(response.data.data.nest);
+        setParentsData(response.data.data.nest.parents)
+        console.log(parentsData);
+        handleGetNestDetail()
+        console.log('여기는?');
+      } else {
+        setNestData(null);
+      }
     } catch (error) {
       console.error('둥지 조회 에러', error);
     }
@@ -99,6 +103,7 @@ const AdminNestPage = () => {
 
   // 둥지 이름 변경
   const handleNestName = async () => {
+    const nestId = nestData.nestId
     const data = {
       nestName: inputNestName,
     }
@@ -113,6 +118,7 @@ const AdminNestPage = () => {
 
   //둥지 삭제
   const handleNestDelete = async () => {
+    const nestId = nestData.nestId
     try {
       const response = await nestDelete(nestId)
       console.log('둥지 삭제', response)
@@ -123,35 +129,77 @@ const AdminNestPage = () => {
 
   //둥지의 학생 리스트 조회
   const handleGetNestDetail = async () => {
-    console.log('1')
+    const nestId = nestData.nestId
+    console.log('정보확인', nestData)
     try {
-      console.log('2')
+      console.log('학생 리스트 조회')
       const response = await nestStudents(nestId)
       console.log('Response:', response)
+      setStudentsData(response.data.data.students)
     } catch (error) {
       console.error('Error:', error)
     }
   }
   useEffect(() => {
     handleNestCheck()
-    handleGetNestDetail()
   }, [])
 
   return (
     <div>
-      <div className="font-semibold text-2xl">예지의 푸릇푸릇한 둥지</div>
+    {!nestData ? (
+      <div>
+       <div className="font-semibold text-2xl">둥지가 없습니다.</div>
+          <Button className="primary" onClick={openModal} label="둥지 생성하기" />
+          <Modal
+        isOpen={isOpen}
+        onClose={closeModal}
+        content={
+          <div>
+            <div>그룹명을 입력해주세요</div>
+            <input
+              placeholder="ex. 2023 3학년 2반"
+              maxLength={50}
+              onChange={(e) => setInputNestName(e.target.value)}
+              onKeyDown={handleNestNameInputChange}
+            />
+            <Button
+              className="primary"
+              label="생성하기"
+              onClick={handleCreateNest}
+            />
+            <Button
+              className="primary ml-4"
+              label="취소"
+              onClick={closeModal}
+            />
+          </div>
+        }
+      />
+      </div>
+    ) : (
+    <div>
+      <div className="font-semibold text-2xl">{nestData.nestName}</div>
       <img className="mx-4" src={pencil} alt="" onClick={openPencilModal} />
-      <h2 className="font-semibold text-l">그룹장: 정도현</h2>
-      <div className="studentBox">
-        <div className="circle-image">
+      <div className="font-semibold text-l">그룹장: </div>
+      {parentsData.length > 0 ? (
+    parentsData.map((parent: any) => (
+      <p className="font-semibold text-l">{parent}</p> ))
+      ):(
+        <p>둥지장이 없는 경우는 없을 수 없음. 비상!</p>
+      )}
+
+      {currentStudents.length > 0 ? (
+    currentStudents.map((student: any) => (
+      <div key={student.studentId} className="studentBox">
+        {/* <div className="circle-image">
           <img src={yeji1} alt="" />/
-        </div>
+        </div> */}
         <div className="flex flex items-center">
-          <text>정예지</text>
+          <text>{student.studentName}</text>
         </div>
         <div className="ms-6 flex-col flex justify-center ">
           <text>달성도</text>
-          <text>12/25</text>
+          <text>{student.completedBudCount}/{student.totalBudCount}</text>
         </div>
         <div>
           <Link to="/forest/1">
@@ -159,23 +207,12 @@ const AdminNestPage = () => {
           </Link>
         </div>
       </div>
-      <div className="studentBox">
-        <div className="circle-image">
-          <img src={gijeong1} alt="" />/
-        </div>
-        <div className="flex flex items-center">
-          <text>신기정</text>
-        </div>
-        <div className="ms-6 flex-col flex justify-center ">
-          <text>달성도</text>
-          <text>12/25</text>
-        </div>
-        <div>
-          <Link to="/forest/1">
-            <img className="forest" src={forest} alt="" />
-          </Link>
-        </div>
-      </div>
+      ))
+      ) : (
+        <p>현재 그룹원이 없습니다.</p>
+      )}
+
+
       <Button className="primary" onClick={openModal} label="둥지원 추가하기" />
       <br/>
       <Button className="red" onClick={handleNestDelete} label="둥지 삭제" />
@@ -212,42 +249,26 @@ const AdminNestPage = () => {
         }}
       >
         <h1 className="flex justify-center h-[20%] items-center text-2xl bg-lime-100 rounded-[10px]">
-          그룹 이름 변경
+          둥지 이름 변경
         </h1>
         <input
           type="text"
           value={inputNestName}
           onChange={handleNestNameInputChange}
-          placeholder="그룹 이름을 수정하세요"
+          placeholder="둥지 이름을 수정하세요"
         />
         <Button onClick={handleNestName} className="primary" label="저장" />
       </ReactModal>
-      <Modal
-        isOpen={createModalisOpen}
-        onClose={closeCreateModal}
-        content={
-          <div>
-            <div>그룹명을 입력해주세요</div>
-            <input
-              placeholder="ex. 2023 3학년 2반"
-              maxLength={50}
-              onChange={(e) => setInputNestName(e.target.value)}
-              onKeyDown={handleNestNameInputChange}
-            />
-            <Button
-              className="primary"
-              label="생성하기"
-              onClick={handleCreateNest}
-            />
-            <Button
-              className="primary ml-4"
-              label="취소"
-              onClick={closeModal}
-            />
-          </div>
-        }
-      />
+<div className="pagination">
+        {pageNumbers.map((number) => (
+          <button key={number} onClick={() => changePage(number)}>
+            {number}
+          </button>
+        ))}
+      </div>
     </div>
+  )}
+  </div>
   )
 }
 
