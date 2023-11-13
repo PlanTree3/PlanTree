@@ -1,5 +1,9 @@
 const Tutorial1 = () => {
-  return <div>튜토리얼1</div>
+  return (
+    <div>
+      <img src="/public/plantree.png" alt="" />
+    </div>
+  )
 }
 
 export default Tutorial1

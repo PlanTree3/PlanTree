@@ -10,66 +10,84 @@
   font-size: 2vw;
 }
 .main-box-container {
-  display: grid;
-  grid-template-columns: 8fr 4fr;
+  @apply flex justify-around h-2/3;
 }
-.main-arch-container {
-  position: relative;
-  width: 80%;
-  display: flex;
-  align-items: center;
+.main-page-container {
+  // position: relative;
+  grid-template-rows: 1fr 4fr;
+  grid-template-areas:
+    '. a .'
+    'b c d'
+    '. e .';
+  @apply grid h-full;
+}
+
+.main-page-btn-top {
+  grid-area: a;
+  @apply flex justify-around self-end;
 }
 
 .main-day-btn {
-  background-color: #FFACE4;
+  background-color: #fface4;
   border-radius: 100%;
-  width: 4vw;
-  height: 4vw;
+  width: 3vw;
+  height: 3vw;
   font-size: 1vw;
   font-weight: bold;
-  position: absolute;
+  // position: absolute;
   transform-origin: bottom;
 }
 
 /* 개별 버튼에 대한 위치 설정 */
 #monday {
-  left: 7%;
-  top: 29vh;
+  // left: 7%;
+  // top: 29vh;
+  grid-area: b;
+  @apply justify-self-end;
 }
 #tuesday {
-  left: 22%;
-  top: 12vh;
+  // left: 22%;
+  // top: 12vh;
+  @apply mt-[4vh];
 }
 #wednesday {
-  left: 50%;
-  top: 5vh;
+  // left: 50%;
+  // top: 5vh;
+  @apply mb-[7vh];
 }
 #thursday {
-  left: 78%;
-  top: 12vh;
+  // left: 78%;
+  // top: 12vh;
+  @apply mt-[4vh];
 }
 #friday {
-  left: 93%;
-  top: 29vh;
+  // left: 93%;
+  // top: 29vh;
+  grid-area: d;
+  @apply justify-self-start;
 }
 
 .main-tree-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 25vw;
-  height: 25vw;
   border-radius: 100%;
   border: 1vw solid slategrey;
-  top: 18vh;
-  align-content: center;
-  align-items: center;
-  left: 25%;
+
+  grid-area: c;
+  @apply justify-self-center self-center w-full h-full;
 }
-.main-tree-img {
-  position: relative;
-  width: 23vw;
-  height: 23vw;
-  border-radius: 100%;
-  border: 1vw solid seashell;
+
+.main-todo-container {
+  @apply w-1/4;
+}
+
+.main-todo-list {
+  @apply h-full bg-slate-300 rounded-lg overflow-y-auto p-3;
+
+  &-title {
+    @apply text-xl py-2 text-center;
+  }
+}
+
+.main-tree-degree {
+  grid-area: e;
+  @apply text-center;
 }

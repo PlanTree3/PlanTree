@@ -17,15 +17,16 @@ const ReturnItems = (columnName: string, selectedBranchId: number) => {
         .map((seed: any, index: number) => {
           return (
             <MovableItem
+              branchId={seed.branchId}
               key={seed.seedId}
               id={seed.seedId}
               idType="seed"
               budName={seed.seedName}
-              comments={seed.comments}
+              commentCount={seed.commentCount}
               index={index}
               dayOfWeek={seed.dayOfWeek}
               moveHandler={MoveHandler}
-              color={seed.color}
+              branchColor={seed.branchColor}
             />
           )
         })}
@@ -34,15 +35,16 @@ const ReturnItems = (columnName: string, selectedBranchId: number) => {
         .map((bud: any, index: number) => {
           return (
             <MovableItem
+              branchId={bud.branchId}
               key={bud.budId}
               id={bud.budId}
               idType="bud"
               budName={bud.budName}
-              comments={bud.comments}
+              commentCount={bud.commentCount}
               index={index}
               dayOfWeek={bud.dayOfWeek}
               moveHandler={MoveHandler}
-              color={bud.color}
+              branchColor={bud.branchColor}
             />
           )
         })}

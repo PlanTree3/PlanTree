@@ -3,13 +3,14 @@
 @import 'tailwindcss/utilities';
 
 .dnd-box-container {
-  max-height: 80vh; /* 또는 원하는 최대 높이 */
+  max-height: 100%; /* 또는 원하는 최대 높이 */
   overflow-y: auto; /* 내용이 넘칠 때 스크롤바 표시 */
+  overflow-x: hidden;
 }
 // 스크롤 바 높이
 .dnd-box-container::-webkit-scrollbar {
   height: 1vh;
-  width: 1vw;
+  width: 0.5vw;
 }
 
 // 스크롤 바 트랙 설정
@@ -31,7 +32,7 @@
 }
 
 .dnd-seed-outer-container {
-  width: 75vw;
+  width: 98%;
   //background-color: #8595a9;
   border-radius: 1vw;
   display: grid;
@@ -93,35 +94,51 @@
   align-items: center;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
   @apply truncate w-[10ch] text-center;
-}
-
-.dnd_movable-item .dnd_delete-btn {
-  display: none;
-}
-
-.dnd_movable-item:hover .dnd_delete-btn {
-  //width: 0.1vw;
-  //height: 0.1vh;
-  display: block;
+  &-content {
+    display: grid;
+    gap: 0.3vw;
+    &-deleteBTN {
+      display: none;
+    }
+    &-name {
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    &:hover {
+      grid-template-columns: 1fr 1fr 1fr;
+      .dnd_movable-item-content-name {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .dnd_movable-item-content-deleteBTN {
+        @apply flex w-[60%];
+        align-self: center;
+        justify-self: center;
+      }
+    }
+  }
 }
 
 .dnd-branch-box {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(8vw, 1fr));
-  margin: 5vh 0;
+  grid-template-columns: repeat(10, 1fr);
+  @apply grid my-[5vh];
 }
 
 .dnd-add-branch-btn {
   //background-color: red;
   display: flex;
-  width: 4vw;
+  width: 3vw;
   height: 5vh;
+  justify-content: center;
+  align-items: center;
 }
 
 .dnd-add-branch-btn > img {
   width: 2vw;
   height: 2vh;
-  align-items: center;
 }
 
 .dnd-branch-btn {
@@ -131,20 +148,15 @@
   height: 5vh;
   justify-content: center;
   align-items: center;
+  border-radius: 7px;
 }
 
 .dnd-create-btn-box {
-  grid-template-columns: repeat(auto-fill, minmax(5vw, 1fr));
-  display: grid;
-  justify-content: end;
-  align-items: start;
+  display: flex;
+  @apply justify-end;
 }
 .dnd-add-seed-btn {
-  display: flex;
-  align-items: center;
-  background-color: lightgray;
-  width: 4vw;
-  height: 5vh;
+  @apply flex justify-center items-center w-[3vw] h-[5vh];
 }
 
 .dnd-add-seed-btn > img {

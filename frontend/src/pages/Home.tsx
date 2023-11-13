@@ -11,22 +11,21 @@ import './SlideStyle.css'
 const Home = () => {
   return (
     <Swiper
+      slidesPerView="auto"
       pagination={{ clickable: true }}
       scrollbar={{ draggable: true }}
       mousewheel
       keyboard
       modules={[Mousewheel, Pagination]}
-      className="mySwiper"
-      style={{ height: '700px', width: '100%' }}
     >
-      <SwiperSlide>
+      <SwiperSlide className="max-w-[100%]">
         <Tutorial1 />
       </SwiperSlide>
       <SwiperSlide>
         <Tutorial2 />
       </SwiperSlide>
       <SwiperSlide>
-        <Tutorial3 />
+        <Tutorial3 forestName="알아서 작성해보아요" />
       </SwiperSlide>
       <SwiperSlide>
         <LogIn />

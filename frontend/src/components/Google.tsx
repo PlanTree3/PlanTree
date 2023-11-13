@@ -18,7 +18,8 @@ const Google = () => {
   console.log(import.meta.env.VITE_PUBLIC_GOOGLE_CLIENT_ID)
 
   return (
-    <div className="social_login_Gbutton">
+    // <div className="social_login_Gbutton">
+    <div>
       <a href={loginUrl}>
         <img src={googleBtn} alt="googleLogin" />
       </a>

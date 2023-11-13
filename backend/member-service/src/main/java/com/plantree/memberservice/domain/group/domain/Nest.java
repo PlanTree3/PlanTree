@@ -6,9 +6,10 @@ import com.plantree.memberservice.domain.member.domain.Student;
 import com.plantree.memberservice.global.entity.BaseTimeEntity;
 import com.plantree.memberservice.global.exception.UnauthorizedException;
 import com.plantree.memberservice.global.util.SequentialUUIDGenerator;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,13 +28,14 @@ public class Nest extends BaseTimeEntity {
     @Column(name = "nest_id", columnDefinition = "BINARY(16)")
     private UUID id;
 
+    @Column
     private String name;
 
-    @OneToMany(mappedBy = "nest")
-    private List<Student> students = new ArrayList<>();
+    @OneToMany(mappedBy = "nest", cascade = CascadeType.PERSIST)
+    private Set<Student> students = new HashSet<>();
 
-    @OneToMany(mappedBy = "nest")
-    private List<Parent> parents = new ArrayList<>();
+    @OneToMany(mappedBy = "nest", cascade = CascadeType.PERSIST)
+    private Set<Parent> parents = new HashSet<>();
 
     @Builder
     public Nest(String name, Parent parent) {
@@ -46,18 +48,43 @@ public class Nest extends BaseTimeEntity {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();
     }
 
-    public void checkIsNestParent(UUID memberId) {
+    public void joinParent(Parent parent) {
+        parent.checkAlreadyNesting();
+        parent.setNest(this);
+        this.parents.add(parent);
+    }
+
+    public void joinStudent(Student student) {
+        student.checkAlreadyNesting();
+        student.setNest(this);
+        this.students.add(student);
+    }
+
+
+    private void checkIsNestParent(Parent parent) {
         if (this.parents.stream()
-                        .filter(parent -> parent.getMember()
-                                                .getId()
-                                                .equals(memberId))
-                        .findAny()
-                        .isEmpty()) {
+                        .noneMatch(p -> p.getId()
+                                         .equals(parent.getId()))) {
             throw new UnauthorizedException("둥지 부모님이 아닙니다.");
         }
     }
 
-    public void changeName(String name) {
+    public void changeNameByParent(String name, Parent parent) {
+        checkIsNestParent(parent);
         this.name = name;
+    }
+
+    public void checkIsNestParentByMemberId(UUID memberId) {
+        if (this.parents.stream()
+                        .noneMatch(parent -> parent.getMember()
+                                                   .getId()
+                                                   .equals(memberId))) {
+            throw new UnauthorizedException("둥지 부모님이 아닙니다.");
+        }
+    }
+
+    public void disconnectStudentsAndParents() {
+        this.parents.forEach(Parent::leaveNest);
+        this.students.forEach(Student::leaveNest);
     }
 }

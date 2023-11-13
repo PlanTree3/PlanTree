@@ -7,8 +7,8 @@ import {
   branchReducer,
   userReducer,
   signupReducer,
-  questReducer,
-} from '@/stores/features'
+  questReducer, mainReducer
+} from "@/stores/features";
 
 const userPersistConfig = {
   key: 'user',
@@ -30,6 +30,7 @@ export const store = configureStore({
     branch: branchReducer,
     signup: persistSignupReducer,
     quest: questReducer,
+    main: mainReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(sagaMiddleware),

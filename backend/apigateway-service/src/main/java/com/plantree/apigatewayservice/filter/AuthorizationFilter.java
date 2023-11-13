@@ -38,6 +38,9 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             if (accessTokenCookie == null || refreshTokenCookie == null) {
                 throw new AuthenticationFailException("쿠키가 없습니다.");
             }
+            if (requestUri.equals("/member/refresh") && httpMethod.equals("POST")) {
+                return chain.filter(exchange);
+            }
 
             String accessToken = accessTokenCookie.getValue();
             jwtValidator.validateAccessToken(accessToken);
@@ -47,7 +50,8 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             String memberId = claims.getSubject();
 
             veryfyAuthority(role, requestUri, httpMethod);
-            ServerHttpRequest modifiedRequest = mutateRequestAndSetHeaders(originRequest, memberId);
+            ServerHttpRequest modifiedRequest = mutateRequestAndSetHeaders(originRequest, memberId,
+                    role);
             return chain.filter(exchange.mutate()
                                         .request(modifiedRequest)
                                         .build());
@@ -55,10 +59,11 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
     }
 
     private ServerHttpRequest mutateRequestAndSetHeaders(ServerHttpRequest originRequest,
-            String memberId) {
+            String memberId, String role) {
         return originRequest.mutate()
                             .headers(httpHeaders -> {
                                 httpHeaders.add("authMember", memberId);
+                                httpHeaders.add("role", role);
                             })
                             .build();
     }
@@ -70,9 +75,9 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
     }
 
     private boolean isCookieNotRequired(String requestUri, String httpMethod) {
-        return httpMethod.equals("POST") && (requestUri.equals("/member-service/member")
-                || requestUri.equals("/member-service/member/login") || requestUri.equals(
-                "/member-service/dev/auth/login"));
+        return httpMethod.equals("POST") && (requestUri.equals("/member")
+                || requestUri.equals("/member/login") || requestUri.equals(
+                "/dev/auth/login"));
     }
 
     private HttpCookie getCookieByName(ServerHttpRequest request, String name) {

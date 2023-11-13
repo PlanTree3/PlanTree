@@ -1,5 +1,6 @@
 package com.plantree.memberservice.global.config.webmvc;
 
+import com.plantree.memberservice.domain.member.domain.Role;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
@@ -24,6 +25,7 @@ public class JwtLoginMemberArgumentResolver implements HandlerMethodArgumentReso
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) webRequest.getNativeRequest();
         String memberId = httpServletRequest.getHeader("authMember");
-        return new AuthMember(UUID.fromString(memberId));
+        Role role = Role.valueOf(httpServletRequest.getHeader("role"));
+        return new AuthMember(UUID.fromString(memberId), role);
     }
 }
