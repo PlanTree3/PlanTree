@@ -9,4 +9,8 @@ public interface ForestRepository {
     Forest save(Forest forest);
 
     List<Forest> findForestsByMemberId(UUID memberId);
+
+    List<Forest> findAllById(List<UUID> studentIds);
+
+    void saveAll(List<Forest> forests);
 }

@@ -24,8 +24,18 @@ public class ForestRepositoryImpl implements ForestRepository {
     }
 
     @Override
-    public List<Forest> findForestsByMemberId(UUID memberId){
+    public List<Forest> findForestsByMemberId(UUID memberId) {
         return forestQueryRepository.findForestsByMemberId(memberId);
+    }
+
+    @Override
+    public List<Forest> findAllById(List<UUID> studentIds) {
+        return forestJpaRepository.findAllById(studentIds);
+    }
+
+    @Override
+    public void saveAll(List<Forest> forests) {
+        forestJpaRepository.saveAll(forests);
     }
 
 }

@@ -75,7 +75,7 @@ public class AuthMemberValidator {
         }
     }
 
-    public void isGroupLeader(Long groupId, AuthMember authMember) {
+    public void isGroupLeader(UUID groupId, AuthMember authMember) {
         CheckGroupLeaderResDto checkGroupLeaderResDto = memberServiceClient.checkGroupLeader(
                 new CheckGroupLeaderReqDto(authMember.getMemberId(), groupId));
         if (!checkGroupLeaderResDto.isLeader()) {

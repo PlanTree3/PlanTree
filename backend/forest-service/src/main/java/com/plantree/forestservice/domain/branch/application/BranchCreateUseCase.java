@@ -54,7 +54,7 @@ public class BranchCreateUseCase {
     }
 
     @Transactional
-    public void createBranchesToAllGroupMembers(Long groupId, AuthMember authMember, String name) {
+    public void createBranchesToAllGroupMembers(UUID groupId, AuthMember authMember, String name) {
 
         authMemberValidator.isGroupLeader(groupId, authMember);
         List<UUID> studentIds = memberServiceClient.getGroupMembers(groupId)

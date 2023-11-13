@@ -7,7 +7,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface TreeRepository {
+
     Tree save(Tree tree);
+
     Optional<Tree> findById(UUID id);
 
     Optional<Tree> findCurrentTreeByMemberId(UUID memberId);
@@ -16,4 +18,6 @@ public interface TreeRepository {
             LocalDate endedAt);
 
     List<Tree> findTreesByStudentIds(List<UUID> studentIds);
+
+    void saveAll(List<Tree> trees);
 }

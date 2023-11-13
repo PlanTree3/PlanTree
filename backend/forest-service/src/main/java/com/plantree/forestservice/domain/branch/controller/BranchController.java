@@ -63,7 +63,7 @@ public class BranchController {
     }
 
     @PostMapping("/group/{groupId}/branch")
-    public ResponseEntity<?> addBranchesToAllGroupMembers(@PathVariable Long groupId,
+    public ResponseEntity<?> addBranchesToAllGroupMembers(@PathVariable UUID groupId,
             @RequestBody BranchCreateToGroupMembersReqDto reqDto,
             @JwtLoginMember AuthMember authMember) {
 
