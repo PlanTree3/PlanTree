@@ -22,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -42,7 +43,8 @@ public class Tree extends BaseTimeEntity {
     private LocalDate startedAt = LocalDate.now(Clock.systemDefaultZone());
 
     @Column
-    private LocalDate endedAt = LocalDate.now().with(DayOfWeek.SUNDAY);
+    private LocalDate endedAt = LocalDate.now()
+                                         .with(DayOfWeek.SUNDAY);
 
     @Column
     private String name;
@@ -54,17 +56,26 @@ public class Tree extends BaseTimeEntity {
     @OneToMany(mappedBy = "tree", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Branch> branches = new ArrayList<>();
 
-    public Tree(UUID studentId, Forest forest){
+    @Builder
+    public Tree(UUID studentId, Forest forest) {
         this.studentId = studentId;
         this.forest = forest;
         this.name = calculateWeeks() + "번째 나무";
+    }
+
+    @Builder
+    public Tree(UUID studentId, Forest forest, LocalDate startedAt, LocalDate endedAt) {
+        this.studentId = studentId;
+        this.forest = forest;
+        this.startedAt = startedAt;
+        this.endedAt = endedAt;
     }
 
     public void updateForest(Forest forest) {
         this.forest = forest;
     }
 
-    private int calculateWeeks(){
+    private int calculateWeeks() {
         LocalDate date = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         return date.get(weekFields.weekOfWeekBasedYear());

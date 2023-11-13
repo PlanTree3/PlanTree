@@ -13,17 +13,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "forest")
@@ -49,15 +44,25 @@ public class Forest extends BaseTimeEntity {
 
     public Forest(UUID studentId) {
         this.studentId = studentId;
-        this.endedAt = calculateEndDate();
+        this.endedAt = calculateEndDate(LocalDate.now());
     }
 
-    private LocalDate calculateEndDate(){
-        LocalDate endDate = LocalDate.now();
-        if(endDate.isAfter(LocalDate.now().withMonth(3).withDayOfMonth(1).with(DayOfWeek.SUNDAY))){
+    public Forest(UUID studentId, LocalDate endedAt) {
+        this.studentId = studentId;
+        this.endedAt = endedAt;
+    }
+
+    public static LocalDate calculateEndDate(LocalDate localDate) {
+        LocalDate endDate = localDate;
+        if (endDate.isAfter(LocalDate.now()
+                                     .withMonth(3)
+                                     .withDayOfMonth(1)
+                                     .with(DayOfWeek.SUNDAY))) {
             endDate = endDate.withYear(endDate.getYear() + 1);
         }
-        return endDate.withMonth(3).withDayOfMonth(1).with(DayOfWeek.SUNDAY);
+        return endDate.withMonth(3)
+                      .withDayOfMonth(1)
+                      .with(DayOfWeek.SUNDAY);
     }
 
     @PrePersist

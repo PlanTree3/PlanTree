@@ -44,4 +44,10 @@ public class TreeRepositoryImpl implements TreeRepository {
         return treeQueryRepository.findTreesByStudentIds(studentIds);
     }
 
+    @Override
+    public void saveAll(List<Tree> trees) {
+        treeJpaRepository.saveAll(trees);
+    }
+
+
 }
