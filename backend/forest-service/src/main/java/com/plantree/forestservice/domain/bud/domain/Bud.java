@@ -53,26 +53,26 @@ public class Bud extends BaseTimeEntity {
     private List<BudComment> budComments = new ArrayList<>();
 
     @Builder
-    public Bud(String name, Day day, UUID studentId, Branch branch){
+    public Bud(String name, Day day, UUID studentId, Branch branch, UUID treeId) {
         this.name = name;
         this.day = day;
         this.studentId = studentId;
         this.branch = branch;
     }
 
-    public void updateDay(Day day){
+    public void updateDay(Day day) {
         this.day = day;
     }
 
-    public void updateName(String name){
+    public void updateName(String name) {
         this.name = name;
     }
 
-    public void complete(){
+    public void complete() {
         this.isComplete = true;
     }
 
-    public void undoComplete(){
+    public void undoComplete() {
         this.isComplete = false;
     }
 
