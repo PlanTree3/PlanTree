@@ -33,12 +33,21 @@ const RoutesComponent = () => (
     <Route path="/oauth" element={<OauthRedirectPage />} />
 
     <Route path="/studentGroup" element={<StudentGroupPage />} />
-    <Route path="/studentGroupDetail/:groupId" element={<StudentGroupDetailPage />} />
+    <Route
+      path="/studentGroupDetail/:groupId"
+      element={<StudentGroupDetailPage />}
+    />
     <Route path="/adminNest" element={<AdminNestPage />} />
     {/* <Route path="/adminGroupTab" element={<AdminGroupTabPage />} /> */}
     <Route path="/adminGroup" element={<AdminGroupPage />} />
-    <Route path="/adminGroupDetail/:groupId" element={<AdminGroupDetailPage />} />
-    <Route path="/adminGroupRequest/:groupId" element={<AdminGroupRequestPage />} />
+    <Route
+      path="/adminGroupDetail/:groupId"
+      element={<AdminGroupDetailPage />}
+    />
+    <Route
+      path="/adminGroupRequest/:groupId"
+      element={<AdminGroupRequestPage />}
+    />
     {/* QR 연결 페이지 **그룹/둥지 아이디 덧붙여야함 */}
     <Route path="/groupJoin/:groupId" element={<GroupJoinPage />} />
     <Route path="/nestJoin/:nestId" element={<NestJoinPage />} />

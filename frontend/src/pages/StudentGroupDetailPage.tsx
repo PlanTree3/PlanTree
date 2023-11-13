@@ -8,7 +8,7 @@ import Seal from '../../public/Seal.png'
 import { groupDetail } from '@/apis'
 
 const StudentGroupDetailPage = () => {
-  const { groupId } = useParams();
+  const { groupId } = useParams()
   const [currentPage, setCurrentPage] = useState(1)
   const [groupData, setGroupData] = useState<any>(null)
 
@@ -16,10 +16,9 @@ const StudentGroupDetailPage = () => {
 
   //학생의 그룹 상세 조회
   const handleGetGroupDetail = async () => {
-    console.log('1')
     try {
-      console.log('2')
       const response = await groupDetail
+      console.log('Response:', response)
       console.log('Response:', response)
       setGroupData(response.data)
     } catch (error) {
@@ -64,16 +63,18 @@ const StudentGroupDetailPage = () => {
         </div>
       </div>
       <div className="studentBox">
-      {currentStudents.map((student: any) => (
-        <>
-        <div className="flex flex items-center">
-          <text>{student.studentName}</text>
-        </div>
-        <div className="ms-6 flex-col flex justify-center ">
-          <text>달성도</text>
-          <text>{student.totalBudCount}/{student.completedBudCount}</text>
-        </div>
-        </>
+        {currentStudents.map((student: any) => (
+          <>
+            <div className="flex flex items-center">
+              <text>{student.studentName}</text>
+            </div>
+            <div className="ms-6 flex-col flex justify-center ">
+              <text>달성도</text>
+              <text>
+                {student.totalBudCount}/{student.completedBudCount}
+              </text>
+            </div>
+          </>
         ))}
       </div>
       <div className="pagination">
