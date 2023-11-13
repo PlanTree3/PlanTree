@@ -93,7 +93,12 @@ const teacherGroupList = async () => {
 }
 
 // 로그아웃??
-const userLogout = async () => authApi.post(`${userBaseUrl}`)
+const userLogout = async () => {
+  return authApi
+    .post(`${userBaseUrl}/logout`)
+    .then((res) => res)
+    .catch((err) => console.log(err))
+}
 
 export {
   userLogin,

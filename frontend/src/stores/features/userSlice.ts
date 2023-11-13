@@ -24,16 +24,12 @@ export const userSlice = createSlice({
     loginCheck: (state) => {
       state.isLoggedIn = true
     },
-    fetchReUserData: () => {},
     saveUserData: (state, action: PayloadAction<any>) => {
       state.isLoggedIn = true
       state.userData = action.payload
       console.log('유저 정보', action.payload)
     },
-    fetchUserLogout: () => {},
-    successUserLogout: (state) => {
-      state.isLoggedIn = false
-      state.userData = defaultUser
+    successUserLogout: () => {
       localStorage.clear()
     },
     addProfileImageUrl: (state, action: PayloadAction<string>) => {
@@ -43,14 +39,19 @@ export const userSlice = createSlice({
         state.userData.profileImageUrl,
       )
     },
+    logOutCheck: (state) => {
+      console.log('slice의 logoutCheck')
+
+      state.isLoggedIn = false
+    },
   },
 })
 
 export const {
   loginCheck,
   saveUserData,
-  fetchUserLogout,
   successUserLogout,
   addProfileImageUrl,
+  logOutCheck,
 } = userSlice.actions
 export default userSlice.reducer
