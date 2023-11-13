@@ -6,6 +6,7 @@ import com.plantree.memberservice.domain.member.dto.MemberNameRequestDto;
 import com.plantree.memberservice.domain.member.dto.MemberNameResponseDto;
 import com.plantree.memberservice.domain.member.dto.NameChangeRequestDto;
 import com.plantree.memberservice.domain.member.dto.ProfileImageChangeRequestDto;
+import com.plantree.memberservice.domain.member.dto.StudentIdListResponseDto;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
 import com.plantree.memberservice.global.config.webmvc.JwtLoginMember;
 import com.plantree.memberservice.global.dto.HttpResponse;
@@ -56,5 +57,10 @@ public class MemberController {
     public MemberNameResponseDto searchMemberNames(
             @RequestBody MemberNameRequestDto memberNameRequestDto) {
         return memberSearchUseCase.searchMemberNames(memberNameRequestDto);
+    }
+
+    @GetMapping("/student-id")
+    public StudentIdListResponseDto searchStudentIds() {
+        return memberSearchUseCase.searchStudentIds();
     }
 }
