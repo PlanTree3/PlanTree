@@ -14,12 +14,15 @@ import Button from '@/components/Button/Button'
 const MainPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const treeId = useSelector((state: RootState) => state.main.treeId)
+  const treeName = useSelector((state: RootState) => state.main.treeName)
   const buds = useSelector((state: RootState) => state.branch.buds)
   const { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY } = COLUMN_NAMES
   const days = DAY_NAMES
   const today = new Date()
   const monthToday = today.getMonth() + 1
   const dayToday = today.getDay()
+  const dateToday = today.getDate()
   const [selectDay, setSelectDay] = useState('')
   const [message, setMessage] = useState('')
   useEffect(() => {
@@ -103,9 +106,9 @@ const MainPage = () => {
   return (
     <>
       <div>
-        <div className="main-tree-check">42 번 째 나무</div>
+        <div className="main-tree-check">{treeName}</div>
         <div className="main-date">
-          {monthToday} / {dayToday}
+          {monthToday} / {dateToday}
         </div>
       </div>
       <div className="main-box-container">
