@@ -21,19 +21,17 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginCheck: (state) => {
-      state.isLoggedIn = true
+    loginCheck: () => {
+      console.log('logInCheck 들어옴!')
+      localStorage.clear()
     },
-    fetchReUserData: () => {},
     saveUserData: (state, action: PayloadAction<any>) => {
+      localStorage.clear()
       state.isLoggedIn = true
       state.userData = action.payload
       console.log('유저 정보', action.payload)
     },
-    fetchUserLogout: () => {},
-    successUserLogout: (state) => {
-      state.isLoggedIn = false
-      state.userData = defaultUser
+    successUserLogout: () => {
       localStorage.clear()
     },
     addProfileImageUrl: (state, action: PayloadAction<string>) => {
@@ -43,14 +41,19 @@ export const userSlice = createSlice({
         state.userData.profileImageUrl,
       )
     },
+    logOutCheck: (state) => {
+      console.log('slice의 logoutCheck')
+
+      state.isLoggedIn = false
+    },
   },
 })
 
 export const {
   loginCheck,
   saveUserData,
-  fetchUserLogout,
   successUserLogout,
   addProfileImageUrl,
+  logOutCheck,
 } = userSlice.actions
 export default userSlice.reducer

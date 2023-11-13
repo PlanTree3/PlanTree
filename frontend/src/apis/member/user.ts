@@ -35,20 +35,23 @@ const userLogin = async (data: unknown): Promise<AxiosResponse> => {
 const userSignup = async (data: unknown): Promise<AxiosResponse> => {
   return api
     .post(`${userBaseUrl}`, data)
-    .then((res) => res.data.memberId)
+    .then((res) => {
+      console.log('회원가입 이후 확인', res)
+      return res.data.data.memberId
+    })
     .catch((err) => err)
 }
 
 // 유저 정보 받아오기
-const userInfo = async (): Promise<AxiosResponse> => {
-  return api
-    .get(`${userBaseUrl}`)
-    .then((res) => {
-      return res.data
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+const userInfo = async (): Promise<any> => {
+  try {
+    const response = await api.get(`${userBaseUrl}`)
+    console.log(response)
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+  }
 }
 
 // 토큰 리프레쉬
@@ -93,7 +96,12 @@ const teacherGroupList = async () => {
 }
 
 // 로그아웃??
-const userLogout = async () => authApi.post(`${userBaseUrl}`)
+const userLogout = async () => {
+  return authApi
+    .post(`${userBaseUrl}/logout`)
+    .then((res) => res)
+    .catch((err) => console.log(err))
+}
 
 export {
   userLogin,
