@@ -1,0 +1,3 @@
+.chart-box {
+  @apply flex justify-center items-end;
+}

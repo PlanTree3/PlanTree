@@ -30,6 +30,8 @@ public class BudQueryRepository {
         return jpaQueryFactory.select(bud)
                 .from(bud)
                 .where(bud.branch.tree.eq(findCurrentTree(memberId)))
+                .leftJoin(bud.branch, branch)
+                .fetchJoin()
                 .fetch();
     }
 

@@ -6,8 +6,6 @@ import com.plantree.forestservice.domain.bud.application.BudCommentModifyUseCase
 import com.plantree.forestservice.domain.bud.application.BudCommentSearchUseCase;
 import com.plantree.forestservice.domain.bud.dto.BudCommentCreateReqDto;
 import com.plantree.forestservice.domain.bud.dto.BudCommentModifyReqDto;
-import com.plantree.forestservice.domain.bud.dto.BudCreateReqDto;
-import com.plantree.forestservice.domain.bud.dto.BudCreateResDto;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
 import com.plantree.forestservice.global.config.webmvc.JwtLoginMember;
 import com.plantree.forestservice.global.responseType.HttpResponse;

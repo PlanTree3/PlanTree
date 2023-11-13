@@ -8,6 +8,6 @@ import lombok.RequiredArgsConstructor;
 public class BranchCreateReqDto {
 
     private String name;
-    private String color;
+    private String branchColor;
 
 }

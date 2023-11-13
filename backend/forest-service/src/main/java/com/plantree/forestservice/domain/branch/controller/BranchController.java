@@ -37,7 +37,7 @@ public class BranchController {
         return HttpResponse.okWithData(HttpStatus.OK,
                 "가지가 생성되었습니다.",
                 new BranchCreateResDto(branchCreateUseCase.createBranch(treeId, authMember,
-                        branchCreateReqDto.getName(), branchCreateReqDto.getColor())));
+                        branchCreateReqDto.getName(), branchCreateReqDto.getBranchColor())));
 
     }
 

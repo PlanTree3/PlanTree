@@ -23,12 +23,19 @@ public class ForestController {
 
     private final ForestSearchUseCase forestSearchUseCase;
 
+    @GetMapping()
+    public ResponseEntity<?> getMyForestList(@JwtLoginMember AuthMember authMember) {
+
+        return HttpResponse.okWithData(HttpStatus.OK, "숲 목록입니다",
+                forestSearchUseCase.findMyForests(authMember));
+    }
+
     @GetMapping("/{memberId}")
-    public ResponseEntity<?> getBudComments(@PathVariable UUID memberId,
+    public ResponseEntity<?> getOthersForestList(@PathVariable UUID memberId,
             @JwtLoginMember AuthMember authMember) {
 
         return HttpResponse.okWithData(HttpStatus.OK, "숲 목록입니다",
-                forestSearchUseCase.findForests(memberId, authMember));
+                forestSearchUseCase.findOthersForests(memberId, authMember));
     }
 
     @GetMapping("/{forestId}/tree")

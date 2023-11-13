@@ -4,14 +4,14 @@ import com.plantree.forestservice.domain.branch.application.repository.BranchRep
 import com.plantree.forestservice.domain.branch.domain.Branch;
 import com.plantree.forestservice.domain.bud.application.repository.BudRepository;
 import com.plantree.forestservice.domain.bud.domain.Bud;
+import com.plantree.forestservice.domain.bud.domain.BudCreatedEvent;
 import com.plantree.forestservice.domain.bud.domain.Day;
-import com.plantree.forestservice.domain.tree.application.repository.TreeRepository;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
+import com.plantree.forestservice.global.event.EventProducer;
 import com.plantree.forestservice.global.exception.Branch.BranchNotFoundException;
 import com.plantree.forestservice.global.util.AuthMemberValidator;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +22,7 @@ public class BudCreateUseCase {
 
     private final BudRepository budRepository;
     private final BranchRepository branchRepository;
-    private final TreeRepository treeRepository;
     private final AuthMemberValidator authMemberValidator;
-    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Transactional
     public Bud createBud(UUID treeId, UUID branchId, String name, Day dayOfWeek,
@@ -34,15 +32,20 @@ public class BudCreateUseCase {
                                         .orElseThrow(BranchNotFoundException::new);
         authMemberValidator.checkAuthMemberFromTreeId(treeId, authMember);
 
-//        System.out.println("kafka send messages");
-//        kafkaTemplate.send("test", "message");
-
-        return budRepository.save(Bud.builder()
-                                     .name(name)
-                                     .day(dayOfWeek)
-                                     .studentId(authMember.getMemberId())
-                                     .branch(branch)
-                                     .build());
+        Bud bud = budRepository.save(Bud.builder()
+                                        .name(name)
+                                        .day(dayOfWeek)
+                                        .studentId(authMember.getMemberId())
+                                        .branch(branch)
+                                        .build());
+        BudCreatedEvent budCreatedEvent = BudCreatedEvent.builder()
+                                                         .treeId(treeId)
+                                                         .studentId(authMember.getMemberId())
+                                                         .budId(bud.getId())
+                                                         .budName(bud.getName())
+                                                         .build();
+        EventProducer.send(budCreatedEvent);
+        return bud;
 
     }
 }

@@ -30,7 +30,8 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             String requestUri = originRequest.getURI()
                                              .getPath();
             String httpMethod = originRequest.getMethodValue();
-            log.info("API 요청 : " + requestUri, "Method : " + httpMethod);
+
+            log.info("API 요청 : " + requestUri + "METHOD : " + httpMethod);
 
             if (isCookieNotRequired(requestUri, httpMethod)) {
                 return chain.filter(exchange);
