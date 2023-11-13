@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios'
+// import { AxiosRequestConfig } from 'axios'
 import { authApi } from '@/apis'
 
 const nestBaseUrl = 'api/member-service/nest'

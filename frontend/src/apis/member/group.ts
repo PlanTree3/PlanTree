@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { authApi } from '@/apis'
 
 const groupBaseUrl = 'api/member-service/group'
@@ -38,17 +38,17 @@ const groupJoinRequest = async (groupId: any) => {
 }
 
 // 그룹 가입 수락
-const groupJoinAccept = async (groupId: any) => {
+const groupJoinAccept = async (groupId: any, data: any) => {
   authApi
-    .patch(`${groupBaseUrl}/${groupId}/join-accept`)
+    .patch(`${groupBaseUrl}/${groupId}/join-accept`, data)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
 }
 
 // 그룹 가입 거절
-const groupJoinRefuse = async (groupId: any) => {
+const groupJoinRefuse = async (groupId: any, data: any) => {
   authApi
-    .patch(`${groupBaseUrl}/${groupId}/join-refuse`)
+    .patch(`${groupBaseUrl}/${groupId}/join-refuse`, data)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
 }

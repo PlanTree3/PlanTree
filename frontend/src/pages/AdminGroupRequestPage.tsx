@@ -16,7 +16,8 @@ const AdminGroupRequestPage = () => {
   const studentsPerPage = 5
   const endIndex = currentPage * studentsPerPage
   const startIndex = endIndex - studentsPerPage
-  const currentStudents = studentsData?.slice(startIndex, endIndex) || []
+  const currentStudents =
+    studentsData?.joinRequestList?.slice(startIndex, endIndex) || []
 
   const totalPages = studentsData
     ? Math.ceil(studentsData.length / studentsPerPage)
@@ -36,8 +37,9 @@ const AdminGroupRequestPage = () => {
     try {
       const response = await groupStudentsRequest(groupId)
       console.log('Response:', response)
+      console.log('dcdc', groupName)
       // setStudentsData(response.data.joinRequestList)
-      setStudentsData(response.data)
+      setStudentsData(response.data.data)
     } catch (error) {
       console.error('Error:', error)
     }
@@ -47,7 +49,7 @@ const AdminGroupRequestPage = () => {
   const handleGroupAccept = async (studentId: string) => {
     const data = { memberId: studentId }
     try {
-      const response = await groupJoinAccept(data)
+      const response = await groupJoinAccept(groupId, data)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)
@@ -58,7 +60,7 @@ const AdminGroupRequestPage = () => {
   const handleGroupRefuse = async (studentId: string) => {
     const data = { memberId: studentId }
     try {
-      const response = await groupJoinRefuse(data)
+      const response = await groupJoinRefuse(groupId, data)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)

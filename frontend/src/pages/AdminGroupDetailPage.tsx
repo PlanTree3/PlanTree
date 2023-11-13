@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 // import axios, { AxiosRequestConfig } from 'axios'
 import QR from 'qrcode.react'
-import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
+import { Link, useParams, useLocation } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
@@ -24,7 +24,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   const studentsPerPage = 5
   const endIndex = currentPage * studentsPerPage
   const startIndex = endIndex - studentsPerPage
-  const currentStudents = studentsData?.slice(startIndex, endIndex) || []
+  const currentStudents = studentsData?.students?.slice(startIndex, endIndex) || []
 
   const openModal = () => {
     setModalIsOpen(true)
@@ -84,7 +84,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     try {
       const response = await groupStudents(groupId)
       console.log('학생 리스트 조회 응답:', response)
-      setStudentsData(response.data)
+      console.log('dkfjdklfjdf', response.data.data)
+      setStudentsData(response.data.data)
     } catch (error) {
       console.error('학생 리스트 조회 에러:', error)
     }
@@ -105,7 +106,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     console.log('그룹네임', groupName)
   }, [])
 
-  const navi = useNavigate()
+  // const navi = useNavigate()
 
   const totalPages = studentsData
     ? Math.ceil(studentsData.students.length / studentsPerPage)
