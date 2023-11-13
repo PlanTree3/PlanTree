@@ -46,7 +46,7 @@ public class NestController {
     @PatchMapping("/{nestId}/name")
     public ResponseEntity<?> changeName(@PathVariable("nestId") UUID nestId,
             @JwtLoginMember AuthMember authMember,
-            NestNameChangeRequestDto nestNameChangeRequestDto) {
+            @RequestBody NestNameChangeRequestDto nestNameChangeRequestDto) {
         nestModifyUseCase.changeName(nestId, authMember, nestNameChangeRequestDto);
         return HttpResponse.ok(HttpStatus.OK, "둥지 이름 수정 성공");
     }

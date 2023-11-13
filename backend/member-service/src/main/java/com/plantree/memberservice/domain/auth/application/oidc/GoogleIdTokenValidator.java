@@ -41,12 +41,12 @@ public class GoogleIdTokenValidator extends IDTokenValidator {
         String email = (String) payload.get(GOOGLE_EMAIL_KEY);
 
         return OIDCMember.builder()
-                         .oauthProvider(OauthProvider.KAKAO)
+                         .oauthProvider(OauthProvider.GOOGLE)
                          .oauthId(oAuthId)
                          .email(email)
                          .build();
     }
-    
+
     private void checkPayload(Map<String, Object> payload) {
         if (payload.get(GOOGLE_OAUTH_ID_KEY) == null) {
             throw new AuthenticationFailException("잘못된 토큰입니다.");
