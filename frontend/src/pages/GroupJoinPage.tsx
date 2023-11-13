@@ -4,7 +4,7 @@ import { groupJoinRequest } from '@/apis'
 // import axios from 'axios';
 
 const GroupJoinPage: React.FC<any> = () => {
-  const { groupId } = useParams();
+  const { groupId } = useParams()
 
   const handleGroupJoin = async () => {
     try {
@@ -26,7 +26,7 @@ const GroupJoinPage: React.FC<any> = () => {
     <div>
       <div>그룹 가입이 신청되었습니다.</div>
       <Link to={'/main'}>
-      <div>메인으로 돌아가기</div>
+        <div>메인으로 돌아가기</div>
       </Link>
     </div>
   )

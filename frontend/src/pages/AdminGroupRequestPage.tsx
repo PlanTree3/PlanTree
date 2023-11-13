@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 // import axios from 'axios'
 import { Link, useParams, useLocation } from 'react-router-dom'
-import './GroupPage.css'
+import './GroupPage.scss'
 import Button from '@/components/Button/Button'
 import { groupJoinAccept, groupJoinRefuse, groupStudentsRequest } from '@/apis'
 
@@ -80,23 +80,6 @@ const AdminGroupRequestPage = () => {
     handleGroupAccept(studentId)
   }
 
-  // const indexOfLastGroup = currentPage * GroupsPerPage
-  // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
-  // const currentGroups = dummyData.data.groups.slice(
-  //   indexOfFirstGroup,
-  //   indexOfLastGroup,
-  // )
-
-  // const totalPages = Math.ceil(dummyData.data.groups.length / GroupsPerPage)
-
-  // const pageNumbers = []
-  // for (let i = 1; i <= totalPages; i += 1) {
-  //   pageNumbers.push(i)
-  // }
-
-  // const changePage = (page: number) => {
-  //   setCurrentPage(page)
-  // }
   return (
     <div>
       <div className="flex flex-row">
@@ -104,10 +87,7 @@ const AdminGroupRequestPage = () => {
           {groupName}의 대기 학생 목록
         </div>
         <div className="ml-4">
-          <Link
-            to={`/adminGroupDetail/${groupId}`}
-            state={{ groupName: groupName }}
-          >
+          <Link to={`/adminGroupDetail/${groupId}`} state={{ groupName }}>
             <Button label="그룹으로 돌아가기" className="gray" />
           </Link>
         </div>

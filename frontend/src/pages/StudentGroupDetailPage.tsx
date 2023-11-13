@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 // import axios from 'axios';
-import './GroupPage.css'
+import './GroupPage.scss'
 import Seal from '../../public/Seal.png'
 // import yeji1 from '../../public/yeji1.png'
 // import gijeong1 from '../../public/gijeong1.png'
@@ -51,12 +51,17 @@ const StudentGroupDetailPage = () => {
     <div>
       <Link to="/studentGroup">
         <div className="arrow">
-          <div className="pt-6">목록으로 돌아가기</div>
+          {/* <div className="pt-6"> */}
+          <div>목록으로 돌아가기</div>
         </div>
       </Link>
       <div className="font-semibold text-2xl">{groupData.groupName}</div>
       <div className="flex flex-row">
-        <img className="h-40" src={Seal} alt="" />
+        <img
+          // className="h-40"
+          src={Seal}
+          alt=""
+        />
         <div className="groupLeader">
           <text>그룹장: {groupData.teacherName}</text>
         </div>

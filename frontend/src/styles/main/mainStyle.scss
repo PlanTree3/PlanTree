@@ -14,10 +14,12 @@
 }
 .main-page-container {
   // position: relative;
+  grid-template-rows: 1fr 4fr;
   grid-template-areas:
     '. a .'
-    'b c d';
-  @apply grid w-[55%] max-h-full;
+    'b c d'
+    '. e .';
+  @apply grid h-full;
 }
 
 .main-page-btn-top {
@@ -46,7 +48,7 @@
 #tuesday {
   // left: 22%;
   // top: 12vh;
-  @apply mt-[3vh];
+  @apply mt-[4vh];
 }
 #wednesday {
   // left: 50%;
@@ -56,7 +58,7 @@
 #thursday {
   // left: 78%;
   // top: 12vh;
-  @apply mt-[3vh];
+  @apply mt-[4vh];
 }
 #friday {
   // left: 93%;
@@ -66,14 +68,11 @@
 }
 
 .main-tree-container {
-  width: 20vw;
-  height: 20vw;
   border-radius: 100%;
   border: 1vw solid slategrey;
-  top: 18vh;
 
   grid-area: c;
-  @apply justify-self-center self-center max-h-fit;
+  @apply justify-self-center self-center w-full h-full;
 }
 
 .main-todo-container {
@@ -81,12 +80,14 @@
 }
 
 .main-todo-list {
-  @apply h-full bg-slate-300 rounded-lg overflow-y-auto p-5;
+  @apply h-full bg-slate-300 rounded-lg overflow-y-auto p-3;
 
   &-title {
     @apply text-xl py-2 text-center;
   }
 }
 
-.main-bud-list {
+.main-tree-degree {
+  grid-area: e;
+  @apply text-center;
 }

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import chick from '../../public/chick.png'
 import forest from '../../public/forest_tmp.png'
-import './GroupPage.css'
+import './GroupPage.scss'
 import { userGroupList } from '@/apis'
 // import StudentGroupPageResponse from '../types/GroupStudentType'
 
@@ -57,19 +57,23 @@ const StudentGroupPage = () => {
       {studentData && studentData.nest ? (
         // 둥지가 있는 경우
         <>
-          <text className="font-semibold text-2xl">내 둥지 확인하기</text>
-          <div className="box-border h-30 w-3/4 p-5 border-4 bg-amber-700 rounded-3xl">
+          {/* <text className="font-semibold text-2xl"> */}
+          <text>내 둥지 확인하기</text>
+          {/* <div className="box-border h-30 w-3/4 p-5 border-4 bg-amber-700 rounded-3xl"> */}
+          <div>
             <div className="flex flex-row">
               <img className="chick flex flex-start" src={chick} alt="" />
               <div className="flex flex-col items-center text-white tracking-widest">
                 <div>{studentData.nest.nestName}</div>
                 <br />
-                <div className="font-semibold text-l">둥지장</div>
+                {/* <div className="font-semibold text-l"> */}
+                <div>둥지장</div>
                 {studentData.nest.parents.map((parent: any) => (
                   <div>{parent}</div>
                 ))}
                 <br />
-                <div className="font-semibold text-l">둥지원</div>
+                {/* <div className="font-semibold text-l"> */}
+                <div>둥지원</div>
                 {studentData.nest.children.map((child: any) => (
                   <div>{child}</div>
                 ))}
@@ -84,7 +88,8 @@ const StudentGroupPage = () => {
         </div>
       )}
       <br />
-      <text className="font-semibold text-2xl">내 그룹 확인하기</text>
+      {/* <text className="font-semibold text-2xl"> */}
+      <text>내 그룹 확인하기</text>
       <div className="flex-container">
         {currentGroups?.map((group: any, index: number) => (
           <div>

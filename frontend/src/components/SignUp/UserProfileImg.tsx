@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import withReactContent from 'sweetalert2-react-content'
 import { useDispatch, useSelector } from 'react-redux'
 import { LuImagePlus } from 'react-icons/lu'
-import { userLogin, userSignup } from '@/apis/member'
+import { userSignup } from '@/apis/member'
 import { addProfileImg } from '@/stores/features/signupSlice'
 import { loginCheck } from '@/stores/features/userSlice'
 
@@ -96,18 +96,21 @@ const UserProfileImg = () => {
 
   const moveProfileImg = () => {
     const content = (
-      <div className="mb-3.5">
+      // <div className="mb-3.5">
+      <div>
         {imgList.map((img: string, index: number) => (
           <button
             key={index}
-            className="selectImg p-0 mx-1"
+            // className="selectImg p-0 mx-1"
+            className="selectImg"
             onClick={() => {
               chooseProfileImg(`public/profile/${img}.jpg`)
               MySwal.close()
             }}
           >
             <img
-              className="selectImg m-0"
+              // className="selectImg m-0"
+              className="selectImg"
               src={`public/profile/${img}.jpg`}
               alt={img}
             />
@@ -132,42 +135,60 @@ const UserProfileImg = () => {
   }, [userRole])
 
   return (
-    <div className="w-8/12 h-3/5 relative">
-      <div className="flex bg-no-repeat w-full h-full bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]">
+    // <div className="w-8/12 h-3/5 relative">
+    <div className="relative">
+      {/* <div className="flex bg-no-repeat w-full h-full bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]"> */}
+      <div className="bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]">
         {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-        <button className="addImgBtn" onClick={() => moveProfileImg()}>
+        <button
+          // className="addImgBtn"
+          onClick={() => moveProfileImg()}
+        >
           <LuImagePlus />
         </button>
-        <div className="profileImg">
+        {/* <div className="profileImg"> */}
+        <div>
           {isProfileImg ? (
             <img
-              className="showProfileImg"
+              // className="showProfileImg"
               src={inputProfileImg}
               alt={inputProfileImg}
             />
           ) : (
-            <div className="profilePlaceholder">프로필 사진을 선택하세요!</div>
+            // <div className="profilePlaceholder">
+            <div>프로필 사진을 선택하세요!</div>
           )}
         </div>
-        <span className="w-3/5 flex">
-          <div
+        {/* <span className="w-3/5 flex"> */}
+        <span>
+          {/* <div
             className={`mx-1 w-max h-min border-2 rounded-full border-zinc-950 ${bgColor}`}
-          >
-            <div className="mx-1 text-xs">{inputUserRole}</div>
+          > */}
+          <div className={`${bgColor}`}>
+            {/* <div className="mx-1 text-xs"> */}
+            <div>{inputUserRole}</div>
           </div>
-          <div className="w-2/6">
-            <div className="title">이름</div>
-            <div className="title">나이</div>
-            <div className="title">생일</div>
+          {/* <div className="w-2/6"> */}
+          <div>
+            {/* <div className="title"> */}
+            <div>이름</div>
+            {/* <div className="title"> */}
+            <div>나이</div>
+            {/* <div className="title"> */}
+            <div>생일</div>
           </div>
-          <div className="w-3/6">
-            <div className="content">
+          {/* <div className="w-3/6"> */}
+          <div>
+            {/* <div className="content"> */}
+            <div>
               <div>{userName}</div>
             </div>
-            <div className="content">
+            {/* <div className="content"> */}
+            <div>
               <div>{userAge}세</div>
             </div>
-            <div className="content">
+            {/* <div className="content"> */}
+            <div>
               <div>
                 {userBirthMonth}월 {userBirthDay}일
               </div>
@@ -175,7 +196,10 @@ const UserProfileImg = () => {
           </div>
         </span>
       </div>
-      <button className="absolute right-0" onClick={saveUser}>
+      <button
+        // className="absolute right-0"
+        onClick={saveUser}
+      >
         지금부터 숲을 가꿔보자!
       </button>
     </div>

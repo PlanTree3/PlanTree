@@ -11,7 +11,7 @@ import './SlideStyle.css'
 const Home = () => {
   return (
     <Swiper
-      slidesPerView={'auto'}
+      slidesPerView="auto"
       pagination={{ clickable: true }}
       scrollbar={{ draggable: true }}
       mousewheel
@@ -25,7 +25,7 @@ const Home = () => {
         <Tutorial2 />
       </SwiperSlide>
       <SwiperSlide>
-        <Tutorial3 />
+        <Tutorial3 forestName="알아서 작성해보아요" />
       </SwiperSlide>
       <SwiperSlide>
         <LogIn />

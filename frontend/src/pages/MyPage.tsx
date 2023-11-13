@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Mousewheel, Pagination } from 'swiper/modules'
 import Swal from 'sweetalert2'
@@ -17,8 +18,8 @@ import {
 import '@/styles/fontList.scss'
 import '@/styles/profile.scss'
 import './MyPageStyle.scss'
-import { userImageUpdate } from '@/apis'
-import { addProfileImageUrl } from '@/stores/features/userSlice'
+import { userImageUpdate, userNameUpdate } from '@/apis'
+import { addProfileImageUrl, addName } from '@/stores/features/userSlice'
 import Button from '@/components/Button/Button'
 
 const MyPage = () => {
@@ -30,6 +31,9 @@ const MyPage = () => {
   const [inputProfileImg, setInputProfileImg] =
     useState<string>(userprofileImage)
   const [inputUserRole, setInputUserRole] = useState<string>('')
+  const [modifyName, setModifyName] = useState<boolean>(false)
+  const [inputUserName, setInputUserName] = useState<string>(userName)
+  const [inputCount, setInputCount] = useState<number>(0)
 
   const MySwal = withReactContent(Swal)
 
@@ -91,7 +95,8 @@ const MyPage = () => {
             }}
           >
             <img
-              className="selectImg m-0"
+              // className="selectImg m-0"
+              className="selectImg"
               src={`public/profile/${img}.jpg`}
               alt={img}
             />
@@ -133,7 +138,7 @@ const MyPage = () => {
         keyboard
         modules={[Mousewheel, Pagination]}
         className="mySwiper"
-        style={{ height: '500px', width: '100%' }}
+        // style={{ height: '500px', width: '100%' }}
       >
         <SwiperSlide>
           <Tutorial1 />
@@ -142,7 +147,7 @@ const MyPage = () => {
           <Tutorial2 />
         </SwiperSlide>
         <SwiperSlide>
-          <Tutorial3 />
+          <Tutorial3 forestName="나무를 모아 숲을 만들어 보아요!" />
         </SwiperSlide>
       </Swiper>
     )
@@ -187,7 +192,8 @@ const MyPage = () => {
     }
 
     const content = (
-      <table className="table-fixed">
+      // <table className="table-fixed">
+      <table>
         <thead>
           <tr>
             <th>번호</th>
@@ -228,7 +234,7 @@ const MyPage = () => {
   // 이번 주 통계 보기
   const moveChart = () => {
     const content = (
-      <div className="grid grid-cols-3">
+      <div className="my-page-graph-modal">
         <div>
           <BarChart />
         </div>
@@ -260,35 +266,83 @@ const MyPage = () => {
     })
   }
 
-  return (
-    <div className="outer-box">
-      <div className="profileBox">
-        <div className="profileImgBox w-full m-0">
-          <img
-            src={inputProfileImg}
-            alt="유저이미지"
-            className="w-2/5 h-2/5 mypage-image-container"
-          />
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <button className="addImgBtn" onClick={() => moveProfileImg()}>
+  const modiName = () => {
+    if (modifyName) {
+      setModifyName(false)
+    } else {
+      setModifyName(true)
+    }
+  }
+
+  const changeName = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+
+    if (value.length >= 0 && value.length <= 10) {
+      setInputUserName(value)
+      setInputCount(value.length)
+      dispatch(addName(value))
+    }
+
+    setInputCount(value.length)
+
+    const data = {
+      name: value,
+    }
+
+    userNameUpdate(data)
+  }
+
+  const showInputBox = () => {
+    let content = null
+    if (modifyName) {
+      content = [
+        <input type="text" value={inputUserName} onChange={changeName} />,
+      ]
+      if (inputCount <= 10) {
+        content.push(<span>{inputCount}</span>, <span>/10</span>)
+      } else {
+        content.push(<div>이름은 10자를 넘을 수 없습니다.</div>)
+      }
+      content.push(
+        <Button className="normal primary" onClick={modiName} label="확인" />,
+      )
+    } else {
+      content = (
+        <>
+          {inputUserName} 님
+          <button onClick={modiName}>
             <FiPlusCircle />
           </button>
-        </div>
-        <div className="profileImgBox pr-6 pt-3">
-          {inputUserRole && (
-            <div
-              className={`m-2 w-max h-min border-2 rounded-full border-zinc-950 ${bgColorClass()}`}
-            >
-              <div className="mx-1 text-3xl">{inputUserRole}</div>
-            </div>
-          )}
-          <div className="flex">
-            <div className="text-5xl nanum">
-              <div>{userName}</div>
-            </div>
-            <div className="nanum pt-2 pl-1 text-4xl content-end">님</div>
+        </>
+      )
+    }
+
+    return content
+  }
+
+  return (
+    <div className="my-page-profile-box">
+      <div className="my-page-profile-image">
+        <img
+          src={inputProfileImg}
+          alt="유저이미지"
+          // className="w-2/5 h-2/5 mypage-image-container"
+        />
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+        <button
+          // className="addImgBtn"
+          onClick={() => moveProfileImg()}
+        >
+          <FiPlusCircle />
+        </button>
+      </div>
+      <div className="my-page-profile-name">
+        {inputUserRole && (
+          <div className={`${bgColorClass()}`}>
+            <div> {inputUserRole}</div>
           </div>
-        </div>
+        )}
+        <div className="my-page-name-input">{showInputBox()}</div>
       </div>
       <div className="mypage-btn-container">
         <Button
