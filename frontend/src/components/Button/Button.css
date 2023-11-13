@@ -23,10 +23,10 @@
 }
 
 .normal {
-  width: 240px;
-  height: 60px;
-  font-size: 1.5rem;
+  height: 3vw;
+  font-size: 1rem;
   border-radius: 8px;
+  @apply px-3;
 }
 
 .large {

@@ -34,9 +34,9 @@
 }
 
 .forest {
-  width: auto; 
+  width: auto;
   height: auto;
-  max-width: 50%; 
+  max-width: 50%;
   /* max-height: 50%;  */
   /* flex: 0 0 calc(25% - 10px); */
   margin: 5px;
@@ -54,10 +54,10 @@
 }
 
 .groupItem {
-  margin: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  @apply justify-between;
 }
 
 .groupRequest {
@@ -108,4 +108,22 @@
   max-height: 100vh;
   padding: 20px;
 }
-
+.admin-group {
+  &-detail {
+    &-container {
+      @apply flex justify-between;
+    }
+    &-title {
+      img {
+        @apply h-[70%];
+      }
+      @apply flex font-semibold text-2xl;
+    }
+    &-btn-container {
+      @apply space-x-2;
+    }
+    &-content {
+      @apply space-y-2;
+    }
+  }
+}
