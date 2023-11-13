@@ -69,84 +69,78 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
     dispatch(deleteQuest(id))
   }
   return (
-    <>
-      <div className="quest-container">
-        {filteredQuests.map((quest: any) => (
-          <button
-            className="quest-container-inner"
-            key={quest.questId}
-            tabIndex={0}
-            onClick={() => openModal(quest.questId)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                openModal(quest.questId)
-              }
-            }}
+    <div className="quest-container">
+      {filteredQuests.map((quest: any) => (
+        <button
+          className="quest-container-inner"
+          key={quest.questId}
+          tabIndex={0}
+          onClick={() => openModal(quest.questId)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              openModal(quest.questId)
+            }
+          }}
+        >
+          <Dialog
+            open={open === quest.questId}
+            onClose={() => setOpen(null)}
+            aria-labelledby={`quest-title-${quest.questId}`}
+            aria-describedby={`quest-description-${quest.questId}`}
           >
-            <Dialog
-              open={open === quest.questId}
-              onClose={() => setOpen(null)}
-              aria-labelledby={`quest-title-${quest.questId}`}
-              aria-describedby={`quest-description-${quest.questId}`}
-            >
-              <DialogTitle id={`quest-title-${quest.questId}`}>
-                {quest.questTitle}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id={`quest-description-${quest.questId}`}>
-                  {quest.questContent}
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                {questStatus === 'past' && deleteState && (
-                  <button onClick={() => deleteBTN(quest.questId)}>삭제</button>
-                )}
-                {!quest.isConfirmed ? (
-                  <div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        closeModal(quest.questId, quest.isChecked, true)
-                      }}
-                    >
-                      수락
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        closeModal(quest.questId, quest.isChecked, false)
-                      }}
-                    >
-                      거절
-                    </button>
-                  </div>
-                ) : (
+            <DialogTitle id={`quest-title-${quest.questId}`}>
+              {quest.questTitle}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id={`quest-description-${quest.questId}`}>
+                {quest.questContent}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              {questStatus === 'past' && deleteState && (
+                <button onClick={() => deleteBTN(quest.questId)}>삭제</button>
+              )}
+              {!quest.isConfirmed ? (
+                <div>
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       closeModal(quest.questId, quest.isChecked, true)
                     }}
                   >
-                    확인
+                    수락
                   </button>
-                )}
-              </DialogActions>
-            </Dialog>
-            <img
-              src={getQuestImage(quest)}
-              alt="퀘스트이미지"
-              className="quest-img"
-            />
-            <p className="quest-item-title">{quest.questTitle}</p>
-            <p className="quest-item-created">{quest.createdAt}</p>
-          </button>
-        ))}
-      </div>
-      <div>
-        <button>이전</button>
-        <button>다음</button>
-      </div>
-    </>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      closeModal(quest.questId, quest.isChecked, false)
+                    }}
+                  >
+                    거절
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    closeModal(quest.questId, quest.isChecked, true)
+                  }}
+                >
+                  확인
+                </button>
+              )}
+            </DialogActions>
+          </Dialog>
+          <img
+            src={getQuestImage(quest)}
+            alt="퀘스트이미지"
+            className="quest-img"
+          />
+          <p className="quest-item-title">{quest.questTitle}</p>
+          <p className="quest-item-created">{quest.createdAt}</p>
+        </button>
+      ))}
+    </div>
   )
 }
 

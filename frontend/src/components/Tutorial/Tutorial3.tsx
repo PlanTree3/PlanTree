@@ -1,5 +1,11 @@
+import { ForestCard } from '..'
+
 const Tutorial3 = () => {
-  return <div className="w-full h-full">다시 돌아온 튜토리얼 3</div>
+  return (
+    <div className="flex justify-center items-center max-w-[80%]">
+      <ForestCard forestName="숲을 만들어 보아요!" />
+    </div>
+  )
 }
 
 export default Tutorial3

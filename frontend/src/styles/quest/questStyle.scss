@@ -3,7 +3,7 @@
 @import 'tailwindcss/utilities';
 
 .quest-container {
-  @apply grid grid-cols-4 auto-cols-min overflow-x-auto h-[80%] place-items-center;
+  @apply grid grid-cols-4 auto-cols-min overflow-x-auto h-[80%];
   padding: 5vh 3vw;
   border-radius: 3vw;
   margin-top: 3vh;
@@ -17,25 +17,25 @@
 
 // 스크롤 바 트랙 설정
 .quest-container::-webkit-scrollbar-track {
-  background: #FFDAAF;
+  background: #ffdaaf;
   border-radius: 2vh;
 }
 
 // 스크롤 바 설정
 .quest-container::-webkit-scrollbar-thumb {
-  background: #E0C090;
+  background: #e0c090;
   border-radius: 2vh;
 }
 
 // 스크롤 바 클릭 시 설정
 .quest-container::-webkit-scrollbar-thumb:hover {
-  background: #FFACE4;
+  background: #fface4;
   border-radius: 2vh;
 }
 
 // 각 퀘스트 객체
 .quest-container-inner {
-  @apply flex flex-col items-center justify-center;
+  @apply flex flex-col items-center;
   margin-bottom: 5vh;
 }
 
@@ -53,14 +53,14 @@
 }
 
 .quest-btn-container {
-  @apply grid grid-cols-5 gap-4
+  @apply grid grid-cols-5 gap-4;
 }
 
 .quest-btn {
- @apply bg-amber-100;
+  @apply bg-amber-100;
   font-size: 1.5vw;
 }
 
 .quest-del-btn {
-  @apply bg-red-400 border-2 border-black
+  @apply bg-red-400 border-2 border-black;
 }

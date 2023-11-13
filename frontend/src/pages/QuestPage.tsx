@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Quest from '@/components/Quest/Quest'
 
 const QuestPage = () => {
-  const [questStatus, setQuestStatus] = useState('0')
+  const [questStatus, setQuestStatus] = useState('all')
   const [deleteState, setDeleteState] = useState(false)
   const changeQuest = (id: string) => {
     setQuestStatus(id)
@@ -36,6 +36,10 @@ const QuestPage = () => {
         )}
       </div>
       <Quest questStatus={questStatus} deleteState={deleteState} />
+      <div>
+        <button>이전</button>
+        <button>다음</button>
+      </div>
     </>
   )
 }

@@ -94,7 +94,8 @@ const MyPage = () => {
             }}
           >
             <img
-              className="selectImg m-0"
+              // className="selectImg m-0"
+              className="selectImg"
               src={`public/profile/${img}.jpg`}
               alt={img}
             />
@@ -136,7 +137,7 @@ const MyPage = () => {
         keyboard
         modules={[Mousewheel, Pagination]}
         className="mySwiper"
-        style={{ height: '500px', width: '100%' }}
+        // style={{ height: '500px', width: '100%' }}
       >
         <SwiperSlide>
           <Tutorial1 />
@@ -190,7 +191,8 @@ const MyPage = () => {
     }
 
     const content = (
-      <table className="table-fixed">
+      // <table className="table-fixed">
+      <table>
         <thead>
           <tr>
             <th>번호</th>
@@ -231,7 +233,8 @@ const MyPage = () => {
   // 이번 주 통계 보기
   const moveChart = () => {
     const content = (
-      <div className="grid grid-cols-3">
+      // <div className="grid grid-cols-3">
+      <div>
         <div>
           <BarChart />
         </div>
@@ -316,30 +319,41 @@ const MyPage = () => {
   }
 
   return (
-    <div className="outer-box">
-      <div className="profileBox">
-        <div className="profileImgBox w-full m-0">
+    // <div className="outer-box">
+    <div>
+      {/* <div className="profileBox"> */}
+      <div>
+        {/* <div className="profileImgBox w-full m-0"> */}
+        <div>
           <img
             src={inputProfileImg}
             alt="유저이미지"
-            className="w-2/5 h-2/5 mypage-image-container"
+            // className="w-2/5 h-2/5 mypage-image-container"
           />
           {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <button className="addImgBtn" onClick={() => moveProfileImg()}>
+          <button
+            // className="addImgBtn"
+            onClick={() => moveProfileImg()}
+          >
             <FiPlusCircle />
           </button>
         </div>
-        <div className="profileImgBox pr-6 pt-3">
+        {/* <div className="profileImgBox pr-6 pt-3"> */}
+        <div>
           {inputUserRole && (
-            <div
-              className={`m-2 w-max h-min border-2 rounded-full border-zinc-950 ${bgColorClass()}`}
-            >
-              <div className="mx-1 text-3xl">{inputUserRole}</div>
+            // <div
+            //   className={`m-2 w-max h-min border-2 rounded-full border-zinc-950 ${bgColorClass()}`}
+            // >
+            <div className={`${bgColorClass()}`}>
+              {/* <div className="mx-1 text-3xl"> */}
+              <div> {inputUserRole}</div>
             </div>
           )}
           <div className="flex">
-            <div className="text-5xl nanum">{showInputBox()}</div>
-            <div className="nanum pt-2 pl-1 text-4xl content-end">님</div>
+            {/* <div className="text-5xl nanum"> */}
+            <div> {showInputBox()}</div>
+            {/* <div className="nanum pt-2 pl-1 text-4xl content-end"> */}
+            <div>님</div>
           </div>
         </div>
       </div>

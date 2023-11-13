@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 // import axios from 'axios';
-import './GroupPage.css'
+import './GroupPage.scss'
 import Seal from '../../public/Seal.png'
 // import yeji1 from '../../public/yeji1.png'
 // import gijeong1 from '../../public/gijeong1.png'
 import { groupDetail } from '@/apis'
 
 const StudentGroupDetailPage = () => {
-  const { groupId } = useParams()
+  // const { groupId } = useParams()
   const [currentPage, setCurrentPage] = useState(1)
   const [groupData, setGroupData] = useState<any>(null)
 
@@ -52,12 +52,17 @@ const StudentGroupDetailPage = () => {
     <div>
       <Link to="/studentGroup">
         <div className="arrow">
-          <div className="pt-6">목록으로 돌아가기</div>
+          {/* <div className="pt-6"> */}
+          <div>목록으로 돌아가기</div>
         </div>
       </Link>
       <div>{groupData.groupName}</div>
       <div className="flex flex-row">
-        <img className="h-40" src={Seal} alt="" />
+        <img
+          // className="h-40"
+          src={Seal}
+          alt=""
+        />
         <div className="groupLeader">
           <text>그룹장: {groupData.teacherName}</text>
         </div>
@@ -68,7 +73,8 @@ const StudentGroupDetailPage = () => {
             <div className="flex flex items-center">
               <text>{student.studentName}</text>
             </div>
-            <div className="ms-6 flex-col flex justify-center ">
+            {/* <div className="ms-6 flex-col flex justify-center "> */}
+            <div>
               <text>달성도</text>
               <text>
                 {student.totalBudCount}/{student.completedBudCount}

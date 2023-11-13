@@ -4,11 +4,11 @@ import './Tutorial.scss'
 const Tutorial2 = () => {
   return (
     <div className="tutorial-2-container">
-      <img src="/tutorial/flower.png" alt="flower" />
+      <img src="/tutorial/flower.png" alt="" />
       <div className="p-4">
         <div>할 일로</div> <div>봉오리를 만들어 보아요!</div>
       </div>
-      <img src="/tutorial/Seed.png" alt="seed" />
+      <img src="/tutorial/Seed.png" alt="" />
       {/* <Tree degree={10} /> */}
       <div className="p-4">
         <div>한 주 시작은 새싹부터!</div>{' '}

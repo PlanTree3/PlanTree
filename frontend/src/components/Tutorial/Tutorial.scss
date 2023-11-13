@@ -1,7 +1,7 @@
-.tutorialColAlign {
-  @apply grid grid-cols-2;
+.tutorial-2-container {
+  @apply grid w-4/5;
+  grid-template-columns: 1fr 4fr;
+  img {
+    @apply justify-self-center self-center;
+  }
 }
-
-// .tutorialRowAlign {
-//   @apply grid grid-rows-1;
-// }
