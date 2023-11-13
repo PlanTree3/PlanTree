@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import withReactContent from 'sweetalert2-react-content'
 import { useDispatch, useSelector } from 'react-redux'
 import { LuImagePlus } from 'react-icons/lu'
-import { userSignup } from '@/apis/member'
+import { userLogin, userSignup } from '@/apis/member'
 import { addProfileImg } from '@/stores/features/signupSlice'
 import { loginCheck } from '@/stores/features/userSlice'
 
@@ -80,9 +80,11 @@ const UserProfileImg = () => {
   }
 
   const saveUser = () => {
-    userSignup(signUpData)
-    dispatch(loginCheck())
-
+    const response: any = userSignup(signUpData)
+    console.log(response)
+    if (response) {
+      dispatch(loginCheck())
+    }
     navigate('/main')
   }
 
