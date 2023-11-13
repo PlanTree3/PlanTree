@@ -56,6 +56,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
+    public Optional<Member> findByIdWithNestStudent(UUID parentId) {
+        return Optional.ofNullable(memberQueryRepository.findByIdWithNestStudent(parentId));
+    }
+
+    @Override
     public List<Member> findByIdIn(List<UUID> memberIds) {
         return memberQueryRepository.findByIdIn(memberIds);
     }

@@ -5,6 +5,7 @@ import com.plantree.memberservice.domain.group.application.repository.GroupRepos
 import com.plantree.memberservice.domain.group.application.repository.NestRepository;
 import com.plantree.memberservice.domain.group.domain.Group;
 import com.plantree.memberservice.domain.group.domain.GroupStudent;
+import com.plantree.memberservice.domain.group.domain.GroupStudentState;
 import com.plantree.memberservice.domain.group.domain.Nest;
 import com.plantree.memberservice.domain.group.dto.GroupDetailResponseDto;
 import com.plantree.memberservice.domain.group.dto.GroupNestSearchResponseDto;
@@ -113,6 +114,8 @@ public class GroupSearchUseCase {
             BudCountListResponseDto budCounts) {
         return group.getGroupStudents()
                     .stream()
+                    .filter(groupStudent -> groupStudent.getStudentState()
+                                                        .equals(GroupStudentState.ACTIVE))
                     .map(GroupStudent::getStudent)
                     .map(student -> {
                         BudCountResponseDto budCount = budCounts.getBudCounts()

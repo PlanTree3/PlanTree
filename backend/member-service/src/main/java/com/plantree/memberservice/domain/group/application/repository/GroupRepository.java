@@ -18,7 +18,7 @@ public interface GroupRepository {
     Optional<Group> findByIdWithGroupStudents(UUID groupId);
 
     Optional<Group> findByIdWithTeacherAndStudents(UUID groupId);
-
+    
     List<Group> findTeacherGroupsByMemberId(UUID memberId);
 
     void delete(Group group);
