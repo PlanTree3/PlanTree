@@ -37,7 +37,7 @@ const userSignup = async (data: unknown): Promise<AxiosResponse> => {
     .post(`${userBaseUrl}`, data)
     .then((res) => {
       console.log('회원가입 이후 확인', res)
-      return res.data.memberId
+      return res.data.data.memberId
     })
     .catch((err) => err)
 }

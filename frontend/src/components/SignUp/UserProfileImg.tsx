@@ -79,8 +79,8 @@ const UserProfileImg = () => {
     profileImageUrl: inputProfileImg,
   }
 
-  const saveUser = () => {
-    const response: any = userSignup(signUpData)
+  const saveUser = async () => {
+    const response: any = await userSignup(signUpData)
     console.log(response)
     if (response) {
       dispatch(loginCheck())
