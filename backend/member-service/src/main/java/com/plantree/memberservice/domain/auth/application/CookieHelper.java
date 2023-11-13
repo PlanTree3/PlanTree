@@ -34,4 +34,26 @@ public class CookieHelper {
                                                           .build();
         httpServletResponse.addHeader("Set-Cookie", refreshTokenCookie.toString());
     }
+
+    public void expireAccessToken(HttpServletResponse httpServletResponse) {
+        ResponseCookie accessTokenCookie = ResponseCookie.from(ACCESS_TOKEN_NAME, null)
+                                                         .path("/")
+                                                         .sameSite("None")
+                                                         .httpOnly(true)
+                                                         .secure(true)
+                                                         .maxAge(0)
+                                                         .build();
+        httpServletResponse.addHeader("Set-Cookie", accessTokenCookie.toString());
+    }
+
+    public void expireRefreshToken(HttpServletResponse httpServletResponse) {
+        ResponseCookie refreshTokenCookie = ResponseCookie.from(REFRESH_TOKEN_NAME, null)
+                                                          .path("/")
+                                                          .sameSite("None")
+                                                          .httpOnly(true)
+                                                          .secure(true)
+                                                          .maxAge(0)
+                                                          .build();
+        httpServletResponse.addHeader("Set-Cookie", refreshTokenCookie.toString());
+    }
 }
