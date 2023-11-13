@@ -1,6 +1,7 @@
 package com.plantree.memberservice.domain.group.dto;
 
 import com.plantree.memberservice.domain.group.domain.Group;
+import com.plantree.memberservice.domain.group.domain.GroupStudentState;
 import java.time.LocalDate;
 import java.util.UUID;
 import lombok.Getter;
@@ -18,7 +19,11 @@ public class TeacherGroupResponseDto {
         this.groupName = group.getName();
         this.createdAt = group.getCreatedAt()
                               .toLocalDate();
-        this.studentCount = group.getGroupStudents()
-                                 .size();
+        this.studentCount = (int) group.getGroupStudents()
+                                       .stream()
+                                       .filter(groupStudent -> groupStudent.getStudentState()
+                                                                           .equals(
+                                                                                   GroupStudentState.ACTIVE))
+                                       .count();
     }
 }
