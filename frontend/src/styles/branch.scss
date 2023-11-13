@@ -127,24 +127,23 @@
   }
 }
 
-
 .dnd-branch-box {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(8vw, 1fr));
-  margin: 5vh 0;
+  grid-template-columns: repeat(10, 1fr);
+  @apply grid my-[5vh];
 }
 
 .dnd-add-branch-btn {
   //background-color: red;
   display: flex;
-  width: 4vw;
+  width: 3vw;
   height: 5vh;
+  justify-content: center;
+  align-items: center;
 }
 
 .dnd-add-branch-btn > img {
   width: 2vw;
   height: 2vh;
-  align-items: center;
 }
 
 .dnd-branch-btn {
@@ -157,17 +156,10 @@
 }
 
 .dnd-create-btn-box {
-  grid-template-columns: repeat(auto-fill, minmax(5vw, 1fr));
-  display: grid;
-  justify-content: end;
-  align-items: start;
+  display: flex;
 }
 .dnd-add-seed-btn {
-  display: flex;
-  align-items: center;
-  background-color: lightgray;
-  width: 4vw;
-  height: 5vh;
+  @apply flex justify-center items-center w-[3vw] h-[5vh];
 }
 
 .dnd-add-seed-btn > img {
