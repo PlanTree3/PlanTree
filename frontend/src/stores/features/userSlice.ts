@@ -3,17 +3,17 @@ import { UserData } from '@/types/UserType'
 
 export interface UserState {
   isLoggedIn: boolean
-  userData: UserData | null
+  userData: UserData
   error: Error | null
 }
-// const defaultUser: UserData = {
-//   role: 'STUDENT',
-//   name: '요 정 출 현',
-//   profileImageUrl: 'public/profile/rabbit.jpg',
-// }
+const defaultUser: UserData = {
+  role: 'STUDENT',
+  name: '요 정 출 현',
+  profileImageUrl: 'public/profile/rabbit.jpg',
+}
 const initialState: UserState = {
   isLoggedIn: false,
-  userData: null,
+  userData: defaultUser,
   error: null,
 }
 
@@ -21,10 +21,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginCheck: (state) => {
+    loginCheck: () => {
       console.log('logInCheck 들어옴!')
-      // localStorage.clear()
-      console.log(state.userData)
+      localStorage.clear()
     },
     saveUserData: (state, action: PayloadAction<any>) => {
       localStorage.clear()
