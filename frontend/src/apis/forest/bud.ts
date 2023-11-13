@@ -5,7 +5,7 @@ import { authApi } from '@/apis'
 
 // 봉오리 추가
 const budCreate = async (treeId: string, branchId: string, data: any) => {
-  authApi
+  return authApi
     .post(`${branchApiUrl(treeId, branchId)}/bud`, data)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
@@ -76,7 +76,7 @@ const detailBuds = async (treeId: string, budId: string) => {
   return authApi
     .get(`${commentApiUrl(treeId, budId)}/details`)
     .then((res) => res)
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err, treeId, budId))
 }
 
 // 댓글 추가

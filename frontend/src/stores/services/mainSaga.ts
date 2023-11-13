@@ -21,14 +21,14 @@ function* getMainSaga(): Generator<
 > {
   console.log('여기는 들어옴')
   const response: AxiosResponse<any> = yield call(myMainPageApi)
-  console.log(response)
+  console.log('메인 나무 결과', response)
   if (response.data) {
     const idName = {
-      treeId: response.data.treeId,
-      treeName: response.data.treeName,
+      treeId: response.data.data.treeId,
+      treeName: response.data.data.treeName,
     }
     yield put(storeIdName(idName))
-    yield put(storeWeeklyData(response.data.days))
+    yield put(storeWeeklyData(response.data.data.days))
   }
 }
 

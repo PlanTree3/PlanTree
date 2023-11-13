@@ -238,13 +238,13 @@ const MovableItem = ({
               />
             </button>
           </button>
-          <Comments
-            open={detailOpen}
-            handleClose={closeDetailBuds}
-            budId={id}
-            budName={budName}
-            commentCount={commentCount}
-          />
+          {/*<Comments*/}
+          {/*  open={detailOpen}*/}
+          {/*  handleClose={closeDetailBuds}*/}
+          {/*  budId={id}*/}
+          {/*  budName={budName}*/}
+          {/*  commentCount={commentCount}*/}
+          {/*/>*/}
         </>
       )}
       {idType === 'seed' && (
