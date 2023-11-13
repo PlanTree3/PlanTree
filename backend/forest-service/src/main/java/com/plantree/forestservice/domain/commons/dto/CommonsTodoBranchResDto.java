@@ -10,13 +10,13 @@ public class CommonsTodoBranchResDto {
 
     private UUID branchId;
     private String branchName;
-    private String color;
+    private String branchColor;
     private List<CommonsTodoSeedResDto> seeds;
 
     public CommonsTodoBranchResDto(Branch branch, List<CommonsTodoSeedResDto> seeds){
         this.branchId = branch.getId();
         this.branchName = branch.getName();
-        this.color = branch.getColor();
+        this.branchColor = branch.getColor();
         this.seeds = seeds;
     }
 

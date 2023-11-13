@@ -37,13 +37,30 @@ public class CommonsSearchUseCase {
     private final AuthMemberValidator authMemberValidator;
 
     @Transactional
-    public CommonsMainPageResDto findMainPage(UUID memberId, AuthMember authMember) {
+    public CommonsMainPageResDto findMyMainPage(AuthMember authMember) {
+
+        UUID memberId = authMember.getMemberId();
+        Tree tree = treeRepository.findCurrentTreeByMemberId(memberId)
+                .orElseThrow(TreeNotFoundException::new);
+        List<Bud> currentBuds = budRepository.findCurrentBudsByMemberId(memberId);
+
+        return getCommonsMainPageResDto(tree, currentBuds);
+
+    }
+
+    @Transactional
+    public CommonsMainPageResDto findOthersMainPage(UUID memberId, AuthMember authMember) {
 
         Tree tree = treeRepository.findCurrentTreeByMemberId(memberId)
                 .orElseThrow(TreeNotFoundException::new);
         List<Bud> currentBuds = budRepository.findCurrentBudsByMemberId(memberId);
         authMemberValidator.validateAuthMember(memberId, authMember);
 
+        return getCommonsMainPageResDto(tree, currentBuds);
+
+    }
+
+    private static CommonsMainPageResDto getCommonsMainPageResDto(Tree tree, List<Bud> currentBuds) {
         long score = currentBuds.stream().filter(bud -> bud.isComplete()).count() * 100;
 
         Map<Day, List<Bud>> groupBudsByDay = currentBuds.stream()
@@ -83,7 +100,6 @@ public class CommonsSearchUseCase {
         CommonsMainDaysResDto commonsMainDaysResDto = new CommonsMainDaysResDto(MON, TUE, WED, THU,
                 FRI);
         return new CommonsMainPageResDto(tree, commonsMainDaysResDto, score);
-
     }
 
 

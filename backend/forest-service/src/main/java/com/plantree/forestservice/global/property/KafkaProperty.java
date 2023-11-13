@@ -11,4 +11,5 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("kafka")
 public class KafkaProperty {
     private String bootstrapServersConfig;
+    private String defaultTopic;
 }
