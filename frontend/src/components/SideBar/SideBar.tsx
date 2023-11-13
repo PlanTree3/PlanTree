@@ -2,18 +2,21 @@ import { useState } from 'react'
 // import axios from 'axios';
 import ReactModal from 'react-modal'
 import './SideBar.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import post2 from '../../../public/sidebar/02_orange.png'
 import post3 from '../../../public/sidebar/03_yellow.png'
 import post4 from '../../../public/sidebar/04_gress.png'
 import post5 from '../../../public/sidebar/05_sky.png'
 import post1 from '../../../public/sidebar/01_red.png'
 import bell from '../../../public/bell.png'
-import { useSelector } from 'react-redux'
+import { logOutCheck } from '@/stores/features/userSlice'
 
 const SideBar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const openModal = () => {
     setModalIsOpen(true)
@@ -23,7 +26,8 @@ const SideBar = () => {
     setModalIsOpen(false)
   }
   const handleLogout = () => {
-    console.log('로그아웃 버튼 실행')
+    dispatch(logOutCheck())
+    navigate('/')
   }
   return (
     <>

@@ -8,7 +8,7 @@ const LoginCheck = () => {
   useEffect(() => {
     console.log('로그인 체크', isLoggedIn)
     if (!isLoggedIn) {
-      navigate('/main')
+      navigate('/')
     }
   }, [isLoggedIn])
   return null
