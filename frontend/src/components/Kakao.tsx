@@ -68,9 +68,12 @@ const Kakao = () => {
       onSuccess={handleLoginSuccess}
       onFail={handleLoginFailure}
       render={({ onClick }) => (
-        <button className="social_login_button" onClick={onClick}>
+        <button
+          // className="social_login_button"
+          onClick={onClick}
+        >
           <img
-            className="social_login_img"
+            // className="social_login_img"
             src={kakaoBTN}
             alt="카카오 로그인"
           />
