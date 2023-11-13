@@ -46,6 +46,9 @@ export const userSlice = createSlice({
 
       state.isLoggedIn = false
     },
+    addName: (state, action: PayloadAction<string>) => {
+      state.userData.name = action.payload
+    },
   },
 })
 
@@ -55,5 +58,6 @@ export const {
   successUserLogout,
   addProfileImageUrl,
   logOutCheck,
+  addName,
 } = userSlice.actions
 export default userSlice.reducer

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Mousewheel, Pagination } from 'swiper/modules'
 import Swal from 'sweetalert2'
@@ -17,8 +17,8 @@ import {
 import '@/styles/fontList.scss'
 import '@/styles/profile.scss'
 import './MyPageStyle.scss'
-import { userImageUpdate } from '@/apis'
-import { addProfileImageUrl } from '@/stores/features/userSlice'
+import { userImageUpdate, userNameUpdate } from '@/apis'
+import { addProfileImageUrl, addName } from '@/stores/features/userSlice'
 import Button from '@/components/Button/Button'
 
 const MyPage = () => {
@@ -30,6 +30,9 @@ const MyPage = () => {
   const [inputProfileImg, setInputProfileImg] =
     useState<string>(userprofileImage)
   const [inputUserRole, setInputUserRole] = useState<string>('')
+  const [modifyName, setModifyName] = useState<boolean>(false)
+  const [inputUserName, setInputUserName] = useState<string>(userName)
+  const [inputCount, setInputCount] = useState<number>(0)
 
   const MySwal = withReactContent(Swal)
 
@@ -260,6 +263,58 @@ const MyPage = () => {
     })
   }
 
+  const modiName = () => {
+    if (modifyName) {
+      setModifyName(false)
+    } else {
+      setModifyName(true)
+    }
+  }
+
+  const changeName = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+
+    if (value.length >= 0 && value.length <= 10) {
+      setInputUserName(value)
+      setInputCount(value.length)
+      dispatch(addName(value))
+    }
+
+    setInputCount(value.length)
+
+    const data = {
+      name: value,
+    }
+
+    userNameUpdate(data)
+  }
+
+  const showInputBox = () => {
+    let content = null
+    if (modifyName) {
+      content = [
+        <input type="text" value={inputUserName} onChange={changeName} />,
+      ]
+      if (inputCount <= 10) {
+        content.push(<span>{inputCount}</span>, <span>/10</span>)
+      } else {
+        content.push(<span>이름은 10자를 넘을 수 없습니다.</span>)
+      }
+      content.push(<button onClick={modiName}>확인</button>)
+    } else {
+      content = [
+        <div>{inputUserName}</div>,
+
+        // eslint-disable-next-line jsx-a11y/control-has-associated-label
+        <button onClick={modiName}>
+          <FiPlusCircle />
+        </button>,
+      ]
+    }
+
+    return content
+  }
+
   return (
     <div className="outer-box">
       <div className="profileBox">
@@ -283,9 +338,7 @@ const MyPage = () => {
             </div>
           )}
           <div className="flex">
-            <div className="text-5xl nanum">
-              <div>{userName}</div>
-            </div>
+            <div className="text-5xl nanum">{showInputBox()}</div>
             <div className="nanum pt-2 pl-1 text-4xl content-end">님</div>
           </div>
         </div>
