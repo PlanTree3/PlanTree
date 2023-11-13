@@ -10,7 +10,7 @@ import Button from '../Button/Button'
 
 interface ForestProps {
   forestName: string
-  nav: number
+  nav?: number
 }
 
 const ForestCard = ({ forestName, nav }: ForestProps) => {
@@ -30,11 +30,13 @@ const ForestCard = ({ forestName, nav }: ForestProps) => {
           <img data-atropos-offset="0" src={forestFront} alt="forest" />
           <div data-atropos-offset="3" className="forest-text">
             {forestName}
-            <Button
-              className="xsmall primary"
-              onClick={routeForestDetail}
-              label="자세히 보기"
-            />
+            {nav && (
+              <Button
+                className="xsmall primary"
+                onClick={routeForestDetail}
+                label="자세히 보기"
+              />
+            )}
           </div>
         </div>
         <div className="atropos-shadow" />

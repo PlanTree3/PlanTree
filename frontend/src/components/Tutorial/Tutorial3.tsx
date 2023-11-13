@@ -1,13 +1,32 @@
-import { ForestCard } from '..'
+import { Atropos } from 'atropos/react'
+import skyImage from '../../../public/atropos/sun-3588618_1280.jpg'
+import mountainImage from '../../../public/atropos/mountains.svg'
+import forestFront from '../../../public/atropos/forest-front.svg'
+import forestMid from '../../../public/atropos/forest-mid.svg'
+import forestBack from '../../../public/atropos/forest-back.svg'
 
-const Tutorial3 = () => {
+interface ForestProps {
+  forestName: string
+}
+
+const Tutorial3 = ({ forestName }: ForestProps) => {
   return (
-    <>
-      <div className="flex justify-center items-center max-w-[80%]">
-        <ForestCard forestName="숲을 만들어 보아요!" />
+    <Atropos className="atropos">
+      <div className="atropos-component">
+        <div className="atropos-inner">
+          <img className="atropos-spacer" src={skyImage} alt="sky" />
+          <img data-atropos-offset="-4.5" src={skyImage} alt="sky" />
+          <img data-atropos-offset="-6" src={mountainImage} alt="mountains" />
+          <img data-atropos-offset="-4" src={forestBack} alt="forest" />
+          <img data-atropos-offset="-2" src={forestMid} alt="forest" />
+          <img data-atropos-offset="0" src={forestFront} alt="forest" />
+          <div data-atropos-offset="3" className="forest-text">
+            {forestName}
+          </div>
+        </div>
+        <div className="atropos-shadow" />
       </div>
-      <div>*그룹 기능 제공*</div>
-    </>
+    </Atropos>
   )
 }
 
