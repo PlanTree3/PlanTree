@@ -71,8 +71,8 @@ const branchCreate = async (treeId: string, data: any) => {
 }
 
 // 그룹원 가지 일괄등록
-const branchGroupCreate = async (groupId: string, data: unknown) => {
-  authApi
+const branchGroupCreate = async (groupId: any, data: any) => {
+  return authApi
     .post(`${baseUrl}/group/${groupId}/branch`, data)
     .then((res) => res)
     .catch((err) => err)

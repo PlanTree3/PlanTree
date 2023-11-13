@@ -6,7 +6,12 @@ import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
 import './GroupPage.css'
-import { groupDelete, groupNameUpdate, groupStudents } from '@/apis'
+import {
+  branchGroupCreate,
+  groupDelete,
+  groupNameUpdate,
+  groupStudents,
+} from '@/apis'
 
 const AdminGroupDetailPage: React.FC<any> = () => {
   const { groupId } = useParams()
@@ -24,7 +29,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   const studentsPerPage = 5
   const endIndex = currentPage * studentsPerPage
   const startIndex = endIndex - studentsPerPage
-  const currentStudents = studentsData?.students?.slice(startIndex, endIndex) || []
+  const currentStudents =
+    studentsData?.students?.slice(startIndex, endIndex) || []
 
   const openModal = () => {
     setModalIsOpen(true)
@@ -59,9 +65,20 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     setInputGroupName(e.target.value)
   }
 
-  const handleCreateBranch = () => {
-    // api
-    setModalIsOpen(false)
+  // 가지 일괄 등록
+  const handleCreateBranch = async () => {
+    const data = {
+      name: inputValue,
+    }
+    // console.log('그룹아이디', groupId)
+    console.log('인풋값', data)
+    try {
+      const response = await branchGroupCreate(groupId, data)
+      console.log('Response:', response)
+      // setStudentData(response.data.data)
+    } catch (error) {
+      console.error('Error:', error)
+    }
   }
 
   // 그룹이름 수정
@@ -174,7 +191,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             type="text"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder="입력하세요"
+            placeholder="가지 이름을 입력하세요"
           />
           <button onClick={handleCreateBranch}>저장</button>
         </ReactModal>

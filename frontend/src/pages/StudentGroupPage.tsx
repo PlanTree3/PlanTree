@@ -24,9 +24,11 @@ const StudentGroupPage = () => {
       console.error('Error:', error)
     }
   }
+
   useEffect(() => {
     handleGetList()
   }, [])
+
   // 페이지
   const GroupsPerPage = 5
 

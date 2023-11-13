@@ -37,7 +37,6 @@ const AdminGroupRequestPage = () => {
     try {
       const response = await groupStudentsRequest(groupId)
       console.log('Response:', response)
-      console.log('dcdc', groupName)
       // setStudentsData(response.data.joinRequestList)
       setStudentsData(response.data.data)
     } catch (error) {

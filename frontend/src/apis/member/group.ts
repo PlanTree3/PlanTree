@@ -57,7 +57,7 @@ const groupJoinRefuse = async (groupId: any, data: any) => {
 const groupDetail = async (groupId: any) => {
   return authApi
     .get(`${groupBaseUrl}/${groupId}`)
-    .then((res) => res)
+    .then((res) => res.data)
     .catch((err) => err)
 }
 
