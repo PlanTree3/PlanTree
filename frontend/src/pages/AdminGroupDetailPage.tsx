@@ -5,18 +5,13 @@ import { Link, useParams, useLocation } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
-<<<<<<< HEAD
-import './GroupPage.css'
+import './GroupPage.scss'
 import {
   branchGroupCreate,
   groupDelete,
   groupNameUpdate,
   groupStudents,
 } from '@/apis'
-=======
-import './GroupPage.scss'
-import { groupDelete, groupNameUpdate, groupStudents } from '@/apis'
->>>>>>> 0724e3dff43a4591b50e95fa2b5837404b603e7b
 
 const AdminGroupDetailPage: React.FC<any> = () => {
   const { groupId } = useParams()
