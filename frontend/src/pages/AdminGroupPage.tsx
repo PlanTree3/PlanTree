@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-// import { Link } from 'react-router-dom'
-// import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
@@ -60,28 +60,13 @@ const AdminGroupPage: React.FC = () => {
     }
   }
 
+
   useEffect(() => {
     handleGetGroupList()
   }, [])
 
-  //여기부터는 페이지 넘기면서 조회하는 것 임시
+  //여기부터는 페이지 넘기면서 조회하는 것
   const GroupsPerPage = 5
-  // const dummyData = {
-  //   statusCode: 200,
-  //   message: '수락 성공',
-  //   data: {
-  //     groups: [
-  //       { groupName: '그룹1', createdAt: '2023-01-15', studentCount: 10 },
-  //       { groupName: '그룹2', createdAt: '2023-02-20', studentCount: 15 },
-  //       { groupName: '그룹3', createdAt: '2023-03-10', studentCount: 8 },
-  //       { groupName: '그룹4', createdAt: '2023-04-05', studentCount: 12 },
-  //       { groupName: '그룹5', createdAt: '2023-05-18', studentCount: 20 },
-  //       { groupName: '그룹6', createdAt: '2023-06-22', studentCount: 7 },
-  //       { groupName: '그룹7', createdAt: '2023-07-09', studentCount: 13 },
-  //       { groupName: '그룹8', createdAt: '2023-08-12', studentCount: 18 },
-  //     ],
-  //   },
-  // }
 
   const indexOfLastGroup = currentPage * GroupsPerPage
   const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
@@ -103,25 +88,36 @@ const AdminGroupPage: React.FC = () => {
     setCurrentPage(page)
   }
 
+  // const navigate = useNavigate();
+
+  // const handleClick = () => {
+  //   const groupName = groupData.groupName
+  //   navigate({
+  //     pathname: `/adminGroupDetail/${groupData.groupId}`,
+  //     state: { groupName: groupName },
+  //   });
+  // };
+
+
   return (
     <div>
       <hr />
-      <h2>내 그룹 확인하기</h2>
+      <div>내 그룹 확인하기</div>
       <div className="studentListBox">
         <h3>번호 그룹명 시작일 인원</h3>
         {currentGroups?.map((group: any, index: number) => (
           <div>
             {/* eslint-disable-next-line react/no-array-index-key */}
+            <Link to={`/adminGroupDetail/${group.groupId}`} state={{ groupName: group.groupName }}>
             <div key={index} className="groupItem">
-              {/* <Link> */}
               <p className="groupInfo">{index + 1 + (currentPage - 1) * 5} </p>
               <p className="groupInfo">{group.groupName} </p>
               <p className="groupInfo">
                 {group.createdAt[0]}-{group.createdAt[1]}-{group.createdAt[2]}{' '}
               </p>
               <p className="groupInfo">{group.studentCount} </p>
-              {/* </Link> */}
             </div>
+              </Link>
             <hr style={{ background: 'black', height: 1, border: 0 }} />
           </div>
         ))}

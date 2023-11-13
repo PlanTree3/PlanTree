@@ -1,7 +1,7 @@
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { ItemPlacement } from '@/components'
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getBranchData } from "@/stores/features/branchSlice.ts";
+import { getBranchData } from '@/stores/features/branchSlice.ts'
 
 const WeeklyBudsPage = () => {
   const dispatch = useDispatch()

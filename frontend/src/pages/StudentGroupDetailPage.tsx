@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 // import axios from 'axios';
 import './GroupPage.css'
 import Seal from '../../public/Seal.png'
@@ -8,9 +8,11 @@ import Seal from '../../public/Seal.png'
 import { groupDetail } from '@/apis'
 
 const StudentGroupDetailPage = () => {
-  // const [currentPage, setCurrentPage] = useState(1)
+  const { groupId } = useParams();
+  const [currentPage, setCurrentPage] = useState(1)
+  const [groupData, setGroupData] = useState<any>(null)
 
-  // const GroupsPerPage = 5
+  const StudentsPerPage = 5
 
   //학생의 그룹 상세 조회
   const handleGetGroupDetail = async () => {
@@ -19,6 +21,7 @@ const StudentGroupDetailPage = () => {
       console.log('2')
       const response = await groupDetail
       console.log('Response:', response)
+      setGroupData(response.data)
     } catch (error) {
       console.error('Error:', error)
     }
@@ -28,23 +31,23 @@ const StudentGroupDetailPage = () => {
     handleGetGroupDetail()
   }, [])
 
-  // const indexOfLastGroup = currentPage * GroupsPerPage
-  // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
-  // const currentGroups = dummyData.data.groups.slice(
-  //   indexOfFirstGroup,
-  //   indexOfLastGroup,
-  // )
+  const indexOfLastGroup = currentPage * StudentsPerPage
+  const indexOfFirstGroup = indexOfLastGroup - StudentsPerPage
+  const currentStudents = groupData.students.slice(
+    indexOfFirstGroup,
+    indexOfLastGroup,
+  )
 
-  // const totalPages = Math.ceil(dummyData.data.groups.length / GroupsPerPage)
+  const totalPages = Math.ceil(groupData.students.length / StudentsPerPage)
 
-  // const pageNumbers = []
-  // for (let i = 1; i <= totalPages; i += 1) {
-  //   pageNumbers.push(i)
-  // }
+  const pageNumbers = []
+  for (let i = 1; i <= totalPages; i += 1) {
+    pageNumbers.push(i)
+  }
 
-  // const changePage = (page: number) => {
-  //   setCurrentPage(page)
-  // }
+  const changePage = (page: number) => {
+    setCurrentPage(page)
+  }
 
   return (
     <div>
@@ -53,48 +56,32 @@ const StudentGroupDetailPage = () => {
           <div className="pt-6">목록으로 돌아가기</div>
         </div>
       </Link>
-      <h2>떡잎초 3학년 1반</h2>
+      <div>{groupData.groupName}</div>
       <div className="flex flex-row">
         <img className="h-40" src={Seal} alt="" />
         <div className="groupLeader">
-          <text>그룹장: 정도현</text>
+          <text>그룹장: {groupData.teacherName}</text>
         </div>
       </div>
       <div className="studentBox">
-        {/* <div className="circle-imageS">
-          <img src={yeji1} alt="" />/
-        </div> */}
+      {currentStudents.map((student: any) => (
+        <>
         <div className="flex flex items-center">
-          <text>정예지</text>
+          <text>{student.studentName}</text>
         </div>
         <div className="ms-6 flex-col flex justify-center ">
           <text>달성도</text>
-          <text>12/25</text>
+          <text>{student.totalBudCount}/{student.completedBudCount}</text>
         </div>
+        </>
+        ))}
       </div>
-      <div className="studentBox">
-        {/* <div className="circle-imageS">
-          <img src={gijeong1} alt="" />/
-        </div> */}
-        <div className="flex flex items-center">
-          <text>신기정</text>
-        </div>
-        <div className="ms-6 flex-col flex justify-center ">
-          <text>달성도</text>
-          <text>12/25</text>
-        </div>
-      </div>
-      <div className="studentBox">
-        {/* <div className="circle-imageS">
-          <img src={gijeong1} alt="" />/
-        </div> */}
-        <div className="flex flex items-center ">
-          <text>신기정</text>
-        </div>
-        <div className="ms-6 flex-col flex justify-center ">
-          <text>달성도</text>
-          <text>12/25</text>
-        </div>
+      <div className="pagination">
+        {pageNumbers.map((number) => (
+          <button key={number} onClick={() => changePage(number)}>
+            {number}
+          </button>
+        ))}
       </div>
     </div>
   )

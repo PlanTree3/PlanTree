@@ -58,12 +58,6 @@ const userRefresh = async () => {
     .post(`${userBaseUrl}/refresh`)
     .then((res) => {
       console.log(res)
-      Swal.fire({
-        title: '로그인 정보가 만료되어 메인으로 돌아갑니다.',
-        icon: 'info',
-        iconColor: 'red',
-      })
-      // navigate('/main')
     })
     .catch((err) => console.log(err))
 }
@@ -85,7 +79,7 @@ const userNameUpdate = async (data: unknown) =>
 // 그룹 둥지 리스트 조회(학생)
 const userGroupList = async () => {
   return authApi
-    .get(`${memberBaseUrl}/student-group`)
+    .get(`${memberBaseUrl}/group/student-group`)
     .then((res) => res)
     .catch((err) => err)
 }
@@ -99,7 +93,12 @@ const teacherGroupList = async () => {
 }
 
 // 로그아웃??
-const userLogout = async () => authApi.post(`${userBaseUrl}`)
+const userLogout = async () => {
+  return authApi
+    .post(`${userBaseUrl}/logout`)
+    .then((res) => res)
+    .catch((err) => console.log(err))
+}
 
 export {
   userLogin,
