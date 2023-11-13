@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import './GroupPage.css'
+import './GroupPage.scss'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
 import { groupCreate, teacherGroupList } from '@/apis'

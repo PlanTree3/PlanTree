@@ -61,7 +61,7 @@ const ItemPlacement = () => {
         const { seedId, ...createdItem } = newItem
         const data = {
           newSeeds,
-          createdItem
+          createdItem,
         }
         dispatch(addSeeds(data))
         setNewText('')
@@ -93,7 +93,7 @@ const ItemPlacement = () => {
       const { branchId, ...createdItem } = newItem
       const data = {
         newBranches,
-        createdItem
+        createdItem,
       }
       dispatch(addBranches(data))
       setNewTitle('')

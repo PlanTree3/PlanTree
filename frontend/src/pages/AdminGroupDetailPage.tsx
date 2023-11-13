@@ -5,7 +5,7 @@ import { Link, useParams, useLocation } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
-import './GroupPage.css'
+import './GroupPage.scss'
 import { groupDelete, groupNameUpdate, groupStudents } from '@/apis'
 
 const AdminGroupDetailPage: React.FC<any> = () => {
@@ -24,7 +24,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   const studentsPerPage = 5
   const endIndex = currentPage * studentsPerPage
   const startIndex = endIndex - studentsPerPage
-  const currentStudents = studentsData?.students?.slice(startIndex, endIndex) || []
+  const currentStudents =
+    studentsData?.students?.slice(startIndex, endIndex) || []
 
   const openModal = () => {
     setModalIsOpen(true)
@@ -123,23 +124,32 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   return (
     <div>
-      <div className="flex flex-row">
+      <div className="admin-group-detail-container">
         {/* eslint-disable-next-line react/no-unescaped-entities */}
-        <div className="font-semibold text-2xl"> {inputGroupName}의 그룹원</div>
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-        <img className="mx-4" src={pencil} onClick={openPencilModal} />
-        <Button
-          label="가지 일괄 등록"
-          className="primary"
-          onClick={openModal}
-        />
-        <Link
-          to={`/adminGroupRequest/${groupId}`}
-          state={{ groupName: inputGroupName }}
-        >
-          <Button label="가입요청 리스트 확인하기" className="gray" />
-        </Link>
-        <Button label="그룹원 추가하기" className="red" onClick={openQrModal} />
+        <div className="admin-group-detail-title">
+          {' '}
+          {inputGroupName}의 그룹원
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+          <img src={pencil} onClick={openPencilModal} alt="" />
+        </div>
+        <div className="admin-group-detail-btn-container">
+          <Button
+            label="가지 일괄 등록"
+            className="normal primary"
+            onClick={openModal}
+          />
+          <Link
+            to={`/adminGroupRequest/${groupId}`}
+            state={{ groupName: inputGroupName }}
+          >
+            <Button label="가입요청 확인하기" className="normal gray" />
+          </Link>
+          <Button
+            label="그룹원 추가하기"
+            className="normal red"
+            onClick={openQrModal}
+          />
+        </div>
         <ReactModal
           isOpen={modalIsOpen}
           ariaHideApp={false}
@@ -253,33 +263,35 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           />
         </ReactModal>
       </div>
-      <div className="box-border h-2/3 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
-        {currentStudents.length > 0 ? (
-          currentStudents.map((student: any) => (
-            <div key={student.studentId} className="student-box">
-              <p>학생 ID: {student.studentId}</p>
-              <p>학생 이름: {student.studentName}</p>
-              <p>진행한 버드 수: {student.completedBudCount}</p>
-              <p>전체 버드 수: {student.totalBudCount}</p>
-            </div>
-          ))
-        ) : (
-          <p>현재 그룹원이 없습니다.</p>
-        )}
-      </div>
+      <div className="admin-group-detail-content">
+        <div className="h-2/3 w-2/3 p-5 bg-amber-700 rounded-3xl">
+          {currentStudents.length > 0 ? (
+            currentStudents.map((student: any) => (
+              <div key={student.studentId} className="student-box">
+                <p>학생 ID: {student.studentId}</p>
+                <p>학생 이름: {student.studentName}</p>
+                <p>진행한 버드 수: {student.completedBudCount}</p>
+                <p>전체 버드 수: {student.totalBudCount}</p>
+              </div>
+            ))
+          ) : (
+            <p>현재 그룹원이 없습니다.</p>
+          )}
+        </div>
 
-      <div className="pagination">
-        {pageNumbers.map((number) => (
-          <button key={number} onClick={() => changePage(number)}>
-            {number}
-          </button>
-        ))}
+        <div className="pagination">
+          {pageNumbers.map((number) => (
+            <button key={number} onClick={() => changePage(number)}>
+              {number}
+            </button>
+          ))}
+        </div>
+        <Button
+          className="normal red"
+          onClick={handleGroupDelete}
+          label="그룹 삭제하기"
+        />
       </div>
-      <Button
-        className="red"
-        onClick={handleGroupDelete}
-        label="그룹 삭제하기"
-      />
     </div>
   )
 }

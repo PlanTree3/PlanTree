@@ -32,7 +32,7 @@
 }
 
 .dnd-seed-outer-container {
-  width: 75vw;
+  width: 98%;
   //background-color: #8595a9;
   border-radius: 1vw;
   display: grid;
@@ -109,19 +109,14 @@
     &:hover {
       grid-template-columns: 1fr 1fr 1fr;
       .dnd_movable-item-content-name {
-        max-width: 100%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
       }
       .dnd_movable-item-content-deleteBTN {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        &-img {
-          width: 60%;
-          height: auto;
-        }
+        @apply flex w-[60%];
+        align-self: center;
+        justify-self: center;
       }
     }
   }
@@ -153,10 +148,12 @@
   height: 5vh;
   justify-content: center;
   align-items: center;
+  border-radius: 7px;
 }
 
 .dnd-create-btn-box {
   display: flex;
+  @apply justify-end;
 }
 .dnd-add-seed-btn {
   @apply flex justify-center items-center w-[3vw] h-[5vh];

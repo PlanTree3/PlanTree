@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 // import axios from 'axios';
-import './GroupPage.css'
+import './GroupPage.scss'
 import Seal from '../../public/Seal.png'
 // import yeji1 from '../../public/yeji1.png'
 // import gijeong1 from '../../public/gijeong1.png'

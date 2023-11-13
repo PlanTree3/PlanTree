@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import chick from '../../public/chick.png'
 import forest from '../../public/forest_tmp.png'
-import './GroupPage.css'
+import './GroupPage.scss'
 import { userGroupList } from '@/apis'
 // import StudentGroupPageResponse from '../types/GroupStudentType'
 

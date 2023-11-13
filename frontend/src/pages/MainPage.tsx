@@ -150,6 +150,7 @@ const MainPage = () => {
           <div className="main-tree-container">
             <Tree degree={80} />
           </div>
+          <div className="main-tree-degree">진행률 : </div>
         </div>
         <div className="main-todo-container">
           {dayToday === 0 ||
