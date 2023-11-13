@@ -1,13 +1,19 @@
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ItemPlacement } from '@/components'
 import { getBranchData } from '@/stores/features/branchSlice.ts'
+import { getMainData } from '@/stores/features/mainSlice.ts'
+import { RootState } from '@/stores/store.ts'
 
 const WeeklyBudsPage = () => {
   const dispatch = useDispatch()
+  const treeId = useSelector((state: RootState) => state.main.treeId)
   useEffect(() => {
-    dispatch(getBranchData())
-  })
+    dispatch(getMainData())
+    if (treeId) {
+      dispatch(getBranchData())
+    }
+  }, [treeId])
   return <ItemPlacement />
 }
 export default WeeklyBudsPage
