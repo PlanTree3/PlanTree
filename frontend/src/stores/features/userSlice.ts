@@ -22,10 +22,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     loginCheck: (state) => {
+      console.log('logInCheck 들어옴!')
+      localStorage.clear()
       state.isLoggedIn = true
     },
     fetchReUserData: () => {},
     saveUserData: (state, action: PayloadAction<any>) => {
+      localStorage.clear()
       state.isLoggedIn = true
       state.userData = action.payload
       console.log('유저 정보', action.payload)

@@ -82,6 +82,7 @@ const UserProfileImg = () => {
   const saveUser = () => {
     userSignup(signUpData)
     dispatch(loginCheck())
+
     navigate('/main')
   }
 

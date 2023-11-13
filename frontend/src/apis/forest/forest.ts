@@ -8,7 +8,7 @@ const forestBaseUrl = 'api/forest-service/forest'
 // 메인페이지
 const mainPageApi = async (memberId: string): Promise<AxiosResponse> => {
   return authApi
-    .get(`${baseUrl}/main/${memberId}`)
+    .get(`${baseUrl}/commons/main/${memberId}`)
     .then((res) => res)
     .catch((err) => err)
 }
