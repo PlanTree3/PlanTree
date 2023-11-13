@@ -9,6 +9,7 @@ import { userLogin } from '@/apis/member'
 import { loginCheck } from '@/stores/features/userSlice'
 // import Swal from "sweetalert2";
 // import { AxiosError } from "axios";
+import kakaoBTN from '../../public/login_btn/kakaotalk_sharing_btn_small.png'
 
 const Kakao = () => {
   const navigate = useNavigate()
@@ -70,7 +71,7 @@ const Kakao = () => {
         <button className="social_login_button" onClick={onClick}>
           <img
             className="social_login_img"
-            src="src/asset/login_btn/kakaotalk_sharing_btn_small.png"
+            src={kakaoBTN}
             alt="카카오 로그인"
           />
         </button>

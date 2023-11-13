@@ -7,9 +7,9 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material'
-import questImgNew from '@/asset/test/questIcon_new.png'
-import questImgDefault from '@/asset/test/questIcon_defalut.png'
-import questImgBlack from '@/asset/test/questIcon_black.png'
+import questImgNew from '../../../public/test/questIcon_new.png'
+import questImgDefault from '../../../public/test/questIcon_defalut.png'
+import questImgBlack from '../../../public/test/questIcon_black.png'
 import {
   checkQuest,
   confirmQuest,
@@ -72,10 +72,9 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
     <>
       <div className="quest-container">
         {filteredQuests.map((quest: any) => (
-          <div
+          <button
             className="quest-container-inner"
             key={quest.questId}
-            role="button" // 니 역할은 이제 버튼이여
             tabIndex={0}
             onClick={() => openModal(quest.questId)}
             onKeyDown={(e) => {
@@ -140,7 +139,7 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
             />
             <p className="quest-item-title">{quest.questTitle}</p>
             <p className="quest-item-created">{quest.createdAt}</p>
-          </div>
+          </button>
         ))}
       </div>
       <div>

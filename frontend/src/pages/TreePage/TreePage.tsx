@@ -6,7 +6,7 @@ const TreePage = () => {
     <div className="tree-page">
       <div className="tree-page-title">언제부터 언제까지</div>
       <div className="tree-page-tree">
-        <Tree />
+        <Tree degree={30} />
       </div>
       <div className="tree-page-title">통계</div>
       <div className="tree-page-chart-container">

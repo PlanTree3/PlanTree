@@ -9,13 +9,13 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
+import plusIcon from '../../../public/btn/plusIcon.svg'
+import writeIcon from '../../../public/btn/writeIcon.svg'
 import { RootState } from '@/stores/store'
 import { getRandomColor, ReturnItems } from '@/components'
 import { COLUMN_NAMES } from '@/types/DnDType'
 import { addBranches, addSeeds } from '@/stores/features/branchSlice'
 import Column from '@/components/Column'
-import plusIcon from '@/asset/btn/plusIcon.svg'
-import writeIcon from '@/asset/btn/writeIcon.svg'
 
 const ItemPlacement = () => {
   const dispatch = useDispatch()
@@ -55,10 +55,15 @@ const ItemPlacement = () => {
           seedName: newText,
           dayOfWeek: DEFAULT,
           branchId: selectedBranchId,
-          color: colors,
+          branchColor: colors,
         }
         const newSeeds = [...seeds, newItem]
-        dispatch(addSeeds(newSeeds))
+        const { seedId, ...createdItem } = newItem
+        const data = {
+          newSeeds,
+          createdItem
+        }
+        dispatch(addSeeds(data))
         setNewText('')
         setOpenSeed(false)
       } else {
@@ -85,7 +90,12 @@ const ItemPlacement = () => {
         color: getRandomColor(),
       }
       const newBranches = [...branches, newItem]
-      dispatch(addBranches(newBranches))
+      const { branchId, ...createdItem } = newItem
+      const data = {
+        newBranches,
+        createdItem
+      }
+      dispatch(addBranches(data))
       setNewTitle('')
       setOpen(false)
     } else {
@@ -189,6 +199,7 @@ const ItemPlacement = () => {
               }}
             >
               {branch.branchName}
+              {branch.color}
             </button>
           ))}
         </div>

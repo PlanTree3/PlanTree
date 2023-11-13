@@ -1,10 +1,17 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { useDispatch, useSelector } from 'react-redux'
-import { addBuds, addSeeds } from '@/stores/features/branchSlice'
+import Swal from 'sweetalert2'
+import {
+  addBuds,
+  finishedBuds,
+  finishRejectBuds,
+  moveBuds,
+  removeBuds,
+  removeSeeds,
+} from '@/stores/features/branchSlice'
 import {
   DragItem,
-  ItemState,
   MovableItemProps,
   ITEM_TYPE,
   ColumnName,
@@ -12,32 +19,72 @@ import {
 } from '@/types/DnDType'
 import '@/styles/branch.scss'
 import { RootState } from '@/stores/store'
-import { handleComment } from '@/components'
+import { Comments } from '@/components'
+import delBTN from '../../../public/btn/deleteIcon.svg'
+import changeBTN from '../../../public/btn/writeIcon.svg'
 
 const MovableItem = ({
+  branchId,
   id,
   budName,
   idType,
-  comments,
+  commentCount,
   index,
   moveHandler,
   dayOfWeek,
-  color,
+  branchColor,
 }: MovableItemProps) => {
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const buds = useSelector((state: RootState) => state.branch.buds)
+  const [detailOpen, setDeailOpen] = useState(false)
   const changeItemColumn = (
-    currentItem: { index: number; budName: string; budId: number },
+    currentItem: any,
     columnName: string,
+    isFinishDay: boolean,
+    alreadyFinished: boolean,
   ) => {
-    const updatedItems = buds.map((e: ItemState) => {
+    const newBuds = buds.map((e: any) => {
       if (e.budId === currentItem.budId) {
         return { ...e, dayOfWeek: columnName }
       }
       return e
     })
-    dispatch(addBuds(updatedItems))
+    const createdItem = {
+      branchId: currentItem.branchId,
+      budId: currentItem.budId,
+      dayOfWeek: columnName,
+    }
+    const data = {
+      newBuds,
+      createdItem,
+    }
+    if (alreadyFinished && isFinishDay) {
+      Swal.fire({
+        title: '이미 끝난 일정입니다.',
+        text: '일정을 수정하시려면 진행 중 단계로 먼저 옮기셔야 합니다.',
+        icon: 'warning',
+        iconColor: 'yellow',
+      })
+    } else if (alreadyFinished) {
+      Swal.fire({
+        title: '끝난 일정입니다.',
+        text: '정말로 다시 시작하시겠습니까?',
+        icon: 'warning',
+        iconColor: 'yellow',
+        showCancelButton: true,
+        cancelButtonText: '취소',
+        confirmButtonText: '확인',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(finishRejectBuds(data))
+        }
+      })
+    } else if (isFinishDay) {
+      dispatch(finishedBuds(data))
+    } else {
+      dispatch(moveBuds(data))
+    }
   }
   const ref = useRef<HTMLDivElement>(null)
   const [, drop] = useDrop<DragItem>({
@@ -67,28 +114,58 @@ const MovableItem = ({
   type DropPoint = { dropEffect: string; name: string }
   const [{ isDragging }, drag] = useDrag({
     type: ITEM_TYPE,
-    item: { index, budName, dayOfWeek, id },
+    item: { index, budName, dayOfWeek, id, branchId },
     end: (item, monitor) => {
       const dropResult: DropPoint | null = monitor.getDropResult()
       if (dropResult) {
         const point = dropResult.name as ColumnName
         const maxId = Math.floor(Math.random() * 1000 + 2000)
-        if (dayOfWeek === COLUMN_NAMES.DEFAULT) {
-          const newItem = {
-            budId: maxId + 1,
-            budName,
-            dayOfWeek: point,
-            color,
+        const isFinishDay =
+          Object.values(COLUMN_NAMES).includes(point) &&
+          point.includes('_FINISH')
+        const alreadyFinished =
+          Object.values(COLUMN_NAMES).includes(dayOfWeek) &&
+          dayOfWeek.includes('_FINISH')
+        console.log(isFinishDay)
+        const valuesArray = Object.values(COLUMN_NAMES)
+        const pointIndex = valuesArray.indexOf(point)
+        const dayOfWeekIndex = valuesArray.indexOf(dayOfWeek)
+        if (pointIndex === dayOfWeekIndex) {
+          /* TODO document why this block is empty */
+        } else if (pointIndex < dayOfWeekIndex && alreadyFinished) {
+          console.log(pointIndex)
+          Swal.fire({
+            title: '등록된 요일 이전으로 수정은 안돼요!',
+            text: '일정을 잘못 등록하셨다면, 삭제하고 다시 등록해주세요!',
+            icon: 'warning',
+            iconColor: 'red',
+          })
+        } else if (dayOfWeek === COLUMN_NAMES.DEFAULT) {
+          if (isFinishDay) {
+            alert('생성된 씨앗을 바로 끝낼 수는 없어요!')
+          } else {
+            const newItem: any = {
+              budId: maxId + 1,
+              branchColor,
+              budName,
+              dayOfWeek: point,
+              branchId,
+            }
+            const { budId, branchColor: newColor, ...createdItem } = newItem
+            const newBuds = [...buds, newItem]
+            const data = {
+              newBuds,
+              createdItem,
+            }
+            dispatch(addBuds(data))
           }
-          const newBuds = [...buds, newItem]
-          dispatch(addBuds(newBuds))
         } else {
           const newItem = {
             ...item,
             budId: id,
             dayOfWeek: point,
           }
-          changeItemColumn(newItem, point)
+          changeItemColumn(newItem, point, isFinishDay, alreadyFinished)
         }
       }
     },
@@ -98,44 +175,102 @@ const MovableItem = ({
   })
   const opacity = isDragging ? 0.4 : 1
   drag(drop(ref))
-  const removeSeed = (itemId: number) => {
+  const removeSeed = (itemId: string) => {
     const updatedItems = seeds.filter((item: any) => item.seedId !== itemId)
-    dispatch(addSeeds(updatedItems))
+    const data = {
+      newSeeds: updatedItems,
+      createdItem: itemId,
+    }
+    dispatch(removeSeeds(data))
   }
-  const removeBud = (itemId: number) => {
+  const removeBud = (itemId: string) => {
     const updatedItems = buds.filter((item: any) => item.budId !== itemId)
-    dispatch(addBuds(updatedItems))
+    const data = {
+      newBuds: updatedItems,
+      createdItem: itemId,
+    }
+    dispatch(removeBuds(data))
+  }
+  const handleDetailBuds = () => {
+    setDeailOpen(true)
+  }
+  const closeDetailBuds = () => {
+    setDeailOpen(false)
+    console.log('????')
   }
   return (
     <div
       ref={ref}
       className="dnd_movable-item"
-      style={{ opacity, backgroundColor: color }}
+      style={{ opacity, backgroundColor: branchColor }}
     >
       {idType === 'bud' && (
-        <div
-          role="button"
-          onClick={() => handleComment(comments)}
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              handleComment(comments)
-            }
-          }}
-        >
-          {budName}
-          <button onClick={() => removeBud(id)} className="dnd_delete-btn">
-            X
+        <>
+          <button
+            className="dnd_movable-item-content"
+            onClick={() => handleDetailBuds()}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleDetailBuds()
+              }
+            }}
+          >
+            <p className="dnd_movable-item-content-name">{budName}</p>
+            <button
+              // onClick={() => removeBud(id)}
+              className="dnd_movable-item-content-deleteBTN"
+            >
+              <img
+                src={changeBTN}
+                alt="수정버튼"
+                className="dnd_movable-item-content-deleteBTN-img"
+              />
+            </button>
+            <button
+              onClick={() => removeBud(id)}
+              className="dnd_movable-item-content-deleteBTN"
+            >
+              <img
+                src={delBTN}
+                alt="삭제버튼"
+                className="dnd_movable-item-content-deleteBTN-img"
+              />
+            </button>
           </button>
-        </div>
+          <Comments
+            open={detailOpen}
+            handleClose={closeDetailBuds}
+            budId={id}
+            budName={budName}
+            commentCount={commentCount}
+          />
+        </>
       )}
       {idType === 'seed' && (
-        <div>
-          {budName}
-          <button onClick={() => removeSeed(id)} className="dnd_delete-btn">
-            X
+        <button className="dnd_movable-item-content">
+          <p className="dnd_movable-item-content-name">{budName}</p>
+          <button
+            // onClick={() => removeSeed(id)}
+            className="dnd_movable-item-content-deleteBTN"
+          >
+            <img
+              src={changeBTN}
+              alt="수정버튼"
+              className="dnd_movable-item-content-deleteBTN-img"
+            />
           </button>
-        </div>
+          <button
+            onClick={() => removeSeed(id)}
+            className="dnd_movable-item-content-deleteBTN"
+          >
+            <img
+              src={delBTN}
+              alt="삭제버튼"
+              className="dnd_movable-item-content-deleteBTN-img"
+            />
+          </button>
+        </button>
       )}
     </div>
   )

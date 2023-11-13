@@ -6,6 +6,8 @@ import AdminGroupDetailPage from './pages/AdminGroupDetailPage.tsx'
 import AdminGroupPage from './pages/AdminGroupPage.tsx'
 import AdminNestPage from './pages/AdminNestPage.tsx'
 import AdminGroupRequestPage from './pages/AdminGroupRequestPage.tsx'
+import GroupJoinPage from './pages/GroupJoinPage.tsx'
+import NestJoinPage from './pages/NestJoinPage.tsx'
 
 import {
   Home,
@@ -21,6 +23,7 @@ import {
   QuestPage,
   OidcGoogle,
   TreePage,
+  Tutorial,
 } from './pages'
 
 const RoutesComponent = () => (
@@ -30,12 +33,24 @@ const RoutesComponent = () => (
     <Route path="/oauth" element={<OauthRedirectPage />} />
 
     <Route path="/studentGroup" element={<StudentGroupPage />} />
-    <Route path="/studentGroupDetail" element={<StudentGroupDetailPage />} />
+    <Route
+      path="/studentGroupDetail/:groupId"
+      element={<StudentGroupDetailPage />}
+    />
     <Route path="/adminNest" element={<AdminNestPage />} />
     {/* <Route path="/adminGroupTab" element={<AdminGroupTabPage />} /> */}
     <Route path="/adminGroup" element={<AdminGroupPage />} />
-    <Route path="/adminGroupDetail" element={<AdminGroupDetailPage />} />
-    <Route path="/adminGroupRequest" element={<AdminGroupRequestPage />} />
+    <Route
+      path="/adminGroupDetail/:groupId"
+      element={<AdminGroupDetailPage />}
+    />
+    <Route
+      path="/adminGroupRequest/:groupId"
+      element={<AdminGroupRequestPage />}
+    />
+    {/* QR 연결 페이지 **그룹/둥지 아이디 덧붙여야함 */}
+    <Route path="/groupJoin/:groupId" element={<GroupJoinPage />} />
+    <Route path="/nestJoin/:nestId" element={<NestJoinPage />} />
 
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="/oidc/google" element={<OidcGoogle />} />
@@ -47,6 +62,8 @@ const RoutesComponent = () => (
     <Route path="/mypage" element={<MyPage />} />
     <Route path="/quest" element={<QuestPage />} />
     <Route path="*" element={<NotFoundPage />} />
+
+    <Route path="/tutorial" element={<Tutorial />} />
   </Routes>
 )
 

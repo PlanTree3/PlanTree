@@ -36,6 +36,7 @@ module.exports = {
     'jsx-a11y',
   ],
   rules: {
+    'react/no-array-index-key': 'off',
     'no-console': 'off',
     'import/no-extraneous-dependencies': [
       'error',
@@ -68,6 +69,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'react/prop-types': 'off',
   },
   ignorePatterns: ['.eslintrc.cjs'],
 }

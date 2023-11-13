@@ -4,7 +4,9 @@ import com.plantree.memberservice.domain.auth.application.jwt.JwtProvider;
 import com.plantree.memberservice.domain.auth.application.oidc.IDTokenValidatorHandler;
 import com.plantree.memberservice.domain.auth.application.oidc.OIDCMember;
 import com.plantree.memberservice.domain.auth.dto.SignUpResponseDto;
+import com.plantree.memberservice.domain.auth.dto.client.TreeCreateRequestDto;
 import com.plantree.memberservice.domain.auth.dto.request.SignUpRequestDto;
+import com.plantree.memberservice.domain.group.application.client.ForestServiceClient;
 import com.plantree.memberservice.domain.member.application.repository.MemberRepository;
 import com.plantree.memberservice.domain.member.application.repository.ParentRepository;
 import com.plantree.memberservice.domain.member.application.repository.StudentRepository;
@@ -31,6 +33,7 @@ public class SignUpUseCase {
     private final TeacherRepository teacherRepository;
     private final JwtProvider jwtProvider;
     private final CookieHelper cookieHelper;
+    private final ForestServiceClient forestServiceClient;
 
 
     @Transactional
@@ -57,6 +60,7 @@ public class SignUpUseCase {
             case STUDENT:
                 Student student = new Student(member);
                 studentRepository.save(student);
+                forestServiceClient.createTree(new TreeCreateRequestDto(member.getId()));
                 break;
             case PARENT:
                 Parent parent = new Parent(member);

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import withReactContent from 'sweetalert2-react-content'
 import { useDispatch, useSelector } from 'react-redux'
 import { LuImagePlus } from 'react-icons/lu'
-import { userSignup } from '@/apis/member'
+import { userLogin, userSignup } from '@/apis/member'
 import { addProfileImg } from '@/stores/features/signupSlice'
 import { loginCheck } from '@/stores/features/userSlice'
 
@@ -22,7 +22,7 @@ const UserProfileImg = () => {
   const navigate = useNavigate()
 
   const [inputProfileImg, setInputProfileImg] = useState<string>(
-    'src/asset/profile/bear.jpg',
+    'public/profile/bear.jpg',
   )
   const [isProfileImg, setIsProfileImg] = useState<boolean>(false)
   const [inputUserRole, setInputUserRole] = useState<string>('')
@@ -70,7 +70,7 @@ const UserProfileImg = () => {
   }
 
   // 객체에 담아서 백에 보내주자!
-  const data = {
+  const signUpData = {
     idToken,
     oauthProvider,
     name: userName,
@@ -79,11 +79,12 @@ const UserProfileImg = () => {
     profileImageUrl: inputProfileImg,
   }
 
-  const saveUser = () => {
-    console.log(data)
-    userSignup(data)
-    dispatch(loginCheck())
-    localStorage.clear()
+  const saveUser = async () => {
+    const response: any = await userSignup(signUpData)
+    console.log(response)
+    if (response) {
+      dispatch(loginCheck())
+    }
     navigate('/main')
   }
 
@@ -96,17 +97,18 @@ const UserProfileImg = () => {
   const moveProfileImg = () => {
     const content = (
       <div className="mb-3.5">
-        {imgList.map((img: string) => (
+        {imgList.map((img: string, index: number) => (
           <button
+            key={index}
             className="selectImg p-0 mx-1"
             onClick={() => {
-              chooseProfileImg(`src/asset/profile/${img}.jpg`)
+              chooseProfileImg(`public/profile/${img}.jpg`)
               MySwal.close()
             }}
           >
             <img
               className="selectImg m-0"
-              src={`src/asset/profile/${img}.jpg`}
+              src={`public/profile/${img}.jpg`}
               alt={img}
             />
           </button>
@@ -117,7 +119,7 @@ const UserProfileImg = () => {
     MySwal.fire({
       title: '프로필 사진을 골라 주세요',
       html: content,
-      width: 300,
+      width: '27%',
       heightAuto: false,
       position: 'center',
       showConfirmButton: false,
@@ -132,6 +134,7 @@ const UserProfileImg = () => {
   return (
     <div className="w-8/12 h-3/5 relative">
       <div className="flex bg-no-repeat w-full h-full bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]">
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <button className="addImgBtn" onClick={() => moveProfileImg()}>
           <LuImagePlus />
         </button>
