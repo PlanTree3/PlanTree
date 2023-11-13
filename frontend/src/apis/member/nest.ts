@@ -4,7 +4,7 @@ import { authApi } from '@/apis'
 const nestBaseUrl = 'api/member-service/nest'
 
 // 둥지 생성
-const nestCreate = async (data: string): Promise<AxiosRequestConfig> => {
+const nestCreate = async (data: any): Promise<any> => {
   return authApi
     .post(`${nestBaseUrl}`, data)
     .then((res) => res.data)
@@ -12,11 +12,11 @@ const nestCreate = async (data: string): Promise<AxiosRequestConfig> => {
 }
 
 // 둥지 이름 수정
-const nestNameUpdate = async (nestId: string, data: AxiosRequestConfig) => {
+const nestNameUpdate = async (nestId: string, data: any) => {
   authApi
-    .patch(`${nestBaseUrl}/${nestId}`, data)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+    .patch(`${nestBaseUrl}/${nestId}/name`, data)
+    .then((res) => res)
+    .catch((err) => err)
 }
 
 // 둥지 조회
@@ -36,7 +36,7 @@ const nestDelete = async (nestId: string) => {
 }
 
 // 그룹 가입 신청
-const nestJoinRequest = async (nestId: string) => {
+const nestJoinRequest = async (nestId: any) => {
   authApi
     .post(`${nestBaseUrl}/${nestId}/join-request`)
     .then((res) => console.log(res))

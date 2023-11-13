@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './GroupPage.css'
 import Button from '@/components/Button/Button'
@@ -60,7 +60,6 @@ const AdminGroupPage: React.FC = () => {
     }
   }
 
-
   useEffect(() => {
     handleGetGroupList()
   }, [])
@@ -98,7 +97,6 @@ const AdminGroupPage: React.FC = () => {
   //   });
   // };
 
-
   return (
     <div>
       <hr />
@@ -108,16 +106,21 @@ const AdminGroupPage: React.FC = () => {
         {currentGroups?.map((group: any, index: number) => (
           <div>
             {/* eslint-disable-next-line react/no-array-index-key */}
-            <Link to={`/adminGroupDetail/${group.groupId}`} state={{ groupName: group.groupName }}>
-            <div key={index} className="groupItem">
-              <p className="groupInfo">{index + 1 + (currentPage - 1) * 5} </p>
-              <p className="groupInfo">{group.groupName} </p>
-              <p className="groupInfo">
-                {group.createdAt[0]}-{group.createdAt[1]}-{group.createdAt[2]}{' '}
-              </p>
-              <p className="groupInfo">{group.studentCount} </p>
-            </div>
-              </Link>
+            <Link
+              to={`/adminGroupDetail/${group.groupId}`}
+              state={{ groupName: group.groupName }}
+            >
+              <div key={index} className="groupItem">
+                <p className="groupInfo">
+                  {index + 1 + (currentPage - 1) * 5}{' '}
+                </p>
+                <p className="groupInfo">{group.groupName} </p>
+                <p className="groupInfo">
+                  {group.createdAt[0]}-{group.createdAt[1]}-{group.createdAt[2]}{' '}
+                </p>
+                <p className="groupInfo">{group.studentCount} </p>
+              </div>
+            </Link>
             <hr style={{ background: 'black', height: 1, border: 0 }} />
           </div>
         ))}

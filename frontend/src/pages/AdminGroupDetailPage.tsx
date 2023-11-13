@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import axios, {AxiosRequestConfig} from 'axios';
+// import axios, { AxiosRequestConfig } from 'axios'
 import QR from 'qrcode.react'
-import { Link, useNavigate,useParams, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
 import './GroupPage.css'
 import { groupDelete, groupNameUpdate, groupStudents } from '@/apis'
 
-
 const AdminGroupDetailPage: React.FC<any> = () => {
-  const { groupId } = useParams();
-  const location = useLocation();
-  const groupName = location.state?.groupName || '';
-  
+  const { groupId } = useParams()
+  const location = useLocation()
+  const groupName = location.state?.groupName || ''
+
   const [currentPage, setCurrentPage] = useState(1)
-  const [page, setPage] = useState(1)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [QrmodalIsOpen, setQrModalIsOpen] = useState(false)
   const [pencilModalIsOpen, setPencilModalIsOpen] = useState(false)
@@ -23,10 +21,10 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   const [inputGroupName, setInputGroupName] = useState(groupName)
   const [studentsData, setStudentsData] = useState<any>(null)
 
-  const studentsPerPage = 5;
-  const startIndex = (page - 1) * studentsPerPage;
-  const endIndex = startIndex + studentsPerPage;
-  const currentStudents = studentsData?.slice(startIndex, endIndex) || [];
+  const studentsPerPage = 5
+  const endIndex = currentPage * studentsPerPage
+  const startIndex = endIndex - studentsPerPage
+  const currentStudents = studentsData?.slice(startIndex, endIndex) || []
 
   const openModal = () => {
     setModalIsOpen(true)
@@ -84,23 +82,20 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   // 교사의 그룹 학생 리스트 조회
   const handleGetGroupDetail = async () => {
     try {
-      console.log('그룹 학생 리스트 조회')
       const response = await groupStudents(groupId)
-      console.log('Response:', response)
+      console.log('학생 리스트 조회 응답:', response)
       setStudentsData(response.data)
     } catch (error) {
-      console.error('Error:', error)
+      console.error('학생 리스트 조회 에러:', error)
     }
   }
   // 그룹 삭제
   const handleGroupDelete = async () => {
-    console.log('11')
     try {
-      console.log('22')
       const response = await groupDelete(groupId)
-      console.log('Response:', response)
+      console.log('그룹 삭제 응답:', response)
     } catch (error) {
-      console.error('Error:', error)
+      console.error('그룹 삭제 에러:', error)
     }
   }
 
@@ -112,7 +107,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   const navi = useNavigate()
 
-  const totalPages = studentsData?.groups
+  const totalPages = studentsData
     ? Math.ceil(studentsData.students.length / studentsPerPage)
     : 0
 
@@ -137,7 +132,10 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           className="primary"
           onClick={openModal}
         />
-         <Link to={`/adminGroupRequest/${groupId}`} state={{ groupName: inputGroupName }}>
+        <Link
+          to={`/adminGroupRequest/${groupId}`}
+          state={{ groupName: inputGroupName }}
+        >
           <Button label="가입요청 리스트 확인하기" className="gray" />
         </Link>
         <Button label="그룹원 추가하기" className="red" onClick={openQrModal} />
@@ -255,19 +253,19 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         </ReactModal>
       </div>
       <div className="box-border h-2/3 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
-  {currentStudents.length > 0 ? (
-    currentStudents.map((student: any) => (
-      <div key={student.studentId} className="student-box">
-        <p>학생 ID: {student.studentId}</p>
-        <p>학생 이름: {student.studentName}</p>
-        <p>진행한 버드 수: {student.completedBudCount}</p>
-        <p>전체 버드 수: {student.totalBudCount}</p>
+        {currentStudents.length > 0 ? (
+          currentStudents.map((student: any) => (
+            <div key={student.studentId} className="student-box">
+              <p>학생 ID: {student.studentId}</p>
+              <p>학생 이름: {student.studentName}</p>
+              <p>진행한 버드 수: {student.completedBudCount}</p>
+              <p>전체 버드 수: {student.totalBudCount}</p>
+            </div>
+          ))
+        ) : (
+          <p>현재 그룹원이 없습니다.</p>
+        )}
       </div>
-    ))
-  ) : (
-    <p>현재 그룹원이 없습니다.</p>
-  )}
-</div>
 
       <div className="pagination">
         {pageNumbers.map((number) => (
@@ -276,7 +274,11 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           </button>
         ))}
       </div>
-      <Button className='red' onClick={handleGroupDelete} label="그룹 삭제하기" />
+      <Button
+        className="red"
+        onClick={handleGroupDelete}
+        label="그룹 삭제하기"
+      />
     </div>
   )
 }

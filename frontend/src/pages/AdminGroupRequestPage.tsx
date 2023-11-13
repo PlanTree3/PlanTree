@@ -6,38 +6,38 @@ import Button from '@/components/Button/Button'
 import { groupJoinAccept, groupJoinRefuse, groupStudentsRequest } from '@/apis'
 
 const AdminGroupRequestPage = () => {
-  const { groupId } = useParams();
-  const location = useLocation();
-  const groupName = location.state?.groupName || '';
+  const { groupId } = useParams()
+  const location = useLocation()
+  const groupName = location.state?.groupName || ''
 
-  const [page, setPage] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
   const [studentsData, setStudentsData] = useState<any>(null)
 
-  const studentsPerPage = 5;
-  const startIndex = (page - 1) * studentsPerPage;
-  const endIndex = startIndex + studentsPerPage;
-  const currentStudents = studentsData?.slice(startIndex, endIndex) || [];
+  const studentsPerPage = 5
+  const endIndex = currentPage * studentsPerPage
+  const startIndex = endIndex - studentsPerPage
+  const currentStudents = studentsData?.slice(startIndex, endIndex) || []
 
   const totalPages = studentsData
-  ? Math.ceil(studentsData.length / studentsPerPage)
-  : 0
+    ? Math.ceil(studentsData.length / studentsPerPage)
+    : 0
 
-const pageNumbers = []
-for (let i = 1; i <= totalPages; i += 1) {
-  pageNumbers.push(i)
-}
+  const pageNumbers = []
+  for (let i = 1; i <= totalPages; i += 1) {
+    pageNumbers.push(i)
+  }
 
-const changePage = (page: number) => {
-  setCurrentPage(page)
-}
+  const changePage = (page: number) => {
+    setCurrentPage(page)
+  }
 
-// 그룹 가입 수락 대기 리스트 조회
+  // 그룹 가입 수락 대기 리스트 조회
   const handleGroupRequestList = async () => {
     try {
       const response = await groupStudentsRequest(groupId)
       console.log('Response:', response)
-      setStudentsData(response.data.joinRequestList)
+      // setStudentsData(response.data.joinRequestList)
+      setStudentsData(response.data)
     } catch (error) {
       console.error('Error:', error)
     }
@@ -56,7 +56,7 @@ const changePage = (page: number) => {
 
   //그룹 가입 거절
   const handleGroupRefuse = async (studentId: string) => {
-    const data = { memberId: studentId  }
+    const data = { memberId: studentId }
     try {
       const response = await groupJoinRefuse(data)
       console.log('Response:', response)
@@ -68,7 +68,6 @@ const changePage = (page: number) => {
   useEffect(() => {
     handleGroupRequestList()
   }, [])
-
 
   const handleNo = (studentId: string) => {
     console.log('nonono')
@@ -104,34 +103,41 @@ const changePage = (page: number) => {
           {groupName}의 대기 학생 목록
         </div>
         <div className="ml-4">
-          <Link to={`/adminGroupDetail/${groupId}`} state={{ groupName: groupName }}>
+          <Link
+            to={`/adminGroupDetail/${groupId}`}
+            state={{ groupName: groupName }}
+          >
             <Button label="그룹으로 돌아가기" className="gray" />
           </Link>
         </div>
       </div>
       <br />
       <div className="studentListBox">
-      {currentStudents.length > 0 ? (
-    currentStudents.map((student: any, index: number) => (
-        <div>
-          <div className="groupRequest">
-            <p className="groupInfo">{index + 1 + (currentPage - 1) * 5}</p>
-            <p className="groupInfo">{student.studentName}</p>
-            <div className="flex justify-around">
-              <Button
-                className="primary"
-                onClick={() => handleYes(student.studentId)}
-                label="수락하기"
-              />
-              <Button className="red" onClick={() => handleNo(student.studentId)} label="거절하기" />
+        {currentStudents.length > 0 ? (
+          currentStudents.map((student: any, index: number) => (
+            <div>
+              <div className="groupRequest">
+                <p className="groupInfo">{index + 1 + (currentPage - 1) * 5}</p>
+                <p className="groupInfo">{student.studentName}</p>
+                <div className="flex justify-around">
+                  <Button
+                    className="primary"
+                    onClick={() => handleYes(student.studentId)}
+                    label="수락하기"
+                  />
+                  <Button
+                    className="red"
+                    onClick={() => handleNo(student.studentId)}
+                    label="거절하기"
+                  />
+                </div>
+              </div>
+              <hr style={{ background: 'black', height: 1, border: 0 }} />
             </div>
-          </div>
-          <hr style={{ background: 'black', height: 1, border: 0 }} />
-        </div>
-         ))
-         ) : (
-           <p>현재 수락 대기중인 학생이 없습니다.</p>
-         )}
+          ))
+        ) : (
+          <p>현재 수락 대기중인 학생이 없습니다.</p>
+        )}
       </div>
       <div className="pagination">
         {pageNumbers.map((number) => (

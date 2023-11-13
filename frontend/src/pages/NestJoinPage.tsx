@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { nestJoinRequest } from '@/apis'
 // import axios from 'axios';
 
 const NestJoinPage: React.FC<any> = () => {
-
-  const { nestId } = useParams();
+  const { nestId } = useParams()
 
   const handleGroupJoin = async () => {
     try {
@@ -26,8 +25,8 @@ const NestJoinPage: React.FC<any> = () => {
   return (
     <div>
       <div>둥지에 가입되었습니다.</div>
-      <Link to={'/main'}>
-      <div>메인으로 돌아가기</div>
+      <Link to="/main">
+        <div>메인으로 돌아가기</div>
       </Link>
     </div>
   )
