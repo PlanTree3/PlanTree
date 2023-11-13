@@ -58,12 +58,6 @@ const userRefresh = async () => {
     .post(`${userBaseUrl}/refresh`)
     .then((res) => {
       console.log(res)
-      Swal.fire({
-        title: '로그인 정보가 만료되어 메인으로 돌아갑니다.',
-        icon: 'info',
-        iconColor: 'red',
-      })
-      // navigate('/main')
     })
     .catch((err) => console.log(err))
 }

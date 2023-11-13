@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import { HTTP_STATUS } from '@/types/StatusType'
 import { userRefresh } from './member'
+import Swal from 'sweetalert2'
 
 const API_URL = import.meta.env.VITE_PUBLIC_SERVER_BASE_URL
 
@@ -35,10 +36,17 @@ const authInterceptor = (instance: AxiosInstance) => {
       if (error.response.status === HTTP_STATUS.UNAUTHORIZED) {
         // 401일 경우 access token 재 발급
         try {
-          userRefresh()
+          await userRefresh()
         } catch {
-          console.error('response error : ', error)
-          return Promise.reject(error)
+          Swal.fire({
+            title: '로그인 정보가 만료되어 초기화면으로 돌아갑니다.',
+            icon: 'info',
+            iconColor: 'red',
+            confirmButtonText: '확인',
+            willClose: () => {
+              window.location.href = '/'
+            },
+          })
         }
       }
       console.error('response error : ', error)
