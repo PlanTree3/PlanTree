@@ -111,7 +111,7 @@
 .admin-group {
   &-detail {
     &-container {
-      @apply flex justify-between;
+      @apply flex justify-between flex-col;
     }
     &-title {
       img {

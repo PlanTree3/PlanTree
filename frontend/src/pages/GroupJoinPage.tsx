@@ -25,7 +25,7 @@ const GroupJoinPage: React.FC<any> = () => {
   return (
     <div>
       <div>그룹 가입이 신청되었습니다.</div>
-      <Link to={'/main'}>
+      <Link to="/main">
         <div>메인으로 돌아가기</div>
       </Link>
     </div>

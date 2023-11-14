@@ -100,9 +100,8 @@ const AdminGroupPage: React.FC = () => {
   return (
     <div>
       <hr />
-      <div>내 그룹 확인하기</div>
+      <div className="font-semibold text-2xl">내 그룹 확인하기</div>
       <div className="studentListBox">
-        <h3>번호 그룹명 시작일 인원</h3>
         {currentGroups?.map((group: any, index: number) => (
           <div>
             {/* eslint-disable-next-line react/no-array-index-key */}
