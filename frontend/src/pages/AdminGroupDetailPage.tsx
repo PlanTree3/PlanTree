@@ -6,7 +6,12 @@ import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import Button from '@/components/Button/Button'
 import './GroupPage.scss'
-import { groupDelete, groupNameUpdate, groupStudents } from '@/apis'
+import {
+  branchGroupCreate,
+  groupDelete,
+  groupNameUpdate,
+  groupStudents,
+} from '@/apis'
 
 const AdminGroupDetailPage: React.FC<any> = () => {
   const { groupId } = useParams()
@@ -60,9 +65,21 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     setInputGroupName(e.target.value)
   }
 
-  const handleCreateBranch = () => {
-    // api
-    setModalIsOpen(false)
+  // 가지 일괄 등록
+  const handleCreateBranch = async () => {
+    const data = {
+      name: inputValue,
+    }
+    // console.log('그룹아이디', groupId)
+    console.log('인풋값', data)
+    try {
+      const response = await branchGroupCreate(groupId, data)
+      console.log('Response:', response)
+      // setStudentData(response.data.data)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+    closeModal()
   }
 
   // 그룹이름 수정
@@ -125,14 +142,13 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   return (
     <div>
       <div className="admin-group-detail-container">
-        {/* eslint-disable-next-line react/no-unescaped-entities */}
         <div className="admin-group-detail-title">
           {' '}
           {inputGroupName}의 그룹원
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <img src={pencil} onClick={openPencilModal} alt="" />
         </div>
-        <div className="admin-group-detail-btn-container">
+
+        <div className="admin-group-detail-btn-container flex flex-1">
           <Button
             label="가지 일괄 등록"
             className="normal primary"
@@ -150,134 +166,27 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             onClick={openQrModal}
           />
         </div>
-        <ReactModal
-          isOpen={modalIsOpen}
-          ariaHideApp={false}
-          onRequestClose={closeModal}
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.4)',
-              width: '100%',
-              height: '100vh',
-              zIndex: 10,
-              top: 0,
-              left: 0,
-            },
-            content: {
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '40%',
-              height: '40%',
-              border: '2px solid #000',
-              borderRadius: '10px',
-              overflow: 'auto',
-              background: '#F5F5DC',
-              boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
-            },
-          }}
-        >
-          <h1 className="flex justify-center h-[20%] items-center text-2xl bg-lime-100 rounded-[10px]">
-            가지 일괄 등록
-          </h1>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="입력하세요"
-          />
-          <button onClick={handleCreateBranch}>저장</button>
-        </ReactModal>
-        <ReactModal
-          isOpen={pencilModalIsOpen}
-          ariaHideApp={false}
-          onRequestClose={closePencilModal}
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.4)',
-              width: '100%',
-              height: '100vh',
-              zIndex: 10,
-              top: 0,
-              left: 0,
-            },
-            content: {
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '40%',
-              height: '40%',
-              border: '2px solid #000',
-              borderRadius: '10px',
-              overflow: 'auto',
-              background: '#F5F5DC',
-              boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
-            },
-          }}
-        >
-          <h1 className="flex justify-center h-[20%] items-center text-2xl bg-lime-100 rounded-[10px]">
-            그룹 이름 변경
-          </h1>
-          <input
-            type="text"
-            value={inputGroupName}
-            onChange={handleGroupNameInputChange}
-            placeholder="그룹 이름을 수정하세요"
-          />
-          <button onClick={handleGroupName}>저장</button>
-        </ReactModal>
-        <ReactModal
-          isOpen={QrmodalIsOpen}
-          ariaHideApp={false}
-          onRequestClose={closeQrModal}
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.4)',
-              width: '100%',
-              height: '100vh',
-              zIndex: 10,
-              top: 0,
-              left: 0,
-            },
-            content: {
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '80%',
-              height: '80%',
-              border: '2px solid #000',
-              borderRadius: '10px',
-              overflow: 'auto',
-              background: '#F5F5DC',
-              boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
-            },
-          }}
-        >
-          <h1> QR을 찍어 그룹원을 추가해 보세요.</h1>
-          <QR
-            // value={`https://k9a302a.p.ssafy.io//groupJoin/${groupId}`}
-            value={`https://http://localhost:3000/groupJoin/${groupId}`}
-            size={300}
-            id="qr-gen"
-            includeMargin={false}
-          />
-        </ReactModal>
       </div>
+
       <div className="admin-group-detail-content">
-        <div className="h-2/3 w-2/3 p-5 bg-amber-700 rounded-3xl">
-          {currentStudents.length > 0 ? (
-            currentStudents.map((student: any) => (
-              <div key={student.studentId} className="student-box">
-                <p>학생 ID: {student.studentId}</p>
-                <p>학생 이름: {student.studentName}</p>
-                <p>진행한 버드 수: {student.completedBudCount}</p>
-                <p>전체 버드 수: {student.totalBudCount}</p>
-              </div>
-            ))
-          ) : (
-            <p>현재 그룹원이 없습니다.</p>
-          )}
-        </div>
+        {/* <div className="h-2/3 w-2/3 p-5 bg-amber-700 rounded-3xl"> */}
+        {currentStudents.length > 0 ? (
+          currentStudents.map((student: any, index: number) => (
+            <div key={student.studentId} className="studentBox">
+              {/* <p>학생 ID: {student.studentId}</p> */}
+              <p className="flex-1 flex justify-center">
+                {index + 1 + (currentPage - 1) * 5}
+              </p>
+              <p className="flex-1">{student.studentName}</p>
+              <p className="flex-1">
+                {student.completedBudCount}/{student.totalBudCount}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p>현재 그룹원이 없습니다.</p>
+        )}
+        {/* </div> */}
 
         <div className="pagination">
           {pageNumbers.map((number) => (
@@ -286,12 +195,128 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             </button>
           ))}
         </div>
+        <Link to={`/newsLetter/${groupId}`}>
+          <Button className="normal gray" label="가정통신문 보기" />
+        </Link>
         <Button
           className="normal red"
-          onClick={handleGroupDelete}
+          // onClick={handleGroupDelete}
           label="그룹 삭제하기"
         />
       </div>
+
+      <ReactModal
+        isOpen={modalIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            width: '100%',
+            height: '100vh',
+            zIndex: 10,
+            top: 0,
+            left: 0,
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '40%',
+            height: '40%',
+            border: '2px solid #000',
+            borderRadius: '10px',
+            overflow: 'auto',
+            background: '#F5F5DC',
+            boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
+          },
+        }}
+      >
+        <h1 className="flex justify-center h-[20%] items-center text-2xl bg-lime-100 rounded-[10px]">
+          가지 일괄 등록
+        </h1>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="가지 이름을 입력하세요"
+        />
+        <button onClick={handleCreateBranch}>저장</button>
+      </ReactModal>
+      <ReactModal
+        isOpen={pencilModalIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closePencilModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            width: '100%',
+            height: '100vh',
+            zIndex: 10,
+            top: 0,
+            left: 0,
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '40%',
+            height: '40%',
+            border: '2px solid #000',
+            borderRadius: '10px',
+            overflow: 'auto',
+            background: '#F5F5DC',
+            boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
+          },
+        }}
+      >
+        <h1 className="flex justify-center h-[20%] items-center text-2xl bg-lime-100 rounded-[10px]">
+          그룹 이름 변경
+        </h1>
+        <input
+          type="text"
+          value={inputGroupName}
+          onChange={handleGroupNameInputChange}
+          placeholder="그룹 이름을 수정하세요"
+        />
+        <button onClick={handleGroupName}>저장</button>
+      </ReactModal>
+      <ReactModal
+        isOpen={QrmodalIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closeQrModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            width: '100%',
+            height: '100vh',
+            zIndex: 10,
+            top: 0,
+            left: 0,
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '80%',
+            height: '80%',
+            border: '2px solid #000',
+            borderRadius: '10px',
+            overflow: 'auto',
+            background: '#F5F5DC',
+            boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
+          },
+        }}
+      >
+        <h1> QR을 찍어 그룹원을 추가해 보세요.</h1>
+        <QR
+          // value={`https://k9a302a.p.ssafy.io//groupJoin/${groupId}`}
+          value={`https://http://localhost:3000/groupJoin/${groupId}`}
+          size={300}
+          id="qr-gen"
+          includeMargin={false}
+        />
+      </ReactModal>
     </div>
   )
 }

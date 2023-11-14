@@ -25,9 +25,11 @@ const StudentGroupPage = () => {
       console.error('Error:', error)
     }
   }
+
   useEffect(() => {
     handleGetList()
   }, [])
+
   // 페이지
   const GroupsPerPage = 5
 
@@ -91,9 +93,9 @@ const StudentGroupPage = () => {
       <text>내 그룹 확인하기</text>
       <div className="flex-container">
         {currentGroups?.map((group: any, index: number) => (
-          <div>
+          <div key={index}>
             {/* eslint-disable-next-line react/no-array-index-key */}
-            <div key={index} className="groupItem">
+            <div className="groupItem">
               <Link to={`/studentGroupDetail/${group.groupId}`}>
                 <img className="forest" src={forest} alt="" />
                 <p className="groupInfo">{group.groupName} </p>
