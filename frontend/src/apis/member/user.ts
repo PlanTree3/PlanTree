@@ -97,10 +97,13 @@ const teacherGroupList = async () => {
 
 // 로그아웃??
 const userLogout = async () => {
-  return authApi
-    .post(`${userBaseUrl}/logout`)
-    .then((res) => res)
-    .catch((err) => console.log(err))
+  try {
+    const res = await authApi.post(`${userBaseUrl}/logout`)
+    return res
+  } catch (err) {
+    console.error('로그아웃 오류:', err)
+    throw err
+  }
 }
 
 export {

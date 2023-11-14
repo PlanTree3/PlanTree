@@ -16,6 +16,7 @@ import {
   nestNameUpdate,
   nestStudents,
 } from '@/apis'
+import { LoginCheck } from '@/components'
 
 const AdminNestPage = () => {
   const [page, setPage] = useState(1)
@@ -304,4 +305,4 @@ const AdminNestPage = () => {
   )
 }
 
-export default AdminNestPage
+export default LoginCheck(AdminNestPage)

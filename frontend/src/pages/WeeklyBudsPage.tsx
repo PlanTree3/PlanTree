@@ -4,6 +4,7 @@ import { ItemPlacement } from '@/components'
 import { getBranchData } from '@/stores/features/branchSlice.ts'
 import { getMainData } from '@/stores/features/mainSlice.ts'
 import { RootState } from '@/stores/store.ts'
+import LoginCheck from '@/components/LoginCheck.tsx'
 
 const WeeklyBudsPage = () => {
   const dispatch = useDispatch()
@@ -16,4 +17,4 @@ const WeeklyBudsPage = () => {
   }, [treeId])
   return <ItemPlacement />
 }
-export default WeeklyBudsPage
+export default LoginCheck(WeeklyBudsPage)

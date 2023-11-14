@@ -1,5 +1,4 @@
 import { useState } from 'react'
-// import axios from 'axios';
 import ReactModal from 'react-modal'
 import './SideBar.scss'
 import { Link, useNavigate } from 'react-router-dom'
@@ -15,6 +14,7 @@ import { logOutCheck } from '@/stores/features/userSlice'
 const SideBar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn)
+  const role = useSelector((state: any) => state.user.userData.role) ?? null
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -25,36 +25,54 @@ const SideBar = () => {
   const closeModal = () => {
     setModalIsOpen(false)
   }
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(logOutCheck())
     navigate('/')
   }
+
+  const roleBasedMain = (kind: string | null) => {
+    switch (kind) {
+      case 'STUDENT':
+        return '/main'
+      case 'TEACHER':
+        return '/adminGroup'
+      case 'PARENT':
+        return '/adminNest'
+      default:
+        return '/main'
+    }
+  }
+
   return (
     <>
       <div className="sidebar-btn">
-        <Link to="/" className="sidebar-btn-deco">
+        <Link to={roleBasedMain(role)} className="sidebar-btn-deco">
           <button>
-            <img src={post1} alt="Home" className="btn-deco" />
+            <img src={post1} alt="Main" className="btn-deco" />
           </button>
         </Link>
-        <Link to="/main" className="sidebar-btn-deco">
+        {(role === 'STUDENT' || null) && (
+          <Link to="/forest" className="sidebar-btn-deco">
+            <button>
+              <img src={post2} alt="Forest" className="btn-deco" />
+            </button>
+          </Link>
+        )}
+        {(role === 'STUDENT' || null) && (
+          <Link to="/studentGroup" className="sidebar-btn-deco">
+            <button>
+              <img src={post3} alt="studentGroup" className="btn-deco" />
+            </button>
+          </Link>
+        )}
+        <Link to="/quest" className="sidebar-btn-deco">
           <button>
-            <img src={post2} alt="Main" className="btn-deco" />
-          </button>
-        </Link>
-        <Link to="/branch" className="sidebar-btn-deco">
-          <button>
-            <img src={post3} alt="Branch" className="btn-deco" />
+            <img src={post4} alt="Quest" className="btn-deco" />
           </button>
         </Link>
         <Link to="/mypage" className="sidebar-btn-deco">
           <button>
-            <img src={post4} alt="Mypage" className="btn-deco" />
-          </button>
-        </Link>
-        <Link to="/quest" className="sidebar-btn-deco">
-          <button>
-            <img src={post5} alt="Quest" className="btn-deco" />
+            <img src={post5} alt="Mypage" className="btn-deco" />
           </button>
         </Link>
       </div>
