@@ -127,3 +127,19 @@
     }
   }
 }
+
+.student-group {
+  &-nest-area {
+    @apply md:flex items-center;
+
+    div {
+      @apply space-y-2;
+    }
+    title {
+      @apply block text-2xl;
+    }
+    text {
+      @apply block text-lg;
+    }
+  }
+}

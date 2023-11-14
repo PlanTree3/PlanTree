@@ -83,9 +83,12 @@ const StudentGroupPage = () => {
           </div>
         </>
       ) : (
-        <div className="flex flex-row">
-          <img className="chick" src={chick} alt="" />
-          <text>아직 둥지가 없어요</text>
+        <div className="student-group-nest-area">
+          <img src={chick} alt="" />
+          <div>
+            <title>아직 둥지가 없어요</title>
+            <text>보호자와 연결해서 둥지를 만들어 보아요!</text>
+          </div>
         </div>
       )}
       <br />
