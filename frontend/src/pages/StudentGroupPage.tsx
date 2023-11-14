@@ -57,14 +57,14 @@ const StudentGroupPage = () => {
     <div>
       {studentData && studentData.nest ? (
         // 둥지가 있는 경우
-        <>
+        <div>
           {/* <text className="font-semibold text-2xl"> */}
-          <text>내 둥지 확인하기</text>
+          <text className="font-semibold text-2xl">내 둥지 확인하기</text>
           {/* <div className="box-border h-30 w-3/4 p-5 border-4 bg-amber-700 rounded-3xl"> */}
           <div>
             <div className="flex flex-row">
               <img className="chick flex flex-start" src={chick} alt="" />
-              <div className="flex flex-col items-center text-white tracking-widest">
+              <div className="flex flex-col items-center tracking-widest">
                 <div>{studentData.nest.nestName}</div>
                 <br />
                 {/* <div className="font-semibold text-l"> */}
@@ -81,7 +81,7 @@ const StudentGroupPage = () => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <div className="student-group-nest-area">
           <div className="student-group-nest-area-image-container">
@@ -95,7 +95,7 @@ const StudentGroupPage = () => {
       )}
       <br />
       {/* <text className="font-semibold text-2xl"> */}
-      <text>내 그룹 확인하기</text>
+      <text className="font-semibold text-2xl">내 그룹 확인하기</text>
       <div className="flex-container">
         {currentGroups?.map((group: any, index: number) => (
           <div key={index}>

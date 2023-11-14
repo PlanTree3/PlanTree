@@ -94,6 +94,21 @@
   flex-direction: row;
 }
 
+.studentFont {
+  @apply text-lg;
+}
+
+.studentGroupFont {
+  @apply text-lg flex flex-1 justify-center self-center;
+}
+
+.studentNest {
+  border: 5px solid #f1eb5e;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: row;
+}
+
 .whiteBox {
   /* width: 90%; */
   /* height: 100%; */
@@ -111,11 +126,11 @@
 .admin-group {
   &-detail {
     &-container {
-      @apply flex flex-col space-y-[2vh];
+      @apply flex flex-col space-y-[4vh];
     }
     &-title {
       img {
-        @apply max-h-[4vh];
+        @apply max-h-[6vh];
       }
       @apply flex font-semibold text-2xl;
     }
