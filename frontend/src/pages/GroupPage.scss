@@ -111,7 +111,7 @@
 .admin-group {
   &-detail {
     &-container {
-      @apply flex justify-between flex-col;
+      @apply flex flex-col;
     }
     &-title {
       img {
@@ -120,7 +120,7 @@
       @apply flex font-semibold text-2xl;
     }
     &-btn-container {
-      @apply space-x-2;
+      @apply space-x-2; 
     }
     &-content {
       @apply space-y-2;

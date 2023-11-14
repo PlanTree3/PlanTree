@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 // import axios from 'axios';
 import './GroupPage.scss'
 import Seal from '../../public/Seal.png'
@@ -55,7 +55,7 @@ const StudentGroupDetailPage = () => {
           <div>목록으로 돌아가기</div>
         </div>
       </Link>
-      <div className="font-semibold text-2xl">{groupData.groupName}</div>
+      <div className="font-semibold text-2xl">{groupData?.groupName}</div>
       <div className="flex flex-row">
         <img
           // className="h-40"
@@ -63,7 +63,7 @@ const StudentGroupDetailPage = () => {
           alt=""
         />
         <div className="groupLeader">
-          <text>그룹장: {groupData.teacherName}</text>
+          <text>그룹장: {groupData?.teacherName}</text>
         </div>
       </div>
       {currentStudents.map((student: any) => (

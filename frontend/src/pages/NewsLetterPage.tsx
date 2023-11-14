@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 const NewsLetterPage = () => {
+  const { groupId } = useParams()
   const MySwal = withReactContent(Swal)
 
   interface Notice {
