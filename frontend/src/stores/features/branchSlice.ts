@@ -22,9 +22,11 @@ export const branchSlice = createSlice({
     },
     saveSeeds: (state, action) => {
       state.seeds = action.payload
+      console.log('이것이 씨앗이다', state.seeds)
     },
     saveBuds: (state, action) => {
       state.buds = action.payload
+      console.log('얘가 봉오리야', state.buds)
     },
     addBuds: (state, action) => {
       state.buds = action.payload.newBuds

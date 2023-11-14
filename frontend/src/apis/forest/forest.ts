@@ -24,11 +24,9 @@ const myMainPageApi = async (): Promise<AxiosResponse> => {
 }
 
 // 숲 조회
-const forestGetApi = async (
-  data: AxiosRequestConfig,
-): Promise<AxiosResponse> => {
+const forestGetApi = async (): Promise<AxiosResponse> => {
   return authApi
-    .get(`${forestBaseUrl}`, data)
+    .get(`${forestBaseUrl}`)
     .then((res) => res)
     .catch((err) => err)
 }
@@ -52,7 +50,7 @@ const treeDetail = async (treeId: string) => {
 // 일정 조회
 const getSchedule = async (treeId: string) => {
   try {
-    return await authApi.get(`${scheduleUrl(treeId)}`) // 오류가 없을 경우 응답을 반환
+    return await authApi.get(`${scheduleUrl(treeId)}`)
   } catch (error) {
     console.error(error)
     throw error
@@ -64,7 +62,7 @@ const branchCreate = async (treeId: string, data: any) => {
   return authApi
     .post(`${treeApiUrl(treeId)}/branch`, data)
     .then((response) => {
-      console.log(response)
+      console.log('가지 생성', response)
       return response
     })
     .catch()

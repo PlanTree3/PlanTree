@@ -188,18 +188,19 @@ const ItemPlacement = () => {
             <button
               key={branch.branchId}
               className="dnd-branch-btn"
-              onClick={() => handleBranchSelect(branch.branchId, branch.color)}
+              onClick={() =>
+                handleBranchSelect(branch.branchId, branch.branchColor)
+              }
               style={{
                 backgroundColor:
                   selectedBranchId === branch.branchId
                     ? 'lightgray'
-                    : branch.color,
+                    : branch.branchColor,
                 color: selectedBranchId === branch.branchId ? 'white' : 'black',
                 zIndex: selectedBranchId === branch.branchId ? 2 : 1,
               }}
             >
               {branch.branchName}
-              {branch.color}
             </button>
           ))}
         </div>
