@@ -99,7 +99,7 @@ const AdminGroupPage: React.FC = () => {
   // };
 
   return (
-    <div>
+    <div className="overflow-y-auto">
       <hr />
       <div className="font-semibold text-2xl">내 그룹 확인하기</div>
       <div className="studentListBox">

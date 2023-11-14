@@ -144,7 +144,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
       <div className="admin-group-detail-container">
         <div className="admin-group-detail-title">
           {' '}
-          {inputGroupName}의 그룹원
+          {inputGroupName}
           <img src={pencil} onClick={openPencilModal} alt="" />
         </div>
 
@@ -172,7 +172,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           {currentStudents.length > 0 ? (
             currentStudents.map((student: any, index: number) => (
               <div key={student.studentId} className="studentBox">
-                {/* <p>학생 ID: {student.studentId}</p> */}
                 <p className="flex-1 flex justify-center">
                   {index + 1 + (currentPage - 1) * 5}
                 </p>
@@ -201,18 +200,10 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           </Link>
           <Button
             className="normal red"
-            // onClick={handleGroupDelete}
+            onClick={handleGroupDelete}
             label="그룹 삭제하기"
           />
         </div>
-        <Link to={`/newsLetter/${groupId}`}>
-          <Button className="normal gray" label="가정통신문 보기" />
-        </Link>
-        <Button
-          className="normal red"
-          onClick={handleGroupDelete}
-          label="그룹 삭제하기"
-        />
       </div>
       <ReactModal
         isOpen={modalIsOpen}

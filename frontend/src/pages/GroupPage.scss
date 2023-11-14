@@ -94,6 +94,10 @@
   flex-direction: row;
 }
 
+.studentFont {
+  @apply text-lg;
+}
+
 .studentNest {
   border: 5px solid #f1eb5e;
   border-radius: 30px;
@@ -118,11 +122,11 @@
 .admin-group {
   &-detail {
     &-container {
-      @apply flex flex-col space-y-[2vh];
+      @apply flex flex-col space-y-[4vh];
     }
     &-title {
       img {
-        @apply max-h-[4vh];
+        @apply max-h-[6vh];
       }
       @apply flex font-semibold text-2xl;
     }

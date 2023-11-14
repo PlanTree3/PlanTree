@@ -57,7 +57,7 @@ const StudentGroupPage = () => {
     <div>
       {studentData && studentData.nest ? (
         // 둥지가 있는 경우
-        <>
+        <div>
           {/* <text className="font-semibold text-2xl"> */}
           <text className="font-semibold text-2xl">내 둥지 확인하기</text>
           {/* <div className="box-border h-30 w-3/4 p-5 border-4 bg-amber-700 rounded-3xl"> */}
@@ -81,7 +81,7 @@ const StudentGroupPage = () => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <div className="student-group-nest-area">
           <div className="student-group-nest-area-image-container">

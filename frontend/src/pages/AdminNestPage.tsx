@@ -27,7 +27,7 @@ const AdminNestPage = () => {
   const [nestData, setNestData] = useState<any>(null)
   const [currentPage, setCurrentPage] = useState(1)
 
-  const studentsPerPage = 5
+  const studentsPerPage = 4
   const startIndex = (page - 1) * studentsPerPage
   const endIndex = startIndex + studentsPerPage
   const currentStudents = studentsData?.slice(startIndex, endIndex) || []
@@ -190,7 +190,7 @@ const AdminNestPage = () => {
       ) : (
         <div>
           <div className="flex flex-row">
-            <div className="font-semibold text-2xl">{nestData.nestName}</div>
+            <div className="font-semibold text-4xl">{nestData.nestName}</div>
             <img
               className="mx-4"
               src={pencil}
@@ -202,7 +202,7 @@ const AdminNestPage = () => {
           <div className="font-semibold text-l">둥지장: </div>
           {nestData.parents.length > 0 ? (
             nestData.parents.map((parent: any) => (
-              <p className="font-semibold text-l">{parent}</p>
+              <p className="font-semibold text-lg">{parent}</p>
             ))
           ) : (
             <p>둥지장이 없는 경우는 없을 수 없음. 비상!</p>
@@ -212,11 +212,11 @@ const AdminNestPage = () => {
             currentStudents.map((student: any) => (
               <div key={student.studentId} className="studentBox">
                 <div className="flex flex-1 items-center flex justify-center">
-                  <text>{student.studentName}</text>
+                  <text className="studentFont">{student.studentName}</text>
                 </div>
                 <div className="flex-1 flex-col flex justify-center items-center ">
-                  <text>달성도</text>
-                  <text>
+                  <text className="studentFont">달성도</text>
+                  <text className="studentFont">
                     {student.completedBudCount}/{student.totalBudCount}
                   </text>
                 </div>
