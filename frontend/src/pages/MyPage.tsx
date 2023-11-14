@@ -16,8 +16,6 @@ import {
   PieChart,
   LoginCheck,
 } from '@/components'
-import '@/styles/fontList.scss'
-import '@/styles/profile.scss'
 import './MyPageStyle.scss'
 import { userImageUpdate, userNameUpdate } from '@/apis'
 import { addProfileImageUrl, addName } from '@/stores/features/userSlice'
