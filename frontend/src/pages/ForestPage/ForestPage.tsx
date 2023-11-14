@@ -10,6 +10,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import { RootState } from '@/stores/store.ts'
 import { getForestData } from '@/stores/features/forestSlice.ts'
+import { LoginCheck, StudentCheck } from '@/components'
 
 const ForestPage = () => {
   const dummyData = [
@@ -79,4 +80,4 @@ const ForestPage = () => {
   )
 }
 
-export default ForestPage
+export default StudentCheck(LoginCheck(ForestPage))

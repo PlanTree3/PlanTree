@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Quest from '@/components/Quest/Quest'
+import LoginCheck from '@/components/LoginCheck.tsx'
 
 const QuestPage = () => {
   const [questStatus, setQuestStatus] = useState('all')
@@ -44,4 +45,4 @@ const QuestPage = () => {
   )
 }
 
-export default QuestPage
+export default LoginCheck(QuestPage)

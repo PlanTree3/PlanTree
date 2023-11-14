@@ -5,6 +5,7 @@ import './GroupPage.scss'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
 import { groupCreate, teacherGroupList } from '@/apis'
+import { LoginCheck } from '@/components'
 // import { GroupRequest } from '@/types/GroupAdminType'
 
 const AdminGroupPage: React.FC = () => {
@@ -161,4 +162,4 @@ const AdminGroupPage: React.FC = () => {
   )
 }
 
-export default AdminGroupPage
+export default LoginCheck(AdminGroupPage)

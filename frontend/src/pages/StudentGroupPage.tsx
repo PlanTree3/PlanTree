@@ -5,6 +5,7 @@ import chick from '../../public/chick.png'
 import forest from '../../public/forest_tmp.png'
 import './GroupPage.scss'
 import { userGroupList } from '@/apis'
+import { LoginCheck, StudentCheck } from '@/components'
 // import StudentGroupPageResponse from '../types/GroupStudentType'
 
 const StudentGroupPage = () => {
@@ -114,4 +115,4 @@ const StudentGroupPage = () => {
   )
 }
 
-export default StudentGroupPage
+export default StudentCheck(LoginCheck(StudentGroupPage))
