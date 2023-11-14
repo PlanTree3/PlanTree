@@ -200,7 +200,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         </Link>
         <Button
           className="normal red"
-          // onClick={handleGroupDelete}
+          onClick={handleGroupDelete}
           label="그룹 삭제하기"
         />
       </div>

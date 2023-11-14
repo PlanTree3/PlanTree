@@ -94,6 +94,13 @@
   flex-direction: row;
 }
 
+.studentNest {
+  border: 5px solid #f1eb5e;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: row;
+}
+
 .whiteBox {
   /* width: 90%; */
   /* height: 100%; */
@@ -120,7 +127,7 @@
       @apply flex font-semibold text-2xl;
     }
     &-btn-container {
-      @apply space-x-2; 
+      @apply space-x-2;
     }
     &-content {
       @apply space-y-2;
