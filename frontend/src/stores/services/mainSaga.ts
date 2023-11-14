@@ -19,9 +19,7 @@ function* getMainSaga(): Generator<
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  console.log('여기는 들어옴')
   const response: AxiosResponse<any> = yield call(myMainPageApi)
-  console.log('메인 나무 결과', response)
   if (response.data) {
     const idName = {
       treeId: response.data.data.treeId,

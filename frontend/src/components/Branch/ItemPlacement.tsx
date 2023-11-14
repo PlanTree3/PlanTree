@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -21,6 +21,8 @@ const ItemPlacement = () => {
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const branches = useSelector((state: RootState) => state.branch.branches)
+  const treeId = useSelector((state: RootState) => state.main.treeId)
+  const isLoading = useSelector((state: RootState) => state.branch.isLoading)
   const [colors, setColors] = useState('ffffff')
   const [newText, setNewText] = useState('')
   const [newTitle, setNewTitle] = useState('')
@@ -40,6 +42,11 @@ const ItemPlacement = () => {
     THURSDAY_FINISH,
     FRIDAY_FINISH,
   } = COLUMN_NAMES
+  useEffect(() => {
+    if (!treeId) {
+      window.location.href = '/main'
+    }
+  })
   const handleValueText = (event: ChangeEvent<HTMLInputElement>) => {
     setNewText(event.target.value)
   }
@@ -127,7 +134,11 @@ const ItemPlacement = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="dnd-box-container">
         <div className="dnd-create-btn-box">
-          <button className="dnd-add-branch-btn" onClick={handleClickOpen}>
+          <button
+            className="dnd-add-branch-btn"
+            onClick={handleClickOpen}
+            disabled={isLoading}
+          >
             <img src={plusIcon} alt="추가" />
           </button>
           <Dialog open={open} onClose={handleClose}>
@@ -156,6 +167,7 @@ const ItemPlacement = () => {
           <button
             className="dnd-add-seed-btn"
             onClick={handleClickOpenCreateSeed}
+            disabled={isLoading}
           >
             <img src={writeIcon} alt="추가" />
           </button>

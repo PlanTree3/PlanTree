@@ -1,6 +1,7 @@
 import './SignUp.scss'
 import { useDispatch } from 'react-redux'
 import { addRole } from '@/stores/features/signupSlice'
+import Button from '../Button/Button'
 
 import '@/styles/fontList.scss'
 import '@/components/Button/Button.css'
@@ -41,9 +42,8 @@ const UserRole = () => {
         <button
           className="brown normal button"
           onClick={() => setRole(rolesEO[idx])}
-        >
-          {showRole(role)}
-        </button>
+          label={showRole(role)}
+        />
       ))}
       <div>입니다.</div>
     </>

@@ -16,8 +16,6 @@ import {
   PieChart,
   LoginCheck,
 } from '@/components'
-import '@/styles/fontList.scss'
-import '@/styles/profile.scss'
 import './MyPageStyle.scss'
 import { userImageUpdate, userNameUpdate } from '@/apis'
 import { addProfileImageUrl, addName } from '@/stores/features/userSlice'
@@ -379,7 +377,6 @@ const MyPage = () => {
           alt="유저이미지"
           // className="w-2/5 h-2/5 mypage-image-container"
         />
-        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <button
           // className="addImgBtn"
           onClick={() => moveProfileImg()}
@@ -395,7 +392,7 @@ const MyPage = () => {
         )}
         <div className="my-page-name-input">{showInputBox()}</div>
       </div>
-      <div className="mypage-btn-container">
+      <div className="my-page-btn-container">
         <Button
           className="long primary block"
           label="이번 주 통계 보기"
