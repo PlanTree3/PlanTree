@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { authApi } from '@/apis'
 import { branchApiUrl, scheduleUrl, seedApiUrl, treeApiUrl } from '@/utils'
 
@@ -17,7 +17,6 @@ const myMainPageApi = async (): Promise<AxiosResponse> => {
   return authApi
     .get(`${baseUrl}/commons/main`)
     .then((response) => {
-      console.log(response)
       return response
     })
     .catch((error) => error)
@@ -32,9 +31,15 @@ const forestGetApi = async (): Promise<AxiosResponse> => {
 }
 
 // 나무 리스트
-const treeList = async (forestId: number, data: AxiosRequestConfig) => {
+const treeList = async (
+  forestId: string,
+  startedAt: string,
+  endedAt: string,
+) => {
   return authApi
-    .get(`${forestBaseUrl}/${forestId}/tree`, data)
+    .get(
+      `${forestBaseUrl}/${forestId}/tree?startedAt=${startedAt}&endedAt=${endedAt}`,
+    )
     .then((res) => res)
     .catch((err) => err)
 }
