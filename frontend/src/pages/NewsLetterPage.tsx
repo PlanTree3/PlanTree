@@ -2,13 +2,15 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+// import { v4 as uuidv4 } from 'uuid'
 
 const NewsLetterPage = () => {
   const { groupId } = useParams()
   const MySwal = withReactContent(Swal)
+  // const uuid = uuidv4()
 
   interface Notice {
-    notificationId: number
+    informId: number
     title: string
     groupName: string
     createdAt: Date
@@ -16,7 +18,7 @@ const NewsLetterPage = () => {
 
   const [inputNewsLetters, setInputNewsLetters] = useState<Notice[]>([
     {
-      notificationId: 1,
+      informId: 1,
       title: '플젝이',
       groupName: '벌써',
       createdAt: new Date(),
@@ -47,14 +49,17 @@ const NewsLetterPage = () => {
 
     interface NewsData {
       title: string
+      writer: string
       content: string
-      files: [{ fileName: string; fileUrl: string }]
+      // fileId를 string으로 줘도됨?
+      files: [{ fileId: string; fileName: string }]
     }
 
     const news: NewsData = {
       title: '플젝이',
+      writer: '오주영',
       content: '벌써',
-      files: [{ fileName: '랄랄라라라', fileUrl: '루루룰루룰' }],
+      files: [{ fileId: '랄랄라라라', fileName: '루루룰루룰' }],
     }
 
     const content = (
@@ -64,7 +69,6 @@ const NewsLetterPage = () => {
         {news.files.map((file, index) => (
           <div key={index}>
             <div>{file.fileName}</div>
-            <div>{file.fileUrl}</div>
           </div>
         ))}
       </>
@@ -91,13 +95,12 @@ const NewsLetterPage = () => {
           <tr>
             <th>번호</th>
             <th>제목</th>
-            <th>그룹명</th>
             <th>날짜</th>
           </tr>
         </thead>
         <tbody>
           {inputNewsLetters.map((news, idx) => (
-            <tr key={news.notificationId}>
+            <tr key={news.informId}>
               <td>{idx + 1}</td>
               <td>
                 <button onClick={() => showNews(news.notificationId)}>
