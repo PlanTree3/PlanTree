@@ -7,8 +7,10 @@ import {
   branchReducer,
   userReducer,
   signupReducer,
-  questReducer, mainReducer
-} from "@/stores/features";
+  questReducer,
+  mainReducer,
+  forestReducer,
+} from '@/stores/features'
 
 const userPersistConfig = {
   key: 'user',
@@ -31,6 +33,7 @@ export const store = configureStore({
     signup: persistSignupReducer,
     quest: questReducer,
     main: mainReducer,
+    forest: forestReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(sagaMiddleware),
@@ -38,6 +41,6 @@ export const store = configureStore({
 
 sagaMiddleware.run(rootSaga)
 
-export const persistor: any = persistStore(store)
+export const persist: any = persistStore(store)
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

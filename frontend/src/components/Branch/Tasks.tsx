@@ -2,8 +2,8 @@ import { COLUMN_NAMES, CommentType } from '@/types/DnDType'
 
 const { DEFAULT, MONDAY, TUESDAY, WEDNESDAY, FRIDAY_FINISH } = COLUMN_NAMES
 export const branchList = [
-  { branchId: 1, branchName: 'ssafy', color: '#FFFFBA' },
-  { branchId: 2, branchName: '삼성', color: '#D7AAFF' },
+  { branchId: 1, branchName: 'ssafy', branchColor: '#FFFFBA' },
+  { branchId: 2, branchName: '삼성', branchColor: '#D7AAFF' },
 ]
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const comments_1: CommentType[] = [

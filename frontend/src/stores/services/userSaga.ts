@@ -32,10 +32,8 @@ function* fetchUserLogoutSaga(): Generator<
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  const response: AxiosResponse<unknown> = yield call(userLogout)
-  if (response) {
-    yield put(successUserLogout())
-  }
+  yield put(successUserLogout())
+  yield call(userLogout)
 }
 
 export function* watchFetchUserData() {

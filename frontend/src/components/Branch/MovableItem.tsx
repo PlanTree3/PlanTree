@@ -142,7 +142,12 @@ const MovableItem = ({
           })
         } else if (dayOfWeek === COLUMN_NAMES.DEFAULT) {
           if (isFinishDay) {
-            alert('생성된 씨앗을 바로 끝낼 수는 없어요!')
+            Swal.fire({
+              title: '생성된 씨앗을 바로 끝낼 수는 없어요!',
+              text: '일정을 먼저 등록해주세요!',
+              icon: 'info',
+              iconColor: 'lightyellow',
+            })
           } else {
             const newItem: any = {
               budId: maxId + 1,
@@ -196,7 +201,6 @@ const MovableItem = ({
   }
   const closeDetailBuds = () => {
     setDeailOpen(false)
-    console.log('????')
   }
   return (
     <div
@@ -206,7 +210,8 @@ const MovableItem = ({
     >
       {idType === 'bud' && (
         <>
-          <button
+          <div
+            role="button"
             className="dnd_movable-item-content"
             onClick={() => handleDetailBuds()}
             tabIndex={0}
@@ -237,7 +242,7 @@ const MovableItem = ({
                 className="dnd_movable-item-content-deleteBTN-img"
               />
             </button>
-          </button>
+          </div>
           <Comments
             open={detailOpen}
             handleClose={closeDetailBuds}

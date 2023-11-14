@@ -22,9 +22,11 @@ export const branchSlice = createSlice({
     },
     saveSeeds: (state, action) => {
       state.seeds = action.payload
+      console.log('이것이 씨앗이다', state.seeds)
     },
     saveBuds: (state, action) => {
       state.buds = action.payload
+      console.log('얘가 봉오리야', state.buds)
     },
     addBuds: (state, action) => {
       state.buds = action.payload.newBuds
@@ -66,6 +68,21 @@ export const branchSlice = createSlice({
       console.log('finished 취소 로직 검증 : ', action.payload.newBuds)
       console.log('서버로 보낼 애 : ', action.payload.createdItem)
     },
+    modifyBranch: (state, action) => {
+      state.branches = action.payload.newBuds
+      console.log('finished 취소 로직 검증 : ', action.payload.newBuds)
+      console.log('서버로 보낼 애 : ', action.payload.createdItem)
+    },
+    modifyBud: (state, action) => {
+      state.buds = action.payload.newBuds
+      console.log('finished 취소 로직 검증 : ', action.payload.newBuds)
+      console.log('서버로 보낼 애 : ', action.payload.createdItem)
+    },
+    modifySeed: (state, action) => {
+      state.seeds = action.payload.newBuds
+      console.log('finished 취소 로직 검증 : ', action.payload.newBuds)
+      console.log('서버로 보낼 애 : ', action.payload.createdItem)
+    },
   },
 })
 
@@ -82,5 +99,8 @@ export const {
   saveBuds,
   finishedBuds,
   finishRejectBuds,
+  modifyBranch,
+  modifyBud,
+  modifySeed,
 } = branchSlice.actions
 export default branchSlice.reducer

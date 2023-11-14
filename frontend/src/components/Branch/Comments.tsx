@@ -41,26 +41,34 @@ const Comments: React.FC<CommentsProps> = ({
   const [newComment, setNewComment] = useState('')
   const [counts, setCounts] = useState(commentCount)
   const treeId = useSelector((state: RootState) => state.main.treeId)
-  const updateInfo = () => {
-    const response: any = detailBuds(treeId, budId)
-    // api 404로 인한 주석처리
-    // const data: Comment[] | null = response.data.comments ?? null
-    console.log(response)
-    // if (data) {
-    //   setComments(data)
-    // }
+  const updateInfo = async () => {
+    try {
+      const response: any = await detailBuds(treeId, budId)
+      const data = response.data.comments ?? null
+      console.log(response)
+      if (data) {
+        setComments(data)
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
   useEffect(() => {
     updateInfo()
-  }, [open, budId])
-  const handleCommentSubmit = () => {
+  }, [open, budId, treeId])
+
+  const handleCommentSubmit = async () => {
     setCounts(counts + 1)
     setNewComment('')
     const data = {
       content: newComment,
     }
-    commentCreate(treeId, budId, data)
-    updateInfo()
+    try {
+      await commentCreate(treeId, budId, data)
+      updateInfo()
+    } catch (error) {
+      console.error(error)
+    }
   }
   return (
     <Dialog
@@ -74,28 +82,27 @@ const Comments: React.FC<CommentsProps> = ({
         <DialogContentText id="article-dialog-description" tabIndex={-1}>
           현재 댓글 수 : {counts}
         </DialogContentText>
-        <div>
-          <TextField
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            margin="normal"
-            fullWidth
-            label="New Comment"
-            multiline
-            rows={4}
-          />
-          <Button onClick={handleCommentSubmit} color="primary">
-            등록!
-          </Button>
-          <p>댓 글 리 스 트</p>
-          {comments ? (
-            comments.map((comment: Comment, index) => (
-              <p key={index}>{comment.content}</p>
-            ))
-          ) : (
-            <p>등록된 댓글이 없습니다.</p>
-          )}
-        </div>
+        <TextField
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          margin="normal"
+          fullWidth
+          label="New Comment"
+          multiline
+          rows={2}
+          inputProps={{ maxLength: 49 }}
+        />
+        <div>{`${newComment.length} / 50`}</div>
+        <Button onClick={handleCommentSubmit} color="primary">
+          등록!
+        </Button>
+        {comments.length > 0 ? (
+          comments.map((comment: Comment, index) => (
+            <p key={index}>{comment.content}</p>
+          ))
+        ) : (
+          <p>아직 등록된 댓글이 없습니다.</p>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>닫기</Button>

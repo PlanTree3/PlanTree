@@ -43,8 +43,8 @@ export const userSlice = createSlice({
     },
     logOutCheck: (state) => {
       console.log('slice의 logoutCheck')
-
       state.isLoggedIn = false
+      state.userData = defaultUser
     },
     addName: (state, action: PayloadAction<string>) => {
       state.userData.name = action.payload

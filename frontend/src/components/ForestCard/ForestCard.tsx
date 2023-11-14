@@ -10,7 +10,7 @@ import Button from '../Button/Button'
 
 interface ForestProps {
   forestName: string
-  nav?: number
+  nav: string
 }
 
 const ForestCard = ({ forestName, nav }: ForestProps) => {

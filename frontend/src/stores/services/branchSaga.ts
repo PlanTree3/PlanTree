@@ -22,6 +22,7 @@ import {
   removeSeeds,
   saveBranches,
   saveBuds,
+  saveSeeds,
 } from '@/stores/features/branchSlice.ts'
 import {
   branchCreate,
@@ -47,10 +48,32 @@ function* getBranchDataSaga(): Generator<
     console.log(response)
     const { branches } = response.data.data
     const { buds } = response.data.data
-    // const seeds = []
+    const updatedSeeds = branches.reduce((accumulator: any, branch: any) => {
+      // 현재 branch의 seeds에 branchId와 branchColor 추가
+      const seedsWithBranchInfo = branch.seeds.map((seed: any) => ({
+        ...seed,
+        branchId: branch.branchId,
+        branchColor: branch.branchColor,
+        dayOfWeek: '',
+      }))
+      // 누적된 배열에 현재 seeds 배열을 추가
+      return accumulator.concat(seedsWithBranchInfo)
+    }, []) // 초기 누적값은 빈 배열
+
+    console.log(updatedSeeds)
+    const updateBuds = buds.map((bud: any) => {
+      if (bud.complete) {
+        return {
+          ...bud,
+          dayOfWeek: `${bud.dayOfWeek}_FINISH`,
+        }
+      }
+      return bud
+    })
+    console.log(treeId, branches, buds)
     yield put(saveBranches(branches))
-    // yield put(saveSeeds(seeds))
-    yield put(saveBuds(buds))
+    yield put(saveSeeds(updatedSeeds))
+    yield put(saveBuds(updateBuds))
   } catch (error) {
     /* empty */
   }
@@ -121,15 +144,14 @@ function* addBranchesSaga(
   AxiosResponse<FetchUserDataResponse>
 > {
   console.log(action.payload)
-  // const treeId: any = yield select(getTreeId)
-  // 테스트용 나무 아이디 사용
-  const treeId = '9839fc1d-843c-491c-9a71-5c1b8efb22c7'
+  const treeId: any = yield select(getTreeId)
   const data = {
     name: action.payload.createdItem.branchName,
-    color: action.payload.createdItem.color,
+    branchColor: action.payload.createdItem.color,
   }
+  console.log(data)
   const response: AxiosResponse<any> = yield call(branchCreate, treeId, data)
-  console.log('응답', response)
+  console.log('가지생성 응답', response)
   if (response.data) {
     const result = response.data.data
     console.log(result)

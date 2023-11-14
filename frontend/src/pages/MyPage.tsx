@@ -14,6 +14,7 @@ import {
   BarChart,
   DoughnutChart,
   PieChart,
+  LoginCheck,
 } from '@/components'
 import '@/styles/fontList.scss'
 import '@/styles/profile.scss'
@@ -205,7 +206,7 @@ const MyPage = () => {
         <tbody>
           {newsList.map((news, idx) => {
             return (
-              <tr>
+              <tr key={idx}>
                 <td>{idx}</td>
                 <td>{news.title}</td>
                 <td>{news.groupName}</td>
@@ -364,4 +365,4 @@ const MyPage = () => {
   )
 }
 
-export default MyPage
+export default LoginCheck(MyPage)

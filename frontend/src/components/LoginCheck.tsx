@@ -1,17 +1,21 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { RootState } from '@/stores/store.ts'
 
-const LoginCheck = () => {
-  const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn)
-  const navigate = useNavigate()
-  useEffect(() => {
-    console.log('로그인 체크', isLoggedIn)
-    if (!isLoggedIn) {
-      navigate('/')
-    }
-  }, [isLoggedIn])
-  return null
+const LoginCheck = (WrappedComponent: any) => {
+  return function WithLoginCheck(props: any) {
+    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+      if (!isLoggedIn) {
+        navigate('/')
+      }
+    }, [isLoggedIn, navigate])
+
+    return isLoggedIn ? <WrappedComponent {...props} /> : null
+  }
 }
 
 export default LoginCheck
