@@ -1,4 +1,4 @@
-package com.plantree.commonservice.global.webmvc;
+package com.plantree.commonservice.global.config.webmvc;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

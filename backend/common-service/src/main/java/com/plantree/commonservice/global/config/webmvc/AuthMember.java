@@ -1,4 +1,4 @@
-package com.plantree.commonservice.global.webmvc;
+package com.plantree.commonservice.global.config.webmvc;
 
 import java.util.UUID;
 import lombok.Getter;

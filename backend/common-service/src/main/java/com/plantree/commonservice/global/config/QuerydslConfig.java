@@ -1,4 +1,4 @@
-package com.plantree.commonservice.global;
+package com.plantree.commonservice.global.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.persistence.EntityManager;
