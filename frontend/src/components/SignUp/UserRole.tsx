@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux'
 import { addRole } from '@/stores/features/signupSlice'
 import Button from '../Button/Button'
 
+import '@/styles/fontList.scss'
+import '@/components/Button/Button.css'
+
 const UserRole = () => {
   const dispatch = useDispatch()
 
@@ -36,8 +39,8 @@ const UserRole = () => {
     <>
       <div>저는</div>
       {rolesEO.map((role: string, idx) => (
-        <Button
-          className="normal gray"
+        <button
+          className="brown normal button"
           onClick={() => setRole(rolesEO[idx])}
           label={showRole(role)}
         />

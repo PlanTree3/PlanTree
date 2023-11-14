@@ -24,7 +24,7 @@
 .normal {
   height: 4vh;
   font-size: 1rem;
-  border-radius: 8px;
+  border-radius: 18px;
   @apply px-3;
 }
 
@@ -59,4 +59,11 @@
 
 .button {
   cursor: pointer;
+  @apply hover:bg-amber-700;
+}
+
+.brown {
+  background-color: #dddbcb;
+  color: #964b00;
+  border-color: #964b00;
 }

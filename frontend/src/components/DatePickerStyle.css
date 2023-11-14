@@ -16,7 +16,7 @@
 /* 날짜 선택 영역 스타일 */
 .react-datepicker {
   font-size: 16px;
-  height: 264px;
+  height: 100px;
 }
 
 /* 선택 가능한 날짜 스타일 */
@@ -39,7 +39,7 @@
 
 /* DatePicker 아이콘 스타일 */
 .react-datepicker__input-container i {
-  color: #007bff;
+  color: #dddbcb;
 }
 
 /* 헤더의 높이 조정 */

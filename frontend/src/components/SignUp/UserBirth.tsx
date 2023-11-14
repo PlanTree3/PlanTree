@@ -4,6 +4,8 @@ import { LiaBirthdayCakeSolid } from 'react-icons/lia'
 import '../DatePickerStyle.css' // CSS 스타일 파일을 가져오세요.
 import { useDispatch } from 'react-redux'
 
+import '@/styles/fontList.scss'
+
 // mui-datepicker
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
@@ -24,7 +26,8 @@ const UserBirth = () => {
 
   return (
     <>
-      <LiaBirthdayCakeSolid />
+      <div>제 생일은</div>
+      <LiaBirthdayCakeSolid class="icon" />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DemoContainer components={['DatePicker']}>
           <DatePicker
@@ -39,6 +42,7 @@ const UserBirth = () => {
           />
         </DemoContainer>
       </LocalizationProvider>
+      <div>입니다.</div>
     </>
   )
 }
