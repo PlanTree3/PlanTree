@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public class IsTeacherOfGroupResponseDto {
 
-    private boolean isLeader;
+    private boolean isTeacher;
 
-    public IsTeacherOfGroupResponseDto(boolean isLeader) {
-        this.isLeader = isLeader;
+    public IsTeacherOfGroupResponseDto(boolean isTeacher) {
+        this.isTeacher = isTeacher;
     }
 }
