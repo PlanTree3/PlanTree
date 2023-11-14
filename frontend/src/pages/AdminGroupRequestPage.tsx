@@ -37,7 +37,6 @@ const AdminGroupRequestPage = () => {
     try {
       const response = await groupStudentsRequest(groupId)
       console.log('Response:', response)
-      console.log('dcdc', groupName)
       // setStudentsData(response.data.joinRequestList)
       setStudentsData(response.data.data)
     } catch (error) {
@@ -81,23 +80,6 @@ const AdminGroupRequestPage = () => {
     handleGroupAccept(studentId)
   }
 
-  // const indexOfLastGroup = currentPage * GroupsPerPage
-  // const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
-  // const currentGroups = dummyData.data.groups.slice(
-  //   indexOfFirstGroup,
-  //   indexOfLastGroup,
-  // )
-
-  // const totalPages = Math.ceil(dummyData.data.groups.length / GroupsPerPage)
-
-  // const pageNumbers = []
-  // for (let i = 1; i <= totalPages; i += 1) {
-  //   pageNumbers.push(i)
-  // }
-
-  // const changePage = (page: number) => {
-  //   setCurrentPage(page)
-  // }
   return (
     <div>
       <div className="flex flex-row">

@@ -12,16 +12,22 @@
 
 .my-page {
   &-profile-box {
-    @apply h-full flex flex-col justify-center items-center space-y-2;
+    @apply h-full flex flex-col justify-center items-center space-y-5;
   }
   &-profile-image {
-    @apply w-[30%];
+    button {
+      @apply self-start;
+    }
+    @apply flex w-[30%];
   }
   &-profile-name {
     @apply flex items-center;
   }
   &-name-input {
     @apply text-3xl flex items-center;
+  }
+  &-btn-container {
+    @apply w-1/3 space-y-1;
   }
   &-graph-modal {
     @apply grid grid-cols-3;

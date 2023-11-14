@@ -27,7 +27,7 @@ const AdminNestPage = () => {
   const [nestData, setNestData] = useState<any>(null)
   const [currentPage, setCurrentPage] = useState(1)
 
-  const studentsPerPage = 5
+  const studentsPerPage = 4
   const startIndex = (page - 1) * studentsPerPage
   const endIndex = startIndex + studentsPerPage
   const currentStudents = studentsData?.slice(startIndex, endIndex) || []
@@ -88,7 +88,7 @@ const AdminNestPage = () => {
     try {
       const response = await nestStudents(nestId)
       console.log('학생 리스트 조회', response)
-      // setStudentsData(response.data.data.students)
+      setStudentsData(response.data.data.students)
     } catch (error) {
       console.error('Error:', error)
     }
@@ -189,12 +189,20 @@ const AdminNestPage = () => {
         </div>
       ) : (
         <div>
-          <div className="font-semibold text-2xl">{nestData.nestName}</div>
-          <img className="mx-4" src={pencil} alt="" onClick={openPencilModal} />
+          <div className="flex flex-row">
+            <div className="font-semibold text-4xl">{nestData.nestName}</div>
+            <img
+              className="mx-4"
+              src={pencil}
+              alt=""
+              onClick={openPencilModal}
+              tabIndex={0}
+            />
+          </div>
           <div className="font-semibold text-l">둥지장: </div>
           {nestData.parents.length > 0 ? (
             nestData.parents.map((parent: any) => (
-              <p className="font-semibold text-l">{parent}</p>
+              <p className="font-semibold text-lg">{parent}</p>
             ))
           ) : (
             <p>둥지장이 없는 경우는 없을 수 없음. 비상!</p>
@@ -203,19 +211,16 @@ const AdminNestPage = () => {
           {currentStudents.length > 0 ? (
             currentStudents.map((student: any) => (
               <div key={student.studentId} className="studentBox">
-                {/* <div className="circle-image">
-          <img src={yeji1} alt="" />/
-        </div> */}
-                <div className="flex flex items-center">
-                  <text>{student.studentName}</text>
+                <div className="flex flex-1 items-center flex justify-center">
+                  <text className="studentFont">{student.studentName}</text>
                 </div>
-                <div className="ms-6 flex-col flex justify-center ">
-                  <text>달성도</text>
-                  <text>
+                <div className="flex-1 flex-col flex justify-center items-center ">
+                  <text className="studentFont">달성도</text>
+                  <text className="studentFont">
                     {student.completedBudCount}/{student.totalBudCount}
                   </text>
                 </div>
-                <div>
+                <div className="bg flex-1 grid justify-items-end">
                   <Link to="/forest/1">
                     <img className="forest" src={forest} alt="" />
                   </Link>
@@ -225,15 +230,21 @@ const AdminNestPage = () => {
           ) : (
             <p>현재 그룹원이 없습니다.</p>
           )}
-
+          <div className="pagination">
+            {pageNumbers.map((number) => (
+              <button key={number} onClick={() => changePage(number)}>
+                {number}
+              </button>
+            ))}
+          </div>
           <Button
-            className="primary"
+            className=" normal primary"
             onClick={openModal}
             label="둥지원 추가하기"
           />
           <br />
           <Button
-            className="red"
+            className="normal red"
             onClick={handleNestDelete}
             label="둥지 삭제"
           />
@@ -291,14 +302,6 @@ const AdminNestPage = () => {
             />
             <Button onClick={handleNestName} className="primary" label="저장" />
           </ReactModal>
-
-          <div className="pagination">
-            {pageNumbers.map((number) => (
-              <button key={number} onClick={() => changePage(number)}>
-                {number}
-              </button>
-            ))}
-          </div>
         </div>
       )}
     </div>

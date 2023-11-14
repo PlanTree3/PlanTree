@@ -25,9 +25,11 @@ const StudentGroupPage = () => {
       console.error('Error:', error)
     }
   }
+
   useEffect(() => {
     handleGetList()
   }, [])
+
   // 페이지
   const GroupsPerPage = 5
 
@@ -55,14 +57,14 @@ const StudentGroupPage = () => {
     <div>
       {studentData && studentData.nest ? (
         // 둥지가 있는 경우
-        <>
+        <div>
           {/* <text className="font-semibold text-2xl"> */}
-          <text>내 둥지 확인하기</text>
+          <text className="font-semibold text-2xl">내 둥지 확인하기</text>
           {/* <div className="box-border h-30 w-3/4 p-5 border-4 bg-amber-700 rounded-3xl"> */}
           <div>
             <div className="flex flex-row">
               <img className="chick flex flex-start" src={chick} alt="" />
-              <div className="flex flex-col items-center text-white tracking-widest">
+              <div className="flex flex-col items-center tracking-widest">
                 <div>{studentData.nest.nestName}</div>
                 <br />
                 {/* <div className="font-semibold text-l"> */}
@@ -79,21 +81,26 @@ const StudentGroupPage = () => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       ) : (
-        <div className="flex flex-row">
-          <img className="chick" src={chick} alt="" />
-          <text>아직 둥지가 없어요</text>
+        <div className="student-group-nest-area">
+          <div className="student-group-nest-area-image-container">
+            <img src={chick} alt="" />
+          </div>
+          <div className="student-group-nest-area-text-container">
+            <title>아직 둥지가 없어요</title>
+            <text>보호자와 연결해서 둥지를 만들어 보아요!</text>
+          </div>
         </div>
       )}
       <br />
       {/* <text className="font-semibold text-2xl"> */}
-      <text>내 그룹 확인하기</text>
+      <text className="font-semibold text-2xl">내 그룹 확인하기</text>
       <div className="flex-container">
         {currentGroups?.map((group: any, index: number) => (
-          <div>
+          <div key={index}>
             {/* eslint-disable-next-line react/no-array-index-key */}
-            <div key={index} className="groupItem">
+            <div className="groupItem">
               <Link to={`/studentGroupDetail/${group.groupId}`}>
                 <img className="forest" src={forest} alt="" />
                 <p className="groupInfo">{group.groupName} </p>

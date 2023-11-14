@@ -11,6 +11,7 @@ const LogIn = () => {
   const loginTest = () => {
     // test입니다.
     const testURL =
+      // 'https://k9a302a.p.ssafy.io/api/member-service/dev/auth/login?oauthId=yjStudent'
       'https://k9a302a.p.ssafy.io/api/member-service/dev/auth/login?oauthId=yjTeacher'
     axios
       .post(testURL, null, {
