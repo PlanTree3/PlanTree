@@ -12,10 +12,17 @@ const groupNoticeCreate = async (groupId: number, data: unknown) => {
 
 // 가정통신문 리스트 조회(학생, 부모)
 const noticeList = async () => {
-  return authApi
-    .get(`${baseUrl}/notice`)
-    .then((res) => res)
-    .catch((err) => err)
+  try {
+    const res = await authApi.get(`${baseUrl}/notice`)
+    console.log(res.data)
+
+    return res.data
+  } catch (err) {
+    console.log(err)
+
+    // 에러 처리
+    return err
+  }
 }
 
 // 가정통신문 상세 조회
