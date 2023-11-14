@@ -170,16 +170,18 @@ const MyPage = () => {
   const moveNewsList = () => {
     // 여기서 개인의 가정통신문 불러오는 axios 만들기
     interface Notice {
+      notificationId: number
       title: string
       groupName: string
-      date: Date
+      createdAt: Date
     }
     // const newsList: Notice[] = noticeList()
     const newsList: Notice[] = [
       {
+        notificationId: 1,
         title: '플젝이',
         groupName: '벌써',
-        date: new Date(),
+        createdAt: new Date(),
       },
     ]
 
@@ -209,7 +211,7 @@ const MyPage = () => {
                 <td>{idx}</td>
                 <td>{news.title}</td>
                 <td>{news.groupName}</td>
-                <td>{newsListDate(news.date)}</td>
+                <td>{newsListDate(news.createdAt)}</td>
               </tr>
             )
           })}

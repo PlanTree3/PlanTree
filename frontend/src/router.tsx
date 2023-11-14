@@ -24,6 +24,7 @@ import {
   OidcGoogle,
   TreePage,
   Tutorial,
+  NewsLetterPage,
 } from './pages'
 
 const RoutesComponent = () => (
@@ -64,6 +65,8 @@ const RoutesComponent = () => (
     <Route path="*" element={<NotFoundPage />} />
 
     <Route path="/tutorial" element={<Tutorial />} />
+
+    <Route path="/newsLetterPage" element={<NewsLetterPage />} />
   </Routes>
 )
 
