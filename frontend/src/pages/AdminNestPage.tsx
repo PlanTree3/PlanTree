@@ -237,15 +237,14 @@ const AdminNestPage = () => {
               </button>
             ))}
           </div>
-
           <Button
-            className="primary"
+            className=" normal primary"
             onClick={openModal}
             label="둥지원 추가하기"
           />
           <br />
           <Button
-            className="red"
+            className="normal red"
             onClick={handleNestDelete}
             label="둥지 삭제"
           />
