@@ -2,8 +2,6 @@ import { ChangeEvent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addName } from '@/stores/features/signupSlice'
 
-import '@/styles/fontList.scss'
-
 const UserName = () => {
   const dispatch = useDispatch()
   const [inputName, setInputName] = useState<string>('')

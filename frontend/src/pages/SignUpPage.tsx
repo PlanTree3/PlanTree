@@ -8,7 +8,6 @@ import { UserBirth, UserName, UserProfileImg, UserRole } from '@/components'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import './SlideStyle.css'
-import '@/styles/fontList.scss'
 import '../components/SignUp/SignUp.scss'
 
 const SignUpPage = () => {

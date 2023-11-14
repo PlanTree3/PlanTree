@@ -4,8 +4,6 @@ import { LiaBirthdayCakeSolid } from 'react-icons/lia'
 import '../DatePickerStyle.css' // CSS 스타일 파일을 가져오세요.
 import { useDispatch } from 'react-redux'
 
-import '@/styles/fontList.scss'
-
 // mui-datepicker
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
