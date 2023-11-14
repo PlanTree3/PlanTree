@@ -38,19 +38,17 @@
   top: 0;
   visibility: hidden;
 }
-.atropos-component .forest-text {
-  @apply absolute
+.atropos-component .forest-text-area {
+  @apply absolute space-y-[1vh]
   left-0 top-0
   w-[100%] h-[100%]
   z-20
   flex flex-col
   justify-center items-center
-  text-3xl
   text-slate-100 font-bold;
 }
-.atropos-component .forest-text a {
-  color: inherit;
-  text-decoration: none;
+.atropos-component .forest-text-area .forest-text {
+  @apply text-2xl xl:text-5xl;
 }
 .atropos-component .atropos-shadow {
   filter: blur(50px);
