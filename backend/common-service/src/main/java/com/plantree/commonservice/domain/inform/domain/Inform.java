@@ -13,14 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "inform")
 @Getter
-@RequiredArgsConstructor
 @NoArgsConstructor
 public class Inform extends BaseTimeEntity {
 
@@ -31,17 +30,26 @@ public class Inform extends BaseTimeEntity {
     @Column
     private String title;
 
-    @Column
+    @Column(columnDefinition = "VARCHAR(2000)")
     private String content;
 
     @Column(columnDefinition = "BINARY(16)")
     private UUID groupId;
 
     @OneToMany(mappedBy = "inform", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<InformFile> informFile = new ArrayList<>();
+    private List<InformFile> informFiles = new ArrayList<>();
+
+    @Builder
+    public Inform(String title, String content, UUID groupId, List<InformFile> informFiles) {
+        this.title = title;
+        this.content = content;
+        this.groupId = groupId;
+        informFiles.forEach(informFile -> informFile.setInform(this));
+        this.informFiles.addAll(informFiles);
+    }
 
     @PrePersist
-    public void generateInformId(){
+    public void generateInformId() {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();
     }
 

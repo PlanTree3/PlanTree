@@ -1,4 +1,4 @@
-package com.plantree.commonservice.global.webmvc;
+package com.plantree.commonservice.global.config.webmvc;
 
 import java.util.List;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
