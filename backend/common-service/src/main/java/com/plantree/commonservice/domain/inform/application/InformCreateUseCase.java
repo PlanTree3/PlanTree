@@ -36,6 +36,7 @@ public class InformCreateUseCase {
                               .title(informCreateRequestDto.getTitle())
                               .content(informCreateRequestDto.getContent())
                               .groupId(groupId)
+                              .teacherId(authMember.getMemberId())
                               .informFiles(informFiles)
                               .build();
         return new InformCreateResponseDto(informRepository.save(inform)

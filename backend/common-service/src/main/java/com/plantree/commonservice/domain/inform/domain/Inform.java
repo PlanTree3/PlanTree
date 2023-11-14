@@ -1,6 +1,7 @@
 package com.plantree.commonservice.domain.inform.domain;
 
 import com.plantree.commonservice.global.entity.BaseTimeEntity;
+import com.plantree.commonservice.global.exception.UnauthorizedAccessException;
 import com.plantree.commonservice.global.util.SequentialUUIDGenerator;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,16 +37,27 @@ public class Inform extends BaseTimeEntity {
     @Column(columnDefinition = "BINARY(16)")
     private UUID groupId;
 
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID teacherId;
+
     @OneToMany(mappedBy = "inform", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<InformFile> informFiles = new ArrayList<>();
 
     @Builder
-    public Inform(String title, String content, UUID groupId, List<InformFile> informFiles) {
+    public Inform(String title, String content, UUID groupId, UUID teacherId,
+            List<InformFile> informFiles) {
         this.title = title;
         this.content = content;
         this.groupId = groupId;
+        this.teacherId = teacherId;
         informFiles.forEach(informFile -> informFile.setInform(this));
         this.informFiles.addAll(informFiles);
+    }
+
+    public void validateTeacher(UUID memberId) {
+        if (!this.teacherId.equals(memberId)) {
+            throw new UnauthorizedAccessException();
+        }
     }
 
     @PrePersist

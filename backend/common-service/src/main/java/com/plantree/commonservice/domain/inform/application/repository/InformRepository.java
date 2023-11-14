@@ -8,6 +8,8 @@ public interface InformRepository {
 
     Optional<Inform> findById(UUID informId);
 
+    Optional<Inform> findByIdWithFiles(UUID informId);
+
     Inform save(Inform inform);
 
     void deleteById(UUID informId);
