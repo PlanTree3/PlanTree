@@ -70,6 +70,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'import/no-extraneous-dependencies': 'off',
     'react/prop-types': 'off',
+    'react/jsx-props-no-spreading': 'off',
   },
   ignorePatterns: ['.eslintrc.cjs'],
 }

@@ -14,6 +14,7 @@ import {
   BarChart,
   DoughnutChart,
   PieChart,
+  LoginCheck,
 } from '@/components'
 import '@/styles/fontList.scss'
 import '@/styles/profile.scss'
@@ -170,16 +171,18 @@ const MyPage = () => {
   const moveNewsList = () => {
     // 여기서 개인의 가정통신문 불러오는 axios 만들기
     interface Notice {
+      notificationId: number
       title: string
       groupName: string
-      date: Date
+      createdAt: Date
     }
     // const newsList: Notice[] = noticeList()
     const newsList: Notice[] = [
       {
+        notificationId: 1,
         title: '플젝이',
         groupName: '벌써',
-        date: new Date(),
+        createdAt: new Date(),
       },
     ]
 
@@ -189,6 +192,50 @@ const MyPage = () => {
       const day = date.getDate()
 
       return [year, month, day].join('-')
+    }
+
+    const showNews = (notificationId: number) => {
+      console.log(notificationId)
+
+      interface NewsData {
+        title: string
+        content: string
+        files: [{ fileName: string; fileUrl: string }]
+      }
+
+      const news: NewsData = {
+        title: '플젝이',
+        content: '벌써',
+        files: [{ fileName: '랄랄라라라', fileUrl: '루루룰루룰' }],
+      }
+
+      const content = (
+        <>
+          <div>{news.title}</div>
+          <div>{news.content}</div>
+          {news.files.map((file, index) => (
+            <div key={index}>
+              <div>{file.fileName}</div>
+              <div>{file.fileUrl}</div>
+            </div>
+          ))}
+        </>
+      )
+
+      MySwal.fire({
+        html: content,
+        position: 'center',
+        width: '70%',
+        heightAuto: false,
+        padding: 0,
+        confirmButtonText: '확인',
+        customClass: {
+          confirmButton: 'py-0', // 새로운 클래스 이름을 지정합니다.
+        },
+      }).then(() => {
+        // 확인 버튼을 누르면 moveNewsList 모달 호출
+        moveNewsList()
+      })
     }
 
     const content = (
@@ -206,10 +253,14 @@ const MyPage = () => {
           {newsList.map((news, idx) => {
             return (
               <tr>
-                <td>{idx}</td>
-                <td>{news.title}</td>
+                <td>{idx + 1}</td>
+                <td>
+                  <button onClick={() => showNews(news.notificationId)}>
+                    {news.title}
+                  </button>
+                </td>
                 <td>{news.groupName}</td>
-                <td>{newsListDate(news.date)}</td>
+                <td>{newsListDate(news.createdAt)}</td>
               </tr>
             )
           })}
@@ -365,4 +416,4 @@ const MyPage = () => {
   )
 }
 
-export default MyPage
+export default LoginCheck(MyPage)
