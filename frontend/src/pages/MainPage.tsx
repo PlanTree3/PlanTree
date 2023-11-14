@@ -113,7 +113,9 @@ const MainPage = () => {
           <button
             id="monday"
             onClick={() => sendDays(MONDAY)}
-            className="main-day-btn "
+            className={`main-day-btn ${
+              selectDay === MONDAY && 'bg-yellow-400'
+            }`}
           >
             월
           </button>
@@ -121,21 +123,27 @@ const MainPage = () => {
             <button
               id="tuesday"
               onClick={() => sendDays(TUESDAY)}
-              className="main-day-btn"
+              className={`main-day-btn ${
+                selectDay === TUESDAY && 'bg-yellow-400'
+              }`}
             >
               화
             </button>
             <button
               id="wednesday"
               onClick={() => sendDays(WEDNESDAY)}
-              className="main-day-btn"
+              className={`main-day-btn ${
+                selectDay === WEDNESDAY && 'bg-yellow-400'
+              }`}
             >
               수
             </button>
             <button
               id="thursday"
               onClick={() => sendDays(THURSDAY)}
-              className="main-day-btn"
+              className={`main-day-btn ${
+                selectDay === THURSDAY && 'bg-yellow-400'
+              }`}
             >
               목
             </button>
@@ -143,7 +151,9 @@ const MainPage = () => {
           <button
             id="friday"
             onClick={() => sendDays(FRIDAY)}
-            className="main-day-btn"
+            className={`main-day-btn ${
+              selectDay === FRIDAY && 'bg-yellow-400'
+            }`}
           >
             금
           </button>
@@ -186,84 +196,3 @@ const MainPage = () => {
 }
 
 export default StudentCheck(LoginCheck(MainPage))
-
-// return (
-//   <>
-//     <div>
-//       <div className="main-tree-check">42 번 째 나무</div>
-//       <div className="main-date">
-//         {monthToday} / {dayToday}
-//       </div>
-//     </div>
-//     <div className="main-box-container">
-//       <div className="main-arch-container">
-//         <button
-//           id="monday"
-//           onClick={() => sendDays(MONDAY)}
-//           className="main-day-btn"
-//         >
-//           월
-//         </button>
-//         <button
-//           id="tuesday"
-//           onClick={() => sendDays(TUESDAY)}
-//           className="main-day-btn"
-//         >
-//           화
-//         </button>
-//         <button
-//           id="wednesday"
-//           onClick={() => sendDays(WEDNESDAY)}
-//           className="main-day-btn"
-//         >
-//           수
-//         </button>
-//         <button
-//           id="thursday"
-//           onClick={() => sendDays(THURSDAY)}
-//           className="main-day-btn"
-//         >
-//           목
-//         </button>
-//         <button
-//           id="friday"
-//           onClick={() => sendDays(FRIDAY)}
-//           className="main-day-btn"
-//         >
-//           금
-//         </button>
-//         <div className="main-tree-container">
-//           <Tree degree={80} />
-//         </div>
-//       </div>
-//       <div>
-//         {dayToday === 0 ||
-//           (dayToday === 6 && (
-//             <Button className="long primary" label="회고하러 가기" />
-//           ))}
-//         <div className="main-todo-list">
-//           <div className="main-todo-list-title">To Do</div>
-//           <div className="main-todo-list-content">
-//             {message ? (
-//               <div>{message}</div>
-//             ) : (
-//               <div>
-//                 <div title={selectDay}>{returnItemsForColumn(selectDay)}</div>
-//                 <div title={selectDay} style={{ color: 'red' }}>
-//                   {returnFinishedItemsForColumn(`${selectDay} 끝`)}
-//                 </div>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//         <div className="flex justify-end">
-//           <Button
-//             className="primary small "
-//             label="일정 등록하기"
-//             onClick={handleBranchPage}
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   </>
-// )

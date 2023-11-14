@@ -23,7 +23,7 @@
 }
 
 .normal {
-  height: 3vw;
+  height: 4vh;
   font-size: 1rem;
   border-radius: 8px;
   @apply px-3;

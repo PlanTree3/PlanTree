@@ -69,7 +69,7 @@
 
 .main-tree-container {
   border-radius: 100%;
-  border: 1vw solid slategrey;
+  border: 0.5vw solid slategrey;
 
   grid-area: c;
   @apply justify-self-center self-center w-full h-full;
@@ -89,5 +89,5 @@
 
 .main-tree-degree {
   grid-area: e;
-  @apply text-center;
+  @apply text-center text-xl;
 }
