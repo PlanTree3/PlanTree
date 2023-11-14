@@ -7,11 +7,9 @@ import lombok.Getter;
 public class CheckGroupLeaderReqDto {
 
     private UUID teacherId;
-    private UUID groupId;
 
-    public CheckGroupLeaderReqDto(UUID teacherId, UUID groupId) {
+    public CheckGroupLeaderReqDto(UUID teacherId) {
         this.teacherId = teacherId;
-        this.groupId = groupId;
     }
 
 }

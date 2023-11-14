@@ -32,7 +32,7 @@ public interface MemberServiceClient {
 
     @PostMapping("/group/{groupId}/check-leader")
     CheckGroupLeaderResDto checkGroupLeader(
-            @RequestBody CheckGroupLeaderReqDto checkGroupLeaderReqDto);
+            @RequestBody CheckGroupLeaderReqDto checkGroupLeaderReqDto, @PathVariable UUID groupId);
 
     @PostMapping("/member/name")
     GetNamesFromMemberIdResDto getNamesFromMember(
