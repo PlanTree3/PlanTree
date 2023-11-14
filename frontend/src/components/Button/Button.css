@@ -7,19 +7,18 @@
 }
 
 .xsmall {
-  width: 8vw;
-  height: 3vh;
-  font-size: 2vh;
+  height: 2.5vh;
+  font-size: 0.7rem;
   border-radius: 4px;
-  padding: 0;
+  @apply px-[1vw];
 }
 
 .small {
-  width: 7vw;
-  font-size: 0.7rem;
+  height: 3.5vh;
+  font-size: 0.8rem;
   border-radius: 4px;
 
-  @apply p-1;
+  @apply px-[1vw];
 }
 
 .normal {

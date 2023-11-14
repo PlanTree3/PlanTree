@@ -24,6 +24,7 @@ const MainPage = () => {
   const dateToday = today.getDate()
   const [selectDay, setSelectDay] = useState('')
   const [message, setMessage] = useState('')
+
   useEffect(() => {
     dispatch(getMainData())
     if (treeId) {
@@ -112,9 +113,10 @@ const MainPage = () => {
         <div className="main-page-container">
           <button
             id="monday"
-            onClick={() => sendDays(MONDAY)}
+            onClick={() => sendDays('월요일')}
             className={`main-day-btn ${
-              selectDay === MONDAY && 'bg-yellow-400'
+              selectDay === '월요일' &&
+              ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
             }`}
           >
             월
@@ -122,27 +124,30 @@ const MainPage = () => {
           <div className="main-page-btn-top">
             <button
               id="tuesday"
-              onClick={() => sendDays(TUESDAY)}
+              onClick={() => sendDays('화요일')}
               className={`main-day-btn ${
-                selectDay === TUESDAY && 'bg-yellow-400'
+                selectDay === '화요일' &&
+                ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
               }`}
             >
               화
             </button>
             <button
               id="wednesday"
-              onClick={() => sendDays(WEDNESDAY)}
+              onClick={() => sendDays('수요일')}
               className={`main-day-btn ${
-                selectDay === WEDNESDAY && 'bg-yellow-400'
+                selectDay === '수요일' &&
+                ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
               }`}
             >
               수
             </button>
             <button
               id="thursday"
-              onClick={() => sendDays(THURSDAY)}
+              onClick={() => sendDays('목요일')}
               className={`main-day-btn ${
-                selectDay === THURSDAY && 'bg-yellow-400'
+                selectDay === '목요일' &&
+                ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
               }`}
             >
               목
@@ -150,9 +155,10 @@ const MainPage = () => {
           </div>
           <button
             id="friday"
-            onClick={() => sendDays(FRIDAY)}
+            onClick={() => sendDays('금요일')}
             className={`main-day-btn ${
-              selectDay === FRIDAY && 'bg-yellow-400'
+              selectDay === '금요일' &&
+              ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
             }`}
           >
             금
@@ -181,10 +187,8 @@ const MainPage = () => {
                 </div>
               )}
             </div>
-          </div>
-          <div className="flex justify-end">
             <Button
-              className="primary small "
+              className="primary small"
               label="일정 등록하기"
               onClick={handleBranchPage}
             />

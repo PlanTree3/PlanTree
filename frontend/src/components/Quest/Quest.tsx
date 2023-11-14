@@ -16,6 +16,7 @@ import {
   deleteQuest,
 } from '@/stores/features/questSlice'
 import '@/styles/quest/questStyle.scss'
+import Button from '../Button/Button'
 
 interface QuestProps {
   questStatus: string
@@ -88,6 +89,16 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
             aria-labelledby={`quest-title-${quest.questId}`}
             aria-describedby={`quest-description-${quest.questId}`}
           >
+            <div className="quest-modal-close-btn">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  closeModal(quest.questId, quest.isChecked, true)
+                }}
+              >
+                <img src="/public/btn/closeBtn.png" alt="" />
+              </button>
+            </div>
             <DialogTitle id={`quest-title-${quest.questId}`}>
               {quest.questTitle}
             </DialogTitle>
@@ -101,33 +112,33 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
                 <button onClick={() => deleteBTN(quest.questId)}>삭제</button>
               )}
               {!quest.isConfirmed ? (
-                <div>
-                  <button
+                <div className="quest-button-container">
+                  <Button
                     onClick={(e) => {
                       e.stopPropagation()
                       closeModal(quest.questId, quest.isChecked, true)
                     }}
-                  >
-                    수락
-                  </button>
-                  <button
+                    className="normal primary"
+                    label="수락"
+                  />
+                  <Button
                     onClick={(e) => {
                       e.stopPropagation()
                       closeModal(quest.questId, quest.isChecked, false)
                     }}
-                  >
-                    거절
-                  </button>
+                    className="normal red"
+                    label="거절"
+                  />
                 </div>
               ) : (
-                <button
+                <Button
                   onClick={(e) => {
                     e.stopPropagation()
                     closeModal(quest.questId, quest.isChecked, true)
                   }}
-                >
-                  확인
-                </button>
+                  className="normal primary"
+                  label="확인"
+                />
               )}
             </DialogActions>
           </Dialog>

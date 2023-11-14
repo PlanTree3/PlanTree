@@ -28,11 +28,11 @@ const ForestCard = ({ forestName, nav }: ForestProps) => {
           <img data-atropos-offset="-4" src={forestBack} alt="forest" />
           <img data-atropos-offset="-2" src={forestMid} alt="forest" />
           <img data-atropos-offset="0" src={forestFront} alt="forest" />
-          <div data-atropos-offset="3" className="forest-text">
-            {forestName}
+          <div data-atropos-offset="3" className="forest-text-area">
+            <div className="forest-text">{forestName}</div>
             {nav && (
               <Button
-                className="xsmall primary"
+                className="small primary"
                 onClick={routeForestDetail}
                 label="자세히 보기"
               />
