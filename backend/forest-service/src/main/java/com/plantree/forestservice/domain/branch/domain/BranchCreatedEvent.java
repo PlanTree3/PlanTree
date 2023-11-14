@@ -18,7 +18,7 @@ public class BranchCreatedEvent extends Event {
     private String branchName;
 
     @Builder
-    public BranchCreatedEvent(UUID treeId, UUID memberId, Role role, UUID branchId,
+    public BranchCreatedEvent(UUID treeId, UUID memberId, UUID studentId, Role role, UUID branchId,
             String branchName) {
         super(treeId);
         switch (role) {
@@ -28,10 +28,12 @@ public class BranchCreatedEvent extends Event {
                 break;
             case PARENT:
                 this.parentId = memberId;
+                this.studentId = studentId;
                 this.type = ForestEventType.PAR_GEN_BRA;
                 break;
             case TEACHER:
                 this.teacherId = memberId;
+                this.studentId = studentId;
                 this.type = ForestEventType.TEA_GEN_BRA;
                 break;
         }

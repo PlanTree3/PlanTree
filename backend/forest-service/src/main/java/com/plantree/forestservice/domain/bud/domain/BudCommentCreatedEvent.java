@@ -18,7 +18,7 @@ public class BudCommentCreatedEvent extends Event {
     private String budName;
 
     @Builder
-    public BudCommentCreatedEvent(UUID treeId, UUID memberId, Role role, UUID budId,
+    public BudCommentCreatedEvent(UUID treeId, UUID memberId, UUID studentId, Role role, UUID budId,
             String budName) {
         super(treeId);
         switch (role) {
@@ -28,10 +28,12 @@ public class BudCommentCreatedEvent extends Event {
                 break;
             case PARENT:
                 this.parentId = memberId;
+                this.studentId = studentId;
                 this.type = ForestEventType.PAR_WRI_BUD;
                 break;
             case TEACHER:
                 this.teacherId = memberId;
+                this.studentId = studentId;
                 this.type = ForestEventType.TEA_WRI_BUD;
                 break;
         }

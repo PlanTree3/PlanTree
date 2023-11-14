@@ -8,6 +8,7 @@ import com.plantree.memberservice.domain.group.application.GroupSearchUseCase;
 import com.plantree.memberservice.domain.group.dto.GroupStudentIdsResponseDto;
 import com.plantree.memberservice.domain.group.dto.IsTeacherOfGroupResponseDto;
 import com.plantree.memberservice.domain.group.dto.IsTeacherOfStudentResponseDto;
+import com.plantree.memberservice.domain.group.dto.TeacherAndParentIdsResponseDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinAcceptRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinRefuseRequestDto;
@@ -90,6 +91,11 @@ public class GroupController {
     public ResponseEntity<?> searchGroupAndNest(@JwtLoginMember AuthMember authMember) {
         return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
                 groupSearchUseCase.searchGroupAndNest(authMember));
+    }
+
+    @GetMapping("/leader-id/{studentId}")
+    public TeacherAndParentIdsResponseDto searchTeachersAndParentsId(@PathVariable UUID studentId) {
+        return groupSearchUseCase.searchTeachersAndParentsId(studentId);
     }
 
     @GetMapping("/{groupId}")

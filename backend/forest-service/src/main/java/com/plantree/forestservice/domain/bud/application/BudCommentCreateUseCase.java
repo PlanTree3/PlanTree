@@ -50,6 +50,7 @@ public class BudCommentCreateUseCase {
         BudCommentCreatedEvent event = BudCommentCreatedEvent.builder()
                                                              .treeId(treeId)
                                                              .memberId(authMember.getMemberId())
+                                                             .studentId(bud.getStudentId())
                                                              .role(authMember.getRole())
                                                              .budId(bud.getId())
                                                              .budName(bud.getName())

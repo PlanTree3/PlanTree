@@ -3,7 +3,6 @@ package com.plantree.forestservice.global.event;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plantree.forestservice.global.infra.Producer;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 public class EventProducer {
 
@@ -13,10 +12,10 @@ public class EventProducer {
         EventProducer.producer = producer;
     }
 
-    @TransactionalEventListener
     public static void send(Event event) {
         if (producer != null) {
             try {
+                System.out.println(new ObjectMapper().writeValueAsString(event));
                 producer.produce(new ObjectMapper().writeValueAsString(event));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
