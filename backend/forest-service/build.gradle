@@ -35,6 +35,7 @@ ext {
 dependencies {
     // spring
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // cloud
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
