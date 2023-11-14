@@ -31,3 +31,7 @@ export { default as Tutorial1 } from '@/components/Tutorial/Tutorial1'
 export { default as Tutorial2 } from '@/components/Tutorial/Tutorial2'
 export { default as Tutorial3 } from '@/components/Tutorial/Tutorial3'
 export { default as LogIn } from '@/components/Tutorial/LogIn'
+
+// Check
+export { default as LoginCheck } from '@/components/LoginCheck'
+export { StudentCheck, ParentCheck, TeacherCheck } from '@/components/RoleCheck'

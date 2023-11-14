@@ -14,6 +14,7 @@ import {
   BarChart,
   DoughnutChart,
   PieChart,
+  LoginCheck,
 } from '@/components'
 import '@/styles/fontList.scss'
 import '@/styles/profile.scss'
@@ -415,4 +416,4 @@ const MyPage = () => {
   )
 }
 
-export default MyPage
+export default LoginCheck(MyPage)

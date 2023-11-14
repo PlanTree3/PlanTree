@@ -12,7 +12,6 @@ import NestJoinPage from './pages/NestJoinPage.tsx'
 import {
   Home,
   LoginPage,
-  OauthRedirectPage,
   SignUpPage,
   MainPage,
   ForestPage,
@@ -31,7 +30,6 @@ const RoutesComponent = () => (
   <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<LoginPage />} />
-    <Route path="/oauth" element={<OauthRedirectPage />} />
 
     <Route path="/studentGroup" element={<StudentGroupPage />} />
     <Route
@@ -55,7 +53,11 @@ const RoutesComponent = () => (
 
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="/oidc/google" element={<OidcGoogle />} />
+
+    {/* 나의 메인 페이지 / 다른 사람의 메인 페이지(id 조회) */}
     <Route path="/main" element={<MainPage />} />
+    {/*<Route path="/main/:id" element={<MainPage?? />} />*/}
+
     <Route path="/forest" element={<ForestPage />} />
     <Route path="/forest/:id" element={<ForestDetailPage />} />
     <Route path="/tree/:id" element={<TreePage />} />
