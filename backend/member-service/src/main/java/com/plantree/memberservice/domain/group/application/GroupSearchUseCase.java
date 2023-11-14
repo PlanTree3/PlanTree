@@ -14,6 +14,7 @@ import com.plantree.memberservice.domain.group.dto.IsTeacherOfGroupResponseDto;
 import com.plantree.memberservice.domain.group.dto.IsTeacherOfStudentResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoListResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoResponseDto;
+import com.plantree.memberservice.domain.group.dto.TeacherAndParentIdsResponseDto;
 import com.plantree.memberservice.domain.group.dto.TeacherGroupListResponseDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountListResponseDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountRequestDto;
@@ -49,6 +50,18 @@ public class GroupSearchUseCase {
         Nest nest = student.getNest() == null ? null : findNestByIdOrThrow(student.getNest()
                                                                                   .getId());
         return new GroupNestSearchResponseDto(nest, student.getStudentGroups());
+    }
+
+    @Transactional(readOnly = true)
+    public TeacherAndParentIdsResponseDto searchTeachersAndParentsId(UUID studentId) {
+        Student student = findStudentByIdOrThrow(studentId);
+        Nest nest = student.getNest() == null ? null : findNestByIdOrThrow(student.getNest()
+                                                                                  .getId());
+        TeacherAndParentIdsResponseDto dto = new TeacherAndParentIdsResponseDto(nest,
+                student.getStudentGroups());
+        System.out.println(dto.getParentIds());
+        System.out.println(dto.getTeacherIds());
+        return dto;
     }
 
     @Transactional(readOnly = true)
@@ -147,6 +160,13 @@ public class GroupSearchUseCase {
 
     private Student findStudentByIdOrThrow(AuthMember authMember) {
         return memberRepository.findByIdWithGroup(authMember.getMemberId())
+                               .orElseThrow(() -> new ResourceNotFoundException(
+                                       "멤버를 찾을 수 없습니다."))
+                               .getStudent();
+    }
+
+    private Student findStudentByIdOrThrow(UUID studentId) {
+        return memberRepository.findByIdWithGroup(studentId)
                                .orElseThrow(() -> new ResourceNotFoundException(
                                        "멤버를 찾을 수 없습니다."))
                                .getStudent();

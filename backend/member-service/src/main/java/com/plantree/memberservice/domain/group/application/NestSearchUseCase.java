@@ -4,6 +4,7 @@ import com.plantree.memberservice.domain.group.application.client.ForestServiceC
 import com.plantree.memberservice.domain.group.application.repository.NestRepository;
 import com.plantree.memberservice.domain.group.domain.Nest;
 import com.plantree.memberservice.domain.group.dto.IsParentOfStudentResponseDto;
+import com.plantree.memberservice.domain.group.dto.ParentIdsResponseDto;
 import com.plantree.memberservice.domain.group.dto.ParentNestResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoListResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoResponseDto;
@@ -52,6 +53,13 @@ public class NestSearchUseCase {
                                                  .getNest()
                                                  .getId());
         return new ParentNestResponseDto(nest);
+    }
+
+    @Transactional(readOnly = true)
+    public ParentIdsResponseDto searchParentIds(UUID studentId) {
+        Member member = findMemberWithNestParentById(studentId);
+        return new ParentIdsResponseDto(member.getStudent()
+                                              .getNest());
     }
 
     public IsParentOfStudentResponseDto getIsParentOfStudent(

@@ -45,6 +45,7 @@ public class BranchCreateUseCase {
         BranchCreatedEvent event = BranchCreatedEvent.builder()
                                                      .treeId(treeId)
                                                      .memberId(authMember.getMemberId())
+                                                     .studentId(branch.getStudentId())
                                                      .role(authMember.getRole())
                                                      .branchId(branch.getId())
                                                      .branchName(branch.getName())

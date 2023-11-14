@@ -2,6 +2,7 @@ package com.plantree.memberservice.domain.member.controller;
 
 import com.plantree.memberservice.domain.member.application.MemberModifyUseCase;
 import com.plantree.memberservice.domain.member.application.MemberSearchUseCase;
+import com.plantree.memberservice.domain.member.dto.MemberNameListResponseDto;
 import com.plantree.memberservice.domain.member.dto.MemberNameRequestDto;
 import com.plantree.memberservice.domain.member.dto.MemberNameResponseDto;
 import com.plantree.memberservice.domain.member.dto.NameChangeRequestDto;
@@ -10,11 +11,13 @@ import com.plantree.memberservice.domain.member.dto.StudentIdListResponseDto;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
 import com.plantree.memberservice.global.config.webmvc.JwtLoginMember;
 import com.plantree.memberservice.global.dto.HttpResponse;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,9 +57,14 @@ public class MemberController {
     }
 
     @PostMapping("/name")
-    public MemberNameResponseDto searchMemberNames(
+    public MemberNameListResponseDto searchMemberNames(
             @RequestBody MemberNameRequestDto memberNameRequestDto) {
         return memberSearchUseCase.searchMemberNames(memberNameRequestDto);
+    }
+
+    @GetMapping("/{memberId}/name")
+    public MemberNameResponseDto searchMemberName(@PathVariable UUID memberId) {
+        return memberSearchUseCase.searchMemberName(memberId);
     }
 
     @GetMapping("/student-id")

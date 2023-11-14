@@ -23,52 +23,52 @@ public class BudUpdateUseCase {
 
     @Transactional
     public void updateDay(UUID treeId, UUID branchId, UUID budId, Day dayOfWeek,
-                          AuthMember authMember) {
+            AuthMember authMember) {
 
         authMemberValidator.checkAuthMemberFromTreeId(treeId, authMember);
 
         Bud bud = budRepository.findById(budId)
-                .orElseThrow(BudNotFoundException::new);
+                               .orElseThrow(BudNotFoundException::new);
         bud.updateDay(dayOfWeek);
     }
 
     @Transactional
-    public void completeBud(UUID treeId, UUID branchId, UUID budId, Day day, AuthMember authMember) {
+    public void completeBud(UUID treeId, UUID branchId, UUID budId, Day day,
+            AuthMember authMember) {
 
         authMemberValidator.checkAuthMemberFromTreeId(treeId, authMember);
 
         Bud bud = budRepository.findById(budId)
-                .orElseThrow(BudNotFoundException::new);
+                               .orElseThrow(BudNotFoundException::new);
         bud.complete();
         bud.updateDay(day);
         BudCompletedEvent budCompletedEvent = BudCompletedEvent.builder()
-                .treeId(treeId)
-                .studentId(authMember.getMemberId())
-                .budId(budId)
-                .budName(bud.getName())
-                .build();
+                                                               .treeId(treeId)
+                                                               .studentId(authMember.getMemberId())
+                                                               .budId(budId)
+                                                               .budName(bud.getName())
+                                                               .build();
         EventProducer.send(budCompletedEvent);
     }
 
     @Transactional
     public void undoCompleteBud(UUID treeId, UUID branchId, UUID budId,
-                                Day day, AuthMember authMember) {
+            Day day, AuthMember authMember) {
         authMemberValidator.checkAuthMemberFromTreeId(treeId, authMember);
 
         Bud bud = budRepository.findById(budId)
-                .orElseThrow(BudNotFoundException::new);
+                               .orElseThrow(BudNotFoundException::new);
         bud.undoComplete();
         bud.updateDay(day);
-
     }
 
     @Transactional
     public void updateName(UUID treeId, UUID branchId, UUID budId, String name,
-                           AuthMember authMember) {
+            AuthMember authMember) {
         authMemberValidator.checkAuthMemberFromTreeId(treeId, authMember);
 
         Bud bud = budRepository.findById(budId)
-                .orElseThrow(BudNotFoundException::new);
+                               .orElseThrow(BudNotFoundException::new);
         bud.updateName(name);
     }
 
