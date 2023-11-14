@@ -1,5 +1,4 @@
 import { useState } from 'react'
-
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -13,7 +12,14 @@ const NewsLetterPage = () => {
     createdAt: Date
   }
 
-  const [inputNewsLetters, setInputNewsLetters] = useState<Notice[]>()
+  const [inputNewsLetters, setInputNewsLetters] = useState<Notice[]>([
+    {
+      notificationId: 1,
+      title: '플젝이',
+      groupName: '벌써',
+      createdAt: new Date(),
+    },
+  ])
 
   const newsListDate = (date: Date) => {
     const year = date.getFullYear()
@@ -23,20 +29,6 @@ const NewsLetterPage = () => {
     return [year, month, day].join('-')
   }
 
-  const newsList: Notice[] = [
-    {
-      notificationId: 1,
-      title: '플젝이',
-      groupName: '벌써',
-      createdAt: new Date(),
-    },
-  ]
-
-  setInputNewsLetters(newsList)
-
-  // useEffect(() => {
-  // 여기에 axios 연결하기
-  // const newsList: Notice[] = noticeList()
   // const newsList: Notice[] = [
   //   {
   //     notificationId: 1,
@@ -45,17 +37,17 @@ const NewsLetterPage = () => {
   //     createdAt: new Date(),
   //   },
   // ]
-  // setInputNewsLetters(newsList)
-  // }, [])
 
-  const showNews = () => {
+  // setInputNewsLetters(newsList) 이 부분은 삭제합니다.
+
+  const showNews = (notificationId: number) => {
+    console.log(notificationId)
+
     interface NewsData {
       title: string
       content: string
       files: [{ fileName: string; fileUrl: string }]
     }
-
-    // const news: data[] = noticeDetail()
 
     const news: NewsData = {
       title: '플젝이',
@@ -67,14 +59,12 @@ const NewsLetterPage = () => {
       <>
         <div>{news.title}</div>
         <div>{news.content}</div>
-        {news.files.map((file) => {
-          return (
-            <>
-              <div>{file.fileName}</div>
-              <div>{file.fileUrl}</div>
-            </>
-          )
-        })}
+        {news.files.map((file, index) => (
+          <div key={index}>
+            <div>{file.fileName}</div>
+            <div>{file.fileUrl}</div>
+          </div>
+        ))}
       </>
     )
 
@@ -104,18 +94,18 @@ const NewsLetterPage = () => {
           </tr>
         </thead>
         <tbody>
-          {newsList.map((news, idx) => {
-            return (
-              <button onClick={() => showNews()}>
-                <tr>
-                  <td>{idx}</td>
-                  <td>{news.title}</td>
-                  <td>{news.groupName}</td>
-                  <td>{newsListDate(news.createdAt)}</td>
-                </tr>
-              </button>
-            )
-          })}
+          {inputNewsLetters.map((news, idx) => (
+            <tr key={news.notificationId}>
+              <td>{idx + 1}</td>
+              <td>
+                <button onClick={() => showNews(news.notificationId)}>
+                  {news.title}
+                </button>
+              </td>
+              <td>{news.groupName}</td>
+              <td>{newsListDate(news.createdAt)}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
