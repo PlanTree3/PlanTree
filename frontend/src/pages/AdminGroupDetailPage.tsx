@@ -148,7 +148,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           <img src={pencil} onClick={openPencilModal} alt="" />
         </div>
 
-        <div className="admin-group-detail-btn-container flex flex-1">
+        <div className="admin-group-detail-btn-container">
           <Button
             label="가지 일괄 등록"
             className="normal primary"
@@ -166,43 +166,45 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             onClick={openQrModal}
           />
         </div>
-      </div>
 
-      <div className="admin-group-detail-content">
-        {/* <div className="h-2/3 w-2/3 p-5 bg-amber-700 rounded-3xl"> */}
-        {currentStudents.length > 0 ? (
-          currentStudents.map((student: any, index: number) => (
-            <div key={student.studentId} className="studentBox">
-              {/* <p>학생 ID: {student.studentId}</p> */}
-              <p className="flex-1 flex justify-center">
-                {index + 1 + (currentPage - 1) * 5}
-              </p>
-              <p className="flex-1">{student.studentName}</p>
-              <p className="flex-1">
-                {student.completedBudCount}/{student.totalBudCount}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>현재 그룹원이 없습니다.</p>
-        )}
-        {/* </div> */}
+        <div className="admin-group-detail-content">
+          {/* <div className="h-2/3 w-2/3 p-5 bg-amber-700 rounded-3xl"> */}
+          {currentStudents.length > 0 ? (
+            currentStudents.map((student: any, index: number) => (
+              <div key={student.studentId} className="studentBox">
+                {/* <p>학생 ID: {student.studentId}</p> */}
+                <p className="flex-1 flex justify-center">
+                  {index + 1 + (currentPage - 1) * 5}
+                </p>
+                <p className="flex-1">{student.studentName}</p>
+                <p className="flex-1">
+                  {student.completedBudCount}/{student.totalBudCount}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>현재 그룹원이 없습니다.</p>
+          )}
+          {/* </div> */}
 
-        <div className="pagination">
-          {pageNumbers.map((number) => (
-            <button key={number} onClick={() => changePage(number)}>
-              {number}
-            </button>
-          ))}
+          <div className="pagination">
+            {pageNumbers.map((number) => (
+              <button key={number} onClick={() => changePage(number)}>
+                {number}
+              </button>
+            ))}
+          </div>
         </div>
-        <Link to={`/newsLetter/${groupId}`}>
-          <Button className="normal gray" label="가정통신문 보기" />
-        </Link>
-        <Button
-          className="normal red"
-          // onClick={handleGroupDelete}
-          label="그룹 삭제하기"
-        />
+        <div className="admin-group-detail-btn-container-bottom">
+          <Link to={`/newsLetter/${groupId}`}>
+            <Button className="normal gray" label="가정통신문 보기" />
+          </Link>
+          <Button
+            className="normal red"
+            // onClick={handleGroupDelete}
+            label="그룹 삭제하기"
+          />
+        </div>
       </div>
 
       <ReactModal
