@@ -16,6 +16,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class BudController {
 
     @PostMapping("/tree/{treeId}/branch/{branchId}/bud")
     public ResponseEntity<?> addBud(@PathVariable UUID treeId, @PathVariable UUID branchId,
-                                    @RequestBody BudCreateReqDto reqDto, @JwtLoginMember AuthMember authMember) {
+            @RequestBody @Validated BudCreateReqDto reqDto, @JwtLoginMember AuthMember authMember) {
 
         return HttpResponse.okWithData(HttpStatus.OK, "봉오리가 등록되었습니다.",
                 new BudCreateResDto(budCreateUseCase.createBud(treeId, branchId, reqDto.getName(),
@@ -43,44 +44,46 @@ public class BudController {
 
     @PatchMapping("/tree/{treeId}/branch/{branchId}/bud/{budId}/day")
     public ResponseEntity<?> modifyBudDate(@PathVariable UUID treeId, @PathVariable UUID branchId,
-                                           @PathVariable UUID budId, @RequestBody BudDayModifyReqDto reqDto,
-                                           @JwtLoginMember AuthMember authMember) {
+            @PathVariable UUID budId, @RequestBody BudDayModifyReqDto reqDto,
+            @JwtLoginMember AuthMember authMember) {
         budUpdateUseCase.updateDay(treeId, branchId, budId, reqDto.getDayOfWeek(), authMember);
         return HttpResponse.ok(HttpStatus.OK, "봉오리의 요일을 변경하였습니다.");
     }
 
     @PatchMapping("/tree/{treeId}/branch/{branchId}/bud/{budId}/complete")
     public ResponseEntity<?> completeBud(@PathVariable UUID treeId, @PathVariable UUID branchId,
-                                         @PathVariable UUID budId, @RequestBody BudCompleteReqDto budCompleteReqDto,
-                                         @JwtLoginMember AuthMember authMember) {
+            @PathVariable UUID budId, @RequestBody BudCompleteReqDto budCompleteReqDto,
+            @JwtLoginMember AuthMember authMember) {
 
-        budUpdateUseCase.completeBud(treeId, branchId, budId, budCompleteReqDto.getDayOfWeek(), authMember);
+        budUpdateUseCase.completeBud(treeId, branchId, budId, budCompleteReqDto.getDayOfWeek(),
+                authMember);
         return HttpResponse.ok(HttpStatus.OK, "봉오리를 완료하였습니다.");
 
     }
 
     @PatchMapping("/tree/{treeId}/branch/{branchId}/bud/{budId}/undo-complete")
     public ResponseEntity<?> undoCompleteBud(@PathVariable UUID treeId, @PathVariable UUID branchId,
-                                             @PathVariable UUID budId,
-                                             @RequestBody BudUndoCompleteReqDto budUndoCompleteReqDto,
-                                             @JwtLoginMember AuthMember authMember) {
+            @PathVariable UUID budId,
+            @RequestBody BudUndoCompleteReqDto budUndoCompleteReqDto,
+            @JwtLoginMember AuthMember authMember) {
 
-        budUpdateUseCase.undoCompleteBud(treeId, branchId, budId, budUndoCompleteReqDto.getDayOfWeek(), authMember);
+        budUpdateUseCase.undoCompleteBud(treeId, branchId, budId,
+                budUndoCompleteReqDto.getDayOfWeek(), authMember);
         return HttpResponse.ok(HttpStatus.OK, "봉오리 완료를 취소하였습니다.");
 
     }
 
     @PatchMapping("/tree/{treeId}/branch/{branchId}/bud/{budId}/name")
     public ResponseEntity<?> modifyBudName(@PathVariable UUID treeId, @PathVariable UUID branchId,
-                                           @PathVariable UUID budId, @RequestBody BudNameModifyReqDto reqDto,
-                                           @JwtLoginMember AuthMember authMember) {
+            @PathVariable UUID budId, @RequestBody BudNameModifyReqDto reqDto,
+            @JwtLoginMember AuthMember authMember) {
         budUpdateUseCase.updateName(treeId, branchId, budId, reqDto.getName(), authMember);
         return HttpResponse.ok(HttpStatus.OK, "봉오리의 이름을 변경하였습니다.");
     }
 
     @DeleteMapping("/tree/{treeId}/branch/{branchId}/bud/{budId}")
     public ResponseEntity<?> deleteBud(@PathVariable UUID treeId, @PathVariable UUID branchId,
-                                       @PathVariable UUID budId, @JwtLoginMember AuthMember authMember) {
+            @PathVariable UUID budId, @JwtLoginMember AuthMember authMember) {
         budDeleteUseCase.deleteBud(treeId, branchId, budId, authMember);
         return HttpResponse.ok(HttpStatus.OK, "봉오리를 삭제하였습니다.");
     }

@@ -31,10 +31,7 @@ public class Quest extends BaseTimeEntity {
     private UUID acceptor;
 
     @Column
-    private String condition;
-
-    @Column
-    private String reward;
+    private String content;
 
     @PrePersist
     public void generateQuestId(){
