@@ -30,9 +30,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GroupSearchUseCase {
@@ -95,8 +97,12 @@ public class GroupSearchUseCase {
     public IsTeacherOfGroupResponseDto getIsTeacherOfGroup(UUID groupId,
             IsTeacherOfGroupRequestDto isTeacherOfGroupRequestDto) {
         Group group = findGroupWithTeacherByIdOrThrow(groupId);
-        return new IsTeacherOfGroupResponseDto(
+        log.info("groupId : {}", group.getId());
+        log.info("groupTeacher: {}", group.getTeacher().getMember().getId());
+        IsTeacherOfGroupResponseDto responseDto = new IsTeacherOfGroupResponseDto(
                 group.getIsGroupTeacherByMemberId(isTeacherOfGroupRequestDto.getTeacherId()));
+        log.info("isTeacher: {}", responseDto.isLeader());
+        return responseDto;
     }
 
     private boolean validateIsTeacherOfStudent(Member member, UUID teacherId) {

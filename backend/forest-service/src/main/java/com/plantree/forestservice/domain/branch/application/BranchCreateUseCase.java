@@ -14,9 +14,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -55,6 +57,8 @@ public class BranchCreateUseCase {
 
     @Transactional
     public void createBranchesToAllGroupMembers(UUID groupId, AuthMember authMember, String name) {
+        log.info("groupId : {}", groupId);
+        log.info("Auth.memberId: {}", authMember.getMemberId());
 
         authMemberValidator.isGroupLeader(groupId, authMember);
         List<UUID> studentIds = memberServiceClient.getGroupMembers(groupId)
