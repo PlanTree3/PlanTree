@@ -1,4 +1,5 @@
 package com.plantree.commonservice.global.openFeign;
+
 import com.plantree.commonservice.global.openFeign.dto.CheckGroupLeaderReqDto;
 import com.plantree.commonservice.global.openFeign.dto.CheckGroupLeaderResDto;
 import com.plantree.commonservice.global.openFeign.dto.CheckNestParentReqDto;
@@ -9,6 +10,7 @@ import com.plantree.commonservice.global.openFeign.dto.GetAllStudentIdsResDto;
 import com.plantree.commonservice.global.openFeign.dto.GetGroupMembersResDto;
 import com.plantree.commonservice.global.openFeign.dto.GetNamesFromMemberIdReqDto;
 import com.plantree.commonservice.global.openFeign.dto.GetNamesFromMemberIdResDto;
+import com.plantree.commonservice.global.openFeign.dto.MemberNameResDto;
 import java.util.UUID;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,4 +41,7 @@ public interface MemberServiceClient {
 
     @GetMapping("/member/student-id")
     GetAllStudentIdsResDto getAllStudentIds();
+
+    @GetMapping("/member/{memberId}/name")
+    MemberNameResDto getMemberName(@PathVariable(value = "memberId") UUID memberId);
 }

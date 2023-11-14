@@ -17,17 +17,22 @@ public class InformRepositoryImpl implements InformRepository {
     private final InformQueryRepository informQueryRepository;
 
     @Override
-    public Optional<Inform> findById(UUID informId){
+    public Optional<Inform> findById(UUID informId) {
         return informJpaRepository.findById(informId);
     }
 
     @Override
-    public Inform save(Inform inform){
+    public Optional<Inform> findByIdWithFiles(UUID informId) {
+        return Optional.ofNullable(informQueryRepository.findByIdWithFiles(informId));
+    }
+
+    @Override
+    public Inform save(Inform inform) {
         return informJpaRepository.save(inform);
     }
 
     @Override
-    public void deleteById(UUID informId){
+    public void deleteById(UUID informId) {
         informJpaRepository.deleteById(informId);
     }
 
