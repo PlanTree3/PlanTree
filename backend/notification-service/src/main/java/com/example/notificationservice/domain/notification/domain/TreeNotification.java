@@ -1,36 +1,46 @@
 package com.example.notificationservice.domain.notification.domain;
 
+import com.example.notificationservice.global.util.SequentialUUIDGenerator;
+import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@EntityListeners(value = AuditingEntityListener.class)
 public class TreeNotification {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "notification_id")
-    private Long id;
-
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID receiverId;
+    @Column(name = "notification_id", columnDefinition = "BINARY(16)")
+    private UUID id;
 
     @Column(columnDefinition = "BINARY(16)")
     private UUID treeId;
 
-    @Enumerated(EnumType.STRING)
     @Column
-    private TreeNotificationType type;
+    private LocalDate createdAt;
 
-    @Column
+    @Column(columnDefinition = "VARCHAR(500)")
     private String data;
+
+    @Builder
+    public TreeNotification(UUID treeId, String createdAt, String data) {
+        this.treeId = treeId;
+        this.createdAt = LocalDate.parse(createdAt);
+        this.data = data;
+    }
+
+    @PrePersist
+    public void generateMemberId() {
+        this.id = SequentialUUIDGenerator.generateSequentialUUID();
+    }
 }

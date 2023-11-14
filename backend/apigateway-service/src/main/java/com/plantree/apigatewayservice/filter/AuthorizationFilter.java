@@ -81,7 +81,7 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
     private boolean isCookieNotRequired(String requestUri, String httpMethod) {
         return httpMethod.equals("POST") && (requestUri.equals("/member")
                 || requestUri.equals("/member/login") || requestUri.equals(
-                "/member-service/dev/auth/login"));
+                "/dev/auth/login"));
     }
 
     private HttpCookie getCookieByName(ServerHttpRequest request, String name) {

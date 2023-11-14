@@ -45,6 +45,7 @@ public class BranchCreateUseCase {
         BranchCreatedEvent event = BranchCreatedEvent.builder()
                                                      .treeId(treeId)
                                                      .memberId(authMember.getMemberId())
+                                                     .studentId(branch.getStudentId())
                                                      .role(authMember.getRole())
                                                      .branchId(branch.getId())
                                                      .branchName(branch.getName())
@@ -55,7 +56,6 @@ public class BranchCreateUseCase {
 
     @Transactional
     public void createBranchesToAllGroupMembers(UUID groupId, AuthMember authMember, String name) {
-
         authMemberValidator.isGroupLeader(groupId, authMember);
         List<UUID> studentIds = memberServiceClient.getGroupMembers(groupId)
                                                    .getStudentIds();

@@ -6,6 +6,7 @@ import com.plantree.memberservice.domain.group.application.NestJoinUseCase;
 import com.plantree.memberservice.domain.group.application.NestModifyUseCase;
 import com.plantree.memberservice.domain.group.application.NestSearchUseCase;
 import com.plantree.memberservice.domain.group.dto.IsParentOfStudentResponseDto;
+import com.plantree.memberservice.domain.group.dto.ParentIdsResponseDto;
 import com.plantree.memberservice.domain.group.dto.request.IsParentOfStudentRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestNameChangeRequestDto;
@@ -82,5 +83,10 @@ public class NestController {
     public IsParentOfStudentResponseDto getIsParentOfStudent(
             @RequestBody IsParentOfStudentRequestDto isParentOfStudentRequestDto) {
         return nestSearchUseCase.getIsParentOfStudent(isParentOfStudentRequestDto);
+    }
+
+    @GetMapping("/leader-id/{studentId}")
+    public ParentIdsResponseDto searchParentIds(@PathVariable UUID studentId) {
+        return nestSearchUseCase.searchParentIds(studentId);
     }
 }
