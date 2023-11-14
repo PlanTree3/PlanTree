@@ -111,16 +111,20 @@
 .admin-group {
   &-detail {
     &-container {
-      @apply flex flex-col;
+      @apply flex flex-col space-y-[2vh];
     }
     &-title {
       img {
-        @apply h-[70%];
+        @apply max-h-[4vh];
       }
       @apply flex font-semibold text-2xl;
     }
     &-btn-container {
-      @apply space-x-2; 
+      @apply space-x-2;
+
+      &-bottom {
+        @apply flex justify-between justify-self-end;
+      }
     }
     &-content {
       @apply space-y-2;
@@ -132,14 +136,19 @@
   &-nest-area {
     @apply md:flex items-center;
 
-    div {
-      @apply space-y-2;
+    &-image-container {
+      @apply w-2/5 flex justify-center;
     }
-    title {
-      @apply block text-2xl;
-    }
-    text {
-      @apply block text-lg;
+
+    &-text-container {
+      @apply w-3/5 space-y-2;
+
+      title {
+        @apply block text-2xl;
+      }
+      text {
+        @apply block text-lg;
+      }
     }
   }
 }
