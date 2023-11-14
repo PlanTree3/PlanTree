@@ -106,7 +106,7 @@ const NewsLetterPage = () => {
         <tbody>
           {newsList.map((news, idx) => {
             return (
-              <button onClick={showNews()}>
+              <button onClick={() => showNews()}>
                 <tr>
                   <td>{idx}</td>
                   <td>{news.title}</td>

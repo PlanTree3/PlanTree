@@ -66,7 +66,7 @@ const RoutesComponent = () => (
 
     <Route path="/tutorial" element={<Tutorial />} />
 
-    <Route path="/newsLetterPage" element={<NewsLetterPage />} />
+    <Route path="/newsLetter" element={<NewsLetterPage />} />
   </Routes>
 )
 
