@@ -78,7 +78,7 @@ public class AuthMemberValidator {
     public void isGroupLeader(UUID groupId, AuthMember authMember) {
         CheckGroupLeaderResDto checkGroupLeaderResDto = memberServiceClient.checkGroupLeader(
                 new CheckGroupLeaderReqDto(authMember.getMemberId()), groupId);
-        if (!checkGroupLeaderResDto.isLeader()) {
+        if (!checkGroupLeaderResDto.isTeacher()) {
             throw new UnauthorizedAccessException();
         }
     }

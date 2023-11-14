@@ -7,6 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CheckGroupLeaderResDto {
 
-    private boolean isLeader;
+    private boolean isTeacher;
 
 }
