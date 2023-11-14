@@ -1,13 +1,20 @@
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { ChangeEvent, useEffect, useState } from 'react'
+// import { useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import '@/components/Button/Button.css'
+import Button from '@/components/Button/Button'
 // import { v4 as uuidv4 } from 'uuid'
 
 const NewsLetterPage = () => {
-  const { groupId } = useParams()
+  // const { groupId } = useParams()
   const MySwal = withReactContent(Swal)
   // const uuid = uuidv4()
+  const [isModifying, setIsModifying] = useState<boolean>(false)
+  const [inputInformId, setInputInformId] = useState<number>(0)
+  const [inputTitle, setInputTitle] = useState<string>('')
+  const [inputContent, setInputContent] = useState<string>('')
+  // const [inputFileName, setInputFileName] = useState<string[]>([''])
 
   interface Notice {
     informId: number
@@ -44,8 +51,17 @@ const NewsLetterPage = () => {
 
   // setInputNewsLetters(newsList) 이 부분은 삭제합니다.
 
+  setInputNewsLetters([
+    {
+      informId: 1,
+      title: '플젝이',
+      groupName: '벌써',
+      createdAt: new Date(),
+    },
+  ])
+
   const showNews = (notificationId: number) => {
-    console.log(notificationId)
+    setInputInformId(notificationId)
 
     interface NewsData {
       title: string
@@ -62,20 +78,63 @@ const NewsLetterPage = () => {
       files: [{ fileId: '랄랄라라라', fileName: '루루룰루룰' }],
     }
 
-    const content = (
-      <>
-        <div>{news.title}</div>
-        <div>{news.content}</div>
-        {news.files.map((file, index) => (
-          <div key={index}>
-            <div>{file.fileName}</div>
-          </div>
-        ))}
-      </>
-    )
+    // useState에 때려박자
+    setInputTitle(news.title)
+    setInputContent(news.content)
+    const fileNames: string[] = []
+    news.files.map((file) => fileNames.push(file.fileName))
+
+    const modifyNewsLetter = () => {
+      setIsModifying(true)
+    }
+
+    const modifyTitle = (e: ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target
+      setInputTitle(value)
+    }
+
+    const modifyContent = (e: ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target
+      setInputContent(value)
+    }
+
+    const downloadFile = (fileName: string) => {
+      console.log(fileName)
+    }
+
+    const content = () => {
+      return (
+        <div>
+          {isModifying ? (
+            <>
+              <input type="text" value={inputTitle} onChange={modifyTitle} />
+              <input
+                type="text"
+                value={inputContent}
+                onChange={modifyContent}
+              />
+            </>
+          ) : (
+            <>
+              <div>{news.title}</div>
+              <div>{news.writer}</div>
+              <div>{news.content}</div>
+              {news.files.map((file, index) => (
+                <button onClick={() => downloadFile(file.fileName)}>
+                  <div key={index}>
+                    <div>{file.fileName}</div>
+                  </div>
+                </button>
+              ))}
+              <Button onClick={modifyNewsLetter} label="수정하기" />
+            </>
+          )}
+        </div>
+      )
+    }
 
     MySwal.fire({
-      html: content,
+      html: content(),
       position: 'center',
       width: '70%',
       heightAuto: false,
@@ -86,6 +145,12 @@ const NewsLetterPage = () => {
       },
     })
   }
+
+  useEffect(() => {
+    if (isModifying) {
+      showNews(inputInformId)
+    }
+  }, [isModifying, inputInformId])
 
   return (
     <>
@@ -103,7 +168,7 @@ const NewsLetterPage = () => {
             <tr key={news.informId}>
               <td>{idx + 1}</td>
               <td>
-                <button onClick={() => showNews(news.notificationId)}>
+                <button onClick={() => showNews(news.informId)}>
                   {news.title}
                 </button>
               </td>
