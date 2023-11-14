@@ -41,13 +41,24 @@ const UserProfileImg = () => {
     'tiger',
   ]
 
+  // userBirth가 string으로 오면 Date로 변경
+  // persist에는 직렬 가능한 정보를 넣어야 하기에 object 저장 X가 원칙
+  const checkDateType = (day: Date | string) => {
+    if (day instanceof Date) {
+      return day
+    }
+    const fixDay = new Date(day)
+    return fixDay
+  }
+
   // userBirth로부터 나이 추출
   const currentDate = new Date()
-  const userAge = currentDate.getFullYear() - userBirth.getFullYear()
+  const userBithDate = checkDateType(userBirth)
+  const userAge = currentDate.getFullYear() - userBithDate.getFullYear()
 
   // userBirth로부터 month, day 추출
-  const userBirthMonth = userBirth.getMonth() + 1
-  const userBirthDay = userBirth.getDate()
+  const userBirthMonth = userBithDate.getMonth() + 1
+  const userBirthDay = userBithDate.getDate()
 
   // userRole 한국어 패치
   const showUserRole = () => {
