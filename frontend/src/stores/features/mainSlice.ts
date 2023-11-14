@@ -16,13 +16,10 @@ export const mainSlice = createSlice({
   name: 'branch',
   initialState,
   reducers: {
-    getMainData: () => {
-      console.log('진입 확인')
-    },
+    getMainData: () => {},
     storeIdName: (state, action) => {
       state.treeId = action.payload.treeId
       state.treeName = action.payload.treeName
-      console.log('나무 정보 확인', action.payload)
     },
     storeWeeklyData: (state, action) => {
       state.weekly.mon = action.payload.mon

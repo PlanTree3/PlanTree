@@ -9,6 +9,10 @@ import { getTreeDetailData } from '@/stores/features/forestSlice.ts'
 const TreePage = () => {
   const dispatch = useDispatch()
   const [totalP, setTotalP] = useState<null | number>(null)
+  const [branchNames, setBranchNames] = useState([])
+  const [branchTotalCount, setBranchTotalCount] = useState([])
+  const [branchDoneCount, setBranchDoneCount] = useState([])
+  const [notYet, setNotYet] = useState<number[]>([])
   const detailData = useSelector(
     (state: RootState) => state.forest.detailData,
   ) ?? {
@@ -81,33 +85,6 @@ const TreePage = () => {
     ],
   }
   const { id } = useParams()
-  useEffect(() => {
-    console.log(id, detailData)
-    dispatch(getTreeDetailData())
-  }, [id])
-
-  useEffect(() => {
-    let newSum = 0
-    let newFin = 0
-
-    detailData.branches.forEach((branch) => {
-      newSum += branch.totalBudCount
-      newFin += branch.completedBudCount
-    })
-    console.log(newFin, newSum)
-    if (newSum > 0) {
-      setTotalP((newFin / newSum) * 100)
-    } else {
-      setTotalP(0)
-    }
-  }, [detailData])
-
-  // const detailProcess = detailData.branches.map((branch) => ({
-  //   ...branch,
-  //   processRatio: branch.totalBudCount
-  //     ? branch.completedBudCount / branch.totalBudCount
-  //     : 0,
-  // }))
 
   return (
     <div className="tree-page">
@@ -132,14 +109,29 @@ const TreePage = () => {
         </div>
         <div className="tree-page-chart">
           가지 분포
-          <PieChart />
+          {branchNames.length > 0 ? (
+            <PieChart
+              branchNames={branchNames}
+              branchTotalCount={branchTotalCount}
+            />
+          ) : (
+            <p>아직 생성된 가지가 없습니다.</p>
+          )}
         </div>
         <div className="tree-page-chart">
-          가?지 요?일 별 달성도 차트
-          <BarChart />
+          가지 별 달성도 차트
+          {branchNames.length > 0 ? (
+            <BarChart
+              branchNames={branchNames}
+              notYet={notYet}
+              branchDoneCount={branchDoneCount}
+            />
+          ) : (
+            <p>아직 생성된 가지가 없습니다.</p>
+          )}
         </div>
       </div>
-      <div className="tree-page-title">회고회고</div>
+      <div className="tree-page-title">회고</div>
       <div>회고 맵돌리는 구간</div>
     </div>
   )

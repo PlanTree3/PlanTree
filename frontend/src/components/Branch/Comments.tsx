@@ -42,15 +42,11 @@ const Comments: React.FC<CommentsProps> = ({
   const [counts, setCounts] = useState(commentCount)
   const treeId = useSelector((state: RootState) => state.main.treeId)
   const updateInfo = async () => {
-    try {
-      const response: any = await detailBuds(treeId, budId)
-      const data = response.data.comments ?? null
-      console.log(response)
-      if (data) {
-        setComments(data)
-      }
-    } catch (error) {
-      console.error(error)
+    const response: any = await detailBuds(treeId, budId)
+    const data = response.data?.comments ?? null
+    console.log(response)
+    if (data) {
+      setComments(data)
     }
   }
   useEffect(() => {

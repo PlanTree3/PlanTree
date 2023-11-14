@@ -5,9 +5,11 @@ import { authApi } from '@/apis'
 
 // 봉오리 추가
 const budCreate = async (treeId: string, branchId: string, data: any) => {
-  return authApi
+  authApi
     .post(`${branchApiUrl(treeId, branchId)}/bud`, data)
-    .then((res) => console.log(res))
+    .then((res) => {
+      console.log(res)
+    })
     .catch((err) => console.log(err))
 }
 
@@ -44,7 +46,7 @@ const budComplete = async (
   budId: string,
   data: any,
 ) => {
-  return authApi
+  authApi
     .patch(`${budApiUrl(treeId, branchId, budId)}/complete`, data)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
@@ -57,7 +59,7 @@ const budCompleteCancel = async (
   budId: string,
   data: any,
 ) => {
-  return authApi
+  authApi
     .patch(`${budApiUrl(treeId, branchId, budId)}/undo-complete`, data)
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
