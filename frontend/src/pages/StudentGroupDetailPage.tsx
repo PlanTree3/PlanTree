@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 // import axios from 'axios';
 import './GroupPage.scss'
 import Button from '@/components/Button/Button'
@@ -7,6 +7,7 @@ import { groupDetail } from '@/apis'
 
 const StudentGroupDetailPage = () => {
   const { groupId } = useParams()
+  const navigate = useNavigate()
   const [currentPage, setCurrentPage] = useState(1)
   const [groupData, setGroupData] = useState<any>(null)
 
@@ -44,6 +45,7 @@ const StudentGroupDetailPage = () => {
   useEffect(() => {
     handleGetGroupDetail()
   }, [])
+  
   return (
     <div>
       <Link to="/studentGroup">
