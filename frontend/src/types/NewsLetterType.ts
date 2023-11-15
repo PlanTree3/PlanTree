@@ -9,14 +9,12 @@ export type NewsLetterListG = [
 ]
 
 // 가정통신문 상세 조회
-export type NewsLetter = [
-  {
-    title: string
-    writer: string
-    content: string
-    files: [fileId: string, fileName: string]
-  },
-]
+export type NewsLetter = {
+  title: string
+  writer: string
+  content: string
+  files: { fileId: string; fileName: string }[]
+}
 
 // 가정통신문 생성 req
 export type CreateNewsLetterReq = {
