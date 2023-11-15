@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import ReactModal from 'react-modal'
 import './SideBar.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,6 +9,7 @@ import post5 from '../../../public/sidebar/05_sky.png'
 import post1 from '../../../public/sidebar/01_red.png'
 import bell from '../../../public/bell.png'
 import { logOutCheck } from '@/stores/features/userSlice'
+import NotificationBox from '../notificationBox'
 
 const SideBar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -80,36 +80,7 @@ const SideBar = () => {
         <img src={bell} alt="알람" className="sidebar-bell-img" />
       </button>
       {isLoggedIn && <button onClick={handleLogout}>로그아웃</button>}
-
-      <ReactModal
-        isOpen={modalIsOpen}
-        ariaHideApp={false}
-        onRequestClose={closeModal}
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
-            width: '100%',
-            height: '100vh',
-            zIndex: 10,
-            top: 0,
-            left: 0,
-          },
-          content: {
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '80%',
-            height: '80%',
-            border: '1px #000',
-            borderRadius: '10px',
-            overflow: 'auto',
-            background: '#F5F5DC',
-            boxShadow: '3px 3px 3px rgba(0, 0, 0, 0.25)',
-          },
-        }}
-      >
-        <div className="font-semibold text-xl">알림 확인하기</div>
-      </ReactModal>
+      <NotificationBox modalIsOpen={modalIsOpen} closeModal={closeModal} />
     </>
   )
 }

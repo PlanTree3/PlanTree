@@ -153,9 +153,9 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     }
     try {
       const response = await groupQuestCreate(data)
-      console.log('그룹 삭제 응답:', response)
+      console.log('그룹 퀘스트 응답:', response)
     } catch (error) {
-      console.error('그룹 삭제 에러:', error)
+      console.error('그룹 퀘스트 에러:', error)
     }
   }
 
@@ -378,7 +378,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           />
         </div>
       </ReactModal>
-
       <ReactModal
         isOpen={questmodalIsOpen}
         ariaHideApp={false}
@@ -433,8 +432,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             className="normal primary"
           />
         </div>
-        {/* <div className="flex justify-center mt-[8vh]">
-        </div> */}
       </ReactModal>
     </div>
   )

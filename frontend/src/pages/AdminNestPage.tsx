@@ -14,6 +14,7 @@ import {
   nestCreate,
   nestDelete,
   nestNameUpdate,
+  nestQuestCreate,
   nestStudents,
 } from '@/apis'
 import { LoginCheck } from '@/components'
@@ -22,10 +23,14 @@ const AdminNestPage = () => {
   const [page, setPage] = useState(1)
   const [pencilModalIsOpen, setPencilModalIsOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [questmodalIsOpen, setQuestModalIsOpen] = useState(false)
   const [inputNestName, setInputNestName] = useState('')
   const [studentsData, setStudentsData] = useState<any>(null)
   const [nestData, setNestData] = useState<any>(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const [inputQuestTitle, setInputQuestTitle] = useState('')
+  const [inputQuestContent, setInputQuestContent] = useState('')
+  const [selectedStudentId, setSelectedStudentId] = useState('')
 
   const studentsPerPage = 4
   const startIndex = (page - 1) * studentsPerPage
@@ -51,12 +56,15 @@ const AdminNestPage = () => {
     setIsOpen(false)
   }
 
-  // const openCreateModal = () => {
-  //   setCreateModalisOpen(true)
-  // }
-  // const closeCreateModal = () => {
-  //   setCreateModalisOpen(false)
-  // }
+  const openQuestModal = () => {
+    setQuestModalIsOpen(true)
+  }
+
+  const closeQuestModal = () => {
+    setQuestModalIsOpen(false)
+    setInputQuestTitle('')
+    setInputQuestContent('')
+  }
 
   const openPencilModal = () => {
     setPencilModalIsOpen(true)
@@ -68,6 +76,21 @@ const AdminNestPage = () => {
 
   const handleNestNameInputChange = (e) => {
     setInputNestName(e.target.value)
+  }
+  const handleQuestTitleInputChange = (e: {
+    target: { value: React.SetStateAction<string> }
+  }) => {
+    setInputQuestTitle(e.target.value)
+  }
+  const handleQuestContentInputChange = (e: {
+    target: { value: React.SetStateAction<string> }
+  }) => {
+    setInputQuestContent(e.target.value)
+  }
+  const handleStudentSelection = (e: {
+    target: { value: React.SetStateAction<string> }
+  }) => {
+    setSelectedStudentId(e.target.value)
   }
 
   //둥지 생성
@@ -141,13 +164,25 @@ const AdminNestPage = () => {
     }
   }
 
+  // 둥지에서 학생 퀘스트 생성
+  const handleStudentQuest = async () => {
+    const data = {
+      title: inputQuestTitle,
+      content: inputQuestContent,
+      studentId: selectedStudentId,
+    }
+    try {
+      const response = await nestQuestCreate(data)
+      console.log('퀘스트 응답:', response)
+    } catch (error) {
+      console.error('퀘스트 에러:', error)
+    }
+    closeQuestModal()
+  }
+
   useEffect(() => {
     handleNestCheck()
   }, [])
-
-  // useEffect(() => {
-  //   handleNestCheck()
-  // }, [])
 
   const nestId = nestData?.nestId
 
@@ -157,7 +192,7 @@ const AdminNestPage = () => {
         <div>
           <div className="font-semibold text-2xl">둥지가 없습니다.</div>
           <Button
-            className="primary"
+            className="normal primary"
             onClick={openModal}
             label="둥지 생성하기"
           />
@@ -199,7 +234,7 @@ const AdminNestPage = () => {
               tabIndex={0}
             />
           </div>
-          <div className="font-semibold text-l">둥지장: </div>
+          <div className="font-semibold text-l text-yellow-800">둥지장: </div>
           {nestData.parents.length > 0 ? (
             nestData.parents.map((parent: any) => (
               <p className="font-semibold text-lg">{parent}</p>
@@ -237,6 +272,11 @@ const AdminNestPage = () => {
               </button>
             ))}
           </div>
+          <Button
+            className=" normal primary"
+            onClick={openQuestModal}
+            label="퀘스트 생성"
+          />
           <Button
             className=" normal primary"
             onClick={openModal}
@@ -301,6 +341,77 @@ const AdminNestPage = () => {
               placeholder="둥지 이름을 수정하세요"
             />
             <Button onClick={handleNestName} className="primary" label="저장" />
+          </ReactModal>
+          <ReactModal
+            isOpen={questmodalIsOpen}
+            ariaHideApp={false}
+            onRequestClose={closeQuestModal}
+            style={{
+              overlay: {
+                backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                width: '100%',
+                height: '100vh',
+                zIndex: 10,
+                top: 0,
+                left: 0,
+              },
+              content: {
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '60%',
+                height: '70%',
+                border: '2px solid #000',
+                borderRadius: '10px',
+                overflow: 'auto',
+                background: '#F5F5DC',
+                boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
+              },
+            }}
+          >
+            <div className="font-semibold text-xl">
+              <div style={{ gridTemplateColumns: '1fr 9fr', display: 'grid' }}>
+                <div className="w-full">제목:</div>
+                <input
+                  type="text"
+                  value={inputQuestTitle}
+                  onChange={handleQuestTitleInputChange}
+                  placeholder="퀘스트 제목을 적어주세요"
+                />
+              </div>
+
+              <div className="flex flex-col my-[3vh]">
+                <label htmlFor="studentSelect">학생 선택:</label>
+                <select
+                  id="studentSelect"
+                  value={selectedStudentId}
+                  onChange={handleStudentSelection}
+                >
+                  <option value="">-- 학생 선택 --</option>
+                  {currentStudents.map((student: any) => (
+                    <option key={student.studentId} value={student.studentId}>
+                      {student.studentName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-col">
+                <text>내용:</text>
+                <textarea
+                  className="w-full h-[12rem]"
+                  // type="text"
+                  value={inputQuestContent}
+                  onChange={handleQuestContentInputChange}
+                  placeholder=" 보상을 포함한 퀘스트 내용을 적어주세요"
+                />
+              </div>
+              <Button
+                onClick={handleStudentQuest}
+                label="퀘스트 생성"
+                className="normal primary mt-[1vh]"
+              />
+            </div>
           </ReactModal>
         </div>
       )}
