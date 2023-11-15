@@ -3,18 +3,18 @@ import { useParams } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import '@/components/Button/Button.css'
 import Button from '@/components/Button/Button'
-// import {
-//   noticeDetail,
-//   groupNoticeList,
-//   groupNoticeUpdate,
-//   noticeFileCreate,
-//   noticeFileDownload,
-//   deleteNotice,
-// } from '@/apis/communication'
+import {
+  // noticeDetail,
+  groupNoticeList,
+  // groupNoticeUpdate,
+  // noticeFileCreate,
+  // noticeFileDownload,
+  // deleteNotice,
+} from '@/apis/communication'
 import {
   NewsLetterListG,
   NewsLetter,
-  ModifyNewsLetterReq,
+  // ModifyNewsLetterReq,
   // AddFile,
 } from '@/types/NewsLetterType'
 // import { v4 as uuidv4 } from 'uuid'
@@ -113,8 +113,8 @@ const NewsLetterPage = () => {
     const fetchDataAndShowNews = async () => {
       try {
         // 데이터를 가져와서 inputNewsLetters에 설정
-        // const response = await groupNoticeList(groupId)
-        // setInputNewsLetters(response.data)
+        const response = await groupNoticeList(groupId)
+        setInputNewsLetters(response.data)
 
         // isModifying가 true일 때만 showNews 함수 호출
         if (isModifying) {
@@ -140,83 +140,87 @@ const NewsLetterPage = () => {
           <div>날짜</div>
         </div>
         <hr />
-        {inputNewsLetters.map((news, idx) => (
-          <div key={news.informId} className="newsletter-item">
-            <p className="groupInfo">{idx + 1}</p>
-            <p className="groupInfo">
-              <button onClick={() => showNews(news.informId)}>
-                {news.title}
-              </button>
-              <ReactModal
-                isOpen={modalIsOpen}
-                ariaHideApp={false}
-                onRequestClose={closeModal}
-                style={{
-                  overlay: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                    width: '100%',
-                    height: '100vh',
-                    zIndex: 10,
-                    top: 0,
-                    left: 0,
-                  },
-                  content: {
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '50%',
-                    height: '50%',
-                    border: '2px solid #000',
-                    borderRadius: '10px',
-                    overflow: 'auto',
-                    background: '#F5F5DC',
-                    boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
-                  },
-                }}
-              >
-                <div>
-                  {isModifying ? (
-                    <>
-                      <div>제목: </div>
-                      <input
-                        type="text"
-                        value={inputTitle}
-                        onChange={modifyTitle}
-                      />
-                      <div>내용: </div>
-                      <input
-                        type="text"
-                        value={inputContent}
-                        onChange={modifyContent}
-                      />
-                      <Button onClick={sendNewsLetter} label="확인" />
-                    </>
-                  ) : (
-                    <div className="newsletterModal-item">
-                      <div>제목: </div>
-                      <div>{inputTitle}</div>
-                      <div>작성자: </div>
-                      <div>{inputWriter}</div>
-                      <div>내용: </div>
-                      <div>{inputContent}</div>
-                      <hr />
-                      {inputFileName.map((file, index) => (
-                        <button onClick={() => downloadFile(file)}>
-                          <div key={index}>
-                            <div>{file}</div>
-                          </div>
-                        </button>
-                      ))}
-                      <Button onClick={modifyNewsLetter} label="수정하기" />
-                    </div>
-                  )}
-                </div>
-              </ReactModal>
-            </p>
-            <p className="groupInfo">{newsListDate(news.createdAt)}</p>
-          </div>
-        ))}
+        {inputNewsLetters?.length > 0 ? (
+          inputNewsLetters.map((news, idx) => (
+            <div key={news.informId} className="newsletter-item">
+              <p className="groupInfo">{idx + 1}</p>
+              <p className="groupInfo">
+                <button onClick={() => showNews(news.informId)}>
+                  {news.title}
+                </button>{' '}
+              </p>{' '}
+              <p className="groupInfo">{newsListDate(news.createdAt)}</p>
+            </div>
+          ))
+        ) : (
+          <p className="groupInfo">현재 가정통신문이 없습니다.</p>
+        )}
       </div>
+      <ReactModal
+        isOpen={modalIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            width: '100%',
+            height: '100vh',
+            zIndex: 10,
+            top: 0,
+            left: 0,
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '50%',
+            height: '50%',
+            border: '2px solid #000',
+            borderRadius: '10px',
+            overflow: 'auto',
+            background: '#F5F5DC',
+            boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
+          },
+        }}
+      >
+        <div>
+          {isModifying ? (
+            <>
+              <div>제목: </div>
+              <input type="text" value={inputTitle} onChange={modifyTitle} />
+              <div>내용: </div>
+              <input
+                type="text"
+                value={inputContent}
+                onChange={modifyContent}
+              />
+              <Button onClick={sendNewsLetter} label="확인" />
+            </>
+          ) : (
+            <div className="newsletterModal-item">
+              <div>제목: </div>
+              <div>{inputTitle}</div>
+              <div>작성자: </div>
+              <div>{inputWriter}</div>
+              <div>내용: </div>
+              <div>{inputContent}</div>
+              <hr />
+              {inputFileName?.length > 0 ? (
+                inputFileName?.map((file, index) => (
+                  <button onClick={() => downloadFile(file)}>
+                    <div key={index}>
+                      <div>{file}</div>
+                    </div>
+                  </button>
+                ))
+              ) : (
+                <p />
+              )}
+              <Button onClick={modifyNewsLetter} label="수정하기" />
+            </div>
+          )}
+        </div>
+      </ReactModal>
     </div>
   )
 }
