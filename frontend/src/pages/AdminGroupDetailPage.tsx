@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 // import axios, { AxiosRequestConfig } from 'axios'
 import QR from 'qrcode.react'
-import { Link, useParams, useLocation } from 'react-router-dom'
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import arrow from '../../public/arrow.png'
@@ -18,6 +18,7 @@ import {
 const AdminGroupDetailPage: React.FC<any> = () => {
   const { groupId } = useParams()
   const location = useLocation()
+  const navigate = useNavigate()
   const groupName = location.state?.groupName || ''
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -144,6 +145,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     } catch (error) {
       console.error('그룹 삭제 에러:', error)
     }
+    // memo 사용 등 강제 리렌더 할 수 있는 기능 넣기
+    navigate('/adminGroup')
   }
 
   // 그룹 퀘스트 생성
@@ -163,7 +166,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   useEffect(() => {
     handleGetGroupDetail()
-    // setInputValue(groupName)
     console.log('그룹네임', groupName)
   }, [])
 

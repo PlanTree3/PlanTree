@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 // import axios from 'axios';
 import './GroupPage.scss'
-// import Seal from '../../public/Seal.png'
-// import yeji1 from '../../public/yeji1.png'
-// import gijeong1 from '../../public/gijeong1.png'
+import Button from '@/components/Button/Button'
 import { groupDetail } from '@/apis'
 
 const StudentGroupDetailPage = () => {
@@ -80,6 +78,9 @@ const StudentGroupDetailPage = () => {
           </button>
         ))}
       </div>
+      <Link to={`/newsLetter/${groupId}`}>
+        <Button className="normal gray" label="가정통신문 보기" />
+      </Link>
     </div>
   )
 }

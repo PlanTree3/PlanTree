@@ -73,7 +73,9 @@ const AdminNestPage = () => {
     setPencilModalIsOpen(false)
   }
 
-  const handleNestNameInputChange = (e) => {
+  const handleNestNameInputChange = (e: {
+    target: { value: React.SetStateAction<string> }
+  }) => {
     setInputNestName(e.target.value)
   }
   const handleQuestTitleInputChange = (e: {
@@ -204,8 +206,7 @@ const AdminNestPage = () => {
                 <input
                   placeholder="ex. 2023 3학년 2반"
                   maxLength={50}
-                  onChange={(e) => setInputNestName(e.target.value)}
-                  onKeyDown={handleNestNameInputChange}
+                  onChange={handleNestNameInputChange}
                 />
                 <Button
                   className="primary"

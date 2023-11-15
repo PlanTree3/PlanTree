@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigation } from 'react-router-dom'
 import './GroupPage.scss'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
@@ -62,6 +62,10 @@ const AdminGroupPage: React.FC = () => {
   useEffect(() => {
     handleGetGroupList()
   }, [])
+
+  useEffect(() => {
+    handleGetGroupList()
+  }, [useNavigation,handleCreateGroup])
 
   //여기부터는 페이지 넘기면서 조회하는 것
   const GroupsPerPage = 5
