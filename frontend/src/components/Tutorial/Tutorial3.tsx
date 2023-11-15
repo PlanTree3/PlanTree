@@ -11,7 +11,7 @@ interface ForestProps {
 
 const Tutorial3 = ({ forestName }: ForestProps) => {
   return (
-    <Atropos className="atropos">
+    <Atropos className="atropos-tutorial">
       <div className="atropos-component">
         <div className="atropos-inner">
           <img className="atropos-spacer" src={skyImage} alt="sky" />
@@ -20,8 +20,8 @@ const Tutorial3 = ({ forestName }: ForestProps) => {
           <img data-atropos-offset="-4" src={forestBack} alt="forest" />
           <img data-atropos-offset="-2" src={forestMid} alt="forest" />
           <img data-atropos-offset="0" src={forestFront} alt="forest" />
-          <div data-atropos-offset="3" className="forest-text">
-            {forestName}
+          <div data-atropos-offset="3" className="forest-text-area">
+            <div className="forest-text">{forestName}</div>
           </div>
         </div>
         <div className="atropos-shadow" />
