@@ -44,6 +44,9 @@
   color: #fff;
   border: #3579d4;
 }
+.lime {
+  @apply bg-lime-500 border-lime-500;
+}
 
 .gray {
   background-color: #8595a9;

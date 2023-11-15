@@ -43,11 +43,6 @@ const LogIn = () => {
         <Google />
         <button onClick={loginTest}>임시 로그인 버튼</button>
       </div>
-      {/* <Button
-        className="primary"
-        onClick={handleForest}
-        label="예쁜 카드를 보러 가요"
-      /> */}
     </div>
   )
 }

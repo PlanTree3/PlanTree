@@ -70,7 +70,7 @@
 .main-tree-container {
   border-radius: 100%;
   border: 0.7vw solid;
-  box-shadow: 0 0 17px 1px #64748b;
+  box-shadow: 0 0 5px 3px #999;
   grid-area: c;
   @apply justify-self-center self-center w-[25vw] h-[25vw] xl:w-[19vw] xl:h-[19vw] border-lime-500;
 }
@@ -81,8 +81,8 @@
 
 .main-todo-list {
   border-radius: 25px;
-  border-color: #cfb164;
-  box-shadow: 0 0 17px 1px #64748b;
+  border-color: #ebcb7b;
+  box-shadow: 0 0 5px 1px #999;
   grid-template-rows: 1fr 8fr 1fr;
   @apply h-full grid border-[1.5vw] p-3;
 
@@ -105,7 +105,9 @@
 }
 
 .main-todo-list {
-  @apply h-full mt-3 bg-slate-300 text-center rounded-lg overflow-y-auto;
+  border-radius: 25px;
+  @apply h-full mt-3 bg-slate-100 text-center
+    overflow-y-auto;
 
   &-title {
     @apply text-xl py-2;

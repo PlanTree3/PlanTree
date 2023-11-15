@@ -145,8 +145,8 @@ const AdminGroupPage: React.FC = () => {
         isOpen={isOpen}
         onClose={closeModal}
         content={
-          <div>
-            <div>그룹명을 입력해주세요</div>
+          <div className="space-y-[2vh]">
+            <div className="text-lg">그룹명을 입력해주세요</div>
             <input
               placeholder="ex. 2023 3학년 2반"
               maxLength={50}
@@ -154,12 +154,12 @@ const AdminGroupPage: React.FC = () => {
               onKeyDown={handleEnterKeyPress}
             />
             <Button
-              className="primary"
+              className="primary normal"
               label="생성하기"
               onClick={handleCreateGroup}
             />
             <Button
-              className="primary ml-4"
+              className="red normal ml-4"
               label="취소"
               onClick={closeModal}
             />

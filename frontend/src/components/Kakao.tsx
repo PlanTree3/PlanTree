@@ -73,7 +73,7 @@ const Kakao = () => {
           onClick={onClick}
         >
           <img
-            // className="social_login_img"
+            className="social_login_img"
             src={kakaoBTN}
             alt="카카오 로그인"
           />
