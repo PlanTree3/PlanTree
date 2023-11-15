@@ -2,11 +2,8 @@
   @apply w-4/5;
 }
 
-.container {
-  width: 100%;
-  max-width: 800px;
-  margin: auto;
-  padding: 2rem;
+.atropos-tutorial {
+  @apply w-2/3;
 }
 
 /* Atropos web component */
@@ -39,7 +36,7 @@
   visibility: hidden;
 }
 .atropos-component .forest-text-area {
-  @apply absolute space-y-[1vh]
+  @apply absolute
   left-0 top-0
   w-[100%] h-[100%]
   z-20
