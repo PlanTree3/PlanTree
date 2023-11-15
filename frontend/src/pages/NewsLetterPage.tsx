@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ReactModal from 'react-modal'
+// import Swal from 'sweetalert2'
+// import withReactContent from 'sweetalert2-react-content'
 import '@/components/Button/Button.css'
 import Button from '@/components/Button/Button'
 // import {
@@ -14,14 +16,16 @@ import Button from '@/components/Button/Button'
 import {
   NewsLetterListG,
   NewsLetter,
-  ModifyNewsLetterReq,
+  // ModifyNewsLetterReq,
   // AddFile,
 } from '@/types/NewsLetterType'
+// import { groupNoticeList } from '@/apis'
 // import { v4 as uuidv4 } from 'uuid'
 import '@/pages/NewsLetter.scss'
 
 const NewsLetterPage = () => {
   const { groupId } = useParams()
+  // const MySwal = withReactContent(Swal)
   // const uuid = uuidv4()
   const [isModifying, setIsModifying] = useState<boolean>(false)
   const [inputInformId, setInputInformId] = useState<any>(0)
@@ -38,6 +42,17 @@ const NewsLetterPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [inputWriter, setInputWriter] = useState<string>('')
 
+  // 빌드 실행을 위한 useEffect
+  useEffect(() => {
+    const sampleData: NewsLetterListG = [
+      {
+        informId: 'slaasdasdkf',
+        title: '플젝이',
+        createdAt: new Date(),
+      },
+    ]
+    setInputNewsLetters(sampleData)
+  }, [])
   const newsListDate = (date: Date) => {
     const year = date.getFullYear()
     const month = date.getMonth()
