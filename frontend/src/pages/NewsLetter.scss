@@ -1,0 +1,85 @@
+.newsletter {
+  &-page {
+    &-title {
+      @apply flex justify-between ml-[2vw] my-[2vh];
+
+      &-text-2xl {
+        @apply font-semibold text-2xl;
+      }
+    }
+    &-container {
+      @apply mx-[4vw] overflow-y-auto;
+    }
+    &-list {
+      &-box {
+        @apply border-4 rounded-xl p-[2vw];
+        hr {
+          @apply border-t-slate-600 my-[2vh];
+        }
+      }
+      &-title {
+        grid-template-columns: 1fr 6fr 3fr 1fr;
+        @apply grid text-center text-xl;
+      }
+    }
+  }
+
+  &-item {
+    grid-template-columns: 1fr 6fr 3fr 1fr;
+    @apply grid text-center mt-[3vh] border-b-2;
+  }
+
+  &-pagination {
+    @apply flex justify-center;
+  }
+
+  &-detail {
+    &-container {
+      @apply flex flex-col space-y-[4vh];
+    }
+    &-title {
+      img {
+        @apply max-h-[6vh];
+      }
+      @apply flex font-semibold text-2xl justify-between;
+    }
+    &-btn-container {
+      @apply space-x-2;
+
+      &-bottom {
+        @apply flex justify-between justify-self-end;
+      }
+    }
+    &-content {
+      @apply space-y-2;
+    }
+  }
+}
+
+.newsletterModal {
+  @apply gap-2 grid grid-cols-2 text-lg;
+}
+
+// 스크롤 바 높이
+.newsletter-page-container::-webkit-scrollbar {
+  height: 1vh;
+  width: 1vw;
+}
+
+// 스크롤 바 트랙 설정
+.newsletter-page-container::-webkit-scrollbar-track {
+  background: #ffdaaf;
+  border-radius: 2vh;
+}
+
+// 스크롤 바 설정
+.newsletter-page-container::-webkit-scrollbar-thumb {
+  background: #e0c090;
+  border-radius: 2vh;
+}
+
+// 스크롤 바 클릭 시 설정
+.newsletter-page-container::-webkit-scrollbar-thumb:hover {
+  background: #fface4;
+  border-radius: 2vh;
+}
