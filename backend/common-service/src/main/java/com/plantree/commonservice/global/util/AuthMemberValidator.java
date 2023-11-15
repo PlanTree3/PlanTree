@@ -34,9 +34,15 @@ public class AuthMemberValidator {
     }
 
     public void validateAuthMemberAndQuestIssuer(UUID issuer, AuthMember authMember) {
-        UUID memberId = authMember.getMemberId();
-        boolean isAuthMemberQuestIssuer = issuer.equals(memberId);
+        boolean isAuthMemberQuestIssuer = issuer.equals(authMember.getMemberId());
         if(!isAuthMemberQuestIssuer){
+            throw new UnauthorizedAccessException();
+        }
+    }
+
+    public void ValidateAuthMemberAndQuestAcceptor(UUID acceptor, AuthMember authMember){
+        boolean isAuthMemberQuestAcceptor = acceptor.equals(authMember.getMemberId());
+        if(!isAuthMemberQuestAcceptor){
             throw new UnauthorizedAccessException();
         }
     }

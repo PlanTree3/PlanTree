@@ -58,4 +58,13 @@ public class QuestController {
 
     }
 
+    @PatchMapping("quest/{questId}/accept")
+    public ResponseEntity<?> acceptQuest(@PathVariable UUID questId,
+            @JwtLoginMember AuthMember authMember){
+
+        questUpdateUseCase.acceptQuest(questId, authMember);
+        return HttpResponse.ok(HttpStatus.OK, "퀘스트를 수락하였습니다.");
+
+    }
+
 }
