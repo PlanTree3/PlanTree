@@ -1,4 +1,4 @@
-package com.plantree.commonservice.global.webmvc;
+package com.plantree.commonservice.global.config.webmvc;
 
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +25,7 @@ public class JwtLoginMemberArgumentResolver implements HandlerMethodArgumentReso
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) webRequest.getNativeRequest();
         String memberId = httpServletRequest.getHeader("authMember");
+        System.out.println(httpServletRequest.getHeader("role"));
         Role role = Role.valueOf(httpServletRequest.getHeader("role"));
 
         return new AuthMember(UUID.fromString(memberId), role);

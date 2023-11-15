@@ -1,4 +1,4 @@
-package com.plantree.commonservice.global;
+package com.plantree.commonservice.global.config;
 
 import com.plantree.commonservice.global.event.EventProducer;
 import com.plantree.commonservice.global.infra.Producer;

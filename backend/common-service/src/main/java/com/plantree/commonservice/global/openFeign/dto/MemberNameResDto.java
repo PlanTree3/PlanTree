@@ -7,8 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CheckGroupLeaderResDto {
+public class MemberNameResDto {
 
-    private boolean teacher;
-
+    private String name;
 }

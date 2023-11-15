@@ -46,6 +46,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
     // open feign
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
@@ -65,6 +66,9 @@ dependencies {
 
     // kafka
     implementation 'org.springframework.kafka:spring-kafka'
+
+    //aws
+    implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.4'
 }
 
 dependencyManagement {
