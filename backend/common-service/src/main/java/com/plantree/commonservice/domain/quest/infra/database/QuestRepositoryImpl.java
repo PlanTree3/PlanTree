@@ -42,4 +42,9 @@ public class QuestRepositoryImpl implements QuestRepository {
         return questQueryRepository.findAllByAcceptorId(acceptorId);
     }
 
+    @Override
+    public List<Quest> findByIssuer(UUID issuerId){
+        return questQueryRepository.findAllByIssuerId(issuerId);
+    }
+
 }

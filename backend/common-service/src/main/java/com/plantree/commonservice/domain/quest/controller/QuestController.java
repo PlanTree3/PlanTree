@@ -120,4 +120,20 @@ public class QuestController {
 
     }
 
+    @GetMapping("quest/teacher")
+    public ResponseEntity<?> searchTeacherQuests(@JwtLoginMember AuthMember authMember){
+
+        return HttpResponse.okWithData(HttpStatus.OK, "선생님 퀘스트 조회입니다.",
+                questSearchUseCase.findTeacherQuests(authMember));
+
+    }
+
+    @GetMapping("quest/parent")
+    public ResponseEntity<?> searchParentQuests(@JwtLoginMember AuthMember authMember){
+
+        return HttpResponse.okWithData(HttpStatus.OK, "부모님 퀘스트 조회입니다.",
+                questSearchUseCase.findParentQuests(authMember));
+
+    }
+
 }

@@ -4,6 +4,8 @@ import com.plantree.commonservice.domain.quest.application.repository.QuestRepos
 import com.plantree.commonservice.domain.quest.domain.Quest;
 import com.plantree.commonservice.domain.quest.dto.QuestResponseDto;
 import com.plantree.commonservice.global.config.webmvc.AuthMember;
+import com.plantree.commonservice.global.config.webmvc.Role;
+import com.plantree.commonservice.global.exception.UnauthorizedAccessException;
 import com.plantree.commonservice.global.exception.quest.QuestNotFoundException;
 import com.plantree.commonservice.global.openFeign.MemberServiceClient;
 import com.plantree.commonservice.global.openFeign.dto.GetNamesFromMemberIdReqDto;
@@ -45,18 +47,57 @@ public class QuestSearchUseCase {
 
     public List<QuestResponseDto> findStudentQuests(AuthMember authMember) {
 
+        if(!authMember.getRole().equals(Role.STUDENT)) throw new UnauthorizedAccessException();
+
         List<Quest> quests = questRepository.findByAcceptor(authMember.getMemberId());
 
         List<UUID> issuerIds = new ArrayList<>();
         quests.stream()
               .map(quest -> issuerIds.add(quest.getIssuer()));
 
-        Map<UUID, String> names = memberServiceClient.getNamesFromMember(
-                                                             new GetNamesFromMemberIdReqDto(issuerIds))
-                                                     .getNames();
-
-        return quests.stream().map(quest -> new QuestResponseDto(quest, names.get(quest.getIssuer()),
-                names.get(quest.getAcceptor()))).collect(Collectors.toList());
+        return getQuestResponseDtos(quests, issuerIds);
 
     }
+
+    public List<QuestResponseDto> findTeacherQuests(AuthMember authMember) {
+
+        if(!authMember.getRole().equals(Role.TEACHER)) throw new UnauthorizedAccessException();
+
+        List<Quest> quests = questRepository.findByIssuer(authMember.getMemberId());
+
+        List<UUID> acceptors = new ArrayList<>();
+        quests.stream()
+              .map(quest -> acceptors.add(quest.getIssuer()));
+
+        return getQuestResponseDtos(quests, acceptors);
+
+    }
+
+    public List<QuestResponseDto> findParentQuests(AuthMember authMember) {
+
+        if(!authMember.getRole().equals(Role.PARENT)) throw new UnauthorizedAccessException();
+
+        List<Quest> quests = questRepository.findByIssuer(authMember.getMemberId());
+
+        List<UUID> acceptors = new ArrayList<>();
+        quests.stream()
+              .map(quest -> acceptors.add(quest.getIssuer()));
+
+        return getQuestResponseDtos(quests, acceptors);
+
+    }
+
+    private List<QuestResponseDto> getQuestResponseDtos(List<Quest> quests, List<UUID> acceptors) {
+        Map<UUID, String> names = memberServiceClient.getNamesFromMember(
+                                                             new GetNamesFromMemberIdReqDto(
+                                                                     acceptors))
+                                                     .getNames();
+
+        return quests.stream()
+                     .map(quest -> new QuestResponseDto(quest, names.get(quest.getIssuer()),
+                             names.get(quest.getAcceptor())))
+                     .collect(Collectors.toList());
+    }
+
+
 }

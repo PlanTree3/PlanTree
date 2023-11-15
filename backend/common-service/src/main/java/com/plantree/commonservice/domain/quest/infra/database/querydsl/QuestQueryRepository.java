@@ -21,5 +21,11 @@ public class QuestQueryRepository {
                 .fetch();
     }
 
+    public List<Quest> findAllByIssuerId(UUID issuerId){
+        return jpaQueryFactory.selectFrom(quest)
+                .where(quest.issuer.eq(issuerId))
+                .fetch();
+    }
+
 
 }
