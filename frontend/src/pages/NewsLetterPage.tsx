@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import '@/components/Button/Button.css'
 import Button from '@/components/Button/Button'
+import { NewsLetterListP } from '@/types/NewsLetterType'
 // import { v4 as uuidv4 } from 'uuid'
 
 const NewsLetterPage = () => {
@@ -11,21 +12,14 @@ const NewsLetterPage = () => {
   const MySwal = withReactContent(Swal)
   // const uuid = uuidv4()
   const [isModifying, setIsModifying] = useState<boolean>(false)
-  const [inputInformId, setInputInformId] = useState<number>(0)
+  const [inputInformId, setInputInformId] = useState<any>(0)
   const [inputTitle, setInputTitle] = useState<string>('')
   const [inputContent, setInputContent] = useState<string>('')
   // const [inputFileName, setInputFileName] = useState<string[]>([''])
 
-  interface Notice {
-    informId: number
-    title: string
-    groupName: string
-    createdAt: Date
-  }
-
-  const [inputNewsLetters, setInputNewsLetters] = useState<Notice[]>([
+  const [inputNewsLetters, setInputNewsLetters] = useState<NewsLetterListP>([
     {
-      informId: 1,
+      informId: 's;lakf',
       title: '플젝이',
       groupName: '벌써',
       createdAt: new Date(),
@@ -51,16 +45,17 @@ const NewsLetterPage = () => {
 
   // setInputNewsLetters(newsList) 이 부분은 삭제합니다.
 
-  setInputNewsLetters([
-    {
-      informId: 1,
-      title: '플젝이',
-      groupName: '벌써',
-      createdAt: new Date(),
-    },
-  ])
+  // too many rerender 원인
+  // setInputNewsLetters([
+  //   {
+  //     informId: 's;lakf',
+  //     title: '플젝이',
+  //     groupName: '벌써',
+  //     createdAt: new Date(),
+  //   },
+  // ])
 
-  const showNews = (notificationId: number) => {
+  const showNews = (notificationId: any) => {
     setInputInformId(notificationId)
 
     interface NewsData {
