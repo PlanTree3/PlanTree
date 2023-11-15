@@ -73,7 +73,9 @@ const AdminNestPage = () => {
     setPencilModalIsOpen(false)
   }
 
-  const handleNestNameInputChange = (e) => {
+  const handleNestNameInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setInputNestName(e.target.value)
   }
   const handleQuestTitleInputChange = (e: {
@@ -205,7 +207,7 @@ const AdminNestPage = () => {
                   placeholder="ex. 2023 3학년 2반"
                   maxLength={50}
                   onChange={(e) => setInputNestName(e.target.value)}
-                  onKeyDown={handleNestNameInputChange}
+                  // onKeyDown={handleNestNameInputChange}
                 />
                 <Button
                   className="primary"
@@ -376,6 +378,7 @@ const AdminNestPage = () => {
               </div>
 
               <div className="flex flex-col my-[3vh]">
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                 <label htmlFor="studentSelect">학생 선택:</label>
                 <select
                   id="studentSelect"

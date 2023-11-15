@@ -36,7 +36,7 @@ const LogIn = () => {
         <h1 className="text-5xl text-blue-300 font-bold">계획을 그려볼까요?</h1>
       </div>
       <div className="flex justify-center">
-        <div className={`bg-[url('public/plantree.png')] w-60 h-60 bg-cover`} />
+        <div className={`bg-[url('/plantree.png')] w-60 h-60 bg-cover`} />
       </div>
       <div className="flex justify-center gap-8">
         <Kakao />
