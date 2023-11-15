@@ -19,15 +19,19 @@ import com.plantree.memberservice.domain.group.dto.TeacherGroupListResponseDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountListResponseDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountRequestDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountResponseDto;
+import com.plantree.memberservice.domain.group.dto.client.StudentGroupResDto;
 import com.plantree.memberservice.domain.group.dto.request.IsTeacherOfGroupRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.IsTeacherOfStudentRequestDto;
 import com.plantree.memberservice.domain.member.application.repository.MemberRepository;
 import com.plantree.memberservice.domain.member.domain.Member;
+import com.plantree.memberservice.domain.member.domain.Parent;
 import com.plantree.memberservice.domain.member.domain.Student;
 import com.plantree.memberservice.domain.member.domain.Teacher;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
 import com.plantree.memberservice.global.exception.ResourceNotFoundException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -112,6 +116,40 @@ public class GroupSearchUseCase {
                 group.getIsGroupTeacherByMemberId(isTeacherOfGroupRequestDto.getTeacherId()));
     }
 
+    @Transactional(readOnly = true)
+    public StudentGroupResDto getStudentGroups(UUID studentId) {
+        Student student = findStudentByIdOrThrow(studentId);
+        Map<UUID, String> groupInfos = new HashMap<>();
+        student.getStudentGroups()
+               .stream()
+               .map(GroupStudent::getGroup)
+               .forEach(group -> groupInfos.put(group.getId(), group.getName()));
+        return new StudentGroupResDto(groupInfos);
+    }
+
+    @Transactional(readOnly = true)
+    public StudentGroupResDto getChildrenGroups(UUID parentId) {
+        Parent parent = findParentByIdWithNestStudents(parentId);
+        List<UUID> studentIds = parent.getNest()
+                                      .getStudents()
+                                      .stream()
+                                      .map(Student::getMember)
+                                      .map(Member::getId)
+                                      .collect(Collectors.toList());
+        List<Student> students = studentIds.stream()
+                                           .map(this::findStudentByIdOrThrow)
+                                           .collect(
+                                                   Collectors.toList());
+        Map<UUID, String> groupInfos = new HashMap<>();
+        students.forEach(student -> {
+            student.getStudentGroups()
+                   .stream()
+                   .map(GroupStudent::getGroup)
+                   .forEach(group -> groupInfos.put(group.getId(), group.getName()));
+        });
+        return new StudentGroupResDto(groupInfos);
+    }
+
     private boolean validateIsTeacherOfStudent(Member member, UUID teacherId) {
         return member.getStudent()
                      .getStudentGroups()
@@ -180,6 +218,12 @@ public class GroupSearchUseCase {
     private Member findMemberByIdWithGroupTeacher(UUID studentId) {
         return memberRepository.findByIdWithGroupTeacher(studentId)
                                .orElseThrow(() -> new ResourceNotFoundException("멤버를 찾을 수 없습니다."));
+    }
+
+    private Parent findParentByIdWithNestStudents(UUID parentId) {
+        return memberRepository.findByIdWithNestStudent(parentId)
+                               .orElseThrow(() -> new ResourceNotFoundException("멤버를 찾을 수 없습니다."))
+                               .getParent();
     }
 
 }

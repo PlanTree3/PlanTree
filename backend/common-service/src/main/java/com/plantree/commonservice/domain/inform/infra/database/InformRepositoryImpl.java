@@ -6,6 +6,7 @@ import com.plantree.commonservice.domain.inform.infra.database.jpa.InformJpaRepo
 import com.plantree.commonservice.domain.inform.infra.database.query.InformQueryRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -30,6 +31,11 @@ public class InformRepositoryImpl implements InformRepository {
     @Override
     public List<Inform> findByGroupId(UUID groupId) {
         return informJpaRepository.findByGroupId(groupId);
+    }
+
+    @Override
+    public List<Inform> findByGroupIdIn(Set<UUID> groupIds) {
+        return informJpaRepository.findByGroupIdIn(groupIds);
     }
 
     @Override

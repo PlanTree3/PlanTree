@@ -9,6 +9,7 @@ import com.plantree.memberservice.domain.group.dto.GroupStudentIdsResponseDto;
 import com.plantree.memberservice.domain.group.dto.IsTeacherOfGroupResponseDto;
 import com.plantree.memberservice.domain.group.dto.IsTeacherOfStudentResponseDto;
 import com.plantree.memberservice.domain.group.dto.TeacherAndParentIdsResponseDto;
+import com.plantree.memberservice.domain.group.dto.client.StudentGroupResDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinAcceptRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinRefuseRequestDto;
@@ -142,4 +143,13 @@ public class GroupController {
         return groupSearchUseCase.getIsTeacherOfGroup(groupId, isTeacherOfGroupRequestDto);
     }
 
+    @GetMapping("/{memberId}/student-group")
+    public StudentGroupResDto getStudentGroups(@PathVariable UUID memberId) {
+        return groupSearchUseCase.getStudentGroups(memberId);
+    }
+
+    @GetMapping("/{memberId}/children-group")
+    public StudentGroupResDto getChildrenGroups(@PathVariable UUID memberId) {
+        return groupSearchUseCase.getChildrenGroups(memberId);
+    }
 }
