@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class QuestUpdateUseCase {
 
     private final QuestRepository questRepository;
@@ -37,7 +36,8 @@ public class QuestUpdateUseCase {
     public void acceptQuest(UUID questId, AuthMember authMember) {
 
         authMemberValidator.ValidateAuthMemberAndQuestAcceptor(questId, authMember);
-        Quest quest = questRepository.findById(questId).orElseThrow(QuestNotFoundException::new);
+        Quest quest = questRepository.findById(questId)
+                                     .orElseThrow(QuestNotFoundException::new);
         quest.accept();
 
     }
@@ -46,7 +46,8 @@ public class QuestUpdateUseCase {
     public void questSuccessRequest(UUID questId, AuthMember authMember) {
 
         authMemberValidator.ValidateAuthMemberAndQuestAcceptor(questId, authMember);
-        Quest quest = questRepository.findById(questId).orElseThrow(QuestNotFoundException::new);
+        Quest quest = questRepository.findById(questId)
+                                     .orElseThrow(QuestNotFoundException::new);
         quest.finishRequest();
 
     }
@@ -55,7 +56,8 @@ public class QuestUpdateUseCase {
     public void questSuccessAccept(UUID questId, AuthMember authMember) {
 
         authMemberValidator.validateAuthMemberAndQuestIssuer(questId, authMember);
-        Quest quest = questRepository.findById(questId).orElseThrow(QuestNotFoundException::new);
+        Quest quest = questRepository.findById(questId)
+                                     .orElseThrow(QuestNotFoundException::new);
         quest.finish();
 
     }
@@ -63,7 +65,8 @@ public class QuestUpdateUseCase {
     @Transactional
     public void checkQuest(UUID questId, AuthMember authMember) {
 
-        Quest quest = questRepository.findById(questId).orElseThrow(QuestNotFoundException::new);
+        Quest quest = questRepository.findById(questId)
+                                     .orElseThrow(QuestNotFoundException::new);
         authMemberValidator.ValidateAuthMemberAndQuestAcceptor(quest.getAcceptor(), authMember);
         quest.check();
 
