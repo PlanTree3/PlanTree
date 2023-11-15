@@ -30,6 +30,13 @@ export const userSlice = createSlice({
       state.isLoggedIn = true
       state.userData = action.payload
       console.log('유저 정보', action.payload)
+      if (state.userData.role === 'STUDENT') {
+        window.location.href = '/main'
+      } else if (state.userData.role === 'TEACHER') {
+        window.location.href = '/adminGroup'
+      } else {
+        window.location.href = '/adminNest'
+      }
     },
     successUserLogout: () => {
       localStorage.clear()
