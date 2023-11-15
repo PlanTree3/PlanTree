@@ -1,11 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { branchList, budsList, seedsList } from '@/components/Branch/Tasks'
+import { BranchType, BudsType, SeedsType } from '@/types'
 
-const initialState = {
+interface BranchStateType {
+  isLoading: boolean
+  seeds: null | SeedsType[]
+  buds: null | BudsType[]
+  branches: null | BranchType[]
+  newComments: null | number
+}
+const initialState: BranchStateType = {
   isLoading: false,
-  seeds: seedsList,
-  buds: budsList,
-  branches: branchList,
+  seeds: null,
+  buds: null,
+  branches: null,
   newComments: null,
 }
 
@@ -17,7 +24,9 @@ export const branchSlice = createSlice({
       console.log('로딩중이라고!', action.payload)
       state.isLoading = action.payload
     },
-    getBranchData: () => {},
+    getBranchData: () => {
+      console.log('정보요청 시작')
+    },
     saveBranches: (state, action) => {
       state.branches = action.payload
     },
@@ -59,21 +68,6 @@ export const branchSlice = createSlice({
     },
     modifySeed: (state, action) => {
       state.seeds = action.payload.newBuds
-    },
-    modifyBranch: (state, action) => {
-      state.branches = action.payload.newBuds
-      console.log('finished 취소 로직 검증 : ', action.payload.newBuds)
-      console.log('서버로 보낼 애 : ', action.payload.createdItem)
-    },
-    modifyBud: (state, action) => {
-      state.buds = action.payload.newBuds
-      console.log('finished 취소 로직 검증 : ', action.payload.newBuds)
-      console.log('서버로 보낼 애 : ', action.payload.createdItem)
-    },
-    modifySeed: (state, action) => {
-      state.seeds = action.payload.newBuds
-      console.log('finished 취소 로직 검증 : ', action.payload.newBuds)
-      console.log('서버로 보낼 애 : ', action.payload.createdItem)
     },
   },
 })

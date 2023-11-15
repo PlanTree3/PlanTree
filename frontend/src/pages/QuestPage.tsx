@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Quest from '@/components/Quest/Quest'
 import LoginCheck from '@/components/LoginCheck.tsx'
+import Button from '@/components/Button/Button'
 
 const QuestPage = () => {
   const [questStatus, setQuestStatus] = useState('all')
@@ -38,8 +39,8 @@ const QuestPage = () => {
       </div>
       <Quest questStatus={questStatus} deleteState={deleteState} />
       <div>
-        <button>이전</button>
-        <button>다음</button>
+        <Button className="normal primary" label="이전" />
+        <Button className="normal primary" label="다음" />
       </div>
     </>
   )

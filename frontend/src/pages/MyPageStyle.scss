@@ -15,13 +15,16 @@
     @apply h-full flex flex-col justify-center items-center space-y-5;
   }
   &-profile-image {
+    img {
+      @apply rounded-full;
+    }
     button {
       @apply self-start;
     }
-    @apply flex w-[30%];
+    @apply flex w-[17%];
   }
   &-profile-name {
-    @apply flex items-center;
+    @apply flex items-center space-x-[1vw];
   }
   &-name-input {
     @apply text-3xl flex items-center;

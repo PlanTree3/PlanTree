@@ -24,7 +24,7 @@
 .normal {
   height: 4vh;
   font-size: 1rem;
-  border-radius: 18px;
+  border-radius: 10px;
   @apply px-3;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .long {
-  @apply w-full rounded px-3;
+  @apply w-full h-[7vh] text-xl rounded-lg px-3;
 }
 
 .primary {

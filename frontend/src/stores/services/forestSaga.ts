@@ -16,6 +16,7 @@ import {
   saveForestData,
   saveTreeDetailData,
   saveTreesData,
+  selectedInfoData,
 } from '@/stores/features/forestSlice'
 
 function* getForestSaga(): Generator<
@@ -58,22 +59,57 @@ function* getTreeDetailSaga(
   const treeId = action.payload
   const response: AxiosResponse<any> = yield call(treeDetail, treeId)
   if (response.data.data) {
-    // const detailData = response.data.data
-    // const names: any = detailData.branches.map(
-    //   (branch: any) => branch.branchName,
-    // )
-    // const totalBuds: any = detailData.branches.map(
-    //   (branch: any) => branch.totalBudCount,
-    // )
-    // const completeBuds: any = detailData.branches.map(
-    //   (branch: any) => branch.completedBudCount,
-    // )
     yield put(saveTreeDetailData(response.data.data))
   }
+}
+
+function* getTreeSelectSaga(
+  action: PayloadAction<any>,
+): Generator<
+  CallEffect | PutEffect,
+  void,
+  AxiosResponse<FetchUserDataResponse>
+> {
+  let newSum = 0
+  let newFin = 0
+  let totalPercent = 0
+  const detailData = action.payload
+  detailData.branches.forEach((branch: any) => {
+    newSum += branch.totalBudCount
+    newFin += branch.completedBudCount
+  })
+  if (newSum > 0) {
+    totalPercent = (newFin / newSum) * 100
+  } else {
+    totalPercent = 0
+  }
+  const branchNames: any = detailData.branches.map(
+    (branch: any) => branch.branchName,
+  )
+  const branchTotalCount: any = detailData.branches.map(
+    (branch: any) => branch.totalBudCount,
+  )
+  const branchDoneCount: any = detailData.branches.map(
+    (branch: any) => branch.completedBudCount,
+  )
+  const notYet = detailData.branches.map((branch: any) =>
+    branch.totalBudCount > 0
+      ? branch.totalBudCount - branch.completedBudCount
+      : 0,
+  )
+  const saveData = {
+    totalPercent,
+    branchNames,
+    branchTotalCount,
+    branchDoneCount,
+    notYet,
+  }
+  yield put(selectedInfoData(saveData))
 }
 
 export function* watchForestData() {
   yield takeLatest(getForestData.type, getForestSaga)
   yield takeLatest(getTreesData.type, getTreesSaga)
   yield takeLatest(getTreeDetailData.type, getTreeDetailSaga)
+  yield takeLatest(saveTreeDetailData.type, getTreeSelectSaga)
 }

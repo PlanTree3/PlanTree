@@ -2,14 +2,15 @@ import { useState } from 'react'
 import './SideBar.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import post2 from '../../../public/sidebar/02_orange.png'
-import post3 from '../../../public/sidebar/03_yellow.png'
-import post4 from '../../../public/sidebar/04_gress.png'
-import post5 from '../../../public/sidebar/05_sky.png'
-import post1 from '../../../public/sidebar/01_red.png'
+import treeImg from '../../../public/sidebar/navbar_tree.png'
+import forestImg from '../../../public/sidebar/navbar_forest.png'
+// import post3 from '../../../public/sidebar/navbar_.png'
+import questImg from '../../../public/sidebar/navbar_quest.png'
+import nestImg from '../../../public/sidebar/navbar_nest.png'
 import bell from '../../../public/bell.png'
 import { logOutCheck } from '@/stores/features/userSlice'
 import NotificationBox from '../notificationBox'
+import Button from '../Button/Button'
 
 const SideBar = () => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -44,36 +45,36 @@ const SideBar = () => {
   }
 
   return (
-    <>
-      <div className="sidebar-btn">
-        <Link to={roleBasedMain(role)} className="sidebar-btn-deco">
-          <button>
-            <img src={post1} alt="Main" className="btn-deco" />
-          </button>
+    <div className="sidebar-container">
+      <div className="sidebar-btn-container">
+        <Link to={roleBasedMain(role)} className="sidebar-btn">
+          <div className="img">
+            <img src={treeImg} alt="Main" />
+          </div>
         </Link>
         {(role === 'STUDENT' || null) && (
-          <Link to="/forest" className="sidebar-btn-deco">
-            <button>
-              <img src={post2} alt="Forest" className="btn-deco" />
-            </button>
+          <Link to="/forest" className="sidebar-btn">
+            <div className="img">
+              <img src={forestImg} alt="" />
+            </div>
           </Link>
         )}
         {(role === 'STUDENT' || null) && (
-          <Link to="/studentGroup" className="sidebar-btn-deco">
-            <button>
-              <img src={post3} alt="studentGroup" className="btn-deco" />
-            </button>
+          <Link to="/studentGroup" className="sidebar-btn">
+            <div className="img">
+              <img src={nestImg} alt="studentGroup" />
+            </div>
           </Link>
         )}
-        <Link to="/quest" className="sidebar-btn-deco">
-          <button>
-            <img src={post4} alt="Quest" className="btn-deco" />
-          </button>
+        <Link to="/quest" className="sidebar-btn">
+          <div className="img">
+            <img src={questImg} alt="Quest" />
+          </div>
         </Link>
-        <Link to="/mypage" className="sidebar-btn-deco">
-          <button>
-            <img src={post5} alt="Mypage" className="btn-deco" />
-          </button>
+        <Link to="/mypage" className="sidebar-btn">
+          <div className="img">
+            <img src={treeImg} alt="Mypage" />
+          </div>
         </Link>
       </div>
       <button onClick={openModal} className="sidebar-bell">
@@ -81,7 +82,20 @@ const SideBar = () => {
       </button>
       {isLoggedIn && <button onClick={handleLogout}>로그아웃</button>}
       <NotificationBox modalOpen={modalOpen} closeModal={closeModal} />
-    </>
+
+      <div className="sidebar-bottom">
+        <button onClick={openModal} className="sidebar-bell">
+          <img src={bell} alt="알람" className="sidebar-bell-img" />
+        </button>
+        {isLoggedIn && (
+          <Button
+            className="red small self-center"
+            onClick={handleLogout}
+            label="로그아웃"
+          />
+        )}
+      </div>
+    </div>
   )
 }
 

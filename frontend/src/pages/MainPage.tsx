@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { COLUMN_NAMES, DAY_NAMES } from '@/types/DnDType'
+import { DAY_NAMES } from '@/types/DnDType'
 import { RootState } from '@/stores/store'
 import { getBranchData } from '@/stores/features/branchSlice.ts'
 import '@/styles/main/mainStyle.scss'
@@ -16,7 +16,7 @@ const MainPage = () => {
   const treeId = useSelector((state: RootState) => state.main.treeId)
   const treeName = useSelector((state: RootState) => state.main.treeName)
   const buds = useSelector((state: RootState) => state.branch.buds)
-  const { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY } = COLUMN_NAMES
+  // const { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY } = COLUMN_NAMES
   const days = DAY_NAMES
   const today = new Date()
   const monthToday = today.getMonth() + 1
@@ -43,57 +43,32 @@ const MainPage = () => {
     setSelectDay(day)
   }
   const returnItemsForColumn = (columnName: string) => {
-    // const detailBud = (id: number, name: string) => {
-    //   Swal.fire({
-    //     input: 'text',
-    //     inputValue: name,
-    //     width: 600,
-    //     customClass: {
-    //       confirmButton: 'btn btn-primary',
-    //     },
-    //     buttonsStyling: true,
-    //     confirmButtonText: '변경',
-    //     confirmButtonColor: '#9ABAFF',
-    //     showCancelButton: true,
-    //     cancelButtonText: '취소',
-    //     cancelButtonColor: '#FFACE4',
-    //   }).then((result) => {
-    //     if (result.isConfirmed && result.value) {
-    //       console.log(id, result.value)
-    //       // 이름 변경 로직 추가 필요
-    //       // changeBud(id, result.value)
-    //     }
-    //   })
-    // }
     return (
-      <>
+      <div>
         {buds
-          .filter((bud) => bud.dayOfWeek === columnName)
-          .map((bud, idx) => {
+          ?.filter((bud: any) => bud.dayOfWeek === columnName)
+          .map((bud: any) => {
             return (
-              <li className="main-bud-list" key={idx}>
+              <li className="main-bud-list" key={bud.budId}>
                 <button
-                  // onClick={() => detailBud(bud.budId, bud.budName)}
-                  key={bud.budId}
+                // onClick={() => detailBud(bud.budId, bud.budName)}
                 >
                   {bud.budName}
                 </button>
               </li>
             )
           })}
-      </>
+      </div>
     )
   }
   const returnFinishedItemsForColumn = (columnName: string) => {
     return (
       <div>
-        <div>
-          {buds
-            .filter((bud) => bud.dayOfWeek === columnName)
-            .map((bud) => {
-              return <button key={bud.budId}>{bud.budName}</button>
-            })}
-        </div>
+        {buds
+          ?.filter((bud: any) => bud.dayOfWeek === columnName)
+          .map((bud: any) => {
+            return <button key={bud.budId}>{bud.budName}</button>
+          })}
       </div>
     )
   }
