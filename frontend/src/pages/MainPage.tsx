@@ -88,7 +88,7 @@ const MainPage = () => {
         <div className="main-page-container">
           <button
             id="monday"
-            onClick={() => sendDays('월요일')}
+            onClick={() => sendDays('MON')}
             className={`main-day-btn ${
               selectDay === '월요일' &&
               ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
@@ -99,7 +99,7 @@ const MainPage = () => {
           <div className="main-page-btn-top">
             <button
               id="tuesday"
-              onClick={() => sendDays('화요일')}
+              onClick={() => sendDays('TUE')}
               className={`main-day-btn ${
                 selectDay === '화요일' &&
                 ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
@@ -109,7 +109,7 @@ const MainPage = () => {
             </button>
             <button
               id="wednesday"
-              onClick={() => sendDays('수요일')}
+              onClick={() => sendDays('WEN')}
               className={`main-day-btn ${
                 selectDay === '수요일' &&
                 ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
@@ -119,7 +119,7 @@ const MainPage = () => {
             </button>
             <button
               id="thursday"
-              onClick={() => sendDays('목요일')}
+              onClick={() => sendDays('THU')}
               className={`main-day-btn ${
                 selectDay === '목요일' &&
                 ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
@@ -130,7 +130,7 @@ const MainPage = () => {
           </div>
           <button
             id="friday"
-            onClick={() => sendDays('금요일')}
+            onClick={() => sendDays('FRI')}
             className={`main-day-btn ${
               selectDay === '금요일' &&
               ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
