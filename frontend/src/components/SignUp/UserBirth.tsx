@@ -24,7 +24,7 @@ const UserBirth = () => {
 
   return (
     <>
-      <div>제 생일은</div>
+      <div className="divGap">제 생일은</div>
       <LiaBirthdayCakeSolid class="icon" />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DemoContainer components={['DatePicker']}>
@@ -40,7 +40,7 @@ const UserBirth = () => {
           />
         </DemoContainer>
       </LocalizationProvider>
-      <div>입니다.</div>
+      <div className="divGap">입니다.</div>
     </>
   )
 }
