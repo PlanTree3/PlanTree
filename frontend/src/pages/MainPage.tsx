@@ -163,7 +163,7 @@ const MainPage = () => {
               )}
             </div>
             <Button
-              className="primary small"
+              className="lime small"
               label="일정 등록하기"
               onClick={handleBranchPage}
             />

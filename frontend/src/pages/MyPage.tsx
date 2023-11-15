@@ -423,17 +423,17 @@ const MyPage = () => {
       </div>
       <div className="my-page-btn-container">
         <Button
-          className="long primary block"
+          className="long lime block"
           label="이번 주 통계 보기"
           onClick={moveChart}
         />
         <Button
-          className="long primary block"
+          className="long lime block"
           label="가정 통신문 보기"
           onClick={moveNewsList}
         />
         <Button
-          className="long primary block"
+          className="long lime block"
           label="Plan Tree 100% 활용하기"
           onClick={moveTutorial}
         />

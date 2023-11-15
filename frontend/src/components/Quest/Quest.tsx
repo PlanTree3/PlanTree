@@ -16,7 +16,7 @@ import {
   deleteQuest,
 } from '@/stores/features/questSlice'
 import '@/styles/quest/questStyle.scss'
-import Button from '../Button/Button'
+import { Button } from '..'
 
 interface QuestProps {
   questStatus: string
@@ -109,7 +109,11 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
             </DialogContent>
             <DialogActions>
               {questStatus === 'past' && deleteState && (
-                <button onClick={() => deleteBTN(quest.questId)}>삭제</button>
+                <Button
+                  className="red normal"
+                  onClick={() => deleteBTN(quest.questId)}
+                  label="삭제"
+                />
               )}
               {!quest.isConfirmed ? (
                 <div className="quest-button-container">
