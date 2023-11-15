@@ -41,4 +41,14 @@ public class QuestUpdateUseCase {
         quest.accept();
 
     }
+
+    @Transactional
+    public void questSuccessRequest(UUID questId, AuthMember authMember) {
+
+        authMemberValidator.ValidateAuthMemberAndQuestAcceptor(questId, authMember);
+        Quest quest = questRepository.findById(questId).orElseThrow(QuestNotFoundException::new);
+        quest.finishRequest();
+
+    }
+
 }

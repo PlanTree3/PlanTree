@@ -76,4 +76,13 @@ public class QuestController {
 
     }
 
+    @PatchMapping("quest/{questId}/success-request")
+    public ResponseEntity<?> questSuccessRequest(@PathVariable UUID questId,
+            @JwtLoginMember AuthMember authMember){
+
+        questUpdateUseCase.questSuccessRequest(questId, authMember);
+        return HttpResponse.ok(HttpStatus.OK, "퀘스트 성공을 요청하였습니다.");
+
+    }
+
 }
