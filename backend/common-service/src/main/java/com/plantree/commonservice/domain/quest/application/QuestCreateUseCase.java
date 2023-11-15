@@ -8,7 +8,6 @@ import com.plantree.commonservice.global.config.webmvc.AuthMember;
 import com.plantree.commonservice.global.openFeign.MemberServiceClient;
 import com.plantree.commonservice.global.util.AuthMemberValidator;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
