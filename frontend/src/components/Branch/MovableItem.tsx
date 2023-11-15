@@ -45,46 +45,48 @@ const MovableItem = ({
     isFinishDay: boolean,
     alreadyFinished: boolean,
   ) => {
-    const newBuds = buds.map((e: any) => {
-      if (e.budId === currentItem.budId) {
-        return { ...e, dayOfWeek: columnName }
-      }
-      return e
-    })
-    const createdItem = {
-      branchId: currentItem.branchId,
-      budId: currentItem.budId,
-      dayOfWeek: columnName,
-    }
-    const data = {
-      newBuds,
-      createdItem,
-    }
-    if (alreadyFinished && isFinishDay) {
-      Swal.fire({
-        title: '이미 끝난 일정입니다.',
-        text: '일정을 수정하시려면 진행 중 단계로 먼저 옮기셔야 합니다.',
-        icon: 'warning',
-        iconColor: 'yellow',
-      })
-    } else if (alreadyFinished) {
-      Swal.fire({
-        title: '끝난 일정입니다.',
-        text: '정말로 다시 시작하시겠습니까?',
-        icon: 'warning',
-        iconColor: 'yellow',
-        showCancelButton: true,
-        cancelButtonText: '취소',
-        confirmButtonText: '확인',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(finishRejectBuds(data))
+    if (buds) {
+      const newBuds = buds.map((e: any) => {
+        if (e.budId === currentItem.budId) {
+          return { ...e, dayOfWeek: columnName }
         }
+        return e
       })
-    } else if (isFinishDay) {
-      dispatch(finishedBuds(data))
-    } else {
-      dispatch(moveBuds(data))
+      const createdItem = {
+        branchId: currentItem.branchId,
+        budId: currentItem.budId,
+        dayOfWeek: columnName,
+      }
+      const data = {
+        newBuds,
+        createdItem,
+      }
+      if (alreadyFinished && isFinishDay) {
+        Swal.fire({
+          title: '이미 끝난 일정입니다.',
+          text: '일정을 수정하시려면 진행 중 단계로 먼저 옮기셔야 합니다.',
+          icon: 'warning',
+          iconColor: 'yellow',
+        })
+      } else if (alreadyFinished) {
+        Swal.fire({
+          title: '끝난 일정입니다.',
+          text: '정말로 다시 시작하시겠습니까?',
+          icon: 'warning',
+          iconColor: 'yellow',
+          showCancelButton: true,
+          cancelButtonText: '취소',
+          confirmButtonText: '확인',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch(finishRejectBuds(data))
+          }
+        })
+      } else if (isFinishDay) {
+        dispatch(finishedBuds(data))
+      } else {
+        dispatch(moveBuds(data))
+      }
     }
   }
   const ref = useRef<HTMLDivElement>(null)
@@ -156,13 +158,15 @@ const MovableItem = ({
               dayOfWeek: point,
               branchId,
             }
-            const { budId, branchColor: newColor, ...createdItem } = newItem
-            const newBuds = [...buds, newItem]
-            const data = {
-              newBuds,
-              createdItem,
+            if (buds) {
+              const { budId, branchColor: newColor, ...createdItem } = newItem
+              const newBuds = [...buds, newItem]
+              const data = {
+                newBuds,
+                createdItem,
+              }
+              dispatch(addBuds(data))
             }
-            dispatch(addBuds(data))
           }
         } else {
           const newItem = {
@@ -184,22 +188,26 @@ const MovableItem = ({
     drag(drop(ref))
   }
   const removeSeed = (itemId: string) => {
-    const updatedItems = seeds.filter((item: any) => item.seedId !== itemId)
-    const newItem = buds.filter((item: any) => item.budId === itemId)
-    const data = {
-      newSeeds: updatedItems,
-      createdItem: newItem[0],
+    const updatedItems = seeds?.filter((item: any) => item.seedId !== itemId)
+    const newItem = buds?.filter((item: any) => item.budId === itemId)
+    if (newItem) {
+      const data = {
+        newSeeds: updatedItems,
+        createdItem: newItem[0],
+      }
+      dispatch(removeSeeds(data))
     }
-    dispatch(removeSeeds(data))
   }
   const removeBud = (itemId: string) => {
-    const updatedItems = buds.filter((item: any) => item.budId !== itemId)
-    const newItem = buds.filter((item: any) => item.budId === itemId)
-    const data = {
-      newBuds: updatedItems,
-      createdItem: newItem[0],
+    const updatedItems = buds?.filter((item: any) => item.budId !== itemId)
+    const newItem = buds?.filter((item: any) => item.budId === itemId)
+    if (newItem) {
+      const data = {
+        newBuds: updatedItems,
+        createdItem: newItem[0],
+      }
+      dispatch(removeBuds(data))
     }
-    dispatch(removeBuds(data))
   }
   const handleDetailBuds = () => {
     setDeailOpen(true)

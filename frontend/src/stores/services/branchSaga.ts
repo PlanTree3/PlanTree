@@ -223,8 +223,9 @@ function* finishBudsSaga(
     const { branchId } = action.payload.createdItem
     const { budId } = action.payload.createdItem
     const { dayOfWeek } = action.payload.createdItem
+    const reDayofWeek = dayOfWeek.replace('_FINISH', '')
     const data = {
-      dayOfWeek,
+      dayOfWeek: reDayofWeek,
     }
     if (data.dayOfWeek) {
       yield call(budComplete, treeId, branchId, budId, data)

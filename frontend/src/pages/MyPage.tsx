@@ -20,6 +20,9 @@ import './MyPageStyle.scss'
 import { userImageUpdate, userNameUpdate } from '@/apis'
 import { addProfileImageUrl, addName } from '@/stores/features/userSlice'
 import Button from '@/components/Button/Button'
+import { getMainData } from '@/stores/features/mainSlice.ts'
+import { RootState } from '@/stores/store.ts'
+import { getTreeDetailData } from '@/stores/features/forestSlice.ts'
 
 const MyPage = () => {
   const userName = useSelector((state: any) => state.user.userData.name)
@@ -37,6 +40,21 @@ const MyPage = () => {
   const MySwal = withReactContent(Swal)
 
   const dispatch = useDispatch()
+
+  const treeId = useSelector((state: RootState) => state.main.treeId)
+  const {
+    totalPercent,
+    branchNames,
+    branchTotalCount,
+    branchDoneCount,
+    notYet,
+  } = useSelector((state: RootState) => state.forest.selectedInfo)
+  useEffect(() => {
+    dispatch(getMainData())
+    if (treeId) {
+      dispatch(getTreeDetailData(treeId))
+    }
+  }, [treeId])
 
   const imgList: string[] = [
     'bear',
@@ -274,7 +292,7 @@ const MyPage = () => {
       padding: 0,
       confirmButtonText: '확인',
       customClass: {
-        confirmButton: 'py-0', // 새로운 클래스 이름을 지정합니다.
+        confirmButton: 'py-0',
       },
     })
   }
@@ -284,18 +302,30 @@ const MyPage = () => {
     const content = (
       <div className="my-page-graph-modal">
         <div>
-          <BarChart />
+          <BarChart
+            branchNames={branchNames}
+            notYet={notYet}
+            branchDoneCount={branchDoneCount}
+          />
         </div>
         <div>
           <DoughnutChart
-            centerText="87%"
+            centerText={
+              totalPercent === null ? 'Loading...' : `${totalPercent}%`
+            }
             chartData={{
-              data: [87, 13],
+              data:
+                totalPercent === null
+                  ? [100, 0]
+                  : [totalPercent, 100 - totalPercent],
             }}
           />
         </div>
         <div>
-          <PieChart />
+          <PieChart
+            branchNames={branchNames}
+            branchTotalCount={branchTotalCount}
+          />
         </div>
       </div>
     )

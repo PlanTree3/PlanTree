@@ -5,14 +5,12 @@ import { authApi } from '@/apis'
 
 // 봉오리 추가
 const budCreate = async (treeId: string, branchId: string, data: any) => {
-  authApi
-    .post(`${branchApiUrl(treeId, branchId)}/bud`, data)
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => console.log(err))
+  try {
+    await authApi.post(`${branchApiUrl(treeId, branchId)}/bud`, data)
+  } catch (err) {
+    console.log(err)
+  }
 }
-
 // 봉오리 dnd
 const budDayUpdate = async (
   treeId: string,

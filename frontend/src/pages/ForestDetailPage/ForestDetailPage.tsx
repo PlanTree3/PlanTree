@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { DoughnutChart } from '@/components'
@@ -49,48 +49,11 @@ const ForestDetailPage = () => {
   const [endedAt, setEndedAt] = useState('')
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const detailData = useSelector((state: RootState) => state.forest.selectTree)
   const handleTreeBox = (treeId: string) => {
     dispatch(getTreeDetailData(treeId))
-
-    let newSum = 0
-    let newFin = 0
-    let totalPercent = 0
-
-    if (detailData && detailData.branches) {
-      detailData.branches.forEach((branch: any) => {
-        newSum += branch.totalBudCount
-        newFin += branch.completedBudCount
-      })
-      console.log(newFin, newSum)
-      if (newSum > 0) {
-        totalPercent = (newFin / newSum) * 100
-      } else {
-        totalPercent = 0
-      }
-      const branchNames: any = detailData.branches.map(
-        (branch) => branch.branchName,
-      )
-      const branchTotalCount: any = detailData.branches.map(
-        (branch) => branch.totalBudCount,
-      )
-      const branchDoneCount: any = detailData.branches.map(
-        (branch) => branch.completedBudCount,
-      )
-      const notYet = detailData.branches.map((branch) =>
-        branch.totalBudCount > 0
-          ? branch.totalBudCount - branch.completedBudCount
-          : 0,
-      )
-      const saveData = {
-        totalPercent,
-        branchNames,
-        branchTotalCount,
-        branchDoneCount,
-        notYet,
-      }
-    }
-    navigate(`/tree/${treeId}`)
+    setTimeout(() => {
+      navigate(`/tree/${treeId}`)
+    }, 0)
   }
 
   const startedAtOnChange = (e: any) => {
@@ -199,5 +162,4 @@ const ForestDetailPage = () => {
     </div>
   )
 }
-
 export default ForestDetailPage
