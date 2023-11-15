@@ -14,7 +14,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,11 +76,20 @@ public class QuestController {
     }
 
     @PatchMapping("quest/{questId}/success-request")
-    public ResponseEntity<?> questSuccessRequest(@PathVariable UUID questId,
+    public ResponseEntity<?> requestQuestSuccess(@PathVariable UUID questId,
             @JwtLoginMember AuthMember authMember){
 
         questUpdateUseCase.questSuccessRequest(questId, authMember);
         return HttpResponse.ok(HttpStatus.OK, "퀘스트 성공을 요청하였습니다.");
+
+    }
+
+    @PatchMapping("quest/{questId}/success-accept")
+    public ResponseEntity<?> acceptQuestSuccess(@PathVariable UUID questId,
+            @JwtLoginMember AuthMember authMember){
+
+        questUpdateUseCase.questSuccessAccept(questId, authMember);
+        return HttpResponse.ok(HttpStatus.OK, "퀘스트 성공을 수락하였습니다.");
 
     }
 
