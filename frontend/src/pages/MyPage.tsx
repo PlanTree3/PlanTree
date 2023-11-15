@@ -173,7 +173,7 @@ const MyPage = () => {
       title: 'Plan Tree 100% 활용하기',
       html: content,
       position: 'center',
-      width: '70%',
+      width: '50%',
       heightAuto: false,
       padding: 0,
       confirmButtonText: '확인',
@@ -415,7 +415,7 @@ const MyPage = () => {
       </div>
       <div className="my-page-profile-name">
         {inputUserRole && (
-          <div className={`${bgColorClass()}`}>
+          <div className={`${bgColorClass()} rounded-full px-2`}>
             <div> {inputUserRole}</div>
           </div>
         )}
