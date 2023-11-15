@@ -1,6 +1,7 @@
 package com.plantree.commonservice.domain.quest.application;
 
 import com.plantree.commonservice.domain.quest.application.repository.QuestRepository;
+import com.plantree.commonservice.domain.quest.domain.IssuerType;
 import com.plantree.commonservice.domain.quest.domain.Quest;
 import com.plantree.commonservice.domain.quest.dto.GroupQuestCreateReqDto;
 import com.plantree.commonservice.domain.quest.dto.StudentQuestCreateReqDto;
@@ -31,6 +32,7 @@ public class QuestCreateUseCase {
         questRepository.save(Quest.builder()
                                   .title(studentQuestCreateReqDto.getTitle())
                                   .issuer(authMember.getMemberId())
+                                  .issuerType(IssuerType.PARENT)
                                   .acceptor(studentQuestCreateReqDto.getStudentId())
                                   .content(studentQuestCreateReqDto.getContent())
                                   .build());
@@ -44,12 +46,18 @@ public class QuestCreateUseCase {
 
         List<Quest> quests = memberServiceClient.getGroupMembers(
                                                         groupQuestCreateReqDto.getGroupId())
-                                               .getStudentIds().stream().map(studentId -> Quest.builder()
-                        .title(groupQuestCreateReqDto.getTitle())
-                        .content(groupQuestCreateReqDto.getContent())
-                        .issuer(authMember.getMemberId())
-                        .acceptor(studentId)
-                        .build()).collect(Collectors.toList());
+                                                .getStudentIds()
+                                                .stream()
+                                                .map(studentId -> Quest.builder()
+                                                                       .title(groupQuestCreateReqDto.getTitle())
+                                                                       .content(
+                                                                               groupQuestCreateReqDto.getContent())
+                                                                       .issuer(authMember.getMemberId())
+                                                                       .issuerType(
+                                                                               IssuerType.TEACHER)
+                                                                       .acceptor(studentId)
+                                                                       .build())
+                                                .collect(Collectors.toList());
 
         questRepository.saveAll(quests);
 

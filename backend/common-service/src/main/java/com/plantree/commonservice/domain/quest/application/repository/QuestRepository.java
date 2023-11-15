@@ -15,4 +15,8 @@ public interface QuestRepository {
     Quest save(Quest quest);
 
     List<Quest> saveAll(List<Quest> quests);
+
+    List<Quest> findByAcceptor(UUID acceptorId);
+
+    List<Quest> findByIssuer(UUID issuerId);
 }

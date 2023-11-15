@@ -1,9 +1,11 @@
 package com.plantree.commonservice.domain.quest.domain;
 
+import com.plantree.commonservice.domain.quest.infra.database.converter.IssuerTypeConverter;
 import com.plantree.commonservice.global.entity.BaseTimeEntity;
 import com.plantree.commonservice.global.util.SequentialUUIDGenerator;
 import java.util.UUID;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
@@ -24,6 +26,10 @@ public class Quest extends BaseTimeEntity {
 
     @Column
     private String title;
+
+    @Column
+    @Convert(converter = IssuerTypeConverter.class)
+    private IssuerType issuerType;
 
     @Column
     private UUID issuer;
@@ -47,39 +53,40 @@ public class Quest extends BaseTimeEntity {
     private boolean isFinished;
 
     @Builder
-    public Quest(String title, UUID issuer, UUID acceptor, String content){
+    public Quest(String title, IssuerType issuerType, UUID issuer, UUID acceptor, String content) {
         this.title = title;
+        this.issuerType = issuerType;
         this.issuer = issuer;
         this.acceptor = acceptor;
         this.content = content;
     }
 
-    public void updateTitle(String title){
+    public void updateTitle(String title) {
         this.title = title;
     }
 
-    public void updateContent(String content){
+    public void updateContent(String content) {
         this.content = content;
     }
 
-    public void check(){
+    public void check() {
         this.isChecked = true;
     }
 
-    public void accept(){
+    public void accept() {
         this.isConfirmed = true;
     }
 
-    public void finishRequest(){
+    public void finishRequest() {
         this.isWaiting = true;
     }
 
-    public void finish(){
+    public void finish() {
         this.isFinished = true;
     }
 
     @PrePersist
-    public void generateQuestId(){
+    public void generateQuestId() {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();
     }
 

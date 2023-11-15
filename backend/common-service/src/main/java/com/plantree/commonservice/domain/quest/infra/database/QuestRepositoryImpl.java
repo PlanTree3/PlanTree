@@ -37,4 +37,14 @@ public class QuestRepositoryImpl implements QuestRepository {
         return questJpaRepository.saveAll(quests);
     }
 
+    @Override
+    public List<Quest> findByAcceptor(UUID acceptorId){
+        return questQueryRepository.findAllByAcceptorId(acceptorId);
+    }
+
+    @Override
+    public List<Quest> findByIssuer(UUID issuerId){
+        return questQueryRepository.findAllByIssuerId(issuerId);
+    }
+
 }
