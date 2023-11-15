@@ -2,8 +2,8 @@ import ReactModal from 'react-modal'
 import { useState, useEffect } from 'react'
 import {
   notificationBox,
-  notificationDelete,
-  notificationReading,
+  // notificationDelete,
+  // notificationReading,
 } from '@/apis/notification'
 
 const NotificationBox = ({ modalOpen, closeModal }: any) => {
@@ -22,25 +22,25 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
     handleNotification()
   }, [modalOpen])
 
-  // 알림함 삭제
-  const handleNotificationDelete = async () => {
-    try {
-      const response = await notificationDelete()
-      console.log('알림함 전체 응답', response)
-    } catch (error) {
-      console.error('알림함 전체 삭제 에러:', error)
-    }
-  }
+  // // 알림함 삭제
+  // const handleNotificationDelete = async () => {
+  //   try {
+  //     const response = await notificationDelete()
+  //     console.log('알림함 전체 응답', response)
+  //   } catch (error) {
+  //     console.error('알림함 전체 삭제 에러:', error)
+  //   }
+  // }
 
   // 알림함 알림 하나 조회
-  const handleNotificationReading = async (notificationId) => {
-    try {
-      const response = await notificationReading()
-      console.log('알림 하나 조회 응답', response)
-    } catch (error) {
-      console.error('알림 하나 조회 에러:', error)
-    }
-  }
+  // const handleNotificationReading = async (notificationId) => {
+  //   try {
+  //     const response = await notificationReading()
+  //     console.log('알림 하나 조회 응답', response)
+  //   } catch (error) {
+  //     console.error('알림 하나 조회 에러:', error)
+  //   }
+  // }
 
   useEffect(() => {
     handleNotification()

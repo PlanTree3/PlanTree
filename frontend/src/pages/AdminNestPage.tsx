@@ -20,7 +20,6 @@ import {
 import { LoginCheck } from '@/components'
 
 const AdminNestPage = () => {
-  const [page, setPage] = useState(1)
   const [pencilModalIsOpen, setPencilModalIsOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [questmodalIsOpen, setQuestModalIsOpen] = useState(false)
@@ -33,8 +32,8 @@ const AdminNestPage = () => {
   const [selectedStudentId, setSelectedStudentId] = useState('')
 
   const studentsPerPage = 4
-  const startIndex = (page - 1) * studentsPerPage
-  const endIndex = startIndex + studentsPerPage
+  const endIndex = currentPage * studentsPerPage
+  const startIndex = endIndex - studentsPerPage
   const currentStudents = studentsData?.slice(startIndex, endIndex) || []
 
   const totalPages = studentsData
@@ -226,13 +225,9 @@ const AdminNestPage = () => {
         <div>
           <div className="flex flex-row">
             <div className="font-semibold text-4xl">{nestData.nestName}</div>
-            <img
-              className="mx-4"
-              src={pencil}
-              alt=""
-              onClick={openPencilModal}
-              tabIndex={0}
-            />
+            <button className="mx-4" onClick={openPencilModal}>
+              <img src={pencil} alt="둥지이름수정" />
+            </button>
           </div>
           <div className="font-semibold text-l text-yellow-800">둥지장: </div>
           {nestData.parents.length > 0 ? (
@@ -247,13 +242,13 @@ const AdminNestPage = () => {
             currentStudents.map((student: any) => (
               <div key={student.studentId} className="studentBox">
                 <div className="flex flex-1 items-center flex justify-center">
-                  <text className="studentFont">{student.studentName}</text>
+                  <p className="studentFont">{student.studentName}</p>
                 </div>
                 <div className="flex-1 flex-col flex justify-center items-center ">
-                  <text className="studentFont">달성도</text>
-                  <text className="studentFont">
+                  <p className="studentFont">달성도</p>
+                  <p className="studentFont">
                     {student.completedBudCount}/{student.totalBudCount}
-                  </text>
+                  </p>
                 </div>
                 <div className="bg flex-1 grid justify-items-end">
                   <Link to="/forest/1">
