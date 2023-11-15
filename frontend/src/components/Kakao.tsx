@@ -39,7 +39,7 @@ const Kakao = () => {
       navigate('/signUp')
     } else {
       dispatch(loginCheck())
-      navigate('/main')
+      // navigate('/main')
     }
     // catch (error: any) {
     //   Swal.fire({

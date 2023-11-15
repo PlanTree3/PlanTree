@@ -31,7 +31,7 @@ const OidcGoogle = () => {
             navigate('/signUp')
           } else {
             dispatch(loginCheck())
-            navigate('/main')
+            // navigate('/main')
           }
         } catch (error) {
           console.error('Error during login:', error)
