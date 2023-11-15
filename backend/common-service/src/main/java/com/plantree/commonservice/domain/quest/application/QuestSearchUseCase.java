@@ -9,7 +9,6 @@ import com.plantree.commonservice.global.exception.UnauthorizedAccessException;
 import com.plantree.commonservice.global.exception.quest.QuestNotFoundException;
 import com.plantree.commonservice.global.openFeign.MemberServiceClient;
 import com.plantree.commonservice.global.openFeign.dto.GetNamesFromMemberIdReqDto;
-import com.plantree.commonservice.global.openFeign.dto.GetNamesFromMemberIdResDto;
 import com.plantree.commonservice.global.util.AuthMemberValidator;
 import java.util.ArrayList;
 import java.util.List;

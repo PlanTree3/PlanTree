@@ -1,9 +1,11 @@
 package com.plantree.commonservice.domain.quest.domain;
 
+import com.plantree.commonservice.domain.quest.infra.database.converter.IssuerTypeConverter;
 import com.plantree.commonservice.global.entity.BaseTimeEntity;
 import com.plantree.commonservice.global.util.SequentialUUIDGenerator;
 import java.util.UUID;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
@@ -26,6 +28,7 @@ public class Quest extends BaseTimeEntity {
     private String title;
 
     @Column
+    @Convert(converter = IssuerTypeConverter.class)
     private IssuerType issuerType;
 
     @Column
