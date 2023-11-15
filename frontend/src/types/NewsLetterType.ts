@@ -24,3 +24,19 @@ export type CreateNewsLetterReq = {
   content: string
   files: [MultiPartFile: any]
 }
+
+// 가정통신문 생성 res
+export type CreateNewsLetterRes = {
+  informId: string
+}
+
+// 가정통신문 수정 req
+export type ModifyNewsLetterReq = {
+  title: string
+  content: string
+}
+
+// 가정통신문 파일 추가 req
+export type AddFile = {
+  file: any
+}
