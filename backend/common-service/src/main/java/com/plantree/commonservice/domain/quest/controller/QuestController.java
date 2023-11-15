@@ -112,4 +112,12 @@ public class QuestController {
 
     }
 
+    @GetMapping("quest/student")
+    public ResponseEntity<?> searchStudentQuests(@JwtLoginMember AuthMember authMember){
+
+        return HttpResponse.okWithData(HttpStatus.OK, "학생 퀘스트 조회입니다.",
+                questSearchUseCase.findStudentQuests(authMember));
+
+    }
+
 }

@@ -9,9 +9,11 @@ import com.plantree.commonservice.global.openFeign.MemberServiceClient;
 import com.plantree.commonservice.global.openFeign.dto.GetNamesFromMemberIdReqDto;
 import com.plantree.commonservice.global.openFeign.dto.GetNamesFromMemberIdResDto;
 import com.plantree.commonservice.global.util.AuthMemberValidator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +40,23 @@ public class QuestSearchUseCase {
                                .acceptorName(names.get(quest.getAcceptor()))
                                .issuerName(names.get(quest.getIssuer()))
                                .build();
+
+    }
+
+    public List<QuestResponseDto> findStudentQuests(AuthMember authMember) {
+
+        List<Quest> quests = questRepository.findByAcceptor(authMember.getMemberId());
+
+        List<UUID> issuerIds = new ArrayList<>();
+        quests.stream()
+              .map(quest -> issuerIds.add(quest.getIssuer()));
+
+        Map<UUID, String> names = memberServiceClient.getNamesFromMember(
+                                                             new GetNamesFromMemberIdReqDto(issuerIds))
+                                                     .getNames();
+
+        return quests.stream().map(quest -> new QuestResponseDto(quest, names.get(quest.getIssuer()),
+                names.get(quest.getAcceptor()))).collect(Collectors.toList());
 
     }
 }
