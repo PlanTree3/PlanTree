@@ -1,0 +1,11 @@
+.log-in {
+  &-container {
+    @apply w-full h-full flex justify-center items-center;
+  }
+  &-box {
+    @apply w-1/2 flex flex-col items-center;
+    img {
+      @apply xl:w-[70%];
+    }
+  }
+}

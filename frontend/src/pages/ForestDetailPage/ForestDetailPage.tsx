@@ -118,7 +118,7 @@ const ForestDetailPage = () => {
           <input type="date" id="end" onChange={endedAtOnChange} /> 까지
           <Button
             label="검색하기"
-            className="xxsmall"
+            className="small lime"
             onClick={handleSearchBtn}
           />
         </div>
