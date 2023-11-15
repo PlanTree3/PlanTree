@@ -93,4 +93,13 @@ public class QuestController {
 
     }
 
+    @PatchMapping("quest/{questId}/check")
+    public ResponseEntity<?> checkQuest(@PathVariable UUID questId,
+            @JwtLoginMember AuthMember authMember){
+
+        questUpdateUseCase.checkQuest(questId, authMember);
+        return HttpResponse.ok(HttpStatus.OK, "퀘스트를 확인하였습니다.");
+
+    }
+
 }
