@@ -9,21 +9,26 @@
 
   &-btn {
     cursor: pointer;
+    box-shadow: 5px 5px 5px 0.1px #777777;
     @apply w-full bg-lime-500 grid rounded-r-xl;
 
     &:hover {
       .img {
-        @apply w-1/2 pr-[1vw];
+        @apply w-[55%] xl:w-[45%];
       }
     }
     .img {
       transition: width 0.5s;
-      width: 40%;
+
       transition: width 0.5s;
 
       z-index: 1;
 
-      @apply justify-self-end m-[1.5vw] pr-[1vw];
+      @apply justify-self-end
+      mx-[1.7vw] my-[1vh]
+      w-[50%] xl:w-[40%]
+      text-[0.8rem]
+      text-center text-black;
     }
   }
 

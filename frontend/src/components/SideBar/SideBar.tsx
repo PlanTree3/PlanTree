@@ -50,12 +50,13 @@ const SideBar = () => {
         <Link to={roleBasedMain(role)} className="sidebar-btn">
           <div className="img">
             <img src={treeImg} alt="Main" />
+            메인
           </div>
         </Link>
         {(role === 'STUDENT' || null) && (
           <Link to="/forest" className="sidebar-btn">
             <div className="img">
-              <img src={forestImg} alt="" />
+              <img src={forestImg} alt="" />숲
             </div>
           </Link>
         )}
@@ -63,26 +64,29 @@ const SideBar = () => {
           <Link to="/studentGroup" className="sidebar-btn">
             <div className="img">
               <img src={nestImg} alt="studentGroup" />
+              둥지
             </div>
           </Link>
         )}
         <Link to="/quest" className="sidebar-btn">
           <div className="img">
             <img src={questImg} alt="Quest" />
+            퀘스트
           </div>
         </Link>
         <Link to="/mypage" className="sidebar-btn">
           <div className="img">
             <img src={treeImg} alt="Mypage" />
+            마이페이지
           </div>
         </Link>
       </div>
-      <button onClick={openModal} className="sidebar-bell">
-        <img src={bell} alt="알람" className="sidebar-bell-img" />
-      </button>
-      <NotificationBox modalOpen={modalOpen} closeModal={closeModal} />
-
       <div className="sidebar-bottom">
+        <button onClick={openModal} className="sidebar-bell">
+          <img src={bell} alt="알람" className="sidebar-bell-img" />
+        </button>
+        <NotificationBox modalOpen={modalOpen} closeModal={closeModal} />
+
         {isLoggedIn && (
           <Button
             className="red small self-center"
