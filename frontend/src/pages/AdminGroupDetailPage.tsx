@@ -189,12 +189,9 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           {' '}
           <div className="flex">
             {inputGroupName}
-            <img
-              className=""
-              src={pencil}
-              onClick={openPencilModal}
-              alt=""
-            />
+            <button onClick={openPencilModal}>
+              <img src={pencil} alt="그룹이름수정" />
+            </button>
           </div>
           <Link to="/adminGroup">
             <img

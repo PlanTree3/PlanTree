@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 // import axios from 'axios';
 import './GroupPage.scss'
-import Seal from '../../public/Seal.png'
+// import Seal from '../../public/Seal.png'
 // import yeji1 from '../../public/yeji1.png'
 // import gijeong1 from '../../public/gijeong1.png'
 import { groupDetail } from '@/apis'
@@ -19,7 +19,6 @@ const StudentGroupDetailPage = () => {
     try {
       const response = await groupDetail(groupId)
       console.log('학생 그룹 상제 조회 응답:', response)
-      // console.log('Response:', response.data)
       setGroupData(response.data)
     } catch (error) {
       console.error('학생 그룹 상제 조회 에러:', error)
@@ -51,23 +50,18 @@ const StudentGroupDetailPage = () => {
     <div>
       <Link to="/studentGroup">
         <div className="arrow">
-          {/* <div className="pt-6"> */}
           <div>목록으로 돌아가기</div>
         </div>
       </Link>
       <div className="font-semibold text-2xl">{groupData?.groupName}</div>
       <div className="flex flex-row">
-        <img
-          // className="h-40"
-          src={Seal}
-          alt=""
-        />
+        {/* <img src={Seal} alt="" /> */}
         <div className="groupLeader">
           <text>그룹장: {groupData?.teacherName}</text>
         </div>
       </div>
-      {currentStudents.map((student: any) => (
-        <div className="studentBox">
+      {currentStudents.map((student: any, index: number) => (
+        <div className="studentBox" key={index}>
           <div className="flex flex items-center">
             <text className="font-semibold text-l">{student.studentName}</text>
           </div>
@@ -80,8 +74,8 @@ const StudentGroupDetailPage = () => {
         </div>
       ))}
       <div className="pagination">
-        {pageNumbers.map((number) => (
-          <button key={number} onClick={() => changePage(number)}>
+        {pageNumbers.map((number, idx) => (
+          <button key={idx} onClick={() => changePage(number)}>
             {number}
           </button>
         ))}
