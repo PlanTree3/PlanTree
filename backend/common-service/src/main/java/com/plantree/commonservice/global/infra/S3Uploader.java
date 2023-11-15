@@ -21,9 +21,9 @@ public class S3Uploader implements FileUploader {
         this.bucket = s3Property.getBucket();
     }
 
-    public void upload(String fileUrl, MultipartFile multipartFile) {
+    public boolean upload(String fileUrl, MultipartFile multipartFile) {
         if (multipartFile == null || multipartFile.isEmpty()) {
-            return;
+            return false;
         }
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -38,6 +38,7 @@ public class S3Uploader implements FileUploader {
         } catch (IOException e) {
             throw new S3UploadException("파일 업로드에 실패하였습니다.");
         }
+        return true;
     }
 
 }

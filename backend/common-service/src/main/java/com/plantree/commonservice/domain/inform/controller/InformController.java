@@ -34,10 +34,15 @@ public class InformController {
     }
 
     @GetMapping("/{informId}")
-    public ResponseEntity<?> searchInformDetail(@PathVariable UUID informId,
-            @JwtLoginMember AuthMember authMember) {
+    public ResponseEntity<?> searchInformDetail(@PathVariable UUID informId) {
         return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
-                informSearchUseCase.searchInformDetail(informId, authMember));
+                informSearchUseCase.searchInformDetail(informId));
+    }
+
+    @GetMapping("/group/{groupId}")
+    public ResponseEntity<?> searchGroupInforms(@PathVariable UUID groupId) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                informSearchUseCase.searchGroupInforms(groupId));
     }
 
 }

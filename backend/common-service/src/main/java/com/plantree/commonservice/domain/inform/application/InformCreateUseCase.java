@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -28,6 +29,7 @@ public class InformCreateUseCase {
     private final InformRepository informRepository;
     private final AuthMemberValidator authMemberValidator;
 
+    @Transactional
     public InformCreateResponseDto createInform(UUID groupId, AuthMember authMember,
             InformCreateRequestDto informCreateRequestDto) {
         authMemberValidator.isGroupLeader(groupId, authMember);
@@ -45,7 +47,9 @@ public class InformCreateUseCase {
 
     private List<InformFile> uploadFiles(List<MultipartFile> files, UUID groupId) {
         List<InformFile> informFiles = new ArrayList<>();
-
+        if (files == null) {
+            return informFiles;
+        }
         String today = LocalDate.now()
                                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
@@ -53,11 +57,12 @@ public class InformCreateUseCase {
             String fileName = file.getOriginalFilename();
             String uploadFileUrl = GROUP_FILE_URL + groupId + "/" + today + "/" + fileName;
             String fileUrl = BUCKET_URL + GROUP_FILE_URL + groupId + "/" + today + "/" + fileName;
-            fileUploader.upload(uploadFileUrl, file);
-            informFiles.add(InformFile.builder()
-                                      .fileName(fileName)
-                                      .fileUrl(fileUrl)
-                                      .build());
+            if (fileUploader.upload(uploadFileUrl, file)) {
+                informFiles.add(InformFile.builder()
+                                          .fileName(fileName)
+                                          .fileUrl(fileUrl)
+                                          .build());
+            }
         }
         return informFiles;
     }
