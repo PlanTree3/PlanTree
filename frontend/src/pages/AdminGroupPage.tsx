@@ -99,40 +99,50 @@ const AdminGroupPage: React.FC = () => {
   // };
 
   return (
-    <div className="overflow-y-auto">
-      <hr />
-      <div className="font-semibold text-2xl">내 그룹 확인하기</div>
-      <div className="studentListBox">
+    <div className="admin-group-page-container">
+      <div className="admin-group-page-title">
+        <div className="admin-group-page-title-text">내 그룹 확인하기</div>
+        <Button
+          className="normal primary"
+          onClick={openModal}
+          label="그룹 생성하기"
+        />
+      </div>
+      <div className="admin-group-page-list-box">
+        {currentGroups?.length !== 0 && (
+          <>
+            <div className="admin-group-page-list-title">
+              <div>번호</div>
+              <div>제목</div>
+              <div>생성일</div>
+              <div>인원</div>
+            </div>
+            <hr />
+          </>
+        )}
         {currentGroups?.map((group: any, index: number) => (
-          <div>
-            {/* eslint-disable-next-line react/no-array-index-key */}
-            <Link
-              to={`/adminGroupDetail/${group.groupId}`}
-              state={{ groupName: group.groupName }}
-            >
-              <div key={index} className="groupItem">
-                <p className="groupInfo">
-                  {index + 1 + (currentPage - 1) * 5}{' '}
-                </p>
-                <p className="groupInfo">{group.groupName} </p>
-                <p className="groupInfo">
-                  {group.createdAt[0]}-{group.createdAt[1]}-{group.createdAt[2]}{' '}
-                </p>
-                <p className="groupInfo">{group.studentCount} </p>
-              </div>
-            </Link>
-            <hr style={{ background: 'black', height: 1, border: 0 }} />
-          </div>
+          <Link
+            to={`/adminGroupDetail/${group.groupId}`}
+            state={{ groupName: group.groupName }}
+          >
+            <div key={index} className="admin-group-item">
+              <p className="groupInfo">{index + 1 + (currentPage - 1) * 5} </p>
+              <p className="groupInfo">{group.groupName} </p>
+              <p className="groupInfo">
+                {group.createdAt[0]}-{group.createdAt[1]}-{group.createdAt[2]}{' '}
+              </p>
+              <p className="groupInfo">{group.studentCount} </p>
+            </div>
+          </Link>
         ))}
       </div>
-      <div className="pagination">
+      <div className="admin-group-pagination">
         {pageNumbers.map((number) => (
           <button key={number} onClick={() => changePage(number)}>
             {number}
           </button>
         ))}
       </div>
-      <Button className="primary" onClick={openModal} label="그룹 생성하기" />
       <Modal
         isOpen={isOpen}
         onClose={closeModal}
