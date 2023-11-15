@@ -25,6 +25,12 @@ public class InformController {
     private final InformCreateUseCase informCreateUseCase;
     private final InformSearchUseCase informSearchUseCase;
 
+    @GetMapping
+    public ResponseEntity<?> searchMyInforms(@JwtLoginMember AuthMember authMember) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                informSearchUseCase.searchMyInforms(authMember));
+    }
+
     @PostMapping("/group/{groupId}")
     public ResponseEntity<?> createInform(@PathVariable UUID groupId,
             @JwtLoginMember AuthMember authMember,
