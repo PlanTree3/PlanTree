@@ -14,6 +14,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -99,6 +100,39 @@ public class QuestController {
 
         questUpdateUseCase.checkQuest(questId, authMember);
         return HttpResponse.ok(HttpStatus.OK, "퀘스트를 확인하였습니다.");
+
+    }
+
+    @GetMapping("quest/{questId}")
+    public ResponseEntity<?> searchQuestDetails(@PathVariable UUID questId,
+            @JwtLoginMember AuthMember authMember){
+
+        return HttpResponse.okWithData(HttpStatus.OK, "퀘스트 상세조회입니다.",
+                questSearchUseCase.findQuestDetails(questId, authMember));
+
+    }
+
+    @GetMapping("quest/student")
+    public ResponseEntity<?> searchStudentQuests(@JwtLoginMember AuthMember authMember){
+
+        return HttpResponse.okWithData(HttpStatus.OK, "학생 퀘스트 조회입니다.",
+                questSearchUseCase.findStudentQuests(authMember));
+
+    }
+
+    @GetMapping("quest/teacher")
+    public ResponseEntity<?> searchTeacherQuests(@JwtLoginMember AuthMember authMember){
+
+        return HttpResponse.okWithData(HttpStatus.OK, "선생님 퀘스트 조회입니다.",
+                questSearchUseCase.findTeacherQuests(authMember));
+
+    }
+
+    @GetMapping("quest/parent")
+    public ResponseEntity<?> searchParentQuests(@JwtLoginMember AuthMember authMember){
+
+        return HttpResponse.okWithData(HttpStatus.OK, "부모님 퀘스트 조회입니다.",
+                questSearchUseCase.findParentQuests(authMember));
 
     }
 
