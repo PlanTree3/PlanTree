@@ -5,6 +5,8 @@ import com.plantree.commonservice.global.exception.UnauthorizedAccessException;
 import com.plantree.commonservice.global.openFeign.MemberServiceClient;
 import com.plantree.commonservice.global.openFeign.dto.CheckGroupLeaderReqDto;
 import com.plantree.commonservice.global.openFeign.dto.CheckGroupLeaderResDto;
+import com.plantree.commonservice.global.openFeign.dto.CheckNestParentReqDto;
+import com.plantree.commonservice.global.openFeign.dto.CheckNestParentResDto;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,4 +24,28 @@ public class AuthMemberValidator {
             throw new UnauthorizedAccessException();
         }
     }
+
+    public void isParentOfStudent(UUID studentId, AuthMember authMember) {
+        CheckNestParentResDto checkNestParentResDto = memberServiceClient.checkNestParent(
+                new CheckNestParentReqDto(studentId, authMember.getMemberId()));
+        if(!checkNestParentResDto.isParent()){
+            throw new UnauthorizedAccessException();
+        }
+    }
+
+    public void validateAuthMemberAndQuestIssuer(UUID issuer, AuthMember authMember) {
+        boolean isAuthMemberQuestIssuer = issuer.equals(authMember.getMemberId());
+        if(!isAuthMemberQuestIssuer){
+            throw new UnauthorizedAccessException();
+        }
+    }
+
+    public void ValidateAuthMemberAndQuestAcceptor(UUID acceptor, AuthMember authMember){
+        boolean isAuthMemberQuestAcceptor = acceptor.equals(authMember.getMemberId());
+        if(!isAuthMemberQuestAcceptor){
+            throw new UnauthorizedAccessException();
+        }
+    }
+
+
 }

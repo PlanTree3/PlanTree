@@ -4,6 +4,7 @@ import com.plantree.commonservice.domain.quest.application.repository.QuestRepos
 import com.plantree.commonservice.domain.quest.domain.Quest;
 import com.plantree.commonservice.domain.quest.infra.database.jpa.QuestJpaRepository;
 import com.plantree.commonservice.domain.quest.infra.database.querydsl.QuestQueryRepository;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,11 @@ public class QuestRepositoryImpl implements QuestRepository {
     @Override
     public Quest save(Quest quest){
         return questJpaRepository.save(quest);
+    }
+
+    @Override
+    public List<Quest> saveAll(List<Quest> quests){
+        return questJpaRepository.saveAll(quests);
     }
 
 }
