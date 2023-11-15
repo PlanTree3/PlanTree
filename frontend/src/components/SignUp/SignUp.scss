@@ -1,13 +1,23 @@
-.roleButton {
-  @apply m-5 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded;
-}
+// .roleButton {
+//   @apply m-5 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded;
+// }
 
 .profileImg {
-  @apply flex flex-col space-y-96 place-content-center justify-center border-2 border-amber-400 p-0 w-48 h-48 bg-[#EFEEE9] mr-1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #8f5454;
+  width: 150px;
+  height: 150px;
+  @apply flex flex-col justify-center bg-[#EFEEE9];
+}
+
+.selectImgModal {
+  @apply w-auto h-2/6;
 }
 
 .selectImg {
-  @apply w-full h-full;
+  @apply w-full h-full p-0 mx-1;
 }
 
 .showProfileImg {
@@ -15,7 +25,7 @@
 }
 
 .addImgBtn {
-  @apply p-0 bg-inherit w-6 h-6 ml-1;
+  @apply p-0 bg-inherit;
 }
 
 .profilePlaceholder {
@@ -90,4 +100,20 @@ input {
 
 .icon {
   @apply w-1/12 h-1/6;
+}
+
+.studentCard {
+  @apply w-8/12 h-3/5 flex border-amber-700;
+}
+
+.userRole {
+  @apply mx-1 w-max h-min border-2 rounded-full border-zinc-950;
+}
+
+.userRoleSpan {
+  @apply w-3/5 flex;
+}
+
+.userRoleDiv {
+  @apply text-xs;
 }
