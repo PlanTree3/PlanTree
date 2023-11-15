@@ -67,4 +67,13 @@ public class QuestController {
 
     }
 
+    @PatchMapping("quest/{questId}/giveup")
+    public ResponseEntity<?> giveupQuest(@PathVariable UUID questId,
+            @JwtLoginMember AuthMember authMember){
+
+        questDeleteUseCase.giveupQuest(questId, authMember);
+        return HttpResponse.ok(HttpStatus.OK, "퀘스트를 포기하였습니다.");
+
+    }
+
 }

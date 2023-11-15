@@ -21,4 +21,10 @@ public class QuestDeleteUseCase {
         questRepository.deleteById(questId);
     }
 
+    @Transactional
+    public void giveupQuest(UUID questId, AuthMember authMember) {
+        authMemberValidator.ValidateAuthMemberAndQuestAcceptor(questId, authMember);
+        questRepository.deleteById(questId);
+    }
+
 }
