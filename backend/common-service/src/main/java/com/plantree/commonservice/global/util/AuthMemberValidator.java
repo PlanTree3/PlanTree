@@ -33,5 +33,13 @@ public class AuthMemberValidator {
         }
     }
 
+    public void validateAuthMemberAndQuestIssuer(UUID issuer, AuthMember authMember) {
+        UUID memberId = authMember.getMemberId();
+        boolean isAuthMemberQuestIssuer = issuer.equals(memberId);
+        if(!isAuthMemberQuestIssuer){
+            throw new UnauthorizedAccessException();
+        }
+    }
+
 
 }

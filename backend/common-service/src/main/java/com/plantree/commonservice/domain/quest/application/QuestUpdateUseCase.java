@@ -4,7 +4,6 @@ import com.plantree.commonservice.domain.quest.application.repository.QuestRepos
 import com.plantree.commonservice.domain.quest.domain.Quest;
 import com.plantree.commonservice.domain.quest.dto.QuestUpdateReqDto;
 import com.plantree.commonservice.global.config.webmvc.AuthMember;
-import com.plantree.commonservice.global.exception.UnauthorizedAccessException;
 import com.plantree.commonservice.global.exception.quest.QuestNotFoundException;
 import com.plantree.commonservice.global.util.AuthMemberValidator;
 import java.util.UUID;
@@ -26,18 +25,13 @@ public class QuestUpdateUseCase {
 
         Quest quest = questRepository.findById(questId)
                                      .orElseThrow(QuestNotFoundException::new);
-        validateAuthMemberAndQuestIssuer(quest.getIssuer(), authMember.getMemberId());
+        authMemberValidator.validateAuthMemberAndQuestIssuer(quest.getIssuer(), authMember);
 
         quest.updateTitle(questUpdateReqDto.getTitle());
         quest.updateContent(questUpdateReqDto.getContent());
 
     }
 
-    private void validateAuthMemberAndQuestIssuer(UUID issuer, UUID memberId) {
-        boolean isAuthMemberQuestIssuer = issuer.equals(memberId);
-        if(!isAuthMemberQuestIssuer){
-            throw new UnauthorizedAccessException();
-        }
-    }
+
 
 }
