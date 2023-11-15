@@ -6,14 +6,14 @@ import '@/styles/branch.scss'
 const ReturnItems = (columnName: string, selectedBranchId: number) => {
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const buds = useSelector((state: RootState) => state.branch.buds)
-  const filteredSeeds = seeds.filter(
+  const filteredSeeds = seeds?.filter(
     (seed: any) =>
       selectedBranchId === null || seed.branchId === selectedBranchId,
   )
   return (
     <>
       {filteredSeeds
-        .filter((seed: any) => seed.dayOfWeek === columnName)
+        ?.filter((seed: any) => seed.dayOfWeek === columnName)
         .map((seed: any, index: number) => {
           return (
             <MovableItem
@@ -31,7 +31,7 @@ const ReturnItems = (columnName: string, selectedBranchId: number) => {
           )
         })}
       {buds
-        .filter((bud: any) => bud.dayOfWeek === columnName)
+        ?.filter((bud: any) => bud.dayOfWeek === columnName)
         .map((bud: any, index: number) => {
           return (
             <MovableItem

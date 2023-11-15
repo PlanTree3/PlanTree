@@ -47,6 +47,17 @@ const ItemPlacement = () => {
       window.location.href = '/main'
     }
   })
+  function generateRandomString(): string {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    const length = 10
+    let result = ''
+    for (let i = 0; i < length; i += 1) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length))
+    }
+    return result
+  }
+
   const handleValueText = (event: ChangeEvent<HTMLInputElement>) => {
     setNewText(event.target.value)
   }
@@ -54,9 +65,9 @@ const ItemPlacement = () => {
     setNewTitle(event.target.value)
   }
   const createItem = () => {
-    if (selectedBranchId) {
+    if (selectedBranchId && seeds) {
       if (newText.length >= 2) {
-        const maxId = seeds.length + 90873
+        const maxId = generateRandomString()
         const newItem = {
           seedId: maxId,
           seedName: newText,
@@ -89,8 +100,8 @@ const ItemPlacement = () => {
     }
   }
   const createBranch = () => {
-    if (newTitle.length >= 2) {
-      const maxId = branches.length + 927343
+    if (newTitle.length >= 2 && branches) {
+      const maxId = generateRandomString()
       const newItem = {
         branchId: maxId,
         branchName: newTitle,
@@ -196,7 +207,7 @@ const ItemPlacement = () => {
           </Dialog>
         </div>
         <div className="dnd-branch-box">
-          {branches.map((branch: any) => (
+          {branches?.map((branch: any) => (
             <button
               key={branch.branchId}
               className="dnd-branch-btn"

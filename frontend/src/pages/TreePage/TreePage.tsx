@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { BarChart, DoughnutChart, PieChart, Tree } from '@/components'
 import './TreePage.scss'
 import { RootState } from '@/stores/store.ts'
-import { getTreeDetailData } from '@/stores/features/forestSlice.ts'
 
 const TreePage = () => {
-  const dispatch = useDispatch()
-  const [totalP, setTotalP] = useState<null | number>(null)
-  const [branchNames, setBranchNames] = useState([])
-  const [branchTotalCount, setBranchTotalCount] = useState([])
-  const [branchDoneCount, setBranchDoneCount] = useState([])
-  const [notYet, setNotYet] = useState<number[]>([])
+  const {
+    totalPercent,
+    branchNames,
+    branchTotalCount,
+    branchDoneCount,
+    notYet,
+  } = useSelector((state: RootState) => state.forest.selectedInfo)
   const detailData = useSelector(
     (state: RootState) => state.forest.detailData,
   ) ?? {
@@ -84,8 +82,6 @@ const TreePage = () => {
       },
     ],
   }
-  const { id } = useParams()
-
   return (
     <div className="tree-page">
       <div className="tree-page-title">
@@ -100,10 +96,13 @@ const TreePage = () => {
           전체 달성도
           <DoughnutChart
             centerText={
-              totalP === null ? 'Loading...' : `${totalP.toFixed(2)}%`
+              totalPercent === null ? 'Loading...' : `${totalPercent}%`
             }
             chartData={{
-              data: totalP === null ? [100, 0] : [totalP, 100 - totalP],
+              data:
+                totalPercent === null
+                  ? [100, 0]
+                  : [totalPercent, 100 - totalPercent],
             }}
           />
         </div>
