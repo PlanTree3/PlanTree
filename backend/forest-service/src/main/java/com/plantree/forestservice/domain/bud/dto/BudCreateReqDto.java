@@ -2,6 +2,7 @@ package com.plantree.forestservice.domain.bud.dto;
 
 import com.plantree.forestservice.domain.bud.domain.Day;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,7 @@ public class BudCreateReqDto {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     private Day dayOfWeek;
 
 }
