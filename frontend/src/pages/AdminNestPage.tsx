@@ -377,6 +377,7 @@ const AdminNestPage = () => {
               </div>
 
               <div className="flex flex-col my-[3vh]">
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                 <label htmlFor="studentSelect">학생 선택:</label>
                 <select
                   id="studentSelect"

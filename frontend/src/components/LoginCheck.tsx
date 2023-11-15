@@ -10,7 +10,7 @@ const LoginCheck = (WrappedComponent: any) => {
 
     useEffect(() => {
       if (!isLoggedIn) {
-        navigate('/')
+        navigate('/login')
       }
     }, [isLoggedIn, navigate])
 

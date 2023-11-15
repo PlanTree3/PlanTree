@@ -9,10 +9,8 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import plusIcon from '../../../public/btn/plusIcon.svg'
-import writeIcon from '../../../public/btn/writeIcon.svg'
 import { RootState } from '@/stores/store'
-import { getRandomColor, ReturnItems } from '@/components'
+import { Button, getRandomColor, ReturnItems } from '@/components'
 import { COLUMN_NAMES } from '@/types/DnDType'
 import { addBranches, addSeeds } from '@/stores/features/branchSlice'
 import Column from '@/components/Column'
@@ -22,8 +20,7 @@ const ItemPlacement = () => {
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const branches = useSelector((state: RootState) => state.branch.branches)
   const treeId = useSelector((state: RootState) => state.main.treeId)
-  const isLoading = useSelector((state: RootState) => state.branch.isLoading)
-  const [colors, setColors] = useState('ffffff')
+  const [colors, setColors] = useState('lightgray')
   const [newText, setNewText] = useState('')
   const [newTitle, setNewTitle] = useState('')
   const [selectedBranchId, setSelectedBranchId] = useState(0)
@@ -145,13 +142,12 @@ const ItemPlacement = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="dnd-box-container">
         <div className="dnd-create-btn-box">
-          <button
-            className="dnd-add-branch-btn"
+          <Button
             onClick={handleClickOpen}
-            disabled={isLoading}
-          >
-            <img src={plusIcon} alt="추가" />
-          </button>
+            className="lime normal"
+            label="가지 만들기"
+          />
+
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>가지 만들기</DialogTitle>
             <DialogContent>
@@ -171,17 +167,23 @@ const ItemPlacement = () => {
               />
             </DialogContent>
             <DialogActions>
-              <button onClick={handleClose}>취소</button>
-              <button onClick={createBranch}>등록</button>
+              <Button
+                className="red small"
+                onClick={handleClose}
+                label="취소"
+              />
+              <Button
+                className="primary small"
+                onClick={createBranch}
+                label="등록"
+              />
             </DialogActions>
           </Dialog>
-          <button
-            className="dnd-add-seed-btn"
+          <Button
+            className="lime normal"
             onClick={handleClickOpenCreateSeed}
-            disabled={isLoading}
-          >
-            <img src={writeIcon} alt="추가" />
-          </button>
+            label="씨앗 만들기"
+          />
           <Dialog open={openSeed} onClose={handleCloseCreateSeed}>
             <DialogTitle>씨앗 만들기</DialogTitle>
             <DialogContent>
@@ -201,8 +203,16 @@ const ItemPlacement = () => {
               />
             </DialogContent>
             <DialogActions>
-              <button onClick={handleCloseCreateSeed}>취소</button>
-              <button onClick={createItem}>등록</button>
+              <Button
+                className="red small"
+                onClick={handleCloseCreateSeed}
+                label="취소"
+              />
+              <Button
+                className="primary small"
+                onClick={createItem}
+                label="등록"
+              />
             </DialogActions>
           </Dialog>
         </div>
@@ -215,9 +225,10 @@ const ItemPlacement = () => {
                 handleBranchSelect(branch.branchId, branch.branchColor)
               }
               style={{
+                border: `2px solid ${branch.branchColor}`,
                 backgroundColor:
-                  selectedBranchId === branch.branchId
-                    ? 'lightgray'
+                  selectedBranchId !== branch.branchId
+                    ? ''
                     : branch.branchColor,
                 color: selectedBranchId === branch.branchId ? 'white' : 'black',
                 zIndex: selectedBranchId === branch.branchId ? 2 : 1,
@@ -228,17 +239,17 @@ const ItemPlacement = () => {
           ))}
         </div>
         <div
-          style={{ backgroundColor: 'lightgray' }}
+          style={{ backgroundColor: `${colors}` }}
           className="dnd-seed-outer-container"
         >
           {ReturnItems(DEFAULT, selectedBranchId)}
         </div>
         <div className="dnd_container">
-          <p>월</p>
-          <p>화</p>
-          <p>수</p>
-          <p>목</p>
-          <p>금</p>
+          <div className="dnd_container-text">월</div>
+          <div className="dnd_container-text">화</div>
+          <div className="dnd_container-text">수</div>
+          <div className="dnd_container-text">목</div>
+          <div className="dnd_container-text">금</div>
         </div>
         <div className="dnd_container">
           <Column title={MONDAY} className="dnd_column dnd_column_shape1">

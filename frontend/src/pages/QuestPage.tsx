@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Quest from '@/components/Quest/Quest'
 import LoginCheck from '@/components/LoginCheck.tsx'
-import Button from '@/components/Button/Button'
 
 const QuestPage = () => {
   const [questStatus, setQuestStatus] = useState('all')
@@ -16,32 +15,40 @@ const QuestPage = () => {
   return (
     <>
       <div className="quest-btn-container">
-        <button onClick={() => changeQuest('all')} className="quest-btn">
+        <button
+          onClick={() => changeQuest('all')}
+          className={`quest-btn${questStatus === 'all' ? '-selected' : ''}`}
+        >
           모든 퀘스트
         </button>
-        <button onClick={() => changeQuest('ing')} className="quest-btn">
+        <button
+          onClick={() => changeQuest('ing')}
+          className={`quest-btn${questStatus === 'ing' ? '-selected' : ''}`}
+        >
           진행 중
         </button>
-        <button onClick={() => changeQuest('new')} className="quest-btn">
+        <button
+          onClick={() => changeQuest('new')}
+          className={`quest-btn${questStatus === 'new' ? '-selected' : ''}`}
+        >
           새 퀘스트
         </button>
-        <button onClick={() => changeQuest('past')} className="quest-btn">
+        <button
+          onClick={() => changeQuest('past')}
+          className={`quest-btn${questStatus === 'past' ? '-selected' : ''}`}
+        >
           이전 퀘스트
         </button>
         {questStatus === 'past' && (
           <button
             onClick={deleteTrigger}
-            className={deleteState ? 'quest-del-btn' : 'quest-btn'}
+            className={deleteState ? 'quest-del-btn-selected' : 'quest-del-btn'}
           >
             퀘스트 삭제
           </button>
         )}
       </div>
       <Quest questStatus={questStatus} deleteState={deleteState} />
-      <div>
-        <Button className="normal primary" label="이전" />
-        <Button className="normal primary" label="다음" />
-      </div>
     </>
   )
 }

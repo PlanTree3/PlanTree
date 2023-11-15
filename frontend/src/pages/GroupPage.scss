@@ -1,5 +1,5 @@
 .arrow {
-  background-image: url('../public/arrow.png');
+  background-image: url('/public/arrow.png');
   background-repeat: no-repeat;
   background-size: contain;
   /* width: 50%; */
@@ -133,11 +133,11 @@
       }
     }
     &-container {
-      @apply mx-[4vw] overflow-y-auto;
+      @apply mx-[4vw] h-full overflow-y-auto;
     }
     &-list {
       &-box {
-        @apply border-4 rounded-xl p-[2vw];
+        @apply border-4 rounded-xl p-[2vw] h-[85%];
         hr {
           @apply border-t-slate-600 my-[2vh];
         }
@@ -195,9 +195,14 @@
       title {
         @apply block text-2xl;
       }
+
       text {
         @apply block text-lg;
       }
+    }
+    &-text {
+      grid-template-columns: 1fr 5fr;
+      @apply grid;
     }
   }
 }

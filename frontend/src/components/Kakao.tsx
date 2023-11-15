@@ -4,12 +4,11 @@ import { useNavigate } from 'react-router-dom' // 라우팅 컴포넌트 밖에�
 // useHistory -> useNavigate
 import { useDispatch } from 'react-redux'
 import { addIdToken, addOauthProvider } from '@/stores/features/signupSlice'
-import '../styles/LogIn.scss'
 import { userLogin } from '@/apis/member'
 import { loginCheck } from '@/stores/features/userSlice'
 // import Swal from "sweetalert2";
 // import { AxiosError } from "axios";
-import kakaoBTN from '../../public/login_btn/kakaotalk_sharing_btn_small.png'
+import kakaoBTN from '../../public/login_btn/kakao.png'
 
 const Kakao = () => {
   const navigate = useNavigate()
@@ -68,15 +67,8 @@ const Kakao = () => {
       onSuccess={handleLoginSuccess}
       onFail={handleLoginFailure}
       render={({ onClick }) => (
-        <button
-          // className="social_login_button"
-          onClick={onClick}
-        >
-          <img
-            // className="social_login_img"
-            src={kakaoBTN}
-            alt="카카오 로그인"
-          />
+        <button onClick={onClick} className="flex justify-center w-2/3">
+          <img src={kakaoBTN} alt="카카오 로그인" />
         </button>
       )}
     />

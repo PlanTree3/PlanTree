@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 // import axios from 'axios';
 import { Link } from 'react-router-dom'
 import chick from '../../public/chick.png'
@@ -67,19 +67,19 @@ const StudentGroupPage = () => {
                 <img src={chick} alt="" />
               </div>
               <div className="student-group-nest-area-text-container">
-                <div>{studentData.nest.nestName}</div>
-                <br />
-                {/* <div className="font-semibold text-l"> */}
-                <div>둥지장</div>
-                {studentData.nest.parents.map((parent: any) => (
-                  <div>{parent}</div>
-                ))}
-                <br />
-                {/* <div className="font-semibold text-l"> */}
-                <div>둥지원</div>
-                {studentData.nest.children.map((child: any) => (
-                  <div>{child}</div>
-                ))}
+                <title>{studentData.nest.nestName}</title>
+                <div className="student-group-nest-area-text">
+                  <title>둥지장</title>
+                  {studentData.nest.parents.map((parent: any) => (
+                    <text>{parent}</text>
+                  ))}
+                </div>
+                <div className="student-group-nest-area-text">
+                  <title>둥지원</title>
+                  {studentData.nest.children.map((child: any) => (
+                    <text>{child}</text>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
