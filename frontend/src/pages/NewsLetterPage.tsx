@@ -109,6 +109,22 @@ const NewsLetterPage = () => {
     setInputWriter(news.writer)
   }
 
+  const fileList: File[] = []
+
+  const onSaveFiles = (e: ChangeEvent<HTMLInputElement>) => {
+    const uploadFiles = Array.prototype.slice.call(e.target.files)
+
+    uploadFiles.map((uploadFile) => fileList.push(uploadFile))
+  }
+
+  const onFileUpload = () => {
+    const formData = new FormData()
+
+    fileList.map((file) => formData.append('multipartFiles', file))
+
+    // https://jforj.tistory.com/132
+  }
+
   useEffect(() => {
     const fetchDataAndShowNews = async () => {
       try {
@@ -194,6 +210,9 @@ const NewsLetterPage = () => {
                 value={inputContent}
                 onChange={modifyContent}
               />
+              <div>첨부파일</div>
+              <input type="file" multiple onChange={onSaveFiles} />
+              <Button onClick={onFileUpload} label="파일 업로드" />
               <Button onClick={sendNewsLetter} label="확인" />
             </>
           ) : (
