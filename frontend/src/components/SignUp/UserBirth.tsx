@@ -24,7 +24,8 @@ const UserBirth = () => {
 
   return (
     <>
-      <LiaBirthdayCakeSolid />
+      <div>제 생일은</div>
+      <LiaBirthdayCakeSolid class="icon" />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DemoContainer components={['DatePicker']}>
           <DatePicker
@@ -39,6 +40,7 @@ const UserBirth = () => {
           />
         </DemoContainer>
       </LocalizationProvider>
+      <div>입니다.</div>
     </>
   )
 }

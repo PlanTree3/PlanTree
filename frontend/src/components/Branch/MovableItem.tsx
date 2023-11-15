@@ -38,6 +38,7 @@ const MovableItem = ({
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const buds = useSelector((state: RootState) => state.branch.buds)
   const [detailOpen, setDeailOpen] = useState(false)
+  const isLoading = useSelector((state: RootState) => state.branch.isLoading)
   const changeItemColumn = (
     currentItem: any,
     columnName: string,
@@ -89,6 +90,7 @@ const MovableItem = ({
   const ref = useRef<HTMLDivElement>(null)
   const [, drop] = useDrop<DragItem>({
     accept: ITEM_TYPE,
+    canDrop: () => !isLoading,
     hover(
       item: { index: number; budName: string },
       monitor: DropTargetMonitor,
@@ -126,14 +128,12 @@ const MovableItem = ({
         const alreadyFinished =
           Object.values(COLUMN_NAMES).includes(dayOfWeek) &&
           dayOfWeek.includes('_FINISH')
-        console.log(isFinishDay)
         const valuesArray = Object.values(COLUMN_NAMES)
         const pointIndex = valuesArray.indexOf(point)
         const dayOfWeekIndex = valuesArray.indexOf(dayOfWeek)
         if (pointIndex === dayOfWeekIndex) {
           /* TODO document why this block is empty */
         } else if (pointIndex < dayOfWeekIndex && alreadyFinished) {
-          console.log(pointIndex)
           Swal.fire({
             title: '등록된 요일 이전으로 수정은 안돼요!',
             text: '일정을 잘못 등록하셨다면, 삭제하고 다시 등록해주세요!',
@@ -174,25 +174,30 @@ const MovableItem = ({
         }
       }
     },
+    canDrag: () => !isLoading,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   })
   const opacity = isDragging ? 0.4 : 1
-  drag(drop(ref))
+  if (!isLoading) {
+    drag(drop(ref))
+  }
   const removeSeed = (itemId: string) => {
     const updatedItems = seeds.filter((item: any) => item.seedId !== itemId)
+    const newItem = buds.filter((item: any) => item.budId === itemId)
     const data = {
       newSeeds: updatedItems,
-      createdItem: itemId,
+      createdItem: newItem[0],
     }
     dispatch(removeSeeds(data))
   }
   const removeBud = (itemId: string) => {
     const updatedItems = buds.filter((item: any) => item.budId !== itemId)
+    const newItem = buds.filter((item: any) => item.budId === itemId)
     const data = {
       newBuds: updatedItems,
-      createdItem: itemId,
+      createdItem: newItem[0],
     }
     dispatch(removeBuds(data))
   }
@@ -209,56 +214,43 @@ const MovableItem = ({
       style={{ opacity, backgroundColor: branchColor }}
     >
       {idType === 'bud' && (
-        <>
-          <div
-            role="button"
-            className="dnd_movable-item-content"
-            onClick={() => handleDetailBuds()}
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                handleDetailBuds()
-              }
-            }}
-          >
-            <p className="dnd_movable-item-content-name">{budName}</p>
-            <button
-              // onClick={() => removeBud(id)}
-              className="dnd_movable-item-content-deleteBTN"
-            >
-              <img
-                src={changeBTN}
-                alt="수정버튼"
-                className="dnd_movable-item-content-deleteBTN-img"
-              />
-            </button>
-            <button
-              onClick={() => removeBud(id)}
-              className="dnd_movable-item-content-deleteBTN"
-            >
-              <img
-                src={delBTN}
-                alt="삭제버튼"
-                className="dnd_movable-item-content-deleteBTN-img"
-              />
-            </button>
-          </div>
-          <Comments
-            open={detailOpen}
-            handleClose={closeDetailBuds}
-            budId={id}
-            budName={budName}
-            commentCount={commentCount}
-          />
-        </>
-      )}
-      {idType === 'seed' && (
-        <button className="dnd_movable-item-content">
+        <div className="dnd_movable-item-content">
           <p className="dnd_movable-item-content-name">{budName}</p>
           <button
-            // onClick={() => removeSeed(id)}
+            onClick={() => handleDetailBuds()}
             className="dnd_movable-item-content-deleteBTN"
           >
+            <img
+              src={changeBTN}
+              alt="수정버튼"
+              className="dnd_movable-item-content-deleteBTN-img"
+            />
+            {detailOpen && (
+              <Comments
+                open={detailOpen}
+                handleClose={closeDetailBuds}
+                budId={id}
+                budName={budName}
+                commentCount={commentCount}
+              />
+            )}
+          </button>
+          <button
+            onClick={() => removeBud(id)}
+            className="dnd_movable-item-content-deleteBTN"
+          >
+            <img
+              src={delBTN}
+              alt="삭제버튼"
+              className="dnd_movable-item-content-deleteBTN-img"
+            />
+          </button>
+        </div>
+      )}
+      {idType === 'seed' && (
+        <div className="dnd_movable-item-content">
+          <p className="dnd_movable-item-content-name">{budName}</p>
+          <button className="dnd_movable-item-content-deleteBTN">
             <img
               src={changeBTN}
               alt="수정버튼"
@@ -275,7 +267,7 @@ const MovableItem = ({
               className="dnd_movable-item-content-deleteBTN-img"
             />
           </button>
-        </button>
+        </div>
       )}
     </div>
   )

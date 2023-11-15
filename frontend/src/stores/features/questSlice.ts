@@ -69,7 +69,7 @@ const defaultQuestList = [
     questTitle: '저주받은 성',
     questContent: '고대의 비밀을 풀 준비가 되었나요?',
     createdAt: '2023-10-29',
-    isChecked: true,
+    // isChecked: true,
     isConfirmed: false,
     isFinished: false,
   },

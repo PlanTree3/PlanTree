@@ -24,6 +24,7 @@ const MainPage = () => {
   const dateToday = today.getDate()
   const [selectDay, setSelectDay] = useState('')
   const [message, setMessage] = useState('')
+
   useEffect(() => {
     dispatch(getMainData())
     if (treeId) {
@@ -112,38 +113,53 @@ const MainPage = () => {
         <div className="main-page-container">
           <button
             id="monday"
-            onClick={() => sendDays(MONDAY)}
-            className="main-day-btn "
+            onClick={() => sendDays('월요일')}
+            className={`main-day-btn ${
+              selectDay === '월요일' &&
+              ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
+            }`}
           >
             월
           </button>
           <div className="main-page-btn-top">
             <button
               id="tuesday"
-              onClick={() => sendDays(TUESDAY)}
-              className="main-day-btn"
+              onClick={() => sendDays('화요일')}
+              className={`main-day-btn ${
+                selectDay === '화요일' &&
+                ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
+              }`}
             >
               화
             </button>
             <button
               id="wednesday"
-              onClick={() => sendDays(WEDNESDAY)}
-              className="main-day-btn"
+              onClick={() => sendDays('수요일')}
+              className={`main-day-btn ${
+                selectDay === '수요일' &&
+                ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
+              }`}
             >
               수
             </button>
             <button
               id="thursday"
-              onClick={() => sendDays(THURSDAY)}
-              className="main-day-btn"
+              onClick={() => sendDays('목요일')}
+              className={`main-day-btn ${
+                selectDay === '목요일' &&
+                ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
+              }`}
             >
               목
             </button>
           </div>
           <button
             id="friday"
-            onClick={() => sendDays(FRIDAY)}
-            className="main-day-btn"
+            onClick={() => sendDays('금요일')}
+            className={`main-day-btn ${
+              selectDay === '금요일' &&
+              ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
+            }`}
           >
             금
           </button>
@@ -171,10 +187,8 @@ const MainPage = () => {
                 </div>
               )}
             </div>
-          </div>
-          <div className="flex justify-end">
             <Button
-              className="primary small "
+              className="primary small"
               label="일정 등록하기"
               onClick={handleBranchPage}
             />
@@ -186,84 +200,3 @@ const MainPage = () => {
 }
 
 export default StudentCheck(LoginCheck(MainPage))
-
-// return (
-//   <>
-//     <div>
-//       <div className="main-tree-check">42 번 째 나무</div>
-//       <div className="main-date">
-//         {monthToday} / {dayToday}
-//       </div>
-//     </div>
-//     <div className="main-box-container">
-//       <div className="main-arch-container">
-//         <button
-//           id="monday"
-//           onClick={() => sendDays(MONDAY)}
-//           className="main-day-btn"
-//         >
-//           월
-//         </button>
-//         <button
-//           id="tuesday"
-//           onClick={() => sendDays(TUESDAY)}
-//           className="main-day-btn"
-//         >
-//           화
-//         </button>
-//         <button
-//           id="wednesday"
-//           onClick={() => sendDays(WEDNESDAY)}
-//           className="main-day-btn"
-//         >
-//           수
-//         </button>
-//         <button
-//           id="thursday"
-//           onClick={() => sendDays(THURSDAY)}
-//           className="main-day-btn"
-//         >
-//           목
-//         </button>
-//         <button
-//           id="friday"
-//           onClick={() => sendDays(FRIDAY)}
-//           className="main-day-btn"
-//         >
-//           금
-//         </button>
-//         <div className="main-tree-container">
-//           <Tree degree={80} />
-//         </div>
-//       </div>
-//       <div>
-//         {dayToday === 0 ||
-//           (dayToday === 6 && (
-//             <Button className="long primary" label="회고하러 가기" />
-//           ))}
-//         <div className="main-todo-list">
-//           <div className="main-todo-list-title">To Do</div>
-//           <div className="main-todo-list-content">
-//             {message ? (
-//               <div>{message}</div>
-//             ) : (
-//               <div>
-//                 <div title={selectDay}>{returnItemsForColumn(selectDay)}</div>
-//                 <div title={selectDay} style={{ color: 'red' }}>
-//                   {returnFinishedItemsForColumn(`${selectDay} 끝`)}
-//                 </div>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//         <div className="flex justify-end">
-//           <Button
-//             className="primary small "
-//             label="일정 등록하기"
-//             onClick={handleBranchPage}
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   </>
-// )

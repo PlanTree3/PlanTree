@@ -64,7 +64,7 @@ const ForestPage = () => {
           {forests.map((forest, idx) => {
             return (
               <SwiperSlide key={idx}>
-                <div>{forest.startedAt} 나무</div>
+                <div>{forest.startedAt}</div>
               </SwiperSlide>
             )
           })}
@@ -72,8 +72,9 @@ const ForestPage = () => {
       </div>
       <div className="forest-card-container">
         <ForestCard
-          nav={forests[selected].startedAt}
+          nav={forests[selected].forestId}
           forestName={forests[selected].startedAt}
+          endedAt={forests[selected].endedAt}
         />
       </div>
     </div>

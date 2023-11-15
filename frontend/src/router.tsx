@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom'
 import StudentGroupPage from './pages/StudentGroupPage.tsx'
 import StudentGroupDetailPage from './pages/StudentGroupDetailPage.tsx'
 import AdminGroupDetailPage from './pages/AdminGroupDetailPage.tsx'
-// import AdminGroupTabPage from './pages/AdminGroupTabPage.tsx'
 import AdminGroupPage from './pages/AdminGroupPage.tsx'
 import AdminNestPage from './pages/AdminNestPage.tsx'
 import AdminGroupRequestPage from './pages/AdminGroupRequestPage.tsx'
@@ -23,6 +22,7 @@ import {
   OidcGoogle,
   TreePage,
   Tutorial,
+  NewsLetterPage,
 } from './pages'
 
 const RoutesComponent = () => (
@@ -66,6 +66,8 @@ const RoutesComponent = () => (
     <Route path="*" element={<NotFoundPage />} />
 
     <Route path="/tutorial" element={<Tutorial />} />
+
+    <Route path="/newsLetter/:id" element={<NewsLetterPage />} />
   </Routes>
 )
 

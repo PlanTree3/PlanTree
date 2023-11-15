@@ -33,8 +33,10 @@ const groupDelete = async (groupId: any) => {
 const groupJoinRequest = async (groupId: any) => {
   authApi
     .post(`${groupBaseUrl}/${groupId}/join-request`)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+    .then((res) => res)
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
 // 그룹 가입 수락
@@ -57,7 +59,7 @@ const groupJoinRefuse = async (groupId: any, data: any) => {
 const groupDetail = async (groupId: any) => {
   return authApi
     .get(`${groupBaseUrl}/${groupId}`)
-    .then((res) => res)
+    .then((res) => res.data)
     .catch((err) => err)
 }
 

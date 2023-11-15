@@ -5,7 +5,7 @@ import { DoughnutChart } from '@/components'
 import './ForestDetailPage.scss'
 import Button from '@/components/Button/Button'
 import { RootState } from '@/stores/store'
-import { getTreesData } from '@/stores/features/forestSlice'
+import { getTreeDetailData } from '@/stores/features/forestSlice.ts'
 
 const ForestDetailPage = () => {
   const dummyData = [
@@ -49,10 +49,47 @@ const ForestDetailPage = () => {
   const [endedAt, setEndedAt] = useState('')
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getTreesData())
-  }, [])
+  const detailData = useSelector((state: RootState) => state.forest.selectTree)
   const handleTreeBox = (treeId: string) => {
+    dispatch(getTreeDetailData(treeId))
+
+    let newSum = 0
+    let newFin = 0
+    let totalPercent = 0
+
+    if (detailData && detailData.branches) {
+      detailData.branches.forEach((branch: any) => {
+        newSum += branch.totalBudCount
+        newFin += branch.completedBudCount
+      })
+      console.log(newFin, newSum)
+      if (newSum > 0) {
+        totalPercent = (newFin / newSum) * 100
+      } else {
+        totalPercent = 0
+      }
+      const branchNames: any = detailData.branches.map(
+        (branch) => branch.branchName,
+      )
+      const branchTotalCount: any = detailData.branches.map(
+        (branch) => branch.totalBudCount,
+      )
+      const branchDoneCount: any = detailData.branches.map(
+        (branch) => branch.completedBudCount,
+      )
+      const notYet = detailData.branches.map((branch) =>
+        branch.totalBudCount > 0
+          ? branch.totalBudCount - branch.completedBudCount
+          : 0,
+      )
+      const saveData = {
+        totalPercent,
+        branchNames,
+        branchTotalCount,
+        branchDoneCount,
+        notYet,
+      }
+    }
     navigate(`/tree/${treeId}`)
   }
 
@@ -81,7 +118,6 @@ const ForestDetailPage = () => {
 
     if (filterType === 'start') {
       if (isValidDate(start) && isValidDate(end)) {
-        console.log(start, end)
         return treeStart >= start && treeStart <= end
       }
       if (isValidDate(start) && !isValidDate(end)) {
@@ -91,7 +127,6 @@ const ForestDetailPage = () => {
     }
     // filterType === 'end'
     if (isValidDate(start) && isValidDate(end)) {
-      console.log(start, end)
       return treeEnd >= start && treeEnd <= end
     }
     if (isValidDate(start) && !isValidDate(end)) {

@@ -1,11 +1,12 @@
 import {
   call,
   put,
-  takeLatest,
+  takeEvery,
   CallEffect,
   PutEffect,
   SelectEffect,
   select,
+  takeLatest,
 } from 'redux-saga/effects'
 import { AxiosResponse } from 'axios'
 import { PayloadAction } from '@reduxjs/toolkit'
@@ -23,6 +24,7 @@ import {
   saveBranches,
   saveBuds,
   saveSeeds,
+  setLoading,
 } from '@/stores/features/branchSlice.ts'
 import {
   branchCreate,
@@ -43,9 +45,9 @@ function* getBranchDataSaga(): Generator<
   AxiosResponse<FetchUserDataResponse>
 > {
   try {
+    yield put(setLoading(true))
     const treeId: any = yield select(getTreeId)
     const response: any = yield call(getSchedule, treeId)
-    console.log(response)
     const { branches } = response.data.data
     const { buds } = response.data.data
     const updatedSeeds = branches.reduce((accumulator: any, branch: any) => {
@@ -60,7 +62,6 @@ function* getBranchDataSaga(): Generator<
       return accumulator.concat(seedsWithBranchInfo)
     }, []) // 초기 누적값은 빈 배열
 
-    console.log(updatedSeeds)
     const updateBuds = buds.map((bud: any) => {
       if (bud.complete) {
         return {
@@ -70,12 +71,13 @@ function* getBranchDataSaga(): Generator<
       }
       return bud
     })
-    console.log(treeId, branches, buds)
     yield put(saveBranches(branches))
     yield put(saveSeeds(updatedSeeds))
     yield put(saveBuds(updateBuds))
+    yield put(setLoading(false))
   } catch (error) {
     /* empty */
+    yield put(setLoading(false))
   }
 }
 
@@ -87,28 +89,22 @@ function* addBudsSaga(
   AxiosResponse<FetchUserDataResponse>
 > {
   try {
+    yield put(setLoading(true))
     const treeId: any = yield select(getTreeId)
-    const { branchId } = action.payload.createdItem
+    const { branchId, budName, dayOfWeek } = action.payload.createdItem
     const data = {
-      name: action.payload.createdItem.budName,
-      dayOfWeek: action.payload.createdItem.dayOfWeek,
+      name: budName,
+      dayOfWeek,
     }
-    console.log(data)
-    const response: AxiosResponse<any> = yield call(
-      budCreate,
-      treeId,
-      branchId,
-      data,
-    )
-    if (response.data) {
-      // 응답 데이터가 있으면 뭔가를 합니다.
-      // 예를 들어, Redux store를 업데이트할 수 있습니다.
-      // yield put({ type: 'ADD_BUD_SUCCESS', payload: response.data });
+    if (data.dayOfWeek) {
+      yield call(budCreate, treeId, branchId, data)
+      yield put(getBranchData())
+    } else {
+      console.log('아니 왜 null이 감지됨???')
     }
+    yield put(setLoading(false))
   } catch (error) {
-    // 에러를 처리합니다.
-    // 예를 들어, 에러 메시지를 store에 저장할 수 있습니다.
-    // yield put({ type: 'ADD_BUD_FAILURE', payload: error });
+    /* empty */
   }
 }
 
@@ -119,7 +115,7 @@ function* addSeedsSaga(
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  console.log('씨앗 사가 작동 확인', action.payload)
+  yield put(setLoading(true))
   const { branchId } = action.payload.createdItem
   const treeId: any = yield select(getTreeId)
   const data = {
@@ -132,8 +128,9 @@ function* addSeedsSaga(
     data,
   )
   if (response.data) {
-    // TODO document why this block is empty
+    yield put(getBranchData())
   }
+  yield put(setLoading(false))
 }
 
 function* addBranchesSaga(
@@ -143,20 +140,17 @@ function* addBranchesSaga(
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  console.log(action.payload)
+  yield put(setLoading(true))
   const treeId: any = yield select(getTreeId)
   const data = {
     name: action.payload.createdItem.branchName,
     branchColor: action.payload.createdItem.color,
   }
-  console.log(data)
   const response: AxiosResponse<any> = yield call(branchCreate, treeId, data)
-  console.log('가지생성 응답', response)
   if (response.data) {
-    const result = response.data.data
-    console.log(result)
     yield put(getBranchData())
   }
+  yield put(setLoading(false))
 }
 
 function* removeBudsSaga(
@@ -166,19 +160,12 @@ function* removeBudsSaga(
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  console.log(action.payload)
+  yield put(setLoading(true))
   const treeId: any = yield select(getTreeId)
   const { branchId } = action.payload.createdItem
   const { budId } = action.payload.createdItem
-  const response: AxiosResponse<unknown> = yield call(
-    budDelete,
-    treeId,
-    branchId,
-    budId,
-  )
-  if (response.data) {
-    // TODO document why this block is empty
-  }
+  yield call(budDelete, treeId, branchId, budId)
+  yield put(setLoading(false))
 }
 
 function* removeSeedsSaga(
@@ -188,19 +175,12 @@ function* removeSeedsSaga(
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  console.log(action.payload)
+  yield put(setLoading(true))
   const treeId: any = yield select(getTreeId)
   const { branchId } = action.payload.createdItem
   const { budId } = action.payload.createdItem
-  const response: AxiosResponse<unknown> = yield call(
-    seedCreate,
-    treeId,
-    branchId,
-    budId,
-  )
-  if (response.data) {
-    // TODO document why this block is empty
-  }
+  yield call(seedCreate, treeId, branchId, budId)
+  yield put(setLoading(false))
 }
 
 function* moveBudsSaga(
@@ -211,23 +191,20 @@ function* moveBudsSaga(
   AxiosResponse<FetchUserDataResponse>
 > {
   try {
+    yield put(setLoading(true))
     const treeId: any = yield select(getTreeId)
     const { branchId } = action.payload.createdItem
     const { budId } = action.payload.createdItem
+    const { dayOfWeek } = action.payload.createdItem
     const data = {
-      dayOfWeek: action.payload.createdItem.dayOfWeek,
+      dayOfWeek,
     }
-    console.log(action.payload, data)
-    const response: AxiosResponse<any> = yield call(
-      budDayUpdate,
-      treeId,
-      branchId,
-      budId,
-      data,
-    )
-    if (response.data) {
-      /* empty */
+    if (data.dayOfWeek) {
+      yield call(budDayUpdate, treeId, branchId, budId, data)
+    } else {
+      console.log('아니 왜 null이 감지됨???')
     }
+    yield put(setLoading(false))
   } catch (error) {
     /* empty */
   }
@@ -241,23 +218,20 @@ function* finishBudsSaga(
   AxiosResponse<FetchUserDataResponse>
 > {
   try {
+    yield put(setLoading(true))
     const treeId: any = yield select(getTreeId)
     const { branchId } = action.payload.createdItem
     const { budId } = action.payload.createdItem
-    console.log(action.payload, treeId, branchId, budId)
+    const { dayOfWeek } = action.payload.createdItem
     const data = {
-      dayOfWeek: action.payload.createdItem.dayOfWeek.replace('_FINISH', ''),
+      dayOfWeek,
     }
-    const response: AxiosResponse<any> = yield call(
-      budComplete,
-      treeId,
-      branchId,
-      budId,
-      data,
-    )
-    if (response.data) {
-      // TODO document why this block is empty
+    if (data.dayOfWeek) {
+      yield call(budComplete, treeId, branchId, budId, data)
+    } else {
+      console.log('아니 왜 null이 감지됨???')
     }
+    yield put(setLoading(false))
   } catch (error) {
     /* empty */
   }
@@ -271,23 +245,20 @@ function* finishRejectBudsSaga(
   AxiosResponse<FetchUserDataResponse>
 > {
   try {
+    yield put(setLoading(true))
     const treeId: any = yield select(getTreeId)
     const { branchId } = action.payload.createdItem
     const { budId } = action.payload.createdItem
-    console.log(action.payload)
+    const { dayOfWeek } = action.payload.createdItem
     const data = {
-      dayOfWeek: action.payload.createdItem.dayOfWeek,
+      dayOfWeek,
     }
-    const response1: AxiosResponse<any> = yield call(
-      budCompleteCancel,
-      treeId,
-      branchId,
-      budId,
-      data,
-    )
-    if (response1.data) {
-      // TODO document why this block is empty
+    if (data.dayOfWeek) {
+      yield call(budCompleteCancel, treeId, branchId, budId, data)
+    } else {
+      console.log('아니 왜 null이 감지됨???')
     }
+    yield put(setLoading(false))
   } catch (error) {
     /* empty */
   }
@@ -295,12 +266,12 @@ function* finishRejectBudsSaga(
 
 export function* watchBranchData() {
   yield takeLatest(getBranchData.type, getBranchDataSaga)
-  yield takeLatest(addBuds.type, addBudsSaga)
-  yield takeLatest(addSeeds.type, addSeedsSaga)
-  yield takeLatest(addBranches.type, addBranchesSaga)
-  yield takeLatest(removeBuds.type, removeBudsSaga)
-  yield takeLatest(removeSeeds.type, removeSeedsSaga)
-  yield takeLatest(moveBuds.type, moveBudsSaga)
-  yield takeLatest(finishedBuds.type, finishBudsSaga)
-  yield takeLatest(finishRejectBuds.type, finishRejectBudsSaga)
+  yield takeEvery(addBuds.type, addBudsSaga)
+  yield takeEvery(addSeeds.type, addSeedsSaga)
+  yield takeEvery(addBranches.type, addBranchesSaga)
+  yield takeEvery(removeBuds.type, removeBudsSaga)
+  yield takeEvery(removeSeeds.type, removeSeedsSaga)
+  yield takeEvery(moveBuds.type, moveBudsSaga)
+  yield takeEvery(finishedBuds.type, finishBudsSaga)
+  yield takeEvery(finishRejectBuds.type, finishRejectBudsSaga)
 }
