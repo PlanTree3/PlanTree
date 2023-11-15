@@ -9,7 +9,6 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -40,7 +39,7 @@ public class Inform extends BaseTimeEntity {
     @Column(columnDefinition = "BINARY(16)")
     private UUID teacherId;
 
-    @OneToMany(mappedBy = "inform", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "inform", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<InformFile> informFiles = new ArrayList<>();
 
     @Builder
@@ -57,6 +56,29 @@ public class Inform extends BaseTimeEntity {
     public void validateTeacher(UUID memberId) {
         if (!this.teacherId.equals(memberId)) {
             throw new UnauthorizedAccessException();
+        }
+    }
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+
+    public void changeContent(String content) {
+        this.content = content;
+    }
+
+    public void addInformFile(InformFile informFile) {
+        informFile.setInform(this);
+        this.informFiles.add(informFile);
+    }
+
+    public void deleteInformFile(UUID fileId) {
+        for (InformFile file : this.informFiles) {
+            if (file.getId()
+                    .equals(fileId)) {
+                this.informFiles.remove(file);
+                return;
+            }
         }
     }
 
