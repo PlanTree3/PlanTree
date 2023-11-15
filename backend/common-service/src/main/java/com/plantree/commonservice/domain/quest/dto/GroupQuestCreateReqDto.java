@@ -4,10 +4,10 @@ import java.util.UUID;
 import lombok.Getter;
 
 @Getter
-public class QuestCreateReqDto {
+public class GroupQuestCreateReqDto {
 
     private String title;
     private String content;
-    private UUID studentId;
+    private UUID groupId;
 
 }

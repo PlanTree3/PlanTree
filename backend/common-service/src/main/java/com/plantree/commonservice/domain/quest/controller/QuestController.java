@@ -4,7 +4,8 @@ import com.plantree.commonservice.domain.quest.application.QuestCreateUseCase;
 import com.plantree.commonservice.domain.quest.application.QuestDeleteUseCase;
 import com.plantree.commonservice.domain.quest.application.QuestSearchUseCase;
 import com.plantree.commonservice.domain.quest.application.QuestUpdateUseCase;
-import com.plantree.commonservice.domain.quest.dto.QuestCreateReqDto;
+import com.plantree.commonservice.domain.quest.dto.GroupQuestCreateReqDto;
+import com.plantree.commonservice.domain.quest.dto.StudentQuestCreateReqDto;
 import com.plantree.commonservice.global.config.webmvc.AuthMember;
 import com.plantree.commonservice.global.config.webmvc.JwtLoginMember;
 import com.plantree.commonservice.global.responseType.HttpResponse;
@@ -25,10 +26,19 @@ public class QuestController {
     private final QuestSearchUseCase questSearchUseCase;
 
     @PostMapping("student-quest")
-    public ResponseEntity<?> addStudentQuest(@RequestBody QuestCreateReqDto questCreateReqDto,
+    public ResponseEntity<?> addStudentQuest(@RequestBody StudentQuestCreateReqDto studentQuestCreateReqDto,
             @JwtLoginMember AuthMember authMember){
 
-        questCreateUseCase.createStudentQuest(questCreateReqDto, authMember);
+        questCreateUseCase.createStudentQuest(studentQuestCreateReqDto, authMember);
+        return HttpResponse.ok(HttpStatus.OK, "퀘스트를 생성하였습니다.");
+
+    }
+
+    @PostMapping("group-quest")
+    public ResponseEntity<?> addGroupQuest(@RequestBody GroupQuestCreateReqDto groupQuestCreateReqDto,
+            @JwtLoginMember AuthMember authMember){
+
+        questCreateUseCase.createGroupQuest(groupQuestCreateReqDto, authMember);
         return HttpResponse.ok(HttpStatus.OK, "퀘스트를 생성하였습니다.");
 
     }
