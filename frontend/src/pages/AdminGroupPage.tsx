@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { Link } from 'react-router-dom'
 import './GroupPage.scss'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
 import { groupCreate, teacherGroupList } from '@/apis'
 import { LoginCheck } from '@/components'
-// import { GroupRequest } from '@/types/GroupAdminType'
 
 const AdminGroupPage: React.FC = () => {
   //useState들
@@ -30,7 +28,7 @@ const AdminGroupPage: React.FC = () => {
     }
   }
 
-  //그룹생성
+  // 그룹생성
   // if (!inputGroupName) {
   //   alert('그룹 이름을 지정해주세요')
   // } else {
@@ -104,13 +102,12 @@ const AdminGroupPage: React.FC = () => {
       <div className="font-semibold text-2xl">내 그룹 확인하기</div>
       <div className="studentListBox">
         {currentGroups?.map((group: any, index: number) => (
-          <div>
-            {/* eslint-disable-next-line react/no-array-index-key */}
+          <div key={(group.groupId, index)}>
             <Link
               to={`/adminGroupDetail/${group.groupId}`}
               state={{ groupName: group.groupName }}
             >
-              <div key={index} className="groupItem">
+              <div className="groupItem">
                 <p className="groupInfo">
                   {index + 1 + (currentPage - 1) * 5}{' '}
                 </p>

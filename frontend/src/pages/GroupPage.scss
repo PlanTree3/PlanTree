@@ -132,7 +132,7 @@
       img {
         @apply max-h-[6vh];
       }
-      @apply flex font-semibold text-2xl;
+      @apply flex font-semibold text-2xl justify-between;
     }
     &-btn-container {
       @apply space-x-2;

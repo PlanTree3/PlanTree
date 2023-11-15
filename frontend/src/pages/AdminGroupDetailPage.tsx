@@ -4,6 +4,7 @@ import QR from 'qrcode.react'
 import { Link, useParams, useLocation } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
+import arrow from '../../public/arrow.png'
 import Button from '@/components/Button/Button'
 import './GroupPage.scss'
 import {
@@ -116,6 +117,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     try {
       // const groupId = '1'
       const response = await groupNameUpdate(groupId, data)
+      console.log('inputGroupName 업뎃', inputGroupName)
       console.log('그룹이름 업뎃', response)
     } catch (error) {
       console.error('그룹이름 업뎃 에러', error)
@@ -149,7 +151,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     const data = {
       title: inputQuestTitle,
       content: inputQuestContent,
-      groupId: groupId,
+      groupId,
     }
     try {
       const response = await groupQuestCreate(data)
@@ -185,13 +187,26 @@ const AdminGroupDetailPage: React.FC<any> = () => {
       <div className="admin-group-detail-container">
         <div className="admin-group-detail-title">
           {' '}
-          {inputGroupName}
-          <img
-            className="ml-[3vh]"
-            src={pencil}
-            onClick={openPencilModal}
-            alt=""
-          />
+          <div className="flex">
+            {inputGroupName}
+            <img
+              className=""
+              src={pencil}
+              onClick={openPencilModal}
+              alt=""
+            />
+          </div>
+          <Link to="/adminGroup">
+            <img
+              src={arrow}
+              alt=""
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}
+            />
+          </Link>
         </div>
 
         <div className="admin-group-detail-btn-container">

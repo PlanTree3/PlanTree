@@ -1,24 +1,102 @@
 import ReactModal from 'react-modal'
-import { useEffect } from 'react'
-import { notificationBox } from '@/apis/notification'
+import { useState, useEffect } from 'react'
+import {
+  notificationBox,
+  notificationDelete,
+  notificationReading,
+} from '@/apis/notification'
 
-const NotificationBox = ({ modalIsOpen, closeModal }: any) => {
+const NotificationBox = ({ modalOpen, closeModal }: any) => {
+  const [notificationData, setNotificationData] = useState<any>(null)
   // 알림함 조회
   const handleNotification = async () => {
     try {
       const response = await notificationBox()
       console.log('알림함 조회', response)
+      setNotificationData(response.data)
     } catch (error) {
       console.error('알림함 에러:', error)
     }
   }
   useEffect(() => {
     handleNotification()
+  }, [modalOpen])
+
+  // 알림함 삭제
+  const handleNotificationDelete = async () => {
+    try {
+      const response = await notificationDelete()
+      console.log('알림함 전체 응답', response)
+    } catch (error) {
+      console.error('알림함 전체 삭제 에러:', error)
+    }
+  }
+
+  // 알림함 알림 하나 조회
+  const handleNotificationReading = async (notificationId) => {
+    try {
+      const response = await notificationReading()
+      console.log('알림 하나 조회 응답', response)
+    } catch (error) {
+      console.error('알림 하나 조회 에러:', error)
+    }
+  }
+
+  useEffect(() => {
+    handleNotification()
   }, [])
+
+  // 타입에 따른 문구
+  const getNotificationTypeText = (type: string) => {
+    switch (type) {
+      case 'STU_GEN_BUD':
+        return '학생이 버드 만듬'
+      case 'STU_COM_BUD':
+        return '학생이 버드 완료'
+      case 'STU_GEN_BRA':
+        return '학생이 가지 만듬'
+      case 'PAR_GEN_BRA':
+        return '부모가 가지 만듬'
+      case 'TEA_GEN_BRA':
+        return '선생이 가지 만듬'
+      case 'STU_WRI_BUD':
+        return '학생이 버드에 코멘트 씀'
+      case 'PAR_WRI_BUD':
+        return '부모가 버드에 코멘트 씀'
+      case 'TEA_WRI_BUD':
+        return '선생이 버드에 코멘트 씀'
+      default:
+        return '알 수 없는 타입'
+    }
+  }
+
+  // 알림함에 보여주는 형식
+  const renderNotifications = () => {
+    if (
+      !notificationData ||
+      !notificationData.notifications ||
+      !Array.isArray(notificationData.notifications)
+    ) {
+      return <p>조회할 수 있는 알림이 없습니다</p>
+    }
+
+    return (
+      <div>
+        {notificationData.notifications.map(
+          (notification: any, index: number) => (
+            <p key={index}>
+              {index + 1} {getNotificationTypeText(notification.type)}{' '}
+              {notification.read ? '읽음' : '읽지 않음'}
+            </p>
+          ),
+        )}
+      </div>
+    )
+  }
 
   return (
     <ReactModal
-      isOpen={modalIsOpen}
+      isOpen={modalOpen}
       ariaHideApp={false}
       onRequestClose={closeModal}
       style={{
@@ -45,6 +123,7 @@ const NotificationBox = ({ modalIsOpen, closeModal }: any) => {
       }}
     >
       <div className="font-semibold text-xl">알림 확인하기</div>
+      {renderNotifications()}
     </ReactModal>
   )
 }

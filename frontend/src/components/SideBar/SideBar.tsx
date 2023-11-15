@@ -12,18 +12,18 @@ import { logOutCheck } from '@/stores/features/userSlice'
 import NotificationBox from '../notificationBox'
 
 const SideBar = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn)
   const role = useSelector((state: any) => state.user.userData.role) ?? null
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const openModal = () => {
-    setModalIsOpen(true)
+    setModalOpen(true)
   }
 
   const closeModal = () => {
-    setModalIsOpen(false)
+    setModalOpen(false)
   }
   const handleLogout = async () => {
     dispatch(logOutCheck())
@@ -80,7 +80,7 @@ const SideBar = () => {
         <img src={bell} alt="알람" className="sidebar-bell-img" />
       </button>
       {isLoggedIn && <button onClick={handleLogout}>로그아웃</button>}
-      <NotificationBox modalIsOpen={modalIsOpen} closeModal={closeModal} />
+      <NotificationBox modalOpen={modalOpen} closeModal={closeModal} />
     </>
   )
 }
