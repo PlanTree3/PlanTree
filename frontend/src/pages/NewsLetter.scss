@@ -1,4 +1,6 @@
 .newsletter {
+  @apply overflow-y-auto;
+
   &-page {
     &-title {
       @apply flex justify-between ml-[2vw] my-[2vh];
