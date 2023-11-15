@@ -90,7 +90,7 @@ const MainPage = () => {
             id="monday"
             onClick={() => sendDays('MON')}
             className={`main-day-btn ${
-              selectDay === '월요일' &&
+              selectDay === 'MON' &&
               ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
             }`}
           >
@@ -101,7 +101,7 @@ const MainPage = () => {
               id="tuesday"
               onClick={() => sendDays('TUE')}
               className={`main-day-btn ${
-                selectDay === '화요일' &&
+                selectDay === 'TUE' &&
                 ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
               }`}
             >
@@ -111,7 +111,7 @@ const MainPage = () => {
               id="wednesday"
               onClick={() => sendDays('WEN')}
               className={`main-day-btn ${
-                selectDay === '수요일' &&
+                selectDay === 'WEN' &&
                 ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
               }`}
             >
@@ -121,7 +121,7 @@ const MainPage = () => {
               id="thursday"
               onClick={() => sendDays('THU')}
               className={`main-day-btn ${
-                selectDay === '목요일' &&
+                selectDay === 'THU' &&
                 ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
               }`}
             >
@@ -132,7 +132,7 @@ const MainPage = () => {
             id="friday"
             onClick={() => sendDays('FRI')}
             className={`main-day-btn ${
-              selectDay === '금요일' &&
+              selectDay === 'FRI' &&
               ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
             }`}
           >
