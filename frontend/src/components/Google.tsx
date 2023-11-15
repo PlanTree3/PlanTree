@@ -1,6 +1,5 @@
 import qs from 'qs'
-import googleBtn from '../../public/login_btn/web_light_sq_na@4x.png'
-import '../styles/LogIn.scss'
+import googleBtn from '../../public/login_btn/google.png'
 
 const Google = () => {
   // const frontBase = import.meta.env.VITE_PUBLIC_CLIENT_BASE_URL
@@ -21,11 +20,9 @@ const Google = () => {
   console.log(import.meta.env.VITE_PUBLIC_GOOGLE_CLIENT_ID)
 
   return (
-    <div className="social_login_Gbutton">
-      <a href={loginUrl}>
-        <img src={googleBtn} alt="googleLogin" />
-      </a>
-    </div>
+    <a href={loginUrl} className="w-2/3 flex justify-center">
+      <img src={googleBtn} alt="googleLogin" />
+    </a>
   )
 }
 
