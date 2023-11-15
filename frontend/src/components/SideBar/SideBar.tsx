@@ -80,13 +80,9 @@ const SideBar = () => {
       <button onClick={openModal} className="sidebar-bell">
         <img src={bell} alt="알람" className="sidebar-bell-img" />
       </button>
-      {isLoggedIn && <button onClick={handleLogout}>로그아웃</button>}
       <NotificationBox modalOpen={modalOpen} closeModal={closeModal} />
 
       <div className="sidebar-bottom">
-        <button onClick={openModal} className="sidebar-bell">
-          <img src={bell} alt="알람" className="sidebar-bell-img" />
-        </button>
         {isLoggedIn && (
           <Button
             className="red small self-center"
