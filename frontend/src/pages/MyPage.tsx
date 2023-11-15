@@ -237,8 +237,7 @@ const MyPage = () => {
     }
 
     const content = (
-      // <table className="table-fixed">
-      <table>
+      <table className="table-fixed">
         <thead>
           <tr>
             <th>번호</th>

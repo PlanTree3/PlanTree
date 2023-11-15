@@ -39,7 +39,7 @@ const UserRole = () => {
       <div>저는</div>
       {rolesEO.map((role: string, idx) => (
         <Button
-          className="brown normal button"
+          className="brown large button"
           onClick={() => setRole(rolesEO[idx])}
           label={showRole(role)}
         />

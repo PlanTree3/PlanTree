@@ -107,12 +107,10 @@ const UserProfileImg = () => {
 
   const moveProfileImg = () => {
     const content = (
-      // <div className="mb-3.5">
-      <div>
+      <div className="selectImgModal">
         {imgList.map((img: string, index: number) => (
           <button
             key={index}
-            // className="selectImg p-0 mx-1"
             className="selectImg"
             onClick={() => {
               chooseProfileImg(`public/profile/${img}.jpg`)
@@ -120,7 +118,6 @@ const UserProfileImg = () => {
             }}
           >
             <img
-              // className="selectImg m-0"
               className="selectImg"
               src={`public/profile/${img}.jpg`}
               alt={img}
@@ -131,7 +128,7 @@ const UserProfileImg = () => {
     )
 
     MySwal.fire({
-      title: '프로필 사진을 골라 주세요',
+      title: '프로필 사진을 고르세요',
       html: content,
       width: '27%',
       heightAuto: false,
@@ -146,38 +143,28 @@ const UserProfileImg = () => {
   }, [userRole])
 
   return (
-    // <div className="w-8/12 h-3/5 relative">
-    <div className="relative">
-      {/* <div className="flex bg-no-repeat w-full h-full bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]"> */}
-      <div className="bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]">
+    <div className="studentCard">
+      <div>
         {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-        <button
-          // className="addImgBtn"
-          onClick={() => moveProfileImg()}
-        >
+        <button className="addImgBtn" onClick={() => moveProfileImg()}>
           <LuImagePlus />
         </button>
-        {/* <div className="profileImg"> */}
-        <div>
+        <div className="profileImg">
           {isProfileImg ? (
             <img
-              // className="showProfileImg"
+              className="showProfileImg"
               src={inputProfileImg}
               alt={inputProfileImg}
             />
           ) : (
-            // <div className="profilePlaceholder">
-            <div>프로필 사진을 선택하세요!</div>
+            <div className="profilePlaceholder">
+              <div>프로필 사진을 선택하세요!</div>
+            </div>
           )}
         </div>
-        {/* <span className="w-3/5 flex"> */}
-        <span>
-          {/* <div
-            className={`mx-1 w-max h-min border-2 rounded-full border-zinc-950 ${bgColor}`}
-          > */}
-          <div className={`${bgColor}`}>
-            {/* <div className="mx-1 text-xs"> */}
-            <div>{inputUserRole}</div>
+        <span className="userRoleSpan">
+          <div className={`userRole ${bgColor}`}>
+            <div className="userRoleDiv">{inputUserRole}</div>
           </div>
           {/* <div className="w-2/6"> */}
           <div>
