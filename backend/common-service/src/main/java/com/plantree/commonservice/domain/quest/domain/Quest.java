@@ -26,6 +26,9 @@ public class Quest extends BaseTimeEntity {
     private String title;
 
     @Column
+    private IssuerType issuerType;
+
+    @Column
     private UUID issuer;
 
     @Column
@@ -47,39 +50,40 @@ public class Quest extends BaseTimeEntity {
     private boolean isFinished;
 
     @Builder
-    public Quest(String title, UUID issuer, UUID acceptor, String content){
+    public Quest(String title, IssuerType issuerType, UUID issuer, UUID acceptor, String content) {
         this.title = title;
+        this.issuerType = issuerType;
         this.issuer = issuer;
         this.acceptor = acceptor;
         this.content = content;
     }
 
-    public void updateTitle(String title){
+    public void updateTitle(String title) {
         this.title = title;
     }
 
-    public void updateContent(String content){
+    public void updateContent(String content) {
         this.content = content;
     }
 
-    public void check(){
+    public void check() {
         this.isChecked = true;
     }
 
-    public void accept(){
+    public void accept() {
         this.isConfirmed = true;
     }
 
-    public void finishRequest(){
+    public void finishRequest() {
         this.isWaiting = true;
     }
 
-    public void finish(){
+    public void finish() {
         this.isFinished = true;
     }
 
     @PrePersist
-    public void generateQuestId(){
+    public void generateQuestId() {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();
     }
 
