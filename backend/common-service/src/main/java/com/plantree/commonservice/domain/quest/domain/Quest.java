@@ -54,6 +54,14 @@ public class Quest extends BaseTimeEntity {
         this.content = content;
     }
 
+    public void updateTitle(String title){
+        this.title = title;
+    }
+
+    public void updateContent(String content){
+        this.content = content;
+    }
+
     @PrePersist
     public void generateQuestId(){
         this.id = SequentialUUIDGenerator.generateSequentialUUID();
