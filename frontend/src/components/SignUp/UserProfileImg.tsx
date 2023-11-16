@@ -130,7 +130,7 @@ const UserProfileImg = () => {
     MySwal.fire({
       title: '프로필 사진을 고르세요',
       html: content,
-      width: '27%',
+      width: '45%',
       heightAuto: false,
       position: 'center',
       showConfirmButton: false,
@@ -144,11 +144,7 @@ const UserProfileImg = () => {
 
   return (
     <div className="studentCard">
-      <div>
-        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-        <button className="addImgBtn" onClick={() => moveProfileImg()}>
-          <LuImagePlus />
-        </button>
+      <div className="sign-up-profile-image-container">
         <div className="profileImg">
           {isProfileImg ? (
             <img
@@ -162,42 +158,27 @@ const UserProfileImg = () => {
             </div>
           )}
         </div>
-        <span className="userRoleSpan">
-          <div className={`userRole ${bgColor}`}>
-            <div className="userRoleDiv">{inputUserRole}</div>
-          </div>
-          {/* <div className="w-2/6"> */}
-          <div>
-            {/* <div className="title"> */}
-            <div>이름</div>
-            {/* <div className="title"> */}
-            <div>나이</div>
-            {/* <div className="title"> */}
-            <div>생일</div>
-          </div>
-          {/* <div className="w-3/6"> */}
-          <div>
-            {/* <div className="content"> */}
-            <div>
-              <div>{userName}</div>
-            </div>
-            {/* <div className="content"> */}
-            <div>
-              <div>{userAge}세</div>
-            </div>
-            {/* <div className="content"> */}
-            <div>
-              <div>
-                {userBirthMonth}월 {userBirthDay}일
-              </div>
-            </div>
-          </div>
-        </span>
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+        <button onClick={() => moveProfileImg()}>
+          <LuImagePlus />
+        </button>
       </div>
-      <button
-        // className="absolute right-0"
-        onClick={saveUser}
-      >
+      <div className="sign-up-info">
+        <div className="sign-up-info-container">
+          <div>이름</div>
+          <div className="flex justify-center items-center gap-1">
+            {userName}
+            <div className={`userRole ${bgColor}`}>{inputUserRole}</div>
+          </div>
+          <div>나이</div>
+          <div>{userAge}세</div>
+          <div>생일</div>
+          <div>
+            {userBirthMonth}월 {userBirthDay}일
+          </div>
+        </div>
+      </div>
+      <button className="lime normal" onClick={saveUser}>
         지금부터 숲을 가꿔보자!
       </button>
     </div>

@@ -19,22 +19,19 @@ const UserName = () => {
   }
 
   return (
-    <>
-      <div className="divGap">제 이름은</div>
-      <div className="inputName divGap">
+    <div className="user-name-container">
+      <div className="user-name-is">제 이름은</div>
+      <div className="user-name-input">
         <input
           type="text"
           value={inputName}
           onChange={onInputHandler}
           placeholder="이름 입력"
         />
-        <div className="divGap">
-          <span className="checkName">{inputCount}</span>
-          <span className="checkName">/10</span>
-        </div>
+        <span className="">{inputCount}/10</span>
       </div>
-      <div className="divGap">입니다.</div>
-    </>
+      <div className="user-name-desu">입니다.</div>
+    </div>
   )
 }
 

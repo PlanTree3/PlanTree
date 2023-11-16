@@ -3,7 +3,6 @@
 // }
 
 .profileImg {
-  position: relative;
   overflow: hidden;
   border-radius: 50%;
   border: 3px solid #8f5454;
@@ -22,10 +21,6 @@
 
 .showProfileImg {
   @apply p-0 w-full h-full;
-}
-
-.addImgBtn {
-  @apply p-0 bg-inherit;
 }
 
 .profilePlaceholder {
@@ -59,11 +54,14 @@
 }
 
 .signUpTitle {
-  @apply flex gap-2 items-center text-center font-bold;
+  @apply flex h-[5vh] gap-2 items-center text-center font-bold;
+  img {
+    @apply h-full w-fit;
+  }
 }
 
 .signUpTitleTxt {
-  @apply align-bottom text-4xl h-fit;
+  @apply align-bottom text-2xl h-fit;
 }
 
 .checkName {
@@ -103,17 +101,46 @@ input {
 }
 
 .studentCard {
-  @apply w-8/12 h-3/5 flex border-amber-700;
+  @apply w-8/12 border-amber-700 space-y-5;
 }
 
 .userRole {
-  @apply mx-1 w-max h-min border-2 rounded-full border-zinc-950;
+  @apply rounded-full px-2 text-xs;
 }
 
-.userRoleSpan {
-  @apply w-3/5 flex;
+.user-name {
+  &-container {
+    grid-template-areas:
+      'mn . .'
+      '. inp desu';
+    @apply grid;
+  }
+  &-is {
+    grid-area: mn;
+    @apply text-2xl;
+  }
+  &-input {
+    grid-area: inp;
+    @apply mx-3 flex justify-center items-end gap-2;
+  }
+  &-desu {
+    grid-area: desu;
+    @apply text-2xl flex justify-center items-end;
+  }
 }
 
-.userRoleDiv {
-  @apply text-xs;
+.sign-up {
+  &-profile-image-container {
+    @apply flex justify-center items-center;
+    button {
+      @apply self-start;
+    }
+  }
+  &-info {
+    @apply flex justify-center items-center;
+    &-container {
+      grid-template-columns: 1fr 5fr;
+      @apply grid gap-y-[1vh];
+    }
+  }
 }
