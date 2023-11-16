@@ -173,6 +173,10 @@ export const questSlice = createSlice({
   name: 'quest',
   initialState,
   reducers: {
+    getQuestData: () => {},
+    saveQuestData: (state, action) => {
+      state.questsList = action.payload
+    },
     checkQuest: (state, action) => {
       const questId = action.payload
       const quest = state.questsList.find((idx: any) => idx.questId === questId)
@@ -195,5 +199,11 @@ export const questSlice = createSlice({
   },
 })
 
-export const { checkQuest, confirmQuest, deleteQuest } = questSlice.actions
+export const {
+  getQuestData,
+  saveQuestData,
+  checkQuest,
+  confirmQuest,
+  deleteQuest,
+} = questSlice.actions
 export default questSlice.reducer
