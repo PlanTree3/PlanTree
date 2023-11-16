@@ -23,6 +23,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   const [currentPage, setCurrentPage] = useState(1)
   const [studentsData, setStudentsData] = useState<any>(null)
+  const [fileList, setFileList] = useState<File[]>([])
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [questmodalIsOpen, setQuestModalIsOpen] = useState(false)
@@ -107,23 +108,20 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     setInputNewsContent(e.target.value)
   }
   // 파일 저장
-  const fileList: File[] = []
-
   const onSaveFiles = (e: ChangeEvent<HTMLInputElement>) => {
-    const uploadFiles = e.target.files
+    const { files } = e.target
 
-    if (uploadFiles) {
-      const filesArray = Array.from(uploadFiles)
-      filesArray.map((file) => fileList.push(file))
+    if (files) {
+      const filesArray = Array.from(files)
+      setFileList([...fileList, ...filesArray])
     }
   }
 
   const onFileUpload = async () => {
     const formData = new FormData()
 
-    fileList.map((file) => {
+    fileList.forEach((file) => {
       formData.append('file', file)
-      return null
     })
     formData.append(
       'data',
@@ -235,6 +233,9 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   // 가정통신문 생성
   const handleGroupNotice = async () => {
     const data = {
+      groupId,
+      title: inputNewsTitle,
+      content: inputNewsContent,
       file: fileList,
     }
     try {
