@@ -94,10 +94,10 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation()
-                  closeModal(quest.questId, quest.isChecked, true)
+                  closeModal(quest.questId, quest.isChecked, false)
                 }}
               >
-                <img src="/public/btn/closeBtn.png" alt="" />
+                <img src="/public/btn/closeBtn.png" alt="닫기" />
               </button>
             </div>
             <DialogTitle id={`quest-title-${quest.questId}`}>
@@ -129,6 +129,7 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
                   <Button
                     onClick={(e) => {
                       e.stopPropagation()
+                      dispatch(deleteQuest(quest.questId))
                       closeModal(quest.questId, quest.isChecked, false)
                     }}
                     className="normal red"

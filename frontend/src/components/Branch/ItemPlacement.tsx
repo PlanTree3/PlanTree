@@ -153,7 +153,7 @@ const ItemPlacement = () => {
     if (branches) {
       handleBranchSelect(branches[0].branchId, branches[0].branchColor)
     }
-  }, branches)
+  }, [branches])
 
   return (
     <DndProvider backend={backendForDND} options={backendOptions}>
