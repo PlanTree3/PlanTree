@@ -67,7 +67,7 @@ public class InformController {
     }
 
     @PostMapping("/{informId}/file")
-    public ResponseEntity<?> addInformFile(@PathVariable UUID informId,
+    public ResponseEntity<?> addInformFiles(@PathVariable UUID informId,
             @JwtLoginMember AuthMember authMember,
             @ModelAttribute InformFileAddRequestDto informFileAddRequestDto) {
         informUpdateUseCase.addInformFile(informId, authMember, informFileAddRequestDto);

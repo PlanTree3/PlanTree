@@ -67,9 +67,11 @@ public class Inform extends BaseTimeEntity {
         this.content = content;
     }
 
-    public void addInformFile(InformFile informFile) {
-        informFile.setInform(this);
-        this.informFiles.add(informFile);
+    public void addInformFiles(List<InformFile> informFiles) {
+        for (InformFile informFile : informFiles) {
+            informFile.setInform(this);
+            this.informFiles.add(informFile);
+        }
     }
 
     public void deleteInformFile(UUID fileId) {
