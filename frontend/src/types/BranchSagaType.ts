@@ -15,6 +15,7 @@ export interface BudsType {
   budName: string
   commentCount: number
   dayOfWeek: number | string
+  complete: boolean
 }
 
 export interface SeedsType {

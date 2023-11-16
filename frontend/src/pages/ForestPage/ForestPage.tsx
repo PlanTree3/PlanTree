@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Mousewheel } from 'swiper/modules'
+import { Mousewheel, Pagination } from 'swiper/modules'
 import { useDispatch, useSelector } from 'react-redux'
 import ForestCard from '@/components/ForestCard/ForestCard'
 import './ForestPage.css'
 import 'atropos/css'
-import Button from '@/components/Button/Button'
 import 'swiper/css'
 import 'swiper/css/pagination'
+
 import { RootState } from '@/stores/store.ts'
 import { getForestData } from '@/stores/features/forestSlice.ts'
 import { LoginCheck, StudentCheck } from '@/components'
@@ -31,54 +31,28 @@ const ForestPage = () => {
   useEffect(() => {
     dispatch(getForestData())
   }, [])
-  const [selected, setIndex] = useState(0)
-  const handleSelect = (idx: number) => {
-    setIndex(idx)
-  }
-
-  const slideChange = (e: any) => {
-    setIndex(e.activeIndex)
-  }
 
   return (
-    <div className="forest-page-container">
-      <div className="side-bar">
-        {forests.map((forest, idx) => {
-          return (
-            <Button
-              key={idx}
-              label={forest.startedAt}
-              className={selected === idx ? 'primary' : 'gray'}
-              onClick={() => handleSelect(idx)}
+    <Swiper
+      slidesPerView="auto"
+      pagination={{ clickable: true }}
+      mousewheel
+      modules={[Mousewheel, Pagination]}
+    >
+      {forests?.map((forest) => (
+        <SwiperSlide>
+          <div className="forest-card-container">
+            <ForestCard
+              nav={forest.forestId}
+              forestName={forest.startedAt}
+              endedAt={forest.endedAt}
             />
-          )
-        })}
-        <Swiper
-          direction="vertical"
-          slidesPerView={1}
-          mousewheel
-          modules={[Mousewheel]}
-          onSlideChange={slideChange}
-          initialSlide={selected}
-        >
-          {forests.map((forest, idx) => {
-            return (
-              <SwiperSlide key={idx}>
-                <div>{forest.startedAt}</div>
-              </SwiperSlide>
-            )
-          })}
-        </Swiper>
-      </div>
-      <div className="forest-card-container">
-        <ForestCard
-          nav={forests[selected].forestId}
-          forestName={forests[selected].startedAt}
-          endedAt={forests[selected].endedAt}
-        />
-      </div>
-    </div>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
   )
 }
 
+// export default LoginCheck(ForestPage)
 export default StudentCheck(LoginCheck(ForestPage))

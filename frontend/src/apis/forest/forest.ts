@@ -30,6 +30,16 @@ const forestGetApi = async (): Promise<AxiosResponse> => {
     .catch((err) => err)
 }
 
+// 타인의 숲 조회
+const studentForestGetApi = async (
+  memberId: string,
+): Promise<AxiosResponse> => {
+  return authApi
+    .get(`${forestBaseUrl}/${memberId}`)
+    .then((res) => res)
+    .catch((err) => err)
+}
+
 // 나무 리스트
 const treeList = async (
   forestId: string,
@@ -113,6 +123,7 @@ export {
   myMainPageApi,
   mainPageApi,
   forestGetApi,
+  studentForestGetApi,
   treeList,
   treeDetail,
   branchCreate,

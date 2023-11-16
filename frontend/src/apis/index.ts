@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
+import Swal from 'sweetalert2'
 import { HTTP_STATUS } from '@/types/StatusType'
 import { userRefresh } from './member'
-import Swal from 'sweetalert2'
 
 const API_URL = import.meta.env.VITE_PUBLIC_SERVER_BASE_URL
 
@@ -44,7 +44,7 @@ const authInterceptor = (instance: AxiosInstance) => {
             iconColor: 'red',
             confirmButtonText: '확인',
             willClose: () => {
-              window.location.href = '/'
+              window.location.href = '/login'
             },
           })
         }
@@ -74,3 +74,4 @@ export { api, authApi, formApi, authFormApi }
 export * from './member'
 export * from './forest'
 export * from './communication'
+export * from './notification'

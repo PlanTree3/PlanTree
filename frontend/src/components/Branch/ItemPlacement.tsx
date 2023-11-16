@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
+import { TouchBackend } from 'react-dnd-touch-backend'
+import { isMobile } from 'react-device-detect'
 import { ChangeEvent, useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -9,21 +11,25 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import plusIcon from '../../../public/btn/plusIcon.svg'
-import writeIcon from '../../../public/btn/writeIcon.svg'
 import { RootState } from '@/stores/store'
-import { getRandomColor, ReturnItems } from '@/components'
+import { Button, getRandomColor, ReturnItems } from '@/components'
 import { COLUMN_NAMES } from '@/types/DnDType'
 import { addBranches, addSeeds } from '@/stores/features/branchSlice'
 import Column from '@/components/Column'
 
 const ItemPlacement = () => {
+  const backendForDND = isMobile ? TouchBackend : HTML5Backend
+  // const backendForDND = TouchBackend
+  const backendOptions = {
+    delayTouchStart: 200, // 드래그 시작 전의 지연 시간 (밀리초)
+    enableMouseEvents: true, // 마우스 이벤트 활성화
+  }
+
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const branches = useSelector((state: RootState) => state.branch.branches)
   const treeId = useSelector((state: RootState) => state.main.treeId)
-  const isLoading = useSelector((state: RootState) => state.branch.isLoading)
-  const [colors, setColors] = useState('ffffff')
+  const [colors, setColors] = useState('lightgray')
   const [newText, setNewText] = useState('')
   const [newTitle, setNewTitle] = useState('')
   const [selectedBranchId, setSelectedBranchId] = useState(0)
@@ -47,6 +53,7 @@ const ItemPlacement = () => {
       window.location.href = '/main'
     }
   })
+
   function generateRandomString(): string {
     const characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -141,17 +148,47 @@ const ItemPlacement = () => {
   const handleCloseCreateSeed = () => {
     setOpenSeed(false)
   }
+
+  useEffect(() => {
+    if (branches) {
+      handleBranchSelect(branches[0].branchId, branches[0].branchColor)
+    }
+  }, [branches])
+
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={backendForDND} options={backendOptions}>
       <div className="dnd-box-container">
-        <div className="dnd-create-btn-box">
-          <button
-            className="dnd-add-branch-btn"
+        <div className="dnd-branch-container">
+          <div className="dnd-branch-box">
+            {branches?.map((branch: any) => (
+              <button
+                key={branch.branchId}
+                className="dnd-branch-btn"
+                onClick={() =>
+                  handleBranchSelect(branch.branchId, branch.branchColor)
+                }
+                style={{
+                  border: `3px solid ${branch.branchColor}`,
+                  borderBottom: '0',
+                  backgroundColor:
+                    selectedBranchId !== branch.branchId
+                      ? ''
+                      : branch.branchColor,
+                  color:
+                    selectedBranchId === branch.branchId ? 'white' : 'black',
+                  zIndex: selectedBranchId === branch.branchId ? 2 : 1,
+                }}
+              >
+                {branch.branchName}
+              </button>
+            ))}
+          </div>
+          <Button
             onClick={handleClickOpen}
-            disabled={isLoading}
-          >
-            <img src={plusIcon} alt="추가" />
-          </button>
+            className="lime small w-[9vw]"
+            label="가지 만들기"
+          />
+
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>가지 만들기</DialogTitle>
             <DialogContent>
@@ -171,74 +208,71 @@ const ItemPlacement = () => {
               />
             </DialogContent>
             <DialogActions>
-              <button onClick={handleClose}>취소</button>
-              <button onClick={createBranch}>등록</button>
-            </DialogActions>
-          </Dialog>
-          <button
-            className="dnd-add-seed-btn"
-            onClick={handleClickOpenCreateSeed}
-            disabled={isLoading}
-          >
-            <img src={writeIcon} alt="추가" />
-          </button>
-          <Dialog open={openSeed} onClose={handleCloseCreateSeed}>
-            <DialogTitle>씨앗 만들기</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                새로운 일정을 입력 해주세요!
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="씨앗 이름"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={newText}
-                onChange={handleValueText}
+              <Button
+                className="red small"
+                onClick={handleClose}
+                label="취소"
               />
-            </DialogContent>
-            <DialogActions>
-              <button onClick={handleCloseCreateSeed}>취소</button>
-              <button onClick={createItem}>등록</button>
+              <Button
+                className="primary small"
+                onClick={createBranch}
+                label="등록"
+              />
             </DialogActions>
           </Dialog>
-        </div>
-        <div className="dnd-branch-box">
-          {branches?.map((branch: any) => (
-            <button
-              key={branch.branchId}
-              className="dnd-branch-btn"
-              onClick={() =>
-                handleBranchSelect(branch.branchId, branch.branchColor)
-              }
-              style={{
-                backgroundColor:
-                  selectedBranchId === branch.branchId
-                    ? 'lightgray'
-                    : branch.branchColor,
-                color: selectedBranchId === branch.branchId ? 'white' : 'black',
-                zIndex: selectedBranchId === branch.branchId ? 2 : 1,
-              }}
-            >
-              {branch.branchName}
-            </button>
-          ))}
         </div>
         <div
-          style={{ backgroundColor: 'lightgray' }}
+          style={{ border: `0.3vw solid ${colors}` }}
           className="dnd-seed-outer-container"
         >
-          {ReturnItems(DEFAULT, selectedBranchId)}
+          <div className="dnd-seed-outer-box">
+            {ReturnItems(DEFAULT, selectedBranchId)}
+          </div>
+          <div className="dnd-seed-create-btn">
+            <Button
+              className="lime small"
+              onClick={handleClickOpenCreateSeed}
+              label="씨앗 만들기"
+            />
+            <Dialog open={openSeed} onClose={handleCloseCreateSeed}>
+              <DialogTitle>씨앗 만들기</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  새로운 일정을 입력 해주세요!
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="씨앗 이름"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value={newText}
+                  onChange={handleValueText}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  className="red small"
+                  onClick={handleCloseCreateSeed}
+                  label="취소"
+                />
+                <Button
+                  className="primary small"
+                  onClick={createItem}
+                  label="등록"
+                />
+              </DialogActions>
+            </Dialog>
+          </div>
         </div>
         <div className="dnd_container">
-          <p>월</p>
-          <p>화</p>
-          <p>수</p>
-          <p>목</p>
-          <p>금</p>
+          <div className="dnd_container-text">월</div>
+          <div className="dnd_container-text">화</div>
+          <div className="dnd_container-text">수</div>
+          <div className="dnd_container-text">목</div>
+          <div className="dnd_container-text">금</div>
         </div>
         <div className="dnd_container">
           <Column title={MONDAY} className="dnd_column dnd_column_shape1">

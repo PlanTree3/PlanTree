@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-// import axios, { AxiosRequestConfig } from 'axios'
 import QR from 'qrcode.react'
-import { Link, useParams, useLocation } from 'react-router-dom'
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
 import arrow from '../../public/arrow.png'
@@ -11,6 +10,7 @@ import {
   branchGroupCreate,
   groupDelete,
   groupNameUpdate,
+  groupNoticeCreate,
   groupQuestCreate,
   groupStudents,
 } from '@/apis'
@@ -18,18 +18,24 @@ import {
 const AdminGroupDetailPage: React.FC<any> = () => {
   const { groupId } = useParams()
   const location = useLocation()
+  const navigate = useNavigate()
   const groupName = location.state?.groupName || ''
 
   const [currentPage, setCurrentPage] = useState(1)
   const [studentsData, setStudentsData] = useState<any>(null)
+
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [questmodalIsOpen, setQuestModalIsOpen] = useState(false)
   const [QrmodalIsOpen, setQrModalIsOpen] = useState(false)
   const [pencilModalIsOpen, setPencilModalIsOpen] = useState(false)
+  const [newsModalIsOpen, setNewsModalIsOpen] = useState(false)
+
   const [inputValue, setInputValue] = useState('')
   const [inputGroupName, setInputGroupName] = useState(groupName)
   const [inputQuestTitle, setInputQuestTitle] = useState('')
   const [inputQuestContent, setInputQuestContent] = useState('')
+  const [inputNewsTitle, setInputNewsTitle] = useState('')
+  const [inputNewsContent, setInputNewsContent] = useState('')
 
   const studentsPerPage = 5
   const endIndex = currentPage * studentsPerPage
@@ -40,35 +46,34 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   const openModal = () => {
     setModalIsOpen(true)
   }
-
   const closeModal = () => {
     setModalIsOpen(false)
   }
-
   const openQuestModal = () => {
     setQuestModalIsOpen(true)
   }
-
   const closeQuestModal = () => {
     setQuestModalIsOpen(false)
     setInputQuestTitle('')
     setInputQuestContent('')
   }
-
   const openQrModal = () => {
     setQrModalIsOpen(true)
   }
-
   const closeQrModal = () => {
     setQrModalIsOpen(false)
   }
-
   const openPencilModal = () => {
     setPencilModalIsOpen(true)
   }
-
   const closePencilModal = () => {
     setPencilModalIsOpen(false)
+  }
+  const openNewsModal = () => {
+    setNewsModalIsOpen(true)
+  }
+  const closeNewsModal = () => {
+    setNewsModalIsOpen(false)
   }
 
   const handleInputChange = (e: {
@@ -90,6 +95,16 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     target: { value: React.SetStateAction<string> }
   }) => {
     setInputQuestContent(e.target.value)
+  }
+  const handleNewsTitleInputChange = (e: {
+    target: { value: React.SetStateAction<string> }
+  }) => {
+    setInputNewsTitle(e.target.value)
+  }
+  const handleNewsContentInputChange = (e: {
+    target: { value: React.SetStateAction<string> }
+  }) => {
+    setInputNewsContent(e.target.value)
   }
 
   // 가지 일괄 등록
@@ -144,6 +159,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     } catch (error) {
       console.error('그룹 삭제 에러:', error)
     }
+    // memo 사용 등 강제 리렌더 할 수 있는 기능 넣기
+    navigate('/adminGroup')
   }
 
   // 그룹 퀘스트 생성
@@ -161,9 +178,23 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     }
   }
 
+  // 가정통신문 생성
+  const handleGroupNotice = async () => {
+    const data = {
+      title: inputQuestTitle,
+      content: inputQuestContent,
+      groupId,
+    }
+    try {
+      const response = await groupNoticeCreate(groupId, data)
+      console.log('그룹 퀘스트 응답:', response)
+    } catch (error) {
+      console.error('그룹 퀘스트 에러:', error)
+    }
+  }
+
   useEffect(() => {
     handleGetGroupDetail()
-    // setInputValue(groupName)
     console.log('그룹네임', groupName)
   }, [])
 
@@ -189,12 +220,9 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           {' '}
           <div className="flex">
             {inputGroupName}
-            <img
-              className=""
-              src={pencil}
-              onClick={openPencilModal}
-              alt=""
-            />
+            <button onClick={openPencilModal}>
+              <img src={pencil} alt="그룹이름수정" />
+            </button>
           </div>
           <Link to="/adminGroup">
             <img
@@ -231,17 +259,19 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         <div className="admin-group-detail-content">
           {currentStudents.length > 0 ? (
             currentStudents.map((student: any, index: number) => (
-              <div key={student.studentId} className="studentBox">
-                <p className="studentFont flex-1 flex justify-center my-[2vh]">
-                  {index + 1 + (currentPage - 1) * 5}
-                </p>
-                <p className="studentGroupFont font-semibold">
-                  {student.studentName}
-                </p>
-                <p className="studentGroupFont">
-                  {student.completedBudCount}/{student.totalBudCount}
-                </p>
-              </div>
+              <Link to={`/forest/student/${student.studentId}`}>
+                <div key={student.studentId} className="studentBox">
+                  <p className="studentFont flex-1 flex justify-center my-[2vh]">
+                    {index + 1 + (currentPage - 1) * 5}
+                  </p>
+                  <p className="studentGroupFont font-semibold">
+                    {student.studentName}
+                  </p>
+                  <p className="studentGroupFont">
+                    {student.completedBudCount}/{student.totalBudCount}
+                  </p>
+                </div>
+              </Link>
             ))
           ) : (
             <p>현재 그룹원이 없습니다.</p>
@@ -256,9 +286,16 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           </div>
         </div>
         <div className="admin-group-detail-btn-container-bottom">
-          <Link to={`/newsLetter/${groupId}`}>
-            <Button className="normal gray" label="가정통신문 보기" />
-          </Link>
+          <div>
+            <Button
+              className="normal primary mr-[1vh]"
+              label="가정통신문 생성"
+              onClick={openNewsModal}
+            />
+            <Link to={`/newsLetter/${groupId}`}>
+              <Button className="normal gray" label="가정통신문 보기" />
+            </Link>
+          </div>
           <Button
             className="normal primary"
             label="퀘스트 생성"
@@ -357,28 +394,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         isOpen={QrmodalIsOpen}
         ariaHideApp={false}
         onRequestClose={closeQrModal}
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
-            width: '100%',
-            height: '100vh',
-            zIndex: 10,
-            top: 0,
-            left: 0,
-          },
-          content: {
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '60%',
-            height: '70%',
-            border: '2px solid #000',
-            borderRadius: '10px',
-            overflow: 'auto',
-            background: '#F5F5DC',
-            boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
-          },
-        }}
+        className="reactModal"
       >
         <div className="font-semibold text-xl flex justify-center">
           QR을 찍어 그룹원을 추가해 보세요.
@@ -447,6 +463,58 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             className="normal primary"
           />
         </div>
+      </ReactModal>
+      <ReactModal
+        isOpen={newsModalIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closeNewsModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            width: '100%',
+            height: '100vh',
+            zIndex: 10,
+            top: 0,
+            left: 0,
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '60%',
+            height: '50%',
+            border: '2px solid #000',
+            borderRadius: '10px',
+            overflow: 'auto',
+            background: '#F5F5DC',
+            boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
+          },
+        }}
+      >
+        <div>
+          <div>제목: </div>
+          <input
+            type="text"
+            value={inputNewsTitle}
+            onChange={handleNewsTitleInputChange}
+          />
+          <div>내용: </div>
+          <input
+            type="text"
+            value={inputNewsContent}
+            onChange={handleNewsContentInputChange}
+          />
+          <div>첨부파일</div>
+          {/* <input type="file" multiple onChange={onSaveFiles} />
+          <Button onClick={onFileUpload} label="파일 업로드" />
+          <div>{inputFileName}</div> */}
+          {/* <Button onClick={handleGroupNotice} label="확인" /> */}
+        </div>
+        <Button
+          onClick={handleGroupNotice}
+          label="가정통신문 생성"
+          className="normal primary"
+        />
       </ReactModal>
     </div>
   )

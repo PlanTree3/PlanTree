@@ -14,8 +14,8 @@ import { commentCreate, detailBuds } from '@/apis'
 
 interface Comment {
   id: number
-  createdAt: Date
-  modifiedAt: Date
+  createdAt: string
+  modifiedAt: string
   issuerId: string
   name: string
   role: string
@@ -37,13 +37,19 @@ const Comments: React.FC<CommentsProps> = ({
   budName,
   commentCount,
 }) => {
+  const [detailOpen, setDetailOpen] = useState(false)
+
+  useEffect(() => {
+    setDetailOpen(open)
+  }, [open])
+
   const [comments, setComments] = useState<Comment[]>([])
   const [newComment, setNewComment] = useState('')
   const [counts, setCounts] = useState(commentCount)
   const treeId = useSelector((state: RootState) => state.main.treeId)
   const updateInfo = async () => {
     const response: any = await detailBuds(treeId, budId)
-    const data = response.data?.comments ?? null
+    const data = response.data.data?.comments ?? null
     console.log(response)
     if (data) {
       setComments(data)
@@ -51,7 +57,7 @@ const Comments: React.FC<CommentsProps> = ({
   }
   useEffect(() => {
     updateInfo()
-  }, [open, budId, treeId])
+  }, [detailOpen, budId, treeId])
 
   const handleCommentSubmit = async () => {
     setCounts(counts + 1)
@@ -66,10 +72,15 @@ const Comments: React.FC<CommentsProps> = ({
       console.error(error)
     }
   }
+  const deny = () => {
+    setDetailOpen(false)
+    handleClose()
+  }
+
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={deny}
       aria-labelledby="article-dialog-title"
       aria-describedby="article-dialog-description"
     >
@@ -94,14 +105,20 @@ const Comments: React.FC<CommentsProps> = ({
         </Button>
         {comments.length > 0 ? (
           comments.map((comment: Comment, index) => (
-            <p key={index}>{comment.content}</p>
+            <div key={index}>
+              <p>
+                작성자 : {comment.name} ({comment.role})
+              </p>
+              <p>등록일 : {comment.createdAt.slice(0, 10)}</p>
+              <p>{comment.content}</p>
+            </div>
           ))
         ) : (
           <p>아직 등록된 댓글이 없습니다.</p>
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>닫기</Button>
+        <Button onClick={deny}>닫기</Button>
       </DialogActions>
     </Dialog>
   )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 // import axios from 'axios'
 import { Link, useParams, useLocation } from 'react-router-dom'
 import './GroupPage.scss'
@@ -88,7 +88,7 @@ const AdminGroupRequestPage = () => {
         </div>
         <div className="ml-4">
           <Link to={`/adminGroupDetail/${groupId}`} state={{ groupName }}>
-            <Button label="그룹으로 돌아가기" className="gray" />
+            <Button label="그룹으로 돌아가기" className="gray normal" />
           </Link>
         </div>
       </div>
@@ -102,12 +102,12 @@ const AdminGroupRequestPage = () => {
                 <p className="groupInfo">{student.studentName}</p>
                 <div className="flex justify-around">
                   <Button
-                    className="primary"
+                    className="normal primary"
                     onClick={() => handleYes(student.studentId)}
                     label="수락하기"
                   />
                   <Button
-                    className="red"
+                    className="normal red ml-[1vh]"
                     onClick={() => handleNo(student.studentId)}
                     label="거절하기"
                   />

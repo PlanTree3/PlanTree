@@ -36,18 +36,13 @@ const LogIn = () => {
         <h1 className="text-5xl text-blue-300 font-bold">계획을 그려볼까요?</h1>
       </div>
       <div className="flex justify-center">
-        <div className={`bg-[url('public/plantree.png')] w-60 h-60 bg-cover`} />
+        <div className={`bg-[url('/plantree.png')] w-60 h-60 bg-cover`} />
       </div>
       <div className="flex justify-center gap-8">
         <Kakao />
         <Google />
         <button onClick={loginTest}>임시 로그인 버튼</button>
       </div>
-      {/* <Button
-        className="primary"
-        onClick={handleForest}
-        label="예쁜 카드를 보러 가요"
-      /> */}
     </div>
   )
 }

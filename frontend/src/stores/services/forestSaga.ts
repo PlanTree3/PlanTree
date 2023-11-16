@@ -8,12 +8,14 @@ import {
 import { AxiosResponse } from 'axios'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { FetchUserDataResponse } from '@/types/UserType'
-import { forestGetApi, treeDetail, treeList } from '@/apis'
+import { forestGetApi, studentForestGetApi, treeDetail, treeList } from '@/apis'
 import {
   getForestData,
+  getStudentForestData,
   getTreeDetailData,
   getTreesData,
   saveForestData,
+  saveStudentForestData,
   saveTreeDetailData,
   saveTreesData,
   selectedInfoData,
@@ -29,6 +31,23 @@ function* getForestSaga(): Generator<
     yield put(saveForestData(response.data.data.forests))
   }
 }
+
+//
+function* getStudentForestSaga(
+  action: PayloadAction<any>,
+): Generator<
+  CallEffect | PutEffect,
+  void,
+  AxiosResponse<FetchUserDataResponse>
+> {
+  const { memberId } = action.payload
+  const response: AxiosResponse<any> = yield call(studentForestGetApi, memberId)
+  console.log(response)
+  if (response.data.data.forests) {
+    yield put(saveStudentForestData(response.data.data.forests))
+  }
+}
+//
 
 function* getTreesSaga(
   action: PayloadAction<any>,
@@ -109,6 +128,7 @@ function* getTreeSelectSaga(
 
 export function* watchForestData() {
   yield takeLatest(getForestData.type, getForestSaga)
+  yield takeLatest(getStudentForestData.type, getStudentForestSaga)
   yield takeLatest(getTreesData.type, getTreesSaga)
   yield takeLatest(getTreeDetailData.type, getTreeDetailSaga)
   yield takeLatest(saveTreeDetailData.type, getTreeSelectSaga)

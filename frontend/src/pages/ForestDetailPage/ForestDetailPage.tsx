@@ -1,11 +1,18 @@
+/* eslint-disable no-nested-ternary */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import Atropos from 'atropos/react'
 import { DoughnutChart } from '@/components'
 import './ForestDetailPage.scss'
 import Button from '@/components/Button/Button'
 import { RootState } from '@/stores/store'
 import { getTreeDetailData } from '@/stores/features/forestSlice.ts'
+import greenBackground from '../../../public/greenBackGround.jfif'
+import logImage from '../../../public/models/tree/log.png'
+import smallTree from '../../../public/models/tree/smallTree.png'
+import mediumTree from '../../../public/models/tree/mediumTree.png'
+import { getBranchData } from '@/stores/features/branchSlice.ts'
 
 const ForestDetailPage = () => {
   const dummyData = [
@@ -51,6 +58,7 @@ const ForestDetailPage = () => {
   const dispatch = useDispatch()
   const handleTreeBox = (treeId: string) => {
     dispatch(getTreeDetailData(treeId))
+    dispatch(getBranchData())
     setTimeout(() => {
       navigate(`/tree/${treeId}`)
     }, 0)
@@ -118,45 +126,77 @@ const ForestDetailPage = () => {
           <input type="date" id="end" onChange={endedAtOnChange} /> 까지
           <Button
             label="검색하기"
-            className="xxsmall"
+            className="small lime"
             onClick={handleSearchBtn}
           />
         </div>
       </div>
       <div className="forest-detail-tree-container">
         {showTrees().map((tree: any) => (
-          <div key={tree.treeId} className="forest-detail-tree-box">
-            <div className="forest-detail-tree">
-              <img src="/public/plantree2.jpg" alt="" />
-            </div>
-            <div className="forest-detail-chart">
-              <div className="forest-detail-chart-title">
-                <div className="text-lg">{tree.treeName}</div>
-                <Button
-                  label="자세히 보기"
-                  onClick={() => handleTreeBox(tree.treeId)}
-                  className="xxsmall primary"
+          <Atropos className="atropos-forest-detail">
+            <div className="atropos-component">
+              <div className="atropos-inner">
+                <img
+                  className="atropos-spacer"
+                  src={greenBackground}
+                  alt="sky"
                 />
+                <img
+                  data-atropos-offset="-4.5"
+                  src={greenBackground}
+                  alt="sky"
+                />
+                <div data-atropos-offset="3" className="forest-text-area">
+                  <div key={tree.treeId} className="forest-detail-tree-box">
+                    <div className="forest-detail-tree">
+                      {!tree.treeId ? (
+                        <img src={logImage} alt="" />
+                      ) : tree.treeId ? (
+                        <img src={smallTree} alt="" />
+                      ) : (
+                        <img src={mediumTree} alt="" />
+                      )}
+                    </div>
+                    <div className="forest-detail-chart">
+                      <div className="forest-detail-chart-title">
+                        <div className="text-lg text-black">
+                          {tree.treeName}
+                        </div>
+                        <Button
+                          label="자세히 보기"
+                          onClick={() => handleTreeBox(tree.treeId)}
+                          className="xxsmall primary"
+                        />
+                      </div>
+                      <DoughnutChart
+                        centerText={`${
+                          tree.totalBudCount === 0
+                            ? 0
+                            : (tree.completedBudCount / tree.totalBudCount) *
+                              100
+                        }%`}
+                        chartData={{
+                          data:
+                            tree.totalBudCount === 0
+                              ? [0, 100]
+                              : [
+                                  (tree.completedBudCount /
+                                    tree.totalBudCount) *
+                                    100,
+                                  100 -
+                                    (tree.completedBudCount /
+                                      tree.totalBudCount) *
+                                      100,
+                                ],
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <DoughnutChart
-                centerText={`${
-                  tree.totalBudCount === 0
-                    ? 0
-                    : (tree.completedBudCount / tree.totalBudCount) * 100
-                }%`}
-                chartData={{
-                  data:
-                    tree.totalBudCount === 0
-                      ? [0, 100]
-                      : [
-                          (tree.completedBudCount / tree.totalBudCount) * 100,
-                          100 -
-                            (tree.completedBudCount / tree.totalBudCount) * 100,
-                        ],
-                }}
-              />
+              <div className="atropos-shadow" />
             </div>
-          </div>
+          </Atropos>
         ))}
       </div>
     </div>

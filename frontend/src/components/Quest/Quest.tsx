@@ -16,7 +16,7 @@ import {
   deleteQuest,
 } from '@/stores/features/questSlice'
 import '@/styles/quest/questStyle.scss'
-import Button from '../Button/Button'
+import { Button } from '..'
 
 interface QuestProps {
   questStatus: string
@@ -90,13 +90,14 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
             aria-describedby={`quest-description-${quest.questId}`}
           >
             <div className="quest-modal-close-btn">
+              {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
               <button
                 onClick={(e) => {
                   e.stopPropagation()
-                  closeModal(quest.questId, quest.isChecked, true)
+                  closeModal(quest.questId, quest.isChecked, false)
                 }}
               >
-                <img src="/public/btn/closeBtn.png" alt="" />
+                <img src="/public/btn/closeBtn.png" alt="닫기" />
               </button>
             </div>
             <DialogTitle id={`quest-title-${quest.questId}`}>
@@ -109,7 +110,11 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
             </DialogContent>
             <DialogActions>
               {questStatus === 'past' && deleteState && (
-                <button onClick={() => deleteBTN(quest.questId)}>삭제</button>
+                <Button
+                  className="red normal"
+                  onClick={() => deleteBTN(quest.questId)}
+                  label="삭제"
+                />
               )}
               {!quest.isConfirmed ? (
                 <div className="quest-button-container">
@@ -124,6 +129,7 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
                   <Button
                     onClick={(e) => {
                       e.stopPropagation()
+                      dispatch(deleteQuest(quest.questId))
                       closeModal(quest.questId, quest.isChecked, false)
                     }}
                     className="normal red"

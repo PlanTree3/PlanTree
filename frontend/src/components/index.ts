@@ -1,6 +1,7 @@
 // default
 export { default as Kakao } from '@/components/Kakao'
 export { default as Google } from '@/components/Google'
+export { default as Button } from '@/components/Button/Button'
 
 // Branch
 export { default as getRandomColor } from '@/components/Branch/ColorFunc'

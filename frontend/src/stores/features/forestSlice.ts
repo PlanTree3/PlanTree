@@ -27,6 +27,7 @@ const detailData: SelectTree = {
 
 const initialState = {
   forests: null,
+  studentForest: null,
   trees: null,
   detailData,
   selectedForest: {
@@ -52,6 +53,13 @@ export const forestSlice = createSlice({
     saveForestData: (state, action) => {
       state.forests = action.payload
     },
+    getStudentForestData: (state, action) => {
+      console.log(state.selectTree)
+      console.log(action.payload)
+    },
+    saveStudentForestData: (state, action) => {
+      state.studentForest = action.payload
+    },
     getTreesData: (state, action) => {
       state.selectedForest = action.payload
       console.log(action.payload)
@@ -74,6 +82,8 @@ export const forestSlice = createSlice({
 export const {
   getForestData,
   saveForestData,
+  getStudentForestData,
+  saveStudentForestData,
   getTreesData,
   saveTreesData,
   getTreeDetailData,

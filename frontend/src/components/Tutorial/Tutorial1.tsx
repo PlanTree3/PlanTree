@@ -1,7 +1,7 @@
 const Tutorial1 = () => {
   return (
     <div>
-      <img src="/public/plantree.png" alt="" />
+      <img src="/plantree.png" alt="" />
     </div>
   )
 }

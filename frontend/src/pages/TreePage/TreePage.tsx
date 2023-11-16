@@ -1,9 +1,20 @@
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { BarChart, DoughnutChart, PieChart, Tree } from '@/components'
 import './TreePage.scss'
 import { RootState } from '@/stores/store.ts'
+import { LoadingPage } from '@/pages'
 
 const TreePage = () => {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 700)
+
+    return () => clearTimeout(timer)
+  }, [])
   const {
     totalPercent,
     branchNames,
@@ -11,6 +22,7 @@ const TreePage = () => {
     branchDoneCount,
     notYet,
   } = useSelector((state: RootState) => state.forest.selectedInfo)
+  const { degree, complete } = useSelector((state: RootState) => state.branch)
   const detailData = useSelector(
     (state: RootState) => state.forest.detailData,
   ) ?? {
@@ -88,7 +100,8 @@ const TreePage = () => {
         {detailData.startedAt} ~ {detailData.endedAt}
       </div>
       <div className="tree-page-tree">
-        <Tree degree={30} />
+        {loading && <LoadingPage />}
+        <Tree degree={degree} complete={complete} />
       </div>
       <div className="tree-page-title">통계</div>
       <div className="tree-page-chart-container">

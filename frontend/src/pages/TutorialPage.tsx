@@ -25,7 +25,7 @@ const TutorialPage = () => {
           <Tutorial2 />
         </SwiperSlide>
         <SwiperSlide>
-          <Tutorial3 />
+          <Tutorial3 forestName={'근데 이거 어디서 호출됨???'} />
         </SwiperSlide>
       </Swiper>
     </div>
