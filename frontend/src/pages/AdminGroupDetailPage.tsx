@@ -119,16 +119,31 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     }
   }
 
-  const onFileUpload = () => {
+  const onFileUpload = async () => {
     const formData = new FormData()
-    const fileNames: string[] = fileName
 
     fileList.map((file) => {
       formData.append('file', file)
-      fileNames.push(file.name)
       return null
     })
-    setFileName(fileNames)
+    formData.append(
+      'data',
+      JSON.stringify({
+        file: fileList,
+      }),
+    )
+    try {
+      const response = await groupNoticeCreate(
+        groupId,
+        formData,
+        //   {
+        //   headers: { 'Content-Type': 'multipart/form-data', charset: 'utf-8' },
+        // }
+      )
+      console.log('그룹 퀘스트 응답:', response)
+    } catch (error) {
+      console.error('그룹 퀘스트 에러:', error)
+    }
   }
 
   // 가지 일괄 등록
@@ -203,13 +218,24 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     }
   }
 
+  // 가정통신문 파일 추가
+  // const handleNoticeFile = async () => {
+  //   onFileUpload()
+  //   const data = {
+  //     file,
+  //   }
+  //   try {
+  //     const response = await groupNoticeCreate(groupId, data)
+  //     console.log('그룹 퀘스트 응답:', response)
+  //   } catch (error) {
+  //     console.error('그룹 퀘스트 에러:', error)
+  //   }
+  // }
+
   // 가정통신문 생성
   const handleGroupNotice = async () => {
     const data = {
-      groupId,
-      title: inputNewsTitle,
-      content: inputNewsContent,
-      files: fileList,
+      file: fileList,
     }
     try {
       const response = await groupNoticeCreate(groupId, data)
@@ -319,7 +345,10 @@ const AdminGroupDetailPage: React.FC<any> = () => {
               onClick={openNewsModal}
             />
             <Link to={`/newsLetter/${groupId}`}>
-              <Button className="normal gray" label="가정통신문 보기" />
+              <Button
+                className="normal gray mt-[1vh]"
+                label="가정통신문 보기"
+              />
             </Link>
           </div>
           <Button
@@ -330,7 +359,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         </div>
       </div>
       <Button
-        className="normal red mt-[2vh]"
+        className="normal red mt-[4vh]"
         onClick={handleGroupDelete}
         label="그룹 삭제하기"
       />
@@ -546,21 +575,24 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             onChange={handleNewsTitleInputChange}
           />
           <div>내용: </div>
-          <input
-            type="text"
+          <textarea
+            className="w-full h-[8rem] rounded-lg"
             value={inputNewsContent}
             onChange={handleNewsContentInputChange}
           />
           <div>첨부파일</div>
           <input type="file" multiple onChange={onSaveFiles} />
-          <Button onClick={onFileUpload} label="파일 업로드" />
+          <Button
+            onClick={onFileUpload}
+            label="파일 업로드"
+            className="normal gray mt-[1vh]"
+          />
           <div>{fileName}</div>
-          <Button onClick={handleGroupNotice} label="확인" />
         </div>
         <Button
           onClick={handleGroupNotice}
           label="가정통신문 생성"
-          className="normal primary"
+          className="normal primary mt-[2vh]"
         />
       </ReactModal>
     </div>
