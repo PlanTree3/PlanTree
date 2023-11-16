@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import './GroupPage.scss'
 import Button from '@/components/Button/Button'
 import { groupDetail } from '@/apis'
+import chick from '../../public/chick.png'
 
 const StudentGroupDetailPage = () => {
   const { groupId } = useParams()
@@ -45,7 +46,7 @@ const StudentGroupDetailPage = () => {
   useEffect(() => {
     handleGetGroupDetail()
   }, [])
-  
+
   return (
     <div>
       <Link to="/studentGroup">
@@ -53,27 +54,51 @@ const StudentGroupDetailPage = () => {
           <div>목록으로 돌아가기</div>
         </div>
       </Link>
-      <div className="font-semibold text-2xl">{groupData?.groupName}</div>
+      <div className="font-semibold text-3xl">{groupData?.groupName}</div>
       <div className="flex flex-row">
         {/* <img src={Seal} alt="" /> */}
         <div className="groupLeader">
-          <text>그룹장: {groupData?.teacherName}</text>
+          <p>그룹장: {groupData?.teacherName}</p>
         </div>
       </div>
-      {currentStudents.map((student: any, index: number) => (
-        <div className="studentBox" key={index}>
-          <div className="flex flex items-center">
-            <text className="font-semibold text-l">{student.studentName}</text>
+      <div className="admin-group-page-list-box">
+        {/* </div> */}
+        {currentStudents?.length !== 0 && (
+          <>
+            <div className="admin-group-page-list-title2">
+              <p></p>
+              <div>이름</div>
+              <div>달성도</div>
+            </div>
+            <hr />
+          </>
+        )}
+        {currentStudents.map((student: any, index: number) => (
+          <div key={index}>
+            {/* <div className="flex flex items-center"> */}
+            <div className="admin-group-item2">
+              <img
+                src={chick}
+                alt="병아리"
+                style={{
+                  width: '30%',
+                  placeSelf: 'center',
+                }}
+              />
+              {/* <p className="font-semibold text-l">{student.studentName}</p> */}
+              <p className="groupInfo font -semibold">{student.studentName}</p>
+              {/* <div className="ms-6 flex-col flex justify-center "> */}
+              {/* <p>달성도</p> */}
+              <p className="groupInfo">
+                {student.totalBudCount}/{student.completedBudCount}
+              </p>
+              {/* </div> */}
+            </div>
+            {/* </div> */}
           </div>
-          <div className="ms-6 flex-col flex justify-center ">
-            <text>달성도</text>
-            <text>
-              {student.totalBudCount}/{student.completedBudCount}
-            </text>
-          </div>
-        </div>
-      ))}
-      <div className="pagination">
+        ))}
+      </div>
+      <div className="admin-group-pagination">
         {pageNumbers.map((number, idx) => (
           <button key={idx} onClick={() => changePage(number)}>
             {number}
