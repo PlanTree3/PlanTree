@@ -37,7 +37,6 @@ const MovableItem = ({
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const buds = useSelector((state: RootState) => state.branch.buds)
-  const [detailOpen, setDetailOpen] = useState(false)
   const isLoading = useSelector((state: RootState) => state.branch.isLoading)
   const changeItemColumn = (
     currentItem: any,
@@ -209,13 +208,10 @@ const MovableItem = ({
       dispatch(removeBuds(data))
     }
   }
-  const handleDetailBuds = () => {
-    setDetailOpen(true)
-  }
-  const closeDetailBuds = () => {
-    setDetailOpen(false)
-    console.log('이시발')
-  }
+
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
   return (
     <div
       ref={ref}
@@ -227,7 +223,7 @@ const MovableItem = ({
           <p className="dnd_movable-item-content-name">{budName}</p>
           <div className="dnd_movable-item-content-btn-container">
             <button
-              onClick={() => handleDetailBuds()}
+              onClick={handleOpen}
               className="dnd_movable-item-content-deleteBTN"
             >
               <img
@@ -235,14 +231,16 @@ const MovableItem = ({
                 alt="수정버튼"
                 className="dnd_movable-item-content-deleteBTN-img"
               />
+            </button>
+            {open && (
               <Comments
-                open={detailOpen}
-                handleClose={closeDetailBuds}
+                open={open}
+                handleClose={handleClose}
                 budId={id}
                 budName={budName}
                 commentCount={commentCount}
               />
-            </button>
+            )}
             <button
               onClick={() => removeBud(id)}
               className="dnd_movable-item-content-deleteBTN"
