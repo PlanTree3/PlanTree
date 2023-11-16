@@ -135,7 +135,7 @@ const NewsLetterPage = () => {
     setInputContent(news.content)
     setInputFile(news.files)
     const fileNames: string[] = []
-    news.files.map((file) => fileNames.push(file.fileName))
+    news.files.map((file: any) => fileNames.push(file.fileName))
     setInputFileName(fileNames)
     setInputWriter(news.writer)
   }
