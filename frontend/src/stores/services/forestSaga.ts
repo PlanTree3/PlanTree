@@ -42,7 +42,6 @@ function* getStudentForestSaga(
 > {
   const { memberId } = action.payload
   const response: AxiosResponse<any> = yield call(studentForestGetApi, memberId)
-  console.log(response)
   if (response.data.data.forests) {
     yield put(saveStudentForestData(response.data.data.forests))
   }

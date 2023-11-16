@@ -71,8 +71,6 @@ const MyPage = () => {
   const chooseProfileImg = (url: string) => {
     setInputProfileImg(url)
     dispatch(addProfileImageUrl(url))
-    console.log('mypage의 profileImg 변경입니다.: ', url)
-
     const profileImg = {
       profileImageUrl: url,
     }

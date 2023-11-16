@@ -21,21 +21,17 @@ const OidcGoogle = () => {
           oauthProvider: 'GOOGLE',
           idToken,
         }
-
         try {
           const loginResult = await userLogin(data)
-
           if (loginResult) {
             dispatch(addOauthProvider('GOOGLE'))
             dispatch(addIdToken(idToken))
             navigate('/signUp')
           } else {
             dispatch(loginCheck())
-            // navigate('/main')
           }
         } catch (error) {
           console.error('Error during login:', error)
-          // Handle the error as needed
         }
       }
     }

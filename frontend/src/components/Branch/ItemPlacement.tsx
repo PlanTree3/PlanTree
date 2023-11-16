@@ -19,10 +19,9 @@ import Column from '@/components/Column'
 
 const ItemPlacement = () => {
   const backendForDND = isMobile ? TouchBackend : HTML5Backend
-  // const backendForDND = TouchBackend
   const backendOptions = {
-    delayTouchStart: 200, // 드래그 시작 전의 지연 시간 (밀리초)
-    enableMouseEvents: true, // 마우스 이벤트 활성화
+    delayTouchStart: 200,
+    enableMouseEvents: true,
   }
 
   const dispatch = useDispatch()

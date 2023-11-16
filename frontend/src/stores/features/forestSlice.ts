@@ -53,16 +53,13 @@ export const forestSlice = createSlice({
     saveForestData: (state, action) => {
       state.forests = action.payload
     },
-    getStudentForestData: (state, action) => {
-      console.log(state.selectTree)
-      console.log(action.payload)
-    },
+    // saga 감지용 reducer
+    getStudentForestData: (_state, _action) => {},
     saveStudentForestData: (state, action) => {
       state.studentForest = action.payload
     },
     getTreesData: (state, action) => {
       state.selectedForest = action.payload
-      console.log(action.payload)
     },
     saveTreesData: (state, action) => {
       state.trees = action.payload

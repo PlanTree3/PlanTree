@@ -25,21 +25,36 @@ interface QuestProps {
 
 // eslint-disable-next-line react/prop-types
 const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
-  const [open, setOpen] = useState<null | number>(null)
+  const [open, setOpen] = useState<null | string>(null)
   const dispatch = useDispatch()
   const questList = useSelector((state: any) => state.quest.questsList)
 
-  const openModal = (id: number) => {
+  const openModal = (id: string) => {
     setOpen(id)
   }
-
-  const closeModal = (id: number, isChecked: boolean, isConfirmed: boolean) => {
+  const closeModal = (id: string, isChecked: boolean, isConfirmed: boolean) => {
     setOpen(null)
     if (!isChecked) {
       dispatch(checkQuest(id))
+      console.log('퀘스트 확인함', id)
     }
     if (isConfirmed) {
       dispatch(confirmQuest(id))
+    }
+  }
+
+  const handleClose = (
+    _event: React.SyntheticEvent<NonNullable<unknown>, Event>,
+    reason: string,
+  ) => {
+    if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+      const questId = open
+      const questData = questList.find(
+        (quest: any) => quest.questId === questId,
+      )
+      if (questData && questId) {
+        closeModal(questId, questData.isChecked, false)
+      }
     }
   }
 
@@ -85,7 +100,7 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
         >
           <Dialog
             open={open === quest.questId}
-            onClose={() => setOpen(null)}
+            onClose={handleClose}
             aria-labelledby={`quest-title-${quest.questId}`}
             aria-describedby={`quest-description-${quest.questId}`}
           >
@@ -130,7 +145,7 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
                     onClick={(e) => {
                       e.stopPropagation()
                       dispatch(deleteQuest(quest.questId))
-                      closeModal(quest.questId, quest.isChecked, false)
+                      // closeModal(quest.questId, quest.isChecked, false)
                     }}
                     className="normal red"
                     label="거절"

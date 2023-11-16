@@ -225,8 +225,6 @@ function* moveBudsSaga(
     }
     if (data.dayOfWeek) {
       yield call(budDayUpdate, treeId, branchId, budId, data)
-    } else {
-      console.log('아니 왜 null이 감지됨???')
     }
     yield put(setLoading(false))
   } catch (error) {
@@ -253,8 +251,6 @@ function* finishBudsSaga(
     }
     if (data.dayOfWeek) {
       yield call(budComplete, treeId, branchId, budId, data)
-    } else {
-      console.log('아니 왜 null이 감지됨???')
     }
     yield put(setLoading(false))
   } catch (error) {
@@ -280,8 +276,6 @@ function* finishRejectBudsSaga(
     }
     if (data.dayOfWeek) {
       yield call(budCompleteCancel, treeId, branchId, budId, data)
-    } else {
-      console.log('아니 왜 null이 감지됨???')
     }
     yield put(setLoading(false))
   } catch (error) {

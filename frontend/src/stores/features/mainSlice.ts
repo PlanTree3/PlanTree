@@ -19,7 +19,6 @@ export const mainSlice = createSlice({
   reducers: {
     getMainData: () => {},
     storeIdName: (state, action) => {
-      console.log(action.payload)
       state.treeId = action.payload.treeId
       state.treeName = action.payload.treeName
     },

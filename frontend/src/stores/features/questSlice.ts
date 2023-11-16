@@ -181,6 +181,7 @@ export const questSlice = createSlice({
       const questId = action.payload
       const quest = state.questsList.find((idx: any) => idx.questId === questId)
       if (quest) {
+        console.log('응 확인했어')
         quest.isChecked = true
       }
     },
