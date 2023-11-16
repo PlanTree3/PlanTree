@@ -28,7 +28,7 @@ const SideBar = () => {
   }
   const handleLogout = async () => {
     dispatch(logOutCheck())
-    navigate('/')
+    navigate('/login')
   }
 
   const roleBasedMain = (kind: string | null) => {
