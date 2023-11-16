@@ -1,23 +1,22 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ReactModal from 'react-modal'
-// import Swal from 'sweetalert2'
-// import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import '@/components/Button/Button.css'
 import Button from '@/components/Button/Button'
 import {
   noticeDetail,
   groupNoticeList,
-  // noticeFileCreate,
+  noticeFileCreate,
   groupNoticeUpdate,
-  // noticeFileCreate,
-  // noticeFileDownload,
-  // deleteNotice,
+  deleteNotice,
+  noticeFileDownload,
 } from '@/apis/communication'
 import {
   NewsLetterListG,
-  // NewsLetter,
   ModifyNewsLetterReq,
+  NewsLetter,
   // AddFile,
 } from '@/types/NewsLetterType'
 // import { groupNoticeList } from '@/apis'
@@ -51,6 +50,7 @@ const NewsLetterPage = () => {
   ])
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [inputWriter, setInputWriter] = useState<string>('')
+  const MySwal = withReactContent(Swal)
   // const [inputFileId, setInputFileId] = useState<string[]>([
   //   '하하하하',
   //   '후후후후',
@@ -58,10 +58,20 @@ const NewsLetterPage = () => {
 
   // let fileNames: string[] = []
 
-  const newsListDate = (date: Date) => {
-    const year = date.getFullYear()
-    const month = date.getMonth()
-    const day = date.getDate()
+  const checkDateType = (day: Date | string) => {
+    if (day instanceof Date) {
+      return day
+    }
+    const fixDay = new Date(day)
+    return fixDay
+  }
+
+  const newsListDate = (date: Date | string) => {
+    const userBirthDate = checkDateType(date)
+
+    const year = userBirthDate.getFullYear()
+    const month = userBirthDate.getMonth()
+    const day = userBirthDate.getDate()
 
     return [year, month, day].join('-')
   }
@@ -80,8 +90,16 @@ const NewsLetterPage = () => {
     setInputContent(value)
   }
 
-  const downloadFile = (fileName: string) => {
-    console.log(fileName)
+  const downloadFile = async (name: string) => {
+    const delFile = inputFile.filter((file) => file.fileName === name)[0]
+    console.log('delFile: ', delFile)
+
+    try {
+      const fileUrl = await noticeFileDownload(inputInformId, delFile.fileId)
+      window.location.href = fileUrl
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const sendNewsLetter = () => {
@@ -91,9 +109,6 @@ const NewsLetterPage = () => {
     }
     groupNoticeUpdate(inputInformId, data)
 
-    // axios 연결
-    // noticeFileCreate(inputInformId, formData)
-
     setIsModifying(false)
   }
 
@@ -102,15 +117,15 @@ const NewsLetterPage = () => {
     setModalIsOpen(false)
   }
 
-  const showNews = async (notificationId: any) => {
-    setInputInformId(notificationId)
+  const showNews = async (informId: any) => {
+    setInputInformId(informId)
     setModalIsOpen(true)
 
     // api 연결
     // 여기로 오면 다시 api 연결이 되는지 확인해보자!
-    const news: any = noticeDetail(notificationId)
+    const news: NewsLetter = await noticeDetail(informId)
 
-    console.log(news)
+    // console.log('news: ', news)
 
     // const news: NewsLetter = {
     //   title: inputTitle,
@@ -141,15 +156,21 @@ const NewsLetterPage = () => {
   }
   const fileNames: string[] = inputFileName
 
-  const onFileUpload = () => {
+  const onFileUpload = async () => {
     const formData = new FormData()
 
-    fileList.map((file) => {
+    fileList.forEach((file) => {
       formData.append('files', file)
       fileNames.push(file.name)
-      return null
     })
     setInputFileName(fileNames)
+
+    try {
+      // axios 연결
+      await noticeFileCreate(inputInformId, formData)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const deleteFile = (name: string) => {
@@ -159,11 +180,18 @@ const NewsLetterPage = () => {
 
     const delFileId = delFile[0].fileId
 
-    console.log(delFileId)
-
-    // deleteNotice(inputInformId, delFileId)
+    deleteNotice(inputInformId, delFileId)
 
     setInputFileName(inputFileName.filter((fileName) => fileName !== name))
+  }
+
+  const dontShowNewsLetter = () => {
+    const content = <div>가정통신문을 보실 수 없습니다.</div>
+
+    MySwal.fire({
+      title: '잠깐!',
+      html: content,
+    })
   }
 
   useEffect(() => {
@@ -171,33 +199,22 @@ const NewsLetterPage = () => {
       try {
         // 데이터를 가져와서 inputNewsLetters에 설정
         const response = await groupNoticeList(groupId)
-        console.log('가정통신문 response: ', response.data.data.informs)
+
         setInputNewsLetters(response.data.data.informs)
         // 모달을 벗어났을 때 페이지 업데이트 되는 거는 일단 연결해봐야 알듯...?
+
+        // 날짜 함수 에러가 생기니...
 
         // isModifying가 true일 때만 showNews 함수 호출
         if (isModifying) {
           showNews(inputInformId)
         }
       } catch (error) {
-        console.error('Error fetching data:', error)
+        dontShowNewsLetter()
       }
     }
     fetchDataAndShowNews()
-  }, [])
-
-  // const handleGetNotice = async () => {
-  //   try {
-  //     const response = await noticeList()
-  //     console.log('가통 조회 응답:', response)
-  //   } catch (error) {
-  //     console.error('가통 조회 에러:', error)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   handleGetNotice()
-  // }, [])
+  }, [groupId, inputInformId, isModifying])
 
   return (
     <div className="newsletter-page-container">
@@ -268,7 +285,6 @@ const NewsLetterPage = () => {
               <div>첨부파일</div>
               <input type="file" multiple onChange={onSaveFiles} />
               <Button onClick={onFileUpload} label="파일 업로드" />
-              {/* {showFileNames()} */}
               {inputFileName.map((fileName) => (
                 <>
                   <div>{fileName}</div>
