@@ -7,6 +7,7 @@ import AdminNestPage from './pages/AdminNestPage.tsx'
 import AdminGroupRequestPage from './pages/AdminGroupRequestPage.tsx'
 import GroupJoinPage from './pages/GroupJoinPage.tsx'
 import NestJoinPage from './pages/NestJoinPage.tsx'
+import ForestStudentPage from './pages/ForestPage/ForestStudentPage.tsx'
 
 import {
   Home,
@@ -58,6 +59,7 @@ const RoutesComponent = () => (
     {/*<Route path="/main/:id" element={<MainPage?? />} />*/}
 
     <Route path="/forest" element={<ForestPage />} />
+    <Route path="/forest/student/:memberId" element={<ForestStudentPage />} />
     <Route path="/forest/:id" element={<ForestDetailPage />} />
     <Route path="/tree/:id" element={<TreePage />} />
     <Route path="/branch" element={<WeeklyBudsPage />} />

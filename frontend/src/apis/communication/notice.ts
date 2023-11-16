@@ -1,6 +1,6 @@
 import { authApi } from '@/apis'
 
-const baseUrl = 'api/communication-service/inform'
+const baseUrl = 'api/common-service/inform'
 
 // 가정통신문 생성
 const groupNoticeCreate = async (groupId: any, data: unknown) => {
