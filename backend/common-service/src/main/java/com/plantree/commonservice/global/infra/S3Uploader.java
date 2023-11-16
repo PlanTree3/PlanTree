@@ -1,7 +1,6 @@
 package com.plantree.commonservice.global.infra;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.plantree.commonservice.global.exception.S3UploadException;
@@ -14,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class S3Uploader implements FileUploader {
 
     private final AmazonS3Client amazonS3Client;
-    private String bucket;
+    private final String bucket;
 
     public S3Uploader(AmazonS3Client amazonS3Client, S3Property s3Property) {
         this.amazonS3Client = amazonS3Client;
@@ -33,8 +32,7 @@ public class S3Uploader implements FileUploader {
         try {
             amazonS3Client.putObject(
                     new PutObjectRequest(bucket, fileUrl, multipartFile.getInputStream(),
-                            objectMetadata)
-                            .withCannedAcl(CannedAccessControlList.PublicRead));
+                            objectMetadata));
         } catch (IOException e) {
             throw new S3UploadException("파일 업로드에 실패하였습니다.");
         }

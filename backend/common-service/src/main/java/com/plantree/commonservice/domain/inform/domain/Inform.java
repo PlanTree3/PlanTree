@@ -82,6 +82,16 @@ public class Inform extends BaseTimeEntity {
         }
     }
 
+    public InformFile getFileById(UUID fileId) {
+        for (InformFile file : this.informFiles) {
+            if (file.getId()
+                    .equals(fileId)) {
+                return file;
+            }
+        }
+        return null;
+    }
+
     @PrePersist
     public void generateInformId() {
         this.id = SequentialUUIDGenerator.generateSequentialUUID();

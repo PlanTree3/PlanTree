@@ -2,6 +2,7 @@ package com.plantree.commonservice.domain.inform.application;
 
 import com.plantree.commonservice.domain.inform.application.repository.InformRepository;
 import com.plantree.commonservice.domain.inform.domain.Inform;
+import com.plantree.commonservice.domain.inform.dto.FileUrlResponseDto;
 import com.plantree.commonservice.domain.inform.dto.GroupInformListResponseDto;
 import com.plantree.commonservice.domain.inform.dto.InformDetailResponseDto;
 import com.plantree.commonservice.domain.inform.dto.MyInformListResponseDto;
@@ -68,6 +69,14 @@ public class InformSearchUseCase {
     public GroupInformListResponseDto searchGroupInforms(UUID groupId) {
         List<Inform> groupInforms = informRepository.findByGroupId(groupId);
         return new GroupInformListResponseDto(groupInforms);
+    }
+
+    @Transactional(readOnly = true)
+    public FileUrlResponseDto searchFileUrl(UUID informId, UUID fieldId) {
+        Inform inform = informRepository.findByIdWithFiles(informId)
+                                        .orElseThrow(() -> new ResourceNotFoundException(
+                                                "가정통신문을 찾을 수 없습니다."));
+        return new FileUrlResponseDto(inform.getFileById(fieldId));
     }
 
 }

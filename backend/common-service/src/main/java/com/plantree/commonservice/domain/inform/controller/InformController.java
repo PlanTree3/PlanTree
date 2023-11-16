@@ -81,4 +81,12 @@ public class InformController {
         return HttpResponse.ok(HttpStatus.OK, "파일 삭제 성공");
     }
 
+    @GetMapping("/{informId}/file/{fileId}")
+    public ResponseEntity<?> getFileUrl(@PathVariable(value = "informId") UUID informId,
+            @PathVariable(value = "fileId") UUID fileId) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                informSearchUseCase.searchFileUrl(informId, fileId));
+    }
+
+
 }

@@ -24,6 +24,7 @@ public class InformCreateUseCase {
 
     private final String GROUP_FILE_URL = "group/inform/";
     private final String BUCKET_URL = "https://plantree-bucket.s3.ap-northeast-2.amazonaws.com/";
+    private final String CDN_URL = "https://d1d4ftwrlh987p.cloudfront.net/";
 
     private final FileUploader fileUploader;
     private final InformRepository informRepository;
@@ -57,10 +58,11 @@ public class InformCreateUseCase {
             String fileName = file.getOriginalFilename();
             String uploadFileUrl = GROUP_FILE_URL + groupId + "/" + today + "/" + fileName;
             String fileUrl = BUCKET_URL + GROUP_FILE_URL + groupId + "/" + today + "/" + fileName;
+            String cdnUrl = CDN_URL + GROUP_FILE_URL + groupId + "/" + today + "/" + fileName;
             if (fileUploader.upload(uploadFileUrl, file)) {
                 informFiles.add(InformFile.builder()
                                           .fileName(fileName)
-                                          .fileUrl(fileUrl)
+                                          .fileUrl(cdnUrl)
                                           .build());
             }
         }
