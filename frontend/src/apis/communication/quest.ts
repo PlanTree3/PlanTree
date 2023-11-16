@@ -1,4 +1,5 @@
 import { authApi } from '@/apis'
+// import { scheduleUrl } from '@/utils'
 
 const baseUrl = 'api/common-service'
 
@@ -44,40 +45,51 @@ const userQuestList = async (role: string) => {
 
 // 퀘스트 확인
 const questCheck = async (questId: string) => {
-  authApi
-    .patch(`${baseUrl}/quest/${questId}/check`)
-    .then((res) => res)
-    .catch((err) => err)
+  try {
+    return await authApi.patch(`${baseUrl}/quest/${questId}/check`)
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
 
+// 퀘스트 수정
+const questCorrection = async (questId: string, data: any) => {
+  try {
+    return await authApi.patch(`${baseUrl}/quest/${questId}/check`, data)
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
 // 퀘스트 수락
-const questAccept = async (questId: string) => {
+const questAccept = async (questId: string, data: any) => {
   authApi
-    .patch(`${baseUrl}/quest/${questId}/accept`)
+    .patch(`${baseUrl}/quest/${questId}/accept`, data)
     .then((res) => res)
     .catch((err) => err)
 }
 
 // 퀘스트 포기
-const questGiveUp = async (questId: string) => {
+const questGiveUp = async (questId: string, data: any) => {
   authApi
-    .patch(`${baseUrl}/quest/${questId}/giveup`)
+    .patch(`${baseUrl}/quest/${questId}/giveup`, data)
     .then((res) => console.log(res))
     .catch((err) => err)
 }
 
 // 퀘스트 성공 요청
-const questSuccessRequest = async (questId: number) => {
+const questSuccessRequest = async (questId: string, data: any) => {
   authApi
-    .patch(`${baseUrl}/quest/${questId}/giveup`)
+    .patch(`${baseUrl}/quest/${questId}/success-request`, data)
     .then((res) => res)
     .catch((err) => err)
 }
 
 // 퀘스트 성공 수락
-const questSuccessAccept = async (questId: number) => {
+const questSuccessAccept = async (questId: number, data: any) => {
   authApi
-    .patch(`${baseUrl}/quest/${questId}/giveup`)
+    .patch(`${baseUrl}/quest/${questId}/success-accept`, data)
     .then((res) => res)
     .catch((err) => err)
 }
@@ -93,4 +105,5 @@ export {
   questGiveUp,
   questSuccessRequest,
   questSuccessAccept,
+  questCorrection,
 }

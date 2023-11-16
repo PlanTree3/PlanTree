@@ -7,7 +7,7 @@ import { getQuestData } from '@/stores/features/questSlice.ts'
 
 const QuestPage = () => {
   const [questStatus, setQuestStatus] = useState('all')
-  const [deleteState, setDeleteState] = useState(false)
+  // const [deleteState, setDeleteState] = useState(false)
   const role = useSelector((state: RootState) => state.user.userData.role)
   const dispatch = useDispatch()
   useEffect(() => {
@@ -15,11 +15,11 @@ const QuestPage = () => {
   }, [role])
   const changeQuest = (id: string) => {
     setQuestStatus(id)
-    setDeleteState(false)
+    // setDeleteState(false)
   }
-  const deleteTrigger = () => {
-    setDeleteState(!deleteState)
-  }
+  // const deleteTrigger = () => {
+  //   setDeleteState(!deleteState)
+  // }
   return (
     <>
       <div className="quest-btn-container">
@@ -47,16 +47,16 @@ const QuestPage = () => {
         >
           이전 퀘스트
         </button>
-        {questStatus === 'past' && (
-          <button
-            onClick={deleteTrigger}
-            className={deleteState ? 'quest-del-btn-selected' : 'quest-del-btn'}
-          >
-            퀘스트 삭제
-          </button>
-        )}
+        {/*{questStatus === 'past' && (*/}
+        {/*  <button*/}
+        {/*    onClick={deleteTrigger}*/}
+        {/*    className={deleteState ? 'quest-del-btn-selected' : 'quest-del-btn'}*/}
+        {/*  >*/}
+        {/*    퀘스트 삭제*/}
+        {/*  </button>*/}
+        {/*)}*/}
       </div>
-      <Quest questStatus={questStatus} deleteState={deleteState} />
+      <Quest questStatus={questStatus} />
     </>
   )
 }
