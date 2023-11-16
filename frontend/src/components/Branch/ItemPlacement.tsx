@@ -53,6 +53,7 @@ const ItemPlacement = () => {
       window.location.href = '/main'
     }
   })
+
   function generateRandomString(): string {
     const characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -147,13 +148,44 @@ const ItemPlacement = () => {
   const handleCloseCreateSeed = () => {
     setOpenSeed(false)
   }
+
+  useEffect(() => {
+    if (branches) {
+      handleBranchSelect(branches[0].branchId, branches[0].branchColor)
+    }
+  }, branches)
+
   return (
     <DndProvider backend={backendForDND} options={backendOptions}>
       <div className="dnd-box-container">
-        <div className="dnd-create-btn-box">
+        <div className="dnd-branch-container">
+          <div className="dnd-branch-box">
+            {branches?.map((branch: any) => (
+              <button
+                key={branch.branchId}
+                className="dnd-branch-btn"
+                onClick={() =>
+                  handleBranchSelect(branch.branchId, branch.branchColor)
+                }
+                style={{
+                  border: `3px solid ${branch.branchColor}`,
+                  borderBottom: '0',
+                  backgroundColor:
+                    selectedBranchId !== branch.branchId
+                      ? ''
+                      : branch.branchColor,
+                  color:
+                    selectedBranchId === branch.branchId ? 'white' : 'black',
+                  zIndex: selectedBranchId === branch.branchId ? 2 : 1,
+                }}
+              >
+                {branch.branchName}
+              </button>
+            ))}
+          </div>
           <Button
             onClick={handleClickOpen}
-            className="lime normal"
+            className="lime small w-[9vw]"
             label="가지 만들기"
           />
 
@@ -188,70 +220,52 @@ const ItemPlacement = () => {
               />
             </DialogActions>
           </Dialog>
-          <Button
-            className="lime normal"
-            onClick={handleClickOpenCreateSeed}
-            label="씨앗 만들기"
-          />
-          <Dialog open={openSeed} onClose={handleCloseCreateSeed}>
-            <DialogTitle>씨앗 만들기</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                새로운 일정을 입력 해주세요!
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="씨앗 이름"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={newText}
-                onChange={handleValueText}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button
-                className="red small"
-                onClick={handleCloseCreateSeed}
-                label="취소"
-              />
-              <Button
-                className="primary small"
-                onClick={createItem}
-                label="등록"
-              />
-            </DialogActions>
-          </Dialog>
-        </div>
-        <div className="dnd-branch-box">
-          {branches?.map((branch: any) => (
-            <button
-              key={branch.branchId}
-              className="dnd-branch-btn"
-              onClick={() =>
-                handleBranchSelect(branch.branchId, branch.branchColor)
-              }
-              style={{
-                border: `2px solid ${branch.branchColor}`,
-                backgroundColor:
-                  selectedBranchId !== branch.branchId
-                    ? ''
-                    : branch.branchColor,
-                color: selectedBranchId === branch.branchId ? 'white' : 'black',
-                zIndex: selectedBranchId === branch.branchId ? 2 : 1,
-              }}
-            >
-              {branch.branchName}
-            </button>
-          ))}
         </div>
         <div
-          style={{ backgroundColor: `${colors}` }}
+          style={{ border: `0.3vw solid ${colors}` }}
           className="dnd-seed-outer-container"
         >
-          {ReturnItems(DEFAULT, selectedBranchId)}
+          <div className="dnd-seed-outer-box">
+            {ReturnItems(DEFAULT, selectedBranchId)}
+          </div>
+          <div className="dnd-seed-create-btn">
+            <Button
+              className="lime small"
+              onClick={handleClickOpenCreateSeed}
+              label="씨앗 만들기"
+            />
+            <Dialog open={openSeed} onClose={handleCloseCreateSeed}>
+              <DialogTitle>씨앗 만들기</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  새로운 일정을 입력 해주세요!
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="씨앗 이름"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value={newText}
+                  onChange={handleValueText}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  className="red small"
+                  onClick={handleCloseCreateSeed}
+                  label="취소"
+                />
+                <Button
+                  className="primary small"
+                  onClick={createItem}
+                  label="등록"
+                />
+              </DialogActions>
+            </Dialog>
+          </div>
         </div>
         <div className="dnd_container">
           <div className="dnd_container-text">월</div>
