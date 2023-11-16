@@ -58,17 +58,6 @@ const NewsLetterPage = () => {
 
   // let fileNames: string[] = []
 
-  // 빌드 실행을 위한 useEffect
-  useEffect(() => {
-    const sampleData: NewsLetterListG = [
-      {
-        informId: 'slaasdasdkf',
-        title: '플젝이',
-        createdAt: new Date(),
-      },
-    ]
-    setInputNewsLetters(sampleData)
-  }, [])
   const newsListDate = (date: Date) => {
     const year = date.getFullYear()
     const month = date.getMonth()
@@ -182,8 +171,8 @@ const NewsLetterPage = () => {
       try {
         // 데이터를 가져와서 inputNewsLetters에 설정
         const response = await groupNoticeList(groupId)
-        console.log('가정통신문 response: ', response)
-        setInputNewsLetters(response.data)
+        console.log('가정통신문 response: ', response.data.data.informs)
+        setInputNewsLetters(response.data.data.informs)
         // 모달을 벗어났을 때 페이지 업데이트 되는 거는 일단 연결해봐야 알듯...?
 
         // isModifying가 true일 때만 showNews 함수 호출
@@ -194,9 +183,21 @@ const NewsLetterPage = () => {
         console.error('Error fetching data:', error)
       }
     }
-
     fetchDataAndShowNews()
-  }, [groupId, isModifying, inputInformId, inputContent, inputTitle])
+  }, [])
+
+  // const handleGetNotice = async () => {
+  //   try {
+  //     const response = await noticeList()
+  //     console.log('가통 조회 응답:', response)
+  //   } catch (error) {
+  //     console.error('가통 조회 에러:', error)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   handleGetNotice()
+  // }, [])
 
   return (
     <div className="newsletter-page-container">

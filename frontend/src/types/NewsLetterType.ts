@@ -1,12 +1,17 @@
 // 학생, 부모 가정통신문 리스트 조회
-export type NewsLetterListP = [
-  { informId: string; title: string; groupName: string; createdAt: Date },
-]
+export type NewsLetterListP = {
+  informId: string
+  title: string
+  groupName: string
+  createdAt: Date
+}[]
 
 // 그룹 가정통신문 리스트 조회
-export type NewsLetterListG = [
-  { informId: string; title: string; createdAt: Date },
-]
+export type NewsLetterListG = {
+  informId: string
+  title: string
+  createdAt: Date
+}[]
 
 // 가정통신문 상세 조회
 export type NewsLetter = {

@@ -27,10 +27,14 @@ const noticeList = async () => {
 
 // 가정통신문 상세 조회
 const noticeDetail = async (noticeId: any) => {
-  return authApi
-    .get(`${baseUrl}/${noticeId}`)
-    .then((res) => res)
-    .catch((err) => err)
+  try {
+    const res = await authApi.get(`${baseUrl}/${noticeId}`)
+    return res.data
+  } catch (err) {
+    console.log(err)
+
+    return err
+  }
 }
 
 // 그룹 내 가정통신문 리스트 조회
