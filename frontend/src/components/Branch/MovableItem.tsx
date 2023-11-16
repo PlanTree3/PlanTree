@@ -188,7 +188,7 @@ const MovableItem = ({
   }
   const removeSeed = (itemId: string) => {
     const updatedItems = seeds?.filter((item: any) => item.seedId !== itemId)
-    const newItem = buds?.filter((item: any) => item.budId === itemId)
+    const newItem = seeds?.filter((item: any) => item.seedId === itemId)
     if (newItem) {
       const data = {
         newSeeds: updatedItems,

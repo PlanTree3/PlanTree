@@ -36,6 +36,7 @@ import {
   budDelete,
   getSchedule,
   seedCreate,
+  seedDelete,
 } from '@/apis'
 
 import { getTreeId } from '@/stores/selectors'
@@ -202,8 +203,8 @@ function* removeSeedsSaga(
   yield put(setLoading(true))
   const treeId: any = yield select(getTreeId)
   const { branchId } = action.payload.createdItem
-  const { budId } = action.payload.createdItem
-  yield call(seedCreate, treeId, branchId, budId)
+  const { seedId } = action.payload.createdItem
+  yield call(seedDelete, treeId, branchId, seedId)
   yield put(setLoading(false))
 }
 
