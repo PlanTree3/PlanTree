@@ -1,10 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Quest from '@/components/Quest/Quest'
 import LoginCheck from '@/components/LoginCheck.tsx'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/stores/store.ts'
+import { getQuestData } from '@/stores/features/questSlice.ts'
 
 const QuestPage = () => {
   const [questStatus, setQuestStatus] = useState('all')
   const [deleteState, setDeleteState] = useState(false)
+  const role = useSelector((state: RootState) => state.user.userData.role)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getQuestData())
+  }, [role])
   const changeQuest = (id: string) => {
     setQuestStatus(id)
     setDeleteState(false)
