@@ -37,7 +37,23 @@ const MainPage = () => {
     if (dayToday === 0 || dayToday === 6) {
       setMessage('오늘의 일정은 없습니다')
     } else {
-      const todayLabel = days[dayToday.toString()]
+      let todayLabel = days[dayToday.toString()]
+      type DayMap = {
+        [key: string]: string
+      }
+      const dayMap: DayMap = {
+        월요일: 'MON',
+        화요일: 'TUE',
+        수요일: 'WED',
+        목요일: 'THU',
+        금요일: 'FRI',
+        Monday: 'MON',
+        Tuesday: 'TUE',
+        Wednesday: 'WED',
+        Thursday: 'THU',
+        Friday: 'FRI',
+      }
+      todayLabel = dayMap[todayLabel] || todayLabel
       setSelectDay(todayLabel)
       setMessage('')
     }
