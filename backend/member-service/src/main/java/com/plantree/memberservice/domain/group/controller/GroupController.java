@@ -53,7 +53,7 @@ public class GroupController {
     @PatchMapping("/{groupId}/name")
     public ResponseEntity<?> changeName(@PathVariable("groupId") UUID groupId,
             @JwtLoginMember AuthMember authMember,
-            GroupNameChangeRequestDto groupNameChangeRequestDto) {
+            @RequestBody GroupNameChangeRequestDto groupNameChangeRequestDto) {
         groupModifyUseCase.changeName(groupId, authMember, groupNameChangeRequestDto);
         return HttpResponse.ok(HttpStatus.OK, "그룹 이름 수정 성공");
     }
