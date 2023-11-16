@@ -54,6 +54,7 @@ export const forestSlice = createSlice({
       state.forests = action.payload
     },
     getStudentForestData: (state, action) => {
+      console.log(state.selectTree)
       console.log(action.payload)
     },
     saveStudentForestData: (state, action) => {

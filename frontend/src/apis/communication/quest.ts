@@ -35,15 +35,23 @@ const nestQuestList = async (nestId: number) => {
 }
 
 // 학생 전체 퀘스트 리스트 조회
-const userQuestList = async () => {
+const userQuestList = async (role: string) => {
   return authApi
-    .get(`${baseUrl}/quest`)
+    .get(`${baseUrl}/quest/${role}`)
+    .then((res) => res)
+    .catch((err) => err)
+}
+
+// 퀘스트 확인
+const questCheck = async (questId: string) => {
+  authApi
+    .patch(`${baseUrl}/quest/${questId}/check`)
     .then((res) => res)
     .catch((err) => err)
 }
 
 // 퀘스트 수락
-const questAccept = async (questId: number) => {
+const questAccept = async (questId: string) => {
   authApi
     .patch(`${baseUrl}/quest/${questId}/accept`)
     .then((res) => res)
@@ -51,10 +59,10 @@ const questAccept = async (questId: number) => {
 }
 
 // 퀘스트 포기
-const questGiveUp = async (questId: number) => {
+const questGiveUp = async (questId: string) => {
   authApi
     .patch(`${baseUrl}/quest/${questId}/giveup`)
-    .then((res) => res)
+    .then((res) => console.log(res))
     .catch((err) => err)
 }
 
@@ -80,6 +88,7 @@ export {
   groupQuestList,
   nestQuestList,
   userQuestList,
+  questCheck,
   questAccept,
   questGiveUp,
   questSuccessRequest,
