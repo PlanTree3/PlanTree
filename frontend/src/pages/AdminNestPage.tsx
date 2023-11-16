@@ -252,7 +252,7 @@ const AdminNestPage = () => {
                   </p>
                 </div>
                 <div className="bg flex-1 grid justify-items-end">
-                  <Link to="/forest/1">
+                  <Link to={`/forest/student/${student.studentId}`}>
                     <img className="forest" src={forest} alt="" />
                   </Link>
                 </div>
@@ -274,13 +274,13 @@ const AdminNestPage = () => {
             label="퀘스트 생성"
           />
           <Button
-            className=" normal primary"
+            className=" normal primary ml-[1vh]"
             onClick={openModal}
             label="둥지원 추가하기"
           />
           <br />
           <Button
-            className="normal red"
+            className="normal red mt-[2vh]"
             onClick={handleNestDelete}
             label="둥지 삭제"
           />
@@ -336,7 +336,11 @@ const AdminNestPage = () => {
               onChange={handleNestNameInputChange}
               placeholder="둥지 이름을 수정하세요"
             />
-            <Button onClick={handleNestName} className="primary" label="저장" />
+            <Button
+              onClick={handleNestName}
+              className="normal primary"
+              label="저장"
+            />
           </ReactModal>
           <ReactModal
             isOpen={questmodalIsOpen}

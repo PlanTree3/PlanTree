@@ -15,7 +15,7 @@ import {
   checkQuest,
   deleteQuest,
   getQuestData,
-  // saveQuestData,
+  saveQuestData,
 } from '@/stores/features/questSlice.ts'
 import { role } from '@/stores/selectors.ts'
 
@@ -25,11 +25,12 @@ function* getQuestDataSaga(): Generator<
   AxiosResponse<FetchUserDataResponse>
 > {
   const userType: any = yield select(role)
-  const response: AxiosResponse<any> = yield call(userQuestList, userType)
+  const reUserType = userType.toLowerCase()
+  const response: AxiosResponse<any> = yield call(userQuestList, reUserType)
   console.log(response)
   if (response.data) {
     console.log(response.data.data)
-    // yield put(saveQuestData(response.data.data))
+    yield put(saveQuestData(response.data.data))
   }
 }
 function* deleteQuestSaga(
