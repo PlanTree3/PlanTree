@@ -7,6 +7,8 @@ interface BranchStateType {
   buds: null | BudsType[]
   branches: null | BranchType[]
   newComments: null | number
+  degree: number
+  complete: number
 }
 const initialState: BranchStateType = {
   isLoading: false,
@@ -14,6 +16,8 @@ const initialState: BranchStateType = {
   buds: null,
   branches: null,
   newComments: null,
+  degree: 0,
+  complete: 0,
 }
 
 export const branchSlice = createSlice({
@@ -21,20 +25,22 @@ export const branchSlice = createSlice({
   initialState,
   reducers: {
     setLoading: (state, action) => {
-      console.log('로딩중이라고!', action.payload)
       state.isLoading = action.payload
     },
-    getBranchData: () => {
-      console.log('정보요청 시작')
-    },
+    getBranchData: () => {},
     saveBranches: (state, action) => {
       state.branches = action.payload
+    },
+    setTreeDegree: (state, action) => {
+      state.degree = action.payload.degree
+      state.complete = action.payload.complete
     },
     saveSeeds: (state, action) => {
       state.seeds = action.payload
     },
     saveBuds: (state, action) => {
       state.buds = action.payload
+      console.log('우효~~', state.buds)
     },
     addBuds: (state, action) => {
       state.buds = action.payload.newBuds
@@ -89,5 +95,6 @@ export const {
   modifyBranch,
   modifyBud,
   modifySeed,
+  setTreeDegree,
 } = branchSlice.actions
 export default branchSlice.reducer

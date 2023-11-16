@@ -10,6 +10,7 @@ const initialState = {
     thu: null,
     fri: null,
   },
+  score: 0,
 }
 
 export const mainSlice = createSlice({
@@ -18,6 +19,7 @@ export const mainSlice = createSlice({
   reducers: {
     getMainData: () => {},
     storeIdName: (state, action) => {
+      console.log(action.payload)
       state.treeId = action.payload.treeId
       state.treeName = action.payload.treeName
     },
@@ -28,8 +30,12 @@ export const mainSlice = createSlice({
       state.weekly.thu = action.payload.thu
       state.weekly.fri = action.payload.fri
     },
+    storeScoreData: (state, action) => {
+      state.score = action.payload
+    },
   },
 })
 
-export const { getMainData, storeIdName, storeWeeklyData } = mainSlice.actions
+export const { getMainData, storeIdName, storeWeeklyData, storeScoreData } =
+  mainSlice.actions
 export default mainSlice.reducer

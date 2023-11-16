@@ -16,6 +16,7 @@ const MainPage = () => {
   const treeId = useSelector((state: RootState) => state.main.treeId)
   const treeName = useSelector((state: RootState) => state.main.treeName)
   const buds = useSelector((state: RootState) => state.branch.buds)
+  const score = useSelector((state: RootState) => state.main.score)
   // const { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY } = COLUMN_NAMES
   const days = DAY_NAMES
   const today = new Date()
@@ -24,6 +25,8 @@ const MainPage = () => {
   const dateToday = today.getDate()
   const [selectDay, setSelectDay] = useState('')
   const [message, setMessage] = useState('')
+  const degree = useSelector((state: RootState) => state.branch.degree)
+  const complete = useSelector((state: RootState) => state.branch.complete)
 
   useEffect(() => {
     dispatch(getMainData())
@@ -38,7 +41,10 @@ const MainPage = () => {
       setSelectDay(todayLabel)
       setMessage('')
     }
-  }, [])
+  }, [treeId])
+
+  useEffect(() => {}, [buds])
+
   const sendDays = (day: string) => {
     setSelectDay(day)
   }
@@ -109,9 +115,9 @@ const MainPage = () => {
             </button>
             <button
               id="wednesday"
-              onClick={() => sendDays('WEN')}
+              onClick={() => sendDays('WED')}
               className={`main-day-btn ${
-                selectDay === 'WEN' &&
+                selectDay === 'WED' &&
                 ' border-lime-500 shadow-[0_0_7px_3px_#84cc16]'
               }`}
             >
@@ -139,9 +145,9 @@ const MainPage = () => {
             금
           </button>
           <div className="main-tree-container">
-            <Tree degree={80} />
+            <Tree degree={degree} complete={complete} />
           </div>
-          <div className="main-tree-degree">진행률 : </div>
+          <div className="main-tree-degree">이번 주 점수 : {score}</div>
         </div>
         <div className="main-todo-container">
           {dayToday === 0 ||

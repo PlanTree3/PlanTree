@@ -6,9 +6,10 @@ import { BigTree, Fruit, Log, MediumTree, SmallTree } from './models'
 
 interface TreeProps {
   degree: number
+  complete: number
 }
 
-const Tree = ({ degree }: TreeProps) => {
+const Tree = ({ degree, complete }: TreeProps) => {
   return (
     <Canvas
       camera={{
@@ -29,7 +30,7 @@ const Tree = ({ degree }: TreeProps) => {
         {degree > 20 && degree <= 50 && <SmallTree />}
         {degree > 50 && degree < 100 && <MediumTree />}
         {degree === 100 && <BigTree />}
-        <Fruit degree={degree} />
+        <Fruit degree={complete} />
         <OrbitControls
           enablePan={false}
           enableZoom={false}
