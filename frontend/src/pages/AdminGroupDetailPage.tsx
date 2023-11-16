@@ -230,17 +230,19 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         <div className="admin-group-detail-content">
           {currentStudents.length > 0 ? (
             currentStudents.map((student: any, index: number) => (
-              <div key={student.studentId} className="studentBox">
-                <p className="studentFont flex-1 flex justify-center my-[2vh]">
-                  {index + 1 + (currentPage - 1) * 5}
-                </p>
-                <p className="studentGroupFont font-semibold">
-                  {student.studentName}
-                </p>
-                <p className="studentGroupFont">
-                  {student.completedBudCount}/{student.totalBudCount}
-                </p>
-              </div>
+              <Link to={`/forest/student/${student.studentId}`}>
+                <div key={student.studentId} className="studentBox">
+                  <p className="studentFont flex-1 flex justify-center my-[2vh]">
+                    {index + 1 + (currentPage - 1) * 5}
+                  </p>
+                  <p className="studentGroupFont font-semibold">
+                    {student.studentName}
+                  </p>
+                  <p className="studentGroupFont">
+                    {student.completedBudCount}/{student.totalBudCount}
+                  </p>
+                </div>
+              </Link>
             ))
           ) : (
             <p>현재 그룹원이 없습니다.</p>
@@ -255,9 +257,15 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           </div>
         </div>
         <div className="admin-group-detail-btn-container-bottom">
-          <Link to={`/newsLetter/${groupId}`}>
-            <Button className="normal gray" label="가정통신문 보기" />
-          </Link>
+          <div>
+            <Button
+              className="normal primary mr-[1vh]"
+              label="가정통신문 생성"
+            />
+            <Link to={`/newsLetter/${groupId}`}>
+              <Button className="normal gray" label="가정통신문 보기" />
+            </Link>
+          </div>
           <Button
             className="normal primary"
             label="퀘스트 생성"
@@ -356,6 +364,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         isOpen={QrmodalIsOpen}
         ariaHideApp={false}
         onRequestClose={closeQrModal}
+        // className="reactModal"
         style={{
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.4)',
