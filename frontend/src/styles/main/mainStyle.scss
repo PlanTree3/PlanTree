@@ -101,12 +101,15 @@
 
 .main-tree-degree {
   grid-area: e;
-  @apply text-center text-xl;
+  @apply text-center text-xl flex justify-center items-center gap-2;
+  span {
+    @apply text-3xl text-lime-500 font-bold;
+  }
 }
 
 .main-todo-list {
   border-radius: 25px;
-  @apply h-full mt-3 bg-slate-100 text-center
+  @apply h-full mt-3 bg-slate-100 
     overflow-y-auto;
 
   &-title {

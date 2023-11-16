@@ -21,7 +21,7 @@
     @apply grid grid-cols-2 gap-3 p-[1vw] justify-center items-center overflow-y-auto;
   }
   &-tree-box {
-    @apply flex justify-center items-center pr-[1vw] h-full w-full space-x-3;
+    @apply flex justify-center items-center pr-[1vw] h-[95%] w-full space-x-3;
   }
   &-tree {
     @apply w-1/2 flex items-center;
@@ -35,4 +35,10 @@
       @apply flex justify-between items-center;
     }
   }
+}
+
+.atropos-shadow {
+  filter: blur(50px);
+  opacity: 0.5;
+  background-color: #fff;
 }
