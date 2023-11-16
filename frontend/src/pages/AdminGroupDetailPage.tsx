@@ -23,7 +23,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   const [currentPage, setCurrentPage] = useState(1)
   const [studentsData, setStudentsData] = useState<any>(null)
-  const [fileName, setFileName] = useState<any>(null)
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [questmodalIsOpen, setQuestModalIsOpen] = useState(false)
@@ -587,7 +586,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             label="파일 업로드"
             className="normal gray mt-[1vh]"
           />
-          <div>{fileName}</div>
         </div>
         <Button
           onClick={handleGroupNotice}
