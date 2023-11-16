@@ -11,6 +11,7 @@ const TreePage = () => {
     branchDoneCount,
     notYet,
   } = useSelector((state: RootState) => state.forest.selectedInfo)
+  const { degree, complete } = useSelector((state: RootState) => state.branch)
   const detailData = useSelector(
     (state: RootState) => state.forest.detailData,
   ) ?? {
@@ -88,7 +89,7 @@ const TreePage = () => {
         {detailData.startedAt} ~ {detailData.endedAt}
       </div>
       <div className="tree-page-tree">
-        <Tree degree={30} />
+        <Tree degree={degree} complete={complete} />
       </div>
       <div className="tree-page-title">통계</div>
       <div className="tree-page-chart-container">
