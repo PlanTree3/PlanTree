@@ -1,0 +1,183 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.dnd-box-container {
+  max-height: 100%; /* 또는 원하는 최대 높이 */
+  overflow-y: auto; /* 내용이 넘칠 때 스크롤바 표시 */
+  overflow-x: hidden;
+}
+// 스크롤 바 높이
+.dnd-box-container::-webkit-scrollbar {
+  height: 1vh;
+  width: 0.5vw;
+}
+
+// 스크롤 바 트랙 설정
+.dnd-box-container::-webkit-scrollbar-track {
+  background: #ffdaaf;
+  border-radius: 2vh;
+}
+
+// 스크롤 바 설정
+.dnd-box-container::-webkit-scrollbar-thumb {
+  background: #e0c090;
+  border-radius: 2vh;
+}
+
+// 스크롤 바 클릭 시 설정
+.dnd-box-container::-webkit-scrollbar-thumb:hover {
+  background: #fface4;
+  border-radius: 2vh;
+}
+
+.dnd-seed-outer-container {
+  width: 98%;
+  height: 20vh;
+  //background-color: #8595a9;
+  border-radius: 1vw;
+  border-top-left-radius: 0%;
+  display: grid;
+  margin-bottom: 3vh;
+  min-height: 8vh;
+  grid-template-columns: repeat(auto-fill, minmax(8vw, 1fr));
+  padding: 1vw;
+}
+
+.dnd_container {
+  display: flex;
+  width: 98%;
+  justify-content: space-around;
+  margin-bottom: 3vh;
+  &-text {
+    border-radius: 100%;
+    font-weight: bold;
+    @apply w-[3vw] h-[3vw] border-[3px] flex items-center justify-center;
+  }
+}
+
+.dnd_column {
+  min-height: 20vh;
+  width: 14vw;
+  padding: 1vw;
+  border-radius: 1vw;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dnd_column_shape1 {
+  box-shadow: 2px 2px 5px 3px #999;
+  background-color: #f5ffea;
+}
+
+.dnd_column_shape2 {
+  box-shadow: 2px 2px 5px 3px #999;
+
+  background-color: #fffbf5;
+}
+
+.dnd_column_shape3 {
+  box-shadow: 2px 2px 5px 3px #999;
+
+  background-color: #f5ffea;
+}
+
+.dnd_column_shape4 {
+  box-shadow: 2px 2px 5px 3px #999;
+
+  background-color: #fffbf5;
+}
+
+.dnd_column_shape5 {
+  box-shadow: 2px 2px 5px 3px #999;
+
+  background-color: #f5ffea;
+}
+
+.dnd_column_shape6 {
+  background-color: #fffbf5;
+}
+
+.dnd_movable-item-content-btn-container {
+  @apply flex justify-around;
+}
+
+.dnd_movable-item {
+  border-radius: 1vw;
+  height: 3vh;
+  padding: 1vh 0.5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+  @apply truncate text-center;
+  &:hover {
+    height: 7vh;
+    .dnd_movable-item-content-name {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .dnd_movable-item-content-deleteBTN {
+      @apply flex w-[2vh];
+      align-self: center;
+      justify-self: center;
+    }
+  }
+  &-content {
+    display: grid;
+    gap: 0.3vw;
+    &-deleteBTN {
+      display: none;
+    }
+    &-name {
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+}
+
+.dnd-branch-box {
+  grid-template-columns: repeat(10, 1fr);
+  @apply grid w-[98%];
+}
+
+.dnd-add-branch-btn {
+  //background-color: red;
+  display: flex;
+  width: 3vw;
+  height: 5vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.dnd-add-branch-btn > img {
+  width: 2vw;
+  height: 2vh;
+}
+
+.dnd-branch-btn {
+  position: relative;
+  display: flex;
+  width: 10vw;
+  height: 5vh;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 7px;
+  border-top-left-radius: 7px;
+  @apply border-2;
+}
+
+.dnd-create-btn-box {
+  display: flex;
+  @apply justify-end gap-2 w-[98%];
+}
+.dnd-add-seed-btn {
+  @apply flex justify-center items-center w-[3vw] h-[5vh];
+}
+
+.dnd-add-seed-btn > img {
+  width: 2vw;
+  height: 2vh;
+}

@@ -1,0 +1,119 @@
+// .roleButton {
+//   @apply m-5 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded;
+// }
+
+.profileImg {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #8f5454;
+  width: 150px;
+  height: 150px;
+  @apply flex flex-col justify-center bg-[#EFEEE9];
+}
+
+.selectImgModal {
+  @apply w-auto h-2/6;
+}
+
+.selectImg {
+  @apply w-full h-full p-0 mx-1;
+}
+
+.showProfileImg {
+  @apply p-0 w-full h-full;
+}
+
+.addImgBtn {
+  @apply p-0 bg-inherit;
+}
+
+.profilePlaceholder {
+  @apply text-xs text-slate-400 text-center not-italic w-full h-fit;
+}
+
+.title {
+  @apply text-center;
+}
+
+.content {
+  @apply rounded-lg border-zinc-950;
+}
+
+.datePicker {
+  display: flex;
+  align-items: center;
+  border: 1px solid #747474;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  width: 100%;
+  height: 30px;
+  color: #000;
+  text-align: center;
+  padding-right: 14px;
+
+  &:focus {
+    border: 2px solid #ff5e00;
+  }
+}
+
+.signUpTitle {
+  @apply flex gap-2 items-center text-center font-bold;
+}
+
+.signUpTitleTxt {
+  @apply align-bottom text-4xl h-fit;
+}
+
+.checkName {
+  @apply text-sm;
+}
+
+.redFont {
+  @apply text-orange-700;
+}
+
+input {
+  display: flex;
+  width: 100%;
+  padding: 16px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+
+  border-radius: 12px;
+  border: 1px solid #000;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+
+  padding-right: 50px;
+  height: inherit;
+}
+
+.inputName {
+  @apply flex;
+}
+
+.icon {
+  @apply w-1/12 h-1/6;
+}
+
+.studentCard {
+  @apply w-8/12 h-3/5 flex border-amber-700;
+}
+
+.userRole {
+  @apply mx-1 w-max h-min border-2 rounded-full border-zinc-950;
+}
+
+.userRoleSpan {
+  @apply w-3/5 flex;
+}
+
+.userRoleDiv {
+  @apply text-xs;
+}
