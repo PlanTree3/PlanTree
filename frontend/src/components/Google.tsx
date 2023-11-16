@@ -6,7 +6,8 @@ const Google = () => {
   const AUTHORIZE_URI = 'https://accounts.google.com/o/oauth2/v2/auth'
   const GoggleQuery = qs.stringify({
     client_id: import.meta.env.VITE_PUBLIC_GOOGLE_CLIENT_ID,
-    redirect_uri: 'http://localhost:3000/oidc/google',
+    // redirect_uri: 'http://localhost:3000/oidc/google',
+    redirect_uri: 'https://k9a302a.p.ssafy.io/oidc/google',
     response_type: 'token id_token',
     scope: 'openid profile email',
     nonce:
