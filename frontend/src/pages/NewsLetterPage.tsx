@@ -5,18 +5,19 @@ import ReactModal from 'react-modal'
 // import withReactContent from 'sweetalert2-react-content'
 import '@/components/Button/Button.css'
 import Button from '@/components/Button/Button'
-// import {
-//   noticeDetail,
-//   groupNoticeList,
-//   groupNoticeUpdate,
-//   noticeFileCreate,
-//   noticeFileDownload,
-//   deleteNotice,
-// } from '@/apis/communication'
+import {
+  noticeDetail,
+  groupNoticeList,
+  // noticeFileCreate,
+  groupNoticeUpdate,
+  // noticeFileCreate,
+  // noticeFileDownload,
+  // deleteNotice,
+} from '@/apis/communication'
 import {
   NewsLetterListG,
-  NewsLetter,
-  // ModifyNewsLetterReq,
+  // NewsLetter,
+  ModifyNewsLetterReq,
   // AddFile,
 } from '@/types/NewsLetterType'
 // import { groupNoticeList } from '@/apis'
@@ -31,7 +32,16 @@ const NewsLetterPage = () => {
   const [inputInformId, setInputInformId] = useState<any>(0)
   const [inputTitle, setInputTitle] = useState<string>('플젝이')
   const [inputContent, setInputContent] = useState<string>('하기 싫어요')
-  const [inputFileName, setInputFileName] = useState<string[]>([''])
+  const [inputFile, setInputFile] = useState<
+    { fileId: string; fileName: string }[]
+  >([
+    { fileId: '하하하하', fileName: '룰룰루루' },
+    { fileId: '후후후후', fileName: '랄라라라라' },
+  ])
+  const [inputFileName, setInputFileName] = useState<string[]>([
+    '룰룰루루',
+    '랄라라라라',
+  ])
   const [inputNewsLetters, setInputNewsLetters] = useState<NewsLetterListG>([
     {
       informId: 's;lakf',
@@ -41,6 +51,12 @@ const NewsLetterPage = () => {
   ])
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [inputWriter, setInputWriter] = useState<string>('')
+  // const [inputFileId, setInputFileId] = useState<string[]>([
+  //   '하하하하',
+  //   '후후후후',
+  // ])
+
+  // let fileNames: string[] = []
 
   // 빌드 실행을 위한 useEffect
   useEffect(() => {
@@ -62,8 +78,6 @@ const NewsLetterPage = () => {
   }
 
   const modifyNewsLetter = () => {
-    console.log('수정하기: ', inputTitle)
-    console.log('수정하기: ', inputContent)
     setIsModifying(true)
   }
 
@@ -82,13 +96,14 @@ const NewsLetterPage = () => {
   }
 
   const sendNewsLetter = () => {
-    // const data: ModifyNewsLetterReq = {
-    //   title: inputTitle,
-    //   content: inputContent,
-    // }
-    // groupNoticeUpdate(inputInformId, data)
-    console.log(inputTitle)
-    console.log(inputContent)
+    const data: ModifyNewsLetterReq = {
+      title: inputTitle,
+      content: inputContent,
+    }
+    groupNoticeUpdate(inputInformId, data)
+
+    // axios 연결
+    // noticeFileCreate(inputInformId, formData)
 
     setIsModifying(false)
   }
@@ -103,33 +118,73 @@ const NewsLetterPage = () => {
     setModalIsOpen(true)
 
     // api 연결
-    // const news: NewsLetter = noticeDetail(notificationId)
+    // 여기로 오면 다시 api 연결이 되는지 확인해보자!
+    const news: any = noticeDetail(notificationId)
 
-    const news: NewsLetter = {
-      title: inputTitle,
-      writer: '오주영',
-      content: inputContent,
-      files: [
-        { fileId: '랄랄라라라', fileName: '루루룰루룰' },
-        { fileId: '너무', fileName: '힘들어요' },
-      ],
-    }
+    console.log(news)
+
+    // const news: NewsLetter = {
+    //   title: inputTitle,
+    //   writer: '오주영',
+    //   content: inputContent,
+    //   files: inputFile,
+    // }
 
     // useState에 때려박자
     setInputTitle(news.title)
     setInputContent(news.content)
+    setInputFile(news.files)
     const fileNames: string[] = []
     news.files.map((file) => fileNames.push(file.fileName))
     setInputFileName(fileNames)
     setInputWriter(news.writer)
   }
 
+  const fileList: File[] = []
+
+  const onSaveFiles = (e: ChangeEvent<HTMLInputElement>) => {
+    const uploadFiles = e.target.files
+
+    if (uploadFiles) {
+      const filesArray = Array.from(uploadFiles)
+      filesArray.map((file) => fileList.push(file))
+    }
+  }
+  const fileNames: string[] = inputFileName
+
+  const onFileUpload = () => {
+    const formData = new FormData()
+
+    fileList.map((file) => {
+      formData.append('files', file)
+      fileNames.push(file.name)
+      return null
+    })
+    setInputFileName(fileNames)
+  }
+
+  const deleteFile = (name: string) => {
+    // 파일 삭제
+    // FileId 같은 경우는 name과 일치하는 거 찾아서 지우기 axios
+    const delFile = inputFile.filter((file) => file.fileName === name)
+
+    const delFileId = delFile[0].fileId
+
+    console.log(delFileId)
+
+    // deleteNotice(inputInformId, delFileId)
+
+    setInputFileName(inputFileName.filter((fileName) => fileName !== name))
+  }
+
   useEffect(() => {
     const fetchDataAndShowNews = async () => {
       try {
         // 데이터를 가져와서 inputNewsLetters에 설정
-        // const response = await groupNoticeList(groupId)
-        // setInputNewsLetters(response.data)
+        const response = await groupNoticeList(groupId)
+        console.log('가정통신문 response: ', response)
+        setInputNewsLetters(response.data)
+        // 모달을 벗어났을 때 페이지 업데이트 되는 거는 일단 연결해봐야 알듯...?
 
         // isModifying가 true일 때만 showNews 함수 호출
         if (isModifying) {
@@ -141,7 +196,7 @@ const NewsLetterPage = () => {
     }
 
     fetchDataAndShowNews()
-  }, [groupId, isModifying, inputInformId])
+  }, [groupId, isModifying, inputInformId, inputContent, inputTitle])
 
   return (
     <div className="newsletter-page-container">
@@ -155,83 +210,97 @@ const NewsLetterPage = () => {
           <div>날짜</div>
         </div>
         <hr />
-        {inputNewsLetters.map((news, idx) => (
-          <div key={news.informId} className="newsletter-item">
-            <p className="groupInfo">{idx + 1}</p>
-            <p className="groupInfo">
-              <button onClick={() => showNews(news.informId)}>
-                {news.title}
-              </button>
-              <ReactModal
-                isOpen={modalIsOpen}
-                ariaHideApp={false}
-                onRequestClose={closeModal}
-                style={{
-                  overlay: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                    width: '100%',
-                    height: '100vh',
-                    zIndex: 10,
-                    top: 0,
-                    left: 0,
-                  },
-                  content: {
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '50%',
-                    height: '50%',
-                    border: '2px solid #000',
-                    borderRadius: '10px',
-                    overflow: 'auto',
-                    background: '#F5F5DC',
-                    boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
-                  },
-                }}
-              >
-                <div>
-                  {isModifying ? (
-                    <>
-                      <div>제목: </div>
-                      <input
-                        type="text"
-                        value={inputTitle}
-                        onChange={modifyTitle}
-                      />
-                      <div>내용: </div>
-                      <input
-                        type="text"
-                        value={inputContent}
-                        onChange={modifyContent}
-                      />
-                      <Button onClick={sendNewsLetter} label="확인" />
-                    </>
-                  ) : (
-                    <div className="newsletterModal-item">
-                      <div>제목: </div>
-                      <div>{inputTitle}</div>
-                      <div>작성자: </div>
-                      <div>{inputWriter}</div>
-                      <div>내용: </div>
-                      <div>{inputContent}</div>
-                      <hr />
-                      {inputFileName.map((file, index) => (
-                        <button onClick={() => downloadFile(file)}>
-                          <div key={index}>
-                            <div>{file}</div>
-                          </div>
-                        </button>
-                      ))}
-                      <Button onClick={modifyNewsLetter} label="수정하기" />
-                    </div>
-                  )}
-                </div>
-              </ReactModal>
-            </p>
-            <p className="groupInfo">{newsListDate(news.createdAt)}</p>
-          </div>
-        ))}
+        {inputNewsLetters?.length > 0 ? (
+          inputNewsLetters.map((news, idx) => (
+            <div key={news.informId} className="newsletter-item">
+              <p className="groupInfo">{idx + 1}</p>
+              <p className="groupInfo">
+                <button onClick={() => showNews(news.informId)}>
+                  {news.title}
+                </button>{' '}
+              </p>{' '}
+              <p className="groupInfo">{newsListDate(news.createdAt)}</p>
+            </div>
+          ))
+        ) : (
+          <p className="groupInfo">현재 가정통신문이 없습니다.</p>
+        )}
       </div>
+      <ReactModal
+        isOpen={modalIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            width: '100%',
+            height: '100vh',
+            zIndex: 10,
+            top: 0,
+            left: 0,
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '50%',
+            height: '50%',
+            border: '2px solid #000',
+            borderRadius: '10px',
+            overflow: 'auto',
+            background: '#F5F5DC',
+            boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
+          },
+        }}
+      >
+        <div>
+          {isModifying ? (
+            <>
+              <div>제목: </div>
+              <input type="text" value={inputTitle} onChange={modifyTitle} />
+              <div>내용: </div>
+              <input
+                type="text"
+                value={inputContent}
+                onChange={modifyContent}
+              />
+              <div>첨부파일</div>
+              <input type="file" multiple onChange={onSaveFiles} />
+              <Button onClick={onFileUpload} label="파일 업로드" />
+              {/* {showFileNames()} */}
+              {inputFileName.map((fileName) => (
+                <>
+                  <div>{fileName}</div>
+                  <Button onClick={() => deleteFile(fileName)} label="x" />
+                </>
+              ))}
+              <Button onClick={sendNewsLetter} label="확인" />
+            </>
+          ) : (
+            <div className="newsletterModal-item">
+              <div>제목: </div>
+              <div>{inputTitle}</div>
+              <div>작성자: </div>
+              <div>{inputWriter}</div>
+              <div>내용: </div>
+              <div>{inputContent}</div>
+              <hr />
+              {inputFileName?.length > 0 ? (
+                inputFileName?.map((file, index) => (
+                  <button onClick={() => downloadFile(file)}>
+                    <div key={index}>
+                      <div>{file}</div>
+                    </div>
+                  </button>
+                ))
+              ) : (
+                <p />
+              )}
+              <Button onClick={modifyNewsLetter} label="수정하기" />
+            </div>
+          )}
+        </div>
+      </ReactModal>
     </div>
   )
 }

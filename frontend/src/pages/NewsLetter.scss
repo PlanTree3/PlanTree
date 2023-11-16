@@ -43,7 +43,7 @@
       img {
         @apply max-h-[6vh];
       }
-      @apply flex font-semibold text-2xl justify-between;
+      @apply flex font-semibold text-2xl justify-between text-center;
     }
     &-btn-container {
       @apply space-x-2;
@@ -84,4 +84,11 @@
 .newsletter-page-container::-webkit-scrollbar-thumb:hover {
   background: #fface4;
   border-radius: 2vh;
+}
+
+.groupInfo {
+  margin-bottom: 5px;
+  margin-right: 10px;
+  font-size: larger;
+  @apply text-center;
 }
