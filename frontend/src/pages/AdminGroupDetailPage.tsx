@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 import QR from 'qrcode.react'
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
@@ -23,6 +23,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   const [currentPage, setCurrentPage] = useState(1)
   const [studentsData, setStudentsData] = useState<any>(null)
+  const [fileName, setFileName] = useState<any>(null)
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [questmodalIsOpen, setQuestModalIsOpen] = useState(false)
@@ -106,6 +107,29 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   }) => {
     setInputNewsContent(e.target.value)
   }
+  // 파일 저장
+  const fileList: File[] = []
+
+  const onSaveFiles = (e: ChangeEvent<HTMLInputElement>) => {
+    const uploadFiles = e.target.files
+
+    if (uploadFiles) {
+      const filesArray = Array.from(uploadFiles)
+      filesArray.map((file) => fileList.push(file))
+    }
+  }
+
+  const onFileUpload = () => {
+    const formData = new FormData()
+    const fileNames: string[] = fileName
+
+    fileList.map((file) => {
+      formData.append('file', file)
+      fileNames.push(file.name)
+      return null
+    })
+    setFileName(fileNames)
+  }
 
   // 가지 일괄 등록
   const handleCreateBranch = async () => {
@@ -122,6 +146,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
       console.error('Error:', error)
     }
     closeModal()
+    setInputValue('')
   }
 
   // 그룹이름 수정
@@ -181,9 +206,10 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   // 가정통신문 생성
   const handleGroupNotice = async () => {
     const data = {
-      title: inputQuestTitle,
-      content: inputQuestContent,
       groupId,
+      title: inputNewsTitle,
+      content: inputNewsContent,
+      files: fileList,
     }
     try {
       const response = await groupNoticeCreate(groupId, data)
@@ -278,8 +304,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           )}
 
           <div className="pagination">
-            {pageNumbers.map((number) => (
-              <button key={number} onClick={() => changePage(number)}>
+            {pageNumbers.map((number, idx) => (
+              <button key={idx} onClick={() => changePage(number)}>
                 {number}
               </button>
             ))}
@@ -394,7 +420,28 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         isOpen={QrmodalIsOpen}
         ariaHideApp={false}
         onRequestClose={closeQrModal}
-        className="reactModal"
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            width: '100%',
+            height: '100vh',
+            zIndex: 10,
+            top: 0,
+            left: 0,
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '60%',
+            height: '70%',
+            border: '2px solid #000',
+            borderRadius: '10px',
+            overflow: 'auto',
+            background: '#F5F5DC',
+            boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
+          },
+        }}
       >
         <div className="font-semibold text-xl flex justify-center">
           QR을 찍어 그룹원을 추가해 보세요.
@@ -505,10 +552,10 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             onChange={handleNewsContentInputChange}
           />
           <div>첨부파일</div>
-          {/* <input type="file" multiple onChange={onSaveFiles} />
+          <input type="file" multiple onChange={onSaveFiles} />
           <Button onClick={onFileUpload} label="파일 업로드" />
-          <div>{inputFileName}</div> */}
-          {/* <Button onClick={handleGroupNotice} label="확인" /> */}
+          <div>{fileName}</div>
+          <Button onClick={handleGroupNotice} label="확인" />
         </div>
         <Button
           onClick={handleGroupNotice}

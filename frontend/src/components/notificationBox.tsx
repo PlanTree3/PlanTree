@@ -2,9 +2,10 @@ import ReactModal from 'react-modal'
 import { useState, useEffect } from 'react'
 import {
   notificationBox,
-  // notificationDelete,
+  notificationDelete,
   // notificationReading,
 } from '@/apis/notification'
+import { Button } from '.'
 
 const NotificationBox = ({ modalOpen, closeModal }: any) => {
   const [notificationData, setNotificationData] = useState<any>(null)
@@ -22,15 +23,15 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
     handleNotification()
   }, [modalOpen])
 
-  // // 알림함 삭제
-  // const handleNotificationDelete = async () => {
-  //   try {
-  //     const response = await notificationDelete()
-  //     console.log('알림함 전체 응답', response)
-  //   } catch (error) {
-  //     console.error('알림함 전체 삭제 에러:', error)
-  //   }
-  // }
+  // 알림함 삭제
+  const handleNotificationDelete = async () => {
+    try {
+      const response = await notificationDelete()
+      console.log('알림함 전체 응답', response)
+    } catch (error) {
+      console.error('알림함 전체 삭제 에러:', error)
+    }
+  }
 
   // 알림함 알림 하나 조회
   // const handleNotificationReading = async (notificationId) => {
@@ -84,12 +85,19 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
       <div>
         {notificationData.notifications.map(
           (notification: any, index: number) => (
-            <p key={index}>
-              {index + 1} {getNotificationTypeText(notification.type)}{' '}
-              {notification.read ? '읽음' : '읽지 않음'}
-            </p>
+            <div key={index}>
+              <p>
+                {index + 1} {getNotificationTypeText(notification.type)}{' '}
+              </p>
+              <p>{notification.read ? '읽음' : '읽지 않음'}</p>
+            </div>
           ),
         )}
+        <Button
+          label="전체 삭제"
+          onClick={handleNotificationDelete}
+          className="normal primary"
+        />
       </div>
     )
   }
