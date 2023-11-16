@@ -182,6 +182,7 @@ const NewsLetterPage = () => {
       try {
         // 데이터를 가져와서 inputNewsLetters에 설정
         const response = await groupNoticeList(groupId)
+        console.log('가정통신문 response: ', response)
         setInputNewsLetters(response.data)
         // 모달을 벗어났을 때 페이지 업데이트 되는 거는 일단 연결해봐야 알듯...?
 
