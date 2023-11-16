@@ -8,10 +8,10 @@
 
 /* Atropos web component */
 .atropos-component {
-  display: block;
+  width: 100%;
 }
 .atropos-component .atropos-inner {
-  border-radius: 1rem;
+  @apply border-[1.5vw] border-lime-500;
 }
 .atropos-component img {
   position: absolute;
@@ -19,7 +19,6 @@
   top: -5%;
   width: 110%;
   height: 110%;
-  -o-object-fit: contain;
   object-fit: contain;
   display: block;
   z-index: 1;
@@ -51,6 +50,6 @@
   filter: blur(50px);
   opacity: 0.25;
 }
-.atropos-component .atropos-shadow {
-  opacity: 1 !important;
+.atropos-component .atropos-highlight {
+  z-index: 100;
 }
