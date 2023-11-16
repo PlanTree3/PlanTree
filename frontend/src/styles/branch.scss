@@ -6,6 +6,7 @@
   max-height: 100%; /* 또는 원하는 최대 높이 */
   overflow-y: auto; /* 내용이 넘칠 때 스크롤바 표시 */
   overflow-x: hidden;
+  @apply flex flex-col justify-center items-center;
 }
 // 스크롤 바 높이
 .dnd-box-container::-webkit-scrollbar {
@@ -32,16 +33,25 @@
 }
 
 .dnd-seed-outer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 98%;
   height: 20vh;
-  //background-color: #8595a9;
   border-radius: 1vw;
   border-top-left-radius: 0%;
-  display: grid;
   margin-bottom: 3vh;
   min-height: 8vh;
+  padding: 0.7vw;
+  box-shadow: 2px 3px 3px 1px #bbb;
+}
+.dnd-seed-outer-box {
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(8vw, 1fr));
-  padding: 1vw;
+}
+
+.dnd-seed-create-btn {
+  @apply flex justify-end items-end;
 }
 
 .dnd_container {
@@ -137,7 +147,9 @@
     }
   }
 }
-
+.dnd-branch-container {
+  @apply flex justify-between items-center w-[98%];
+}
 .dnd-branch-box {
   grid-template-columns: repeat(10, 1fr);
   @apply grid w-[98%];
@@ -166,6 +178,7 @@
   align-items: center;
   border-top-right-radius: 7px;
   border-top-left-radius: 7px;
+
   @apply border-2;
 }
 

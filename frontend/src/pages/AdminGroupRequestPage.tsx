@@ -102,12 +102,12 @@ const AdminGroupRequestPage = () => {
                 <p className="groupInfo">{student.studentName}</p>
                 <div className="flex justify-around">
                   <Button
-                    className="primary"
+                    className="normal primary"
                     onClick={() => handleYes(student.studentId)}
                     label="수락하기"
                   />
                   <Button
-                    className="red"
+                    className="normal red ml-[1vh]"
                     onClick={() => handleNo(student.studentId)}
                     label="거절하기"
                   />

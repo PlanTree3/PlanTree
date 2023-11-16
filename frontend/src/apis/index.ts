@@ -74,3 +74,4 @@ export { api, authApi, formApi, authFormApi }
 export * from './member'
 export * from './forest'
 export * from './communication'
+export * from './notification'

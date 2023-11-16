@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Mousewheel, Pagination } from 'swiper/modules'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,10 +10,11 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 
 import { RootState } from '@/stores/store.ts'
-import { getForestData } from '@/stores/features/forestSlice.ts'
-import { LoginCheck, StudentCheck } from '@/components'
+import { getStudentForestData } from '@/stores/features/forestSlice.ts'
+import { LoginCheck } from '@/components'
 
-const ForestPage = () => {
+const ForestStudentPage = () => {
+  const memberId = useParams()
   const dummyData = [
     {
       forestId: '23e77f3c-30f1-4f64-a42c-8b42de61d0ed',
@@ -26,10 +28,10 @@ const ForestPage = () => {
     },
   ]
   const forests =
-    useSelector((state: RootState) => state.forest.forests) ?? dummyData
+    useSelector((state: RootState) => state.forest.studentForest) ?? dummyData
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getForestData())
+    dispatch(getStudentForestData(memberId))
   }, [])
 
   return (
@@ -55,4 +57,4 @@ const ForestPage = () => {
 }
 
 // export default LoginCheck(ForestPage)
-export default StudentCheck(LoginCheck(ForestPage))
+export default LoginCheck(ForestStudentPage)

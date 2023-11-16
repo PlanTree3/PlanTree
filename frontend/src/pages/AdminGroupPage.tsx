@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './GroupPage.scss'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
@@ -7,6 +7,7 @@ import { groupCreate, teacherGroupList } from '@/apis'
 import { LoginCheck } from '@/components'
 
 const AdminGroupPage: React.FC = () => {
+  const navigate = useNavigate()
   //useState들
   const [currentPage, setCurrentPage] = useState(1)
   const [inputGroupName, setInputGroupName] = useState('')
@@ -24,9 +25,25 @@ const AdminGroupPage: React.FC = () => {
   const handleEnterKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      // handleCreateGroup();
     }
   }
+
+  // 그룹생성
+  // if (!inputGroupName) {
+  //   alert('그룹 이름을 지정해주세요')
+  // } else {
+  // const handleCreateGroup = useCallback(async () => {
+  //   const data = { groupName: inputGroupName }
+  //   console.log('여기까진??')
+  //   try {
+  //     console.log('이것도 되지?')
+  //     const response = await groupCreate(data)
+  //     console.log('Response:', response)
+  //   } catch (error) {
+  //     console.error('Error:', error)
+  //   }
+  //   setIsOpen(false)
+  // }, [setInputGroupName])
 
   // 그룹생성
   // if (!inputGroupName) {
@@ -43,6 +60,7 @@ const AdminGroupPage: React.FC = () => {
       console.error('Error:', error)
     }
     setIsOpen(false)
+    navigate('/adminGroup')
   }
 
   // 그룹 리스트 조회
@@ -59,9 +77,13 @@ const AdminGroupPage: React.FC = () => {
     }
   }
 
+  // useEffect(() => {
+  //   handleGetGroupList()
+  // }, [])
+
   useEffect(() => {
     handleGetGroupList()
-  }, [])
+  }, [navigate])
 
   //여기부터는 페이지 넘기면서 조회하는 것
   const GroupsPerPage = 5

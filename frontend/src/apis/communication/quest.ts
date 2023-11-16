@@ -1,6 +1,6 @@
 import { authApi } from '@/apis'
 
-const baseUrl = 'api/communication-service'
+const baseUrl = 'api/common-service'
 
 // 그룹 퀘스트 생성
 const groupQuestCreate = async (data: unknown) => {
