@@ -73,16 +73,12 @@ function* getBranchDataSaga(): Generator<
     })
     j = buds.length
     x = Math.floor((i / j) * 100)
-    if (buds.length < 3) {
+    if (buds.length < 5) {
       k = 20
-    } else if (buds.length < 5) {
-      k = 40
-    } else if (buds.length < 7) {
-      k = 60
     } else if (buds.length < 9) {
-      k = 80
+      k = 50
     } else {
-      k = 100
+      k = 80
     }
     if (x > k) {
       x = k

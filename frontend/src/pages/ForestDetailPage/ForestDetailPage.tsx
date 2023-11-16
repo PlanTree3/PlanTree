@@ -6,6 +6,7 @@ import './ForestDetailPage.scss'
 import Button from '@/components/Button/Button'
 import { RootState } from '@/stores/store'
 import { getTreeDetailData } from '@/stores/features/forestSlice.ts'
+import { getBranchData } from '@/stores/features/branchSlice.ts'
 
 const ForestDetailPage = () => {
   const dummyData = [
@@ -51,6 +52,7 @@ const ForestDetailPage = () => {
   const dispatch = useDispatch()
   const handleTreeBox = (treeId: string) => {
     dispatch(getTreeDetailData(treeId))
+    dispatch(getBranchData())
     setTimeout(() => {
       navigate(`/tree/${treeId}`)
     }, 0)
