@@ -101,18 +101,15 @@ const MyPage = () => {
   const moveProfileImg = () => {
     const content = (
       <div>
-        {/* className="mb-3.5" */}
         {imgList.map((img: string) => (
           <button
             key={img}
-            // className="selectImg p-0 mx-1"
             onClick={() => {
               chooseProfileImg(`public/profile/${img}.jpg`)
               MySwal.close() // 모달을 닫음
             }}
           >
             <img
-              // className="selectImg m-0"
               className="selectImg"
               src={`public/profile/${img}.jpg`}
               alt={img}
@@ -124,7 +121,7 @@ const MyPage = () => {
 
     MySwal.fire({
       html: content,
-      width: '27%',
+      width: '40%',
       heightAuto: false,
       position: 'center',
       showConfirmButton: false,

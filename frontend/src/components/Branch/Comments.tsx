@@ -37,12 +37,6 @@ const Comments: React.FC<CommentsProps> = ({
   budName,
   commentCount,
 }) => {
-  const [detailOpen, setDetailOpen] = useState(false)
-
-  useEffect(() => {
-    setDetailOpen(open)
-  }, [open])
-
   const [comments, setComments] = useState<Comment[]>([])
   const [newComment, setNewComment] = useState('')
   const [counts, setCounts] = useState(commentCount)
@@ -57,7 +51,7 @@ const Comments: React.FC<CommentsProps> = ({
   }
   useEffect(() => {
     updateInfo()
-  }, [detailOpen, budId, treeId])
+  }, [budId, treeId])
 
   const handleCommentSubmit = async () => {
     setCounts(counts + 1)
@@ -72,15 +66,11 @@ const Comments: React.FC<CommentsProps> = ({
       console.error(error)
     }
   }
-  const deny = () => {
-    setDetailOpen(false)
-    handleClose()
-  }
 
   return (
     <Dialog
       open={open}
-      onClose={deny}
+      onClose={handleClose}
       aria-labelledby="article-dialog-title"
       aria-describedby="article-dialog-description"
     >
@@ -118,7 +108,7 @@ const Comments: React.FC<CommentsProps> = ({
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={deny}>닫기</Button>
+        <Button onClick={handleClose}>닫기</Button>
       </DialogActions>
     </Dialog>
   )

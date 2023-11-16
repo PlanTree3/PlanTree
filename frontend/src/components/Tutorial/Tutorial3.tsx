@@ -21,7 +21,7 @@ const Tutorial3 = ({ forestName }: ForestProps) => {
           <img data-atropos-offset="-2" src={forestMid} alt="forest" />
           <img data-atropos-offset="0" src={forestFront} alt="forest" />
           <div data-atropos-offset="3" className="forest-text-area">
-            <div className="forest-text">{forestName}</div>
+            <div className="forest-text-tutorial">{forestName}</div>
           </div>
         </div>
         <div className="atropos-shadow" />

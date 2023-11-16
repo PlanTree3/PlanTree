@@ -55,14 +55,15 @@
 }
 
 .dnd_container {
-  display: flex;
-  width: 98%;
-  justify-content: space-around;
+  display: grid;
+  width: 100%;
   margin-bottom: 3vh;
+  grid-template-columns: 0.7fr 4fr 4fr 4fr 4fr 4fr;
+  grid-template-areas: 'a mon tue wed thu fri';
   &-text {
     border-radius: 100%;
     font-weight: bold;
-    @apply w-[3vw] h-[3vw] border-[3px] flex items-center justify-center;
+    @apply w-[3vw] h-[3vw] border-[3px] justify-self-center flex items-center justify-center;
   }
 }
 
@@ -74,32 +75,40 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  justify-self: center;
 }
 
 .dnd_column_shape1 {
+  grid-area: mon;
   box-shadow: 2px 2px 5px 3px #999;
   background-color: #f5ffea;
 }
 
 .dnd_column_shape2 {
+  grid-area: tue;
   box-shadow: 2px 2px 5px 3px #999;
-
   background-color: #fffbf5;
 }
 
 .dnd_column_shape3 {
+  grid-area: wed;
+
   box-shadow: 2px 2px 5px 3px #999;
 
   background-color: #f5ffea;
 }
 
 .dnd_column_shape4 {
+  grid-area: thu;
+
   box-shadow: 2px 2px 5px 3px #999;
 
   background-color: #fffbf5;
 }
 
 .dnd_column_shape5 {
+  grid-area: fri;
+
   box-shadow: 2px 2px 5px 3px #999;
 
   background-color: #f5ffea;

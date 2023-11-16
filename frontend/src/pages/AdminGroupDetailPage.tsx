@@ -215,6 +215,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     } catch (error) {
       console.error('그룹 퀘스트 에러:', error)
     }
+    closeQuestModal()
   }
 
   // 가정통신문 파일 추가
@@ -242,6 +243,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     } catch (error) {
       console.error('그룹 퀘스트 에러:', error)
     }
+    closeNewsModal()
   }
 
   useEffect(() => {
