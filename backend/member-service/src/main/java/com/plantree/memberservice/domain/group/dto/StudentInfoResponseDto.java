@@ -12,6 +12,7 @@ public class StudentInfoResponseDto {
     private String studentName;
     private int totalBudCount;
     private int completedBudCount;
+    private UUID treeId;
 
 
     public StudentInfoResponseDto(Student student, BudCountResponseDto budCount) {
@@ -20,5 +21,9 @@ public class StudentInfoResponseDto {
         this.studentName = student.getName();
         this.totalBudCount = budCount.getTotalBudCount();
         this.completedBudCount = budCount.getCompletedBudCount();
+    }
+
+    public void setTreeId(UUID treeId) {
+        this.treeId = treeId;
     }
 }

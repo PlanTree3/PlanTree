@@ -8,6 +8,8 @@ import com.plantree.memberservice.domain.group.dto.ParentIdsResponseDto;
 import com.plantree.memberservice.domain.group.dto.ParentNestResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoListResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoResponseDto;
+import com.plantree.memberservice.domain.group.dto.StudentTreeRequestDto;
+import com.plantree.memberservice.domain.group.dto.StudentTreeResponseDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountListResponseDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountRequestDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountResponseDto;
@@ -17,6 +19,7 @@ import com.plantree.memberservice.domain.member.domain.Member;
 import com.plantree.memberservice.domain.member.domain.Parent;
 import com.plantree.memberservice.global.config.webmvc.AuthMember;
 import com.plantree.memberservice.global.exception.ResourceNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,6 +42,12 @@ public class NestSearchUseCase {
         BudCountListResponseDto budCounts = forestServiceClient.getBudCounts(
                 new BudCountRequestDto(nest));
         List<StudentInfoResponseDto> studentInfos = alignStudentInfosByStudentId(nest, budCounts);
+        StudentTreeResponseDto currentTreeIds = forestServiceClient.searchCurrentTreeIds(
+                new StudentTreeRequestDto(new ArrayList<>(nest.getStudents())));
+        studentInfos.forEach(info -> {
+            info.setTreeId(currentTreeIds.getCurrentStudentTreeId()
+                                         .get(info.getStudentId()));
+        });
         return new StudentInfoListResponseDto(studentInfos);
     }
 
