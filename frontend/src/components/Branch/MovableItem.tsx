@@ -37,7 +37,7 @@ const MovableItem = ({
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const buds = useSelector((state: RootState) => state.branch.buds)
-  const [detailOpen, setDeailOpen] = useState(false)
+  const [detailOpen, setDetailOpen] = useState(false)
   const isLoading = useSelector((state: RootState) => state.branch.isLoading)
   const changeItemColumn = (
     currentItem: any,
@@ -210,10 +210,11 @@ const MovableItem = ({
     }
   }
   const handleDetailBuds = () => {
-    setDeailOpen(true)
+    setDetailOpen(true)
   }
   const closeDetailBuds = () => {
-    setDeailOpen(false)
+    setDetailOpen(false)
+    console.log('이시발')
   }
   return (
     <div
@@ -234,15 +235,13 @@ const MovableItem = ({
                 alt="수정버튼"
                 className="dnd_movable-item-content-deleteBTN-img"
               />
-              {detailOpen && (
-                <Comments
-                  open={detailOpen}
-                  handleClose={closeDetailBuds}
-                  budId={id}
-                  budName={budName}
-                  commentCount={commentCount}
-                />
-              )}
+              <Comments
+                open={detailOpen}
+                handleClose={closeDetailBuds}
+                budId={id}
+                budName={budName}
+                commentCount={commentCount}
+              />
             </button>
             <button
               onClick={() => removeBud(id)}

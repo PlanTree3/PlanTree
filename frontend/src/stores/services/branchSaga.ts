@@ -25,6 +25,7 @@ import {
   saveBuds,
   saveSeeds,
   setLoading,
+  setTreeDegree,
 } from '@/stores/features/branchSlice.ts'
 import {
   branchCreate,
@@ -61,7 +62,35 @@ function* getBranchDataSaga(): Generator<
       // 누적된 배열에 현재 seeds 배열을 추가
       return accumulator.concat(seedsWithBranchInfo)
     }, []) // 초기 누적값은 빈 배열
-
+    let i = 0
+    let j = 0
+    let k = 0
+    let x = 0
+    buds.forEach((bud: any) => {
+      if (bud.complete === true) {
+        i += 1
+      }
+    })
+    j = buds.length
+    x = Math.floor((i / j) * 100)
+    if (buds.length < 3) {
+      k = 20
+    } else if (buds.length < 5) {
+      k = 40
+    } else if (buds.length < 7) {
+      k = 60
+    } else if (buds.length < 9) {
+      k = 80
+    } else {
+      k = 100
+    }
+    if (x > k) {
+      x = k
+    }
+    const treeDegree = {
+      degree: k,
+      complete: x,
+    }
     const updateBuds = buds.map((bud: any) => {
       if (bud.complete) {
         return {
@@ -74,6 +103,7 @@ function* getBranchDataSaga(): Generator<
     yield put(saveBranches(branches))
     yield put(saveSeeds(updatedSeeds))
     yield put(saveBuds(updateBuds))
+    yield put(setTreeDegree(treeDegree))
     yield put(setLoading(false))
   } catch (error) {
     /* empty */
@@ -99,8 +129,6 @@ function* addBudsSaga(
     if (data.dayOfWeek) {
       yield call(budCreate, treeId, branchId, data)
       yield put(getBranchData())
-    } else {
-      console.log('아니 왜 null이 감지됨???')
     }
     yield put(setLoading(false))
   } catch (error) {

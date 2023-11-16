@@ -90,6 +90,7 @@ const Quest: React.FC<QuestProps> = ({ questStatus, deleteState }) => {
             aria-describedby={`quest-description-${quest.questId}`}
           >
             <div className="quest-modal-close-btn">
+              {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
               <button
                 onClick={(e) => {
                   e.stopPropagation()
