@@ -142,11 +142,18 @@ const ForestDetailPage = () => {
                   alt="sky"
                 />
                 <img
+                  style={{
+                    opacity: '0.5',
+                  }}
                   data-atropos-offset="-4.5"
                   src={greenBackground}
                   alt="sky"
                 />
-                <div data-atropos-offset="3" className="forest-text-area">
+                <div
+                  data-atropos-offset="0"
+                  className="forest-text-area py-[2vh]"
+                >
+                  <div className="text-lg text-black">{tree.treeName}</div>
                   <div key={tree.treeId} className="forest-detail-tree-box">
                     <div className="forest-detail-tree">
                       {!tree.treeId ? (
@@ -158,16 +165,6 @@ const ForestDetailPage = () => {
                       )}
                     </div>
                     <div className="forest-detail-chart">
-                      <div className="forest-detail-chart-title">
-                        <div className="text-lg text-black">
-                          {tree.treeName}
-                        </div>
-                        <Button
-                          label="자세히 보기"
-                          onClick={() => handleTreeBox(tree.treeId)}
-                          className="xxsmall primary"
-                        />
-                      </div>
                       <DoughnutChart
                         centerText={`${
                           tree.totalBudCount === 0
@@ -192,9 +189,13 @@ const ForestDetailPage = () => {
                       />
                     </div>
                   </div>
+                  <Button
+                    label="자세히 보기"
+                    onClick={() => handleTreeBox(tree.treeId)}
+                    className="normal primary h-[5vh]"
+                  />
                 </div>
               </div>
-              <div className="atropos-shadow" />
             </div>
           </Atropos>
         ))}

@@ -268,13 +268,58 @@ const ItemPlacement = () => {
           </div>
         </div>
         <div className="dnd_container">
-          <div className="dnd_container-text">월</div>
-          <div className="dnd_container-text">화</div>
-          <div className="dnd_container-text">수</div>
-          <div className="dnd_container-text">목</div>
-          <div className="dnd_container-text">금</div>
+          <div
+            className="dnd_container-text"
+            style={{
+              gridArea: 'mon',
+            }}
+          >
+            월
+          </div>
+          <div
+            className="dnd_container-text"
+            style={{
+              gridArea: 'tue',
+            }}
+          >
+            화
+          </div>
+          <div
+            className="dnd_container-text"
+            style={{
+              gridArea: 'wed',
+            }}
+          >
+            수
+          </div>
+          <div
+            className="dnd_container-text"
+            style={{
+              gridArea: 'thu',
+            }}
+          >
+            목
+          </div>
+          <div
+            className="dnd_container-text"
+            style={{
+              gridArea: 'fri',
+            }}
+          >
+            금
+          </div>
         </div>
         <div className="dnd_container">
+          <div
+            className="flex justify-center items-center py-1 border-[3px] rounded-r-[1vw]"
+            style={{
+              writingMode: 'vertical-lr',
+              boxShadow: '2px 2px 5px 3px #999',
+              gridArea: 'a',
+            }}
+          >
+            진행중
+          </div>
           <Column title={MONDAY} className="dnd_column dnd_column_shape1">
             {ReturnItems(MONDAY, selectedBranchId)}
           </Column>
@@ -292,6 +337,16 @@ const ItemPlacement = () => {
           </Column>
         </div>
         <div className="dnd_container">
+          <div
+            className="flex justify-center items-center py-1 border-[3px] rounded-r-[1vw]"
+            style={{
+              writingMode: 'vertical-lr',
+              boxShadow: '2px 2px 5px 3px #999',
+              gridArea: 'a',
+            }}
+          >
+            완료
+          </div>
           <Column
             title={MONDAY_FINISH}
             className="dnd_column dnd_column_shape1"

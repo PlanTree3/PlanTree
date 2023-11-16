@@ -66,7 +66,7 @@ const MainPage = () => {
   }
   const returnItemsForColumn = (columnName: string) => {
     return (
-      <div>
+      <div title={selectDay}>
         {buds
           ?.filter((bud: any) => bud.dayOfWeek === columnName)
           .map((bud: any) => {
@@ -85,11 +85,15 @@ const MainPage = () => {
   }
   const returnFinishedItemsForColumn = (columnName: string) => {
     return (
-      <div>
+      <div title={selectDay} style={{ color: 'red' }}>
         {buds
           ?.filter((bud: any) => bud.dayOfWeek === columnName)
           .map((bud: any) => {
-            return <button key={bud.budId}>{bud.budName}</button>
+            return (
+              <li className="main-bud-list" key={bud.budId}>
+                <button key={bud.budId}>{bud.budName}</button>
+              </li>
+            )
           })}
       </div>
     )
@@ -163,7 +167,9 @@ const MainPage = () => {
           <div className="main-tree-container">
             <Tree degree={degree} complete={complete} />
           </div>
-          <div className="main-tree-degree">이번 주 점수 : {score}</div>
+          <div className="main-tree-degree">
+            이번 주 점수 : <span>+{score}</span>
+          </div>
         </div>
         <div className="main-todo-container">
           {dayToday === 0 ||
@@ -176,12 +182,10 @@ const MainPage = () => {
               {message ? (
                 <div>{message}</div>
               ) : (
-                <div>
-                  <div title={selectDay}>{returnItemsForColumn(selectDay)}</div>
-                  <div title={selectDay} style={{ color: 'red' }}>
-                    {returnFinishedItemsForColumn(`${selectDay}_FINISH`)}
-                  </div>
-                </div>
+                <>
+                  {returnItemsForColumn(selectDay)}
+                  {returnFinishedItemsForColumn(`${selectDay}_FINISH`)}
+                </>
               )}
             </div>
             <Button

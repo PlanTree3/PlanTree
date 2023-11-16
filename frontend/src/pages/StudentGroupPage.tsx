@@ -67,7 +67,7 @@ const StudentGroupPage = () => {
                 <img src={chick} alt="" />
               </div>
               <div className="student-group-nest-area-text-container">
-                <title>{studentData.nest.nestName}</title>
+                <div className="text-3xl">{studentData.nest.nestName}</div>
                 <div className="student-group-nest-area-text">
                   <title>둥지장</title>
                   {studentData.nest.parents.map((parent: any) => (
@@ -76,9 +76,11 @@ const StudentGroupPage = () => {
                 </div>
                 <div className="student-group-nest-area-text">
                   <title>둥지원</title>
-                  {studentData.nest.children.map((child: any) => (
-                    <text>{child}</text>
-                  ))}
+                  <div>
+                    {studentData.nest.children.map((child: any) => (
+                      <text>{child}</text>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
