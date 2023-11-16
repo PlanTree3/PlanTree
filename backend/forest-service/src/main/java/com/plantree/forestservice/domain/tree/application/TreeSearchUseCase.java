@@ -6,6 +6,8 @@ import com.plantree.forestservice.domain.bud.application.repository.BudRepositor
 import com.plantree.forestservice.domain.tree.application.repository.TreeRepository;
 import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.plantree.forestservice.domain.tree.dto.BranchResDto;
+import com.plantree.forestservice.domain.tree.dto.StudentTreeRequestDto;
+import com.plantree.forestservice.domain.tree.dto.StudentTreeResponseDto;
 import com.plantree.forestservice.domain.tree.dto.TreeDetailsResDto;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
 import com.plantree.forestservice.global.exception.Tree.TreeNotFoundException;
@@ -29,15 +31,24 @@ public class TreeSearchUseCase {
 
     public TreeDetailsResDto findTreeDetails(UUID treeId, AuthMember authMember) {
 
-        Tree tree = treeRepository.findById(treeId).orElseThrow(TreeNotFoundException::new);
+        Tree tree = treeRepository.findById(treeId)
+                                  .orElseThrow(TreeNotFoundException::new);
         authMemberValidator.validateAuthMember(tree.getStudentId(), authMember);
 
         List<Branch> branches = branchRepository.findBranchesWithBudsByTreeId(treeId);
-        List<BranchResDto> branchResDto = branches.stream().map(branch -> new BranchResDto(branch))
-                .collect(Collectors.toList());
+        List<BranchResDto> branchResDto = branches.stream()
+                                                  .map(branch -> new BranchResDto(branch))
+                                                  .collect(Collectors.toList());
 
         return new TreeDetailsResDto(tree, branchResDto);
 
+    }
+
+    public StudentTreeResponseDto searchStudentTreeIds(
+            StudentTreeRequestDto studentTreeRequestDto) {
+        List<Tree> currentTrees = treeRepository.findTreesByStudentIds(
+                studentTreeRequestDto.getStudentIds());
+        return new StudentTreeResponseDto(currentTrees);
     }
 
 }

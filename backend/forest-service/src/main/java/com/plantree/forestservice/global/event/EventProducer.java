@@ -15,7 +15,6 @@ public class EventProducer {
     public static void send(Event event) {
         if (producer != null) {
             try {
-                System.out.println(new ObjectMapper().writeValueAsString(event));
                 producer.produce(new ObjectMapper().writeValueAsString(event));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();

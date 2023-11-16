@@ -14,6 +14,8 @@ import com.plantree.memberservice.domain.group.dto.IsTeacherOfGroupResponseDto;
 import com.plantree.memberservice.domain.group.dto.IsTeacherOfStudentResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoListResponseDto;
 import com.plantree.memberservice.domain.group.dto.StudentInfoResponseDto;
+import com.plantree.memberservice.domain.group.dto.StudentTreeRequestDto;
+import com.plantree.memberservice.domain.group.dto.StudentTreeResponseDto;
 import com.plantree.memberservice.domain.group.dto.TeacherAndParentIdsResponseDto;
 import com.plantree.memberservice.domain.group.dto.TeacherGroupListResponseDto;
 import com.plantree.memberservice.domain.group.dto.client.BudCountListResponseDto;
@@ -63,8 +65,6 @@ public class GroupSearchUseCase {
                                                                                   .getId());
         TeacherAndParentIdsResponseDto dto = new TeacherAndParentIdsResponseDto(nest,
                 student.getStudentGroups());
-        System.out.println(dto.getParentIds());
-        System.out.println(dto.getTeacherIds());
         return dto;
     }
 
@@ -91,6 +91,15 @@ public class GroupSearchUseCase {
         BudCountListResponseDto budCounts = forestServiceClient.getBudCounts(
                 new BudCountRequestDto(group));
         List<StudentInfoResponseDto> studentInfos = alignStudentInfosByStudentId(group, budCounts);
+        StudentTreeResponseDto currentTreeIds = forestServiceClient.searchCurrentTreeIds(
+                new StudentTreeRequestDto(group.getGroupStudents()
+                                               .stream()
+                                               .map(GroupStudent::getStudent)
+                                               .collect(Collectors.toList())));
+        studentInfos.forEach(info -> {
+            info.setTreeId(currentTreeIds.getCurrentStudentTreeId()
+                                         .get(info.getStudentId()));
+        });
         return new StudentInfoListResponseDto(studentInfos);
     }
 
