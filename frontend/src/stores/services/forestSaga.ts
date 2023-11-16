@@ -97,7 +97,7 @@ function* getTreeSelectSaga(
     newFin += branch.completedBudCount
   })
   if (newSum > 0) {
-    totalPercent = (newFin / newSum) * 100
+    totalPercent = Math.floor(newFin / newSum) * 100
   } else {
     totalPercent = 0
   }
