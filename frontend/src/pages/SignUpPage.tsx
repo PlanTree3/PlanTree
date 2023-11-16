@@ -2,7 +2,15 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 // import required modules
 import { Mousewheel, Pagination } from 'swiper/modules'
-import { UserBirth, UserName, UserProfileImg, UserRole } from '@/components'
+import {
+  Tutorial1,
+  Tutorial2,
+  Tutorial3,
+  UserBirth,
+  UserName,
+  UserProfileImg,
+  UserRole,
+} from '@/components'
 // style
 // Import Swiper styles
 import 'swiper/css'
@@ -24,9 +32,17 @@ const SignUpPage = () => {
         mousewheel
         keyboard
         modules={[Mousewheel, Pagination]}
-        className="mySwiper"
-        style={{ height: '85%', width: '100%' }}
+        style={{ height: '90%', width: '100%' }}
       >
+        <SwiperSlide className="max-w-[100%]">
+          <Tutorial1 />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Tutorial2 />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Tutorial3 forestName="그럼 지금부터 숲을 만들러 가 볼까요?" />
+        </SwiperSlide>
         <SwiperSlide>
           <UserName />
         </SwiperSlide>
