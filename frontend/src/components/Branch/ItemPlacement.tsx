@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
+import { TouchBackend } from 'react-dnd-touch-backend'
+import { isMobile } from 'react-device-detect'
 import { ChangeEvent, useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -16,6 +18,13 @@ import { addBranches, addSeeds } from '@/stores/features/branchSlice'
 import Column from '@/components/Column'
 
 const ItemPlacement = () => {
+  const backendForDND = isMobile ? TouchBackend : HTML5Backend
+  // const backendForDND = TouchBackend
+  const backendOptions = {
+    delayTouchStart: 200, // 드래그 시작 전의 지연 시간 (밀리초)
+    enableMouseEvents: true, // 마우스 이벤트 활성화
+  }
+
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const branches = useSelector((state: RootState) => state.branch.branches)
@@ -139,7 +148,7 @@ const ItemPlacement = () => {
     setOpenSeed(false)
   }
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={backendForDND} options={backendOptions}>
       <div className="dnd-box-container">
         <div className="dnd-create-btn-box">
           <Button
