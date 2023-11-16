@@ -22,7 +22,6 @@ function* getMainSaga(): Generator<
 > {
   const response: AxiosResponse<any> = yield call(myMainPageApi)
   if (response.data) {
-    console.log(response.data.data)
     const idName = {
       treeId: response.data.data.treeId,
       treeName: response.data.data.treeName,

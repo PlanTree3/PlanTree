@@ -71,6 +71,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'react/prop-types': 'off',
     'react/jsx-props-no-spreading': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }]
   },
   ignorePatterns: ['.eslintrc.cjs'],
 }

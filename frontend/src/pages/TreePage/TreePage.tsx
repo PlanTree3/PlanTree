@@ -23,77 +23,7 @@ const TreePage = () => {
     notYet,
   } = useSelector((state: RootState) => state.forest.selectedInfo)
   const { degree, complete } = useSelector((state: RootState) => state.branch)
-  const detailData = useSelector(
-    (state: RootState) => state.forest.detailData,
-  ) ?? {
-    treeName: '나의 라임오렌지나무5',
-    startedAt: '2023-11-06',
-    endedAt: '2023-11-12',
-    branches: [
-      {
-        branchId: '2e96a422-0a32-4d67-9e63-2a3c82568d85',
-        branchName: '영어 5',
-        buds: [],
-        totalBudCount: 0,
-        completedBudCount: 0,
-      },
-      {
-        branchId: '4f68b02b-0ca7-4c5a-8192-660f20b25132',
-        branchName: '영어 2',
-        buds: [
-          {
-            budId: '2e96a422-0a32-4d67-9e63-2a3c82568d85',
-            budName: '영어 문제 풀기5',
-            complete: true,
-          },
-        ],
-        totalBudCount: 1,
-        completedBudCount: 1,
-      },
-      {
-        branchId: '7b5421ca-4d89-4d1d-80b9-6533aaacdd3a',
-        branchName: '영어 1',
-        buds: [
-          {
-            budId: '4f68b02b-0ca7-4c5a-8192-660f20b25132',
-            budName: '영어 문제 풀기2',
-            complete: true,
-          },
-          {
-            budId: '7b5421ca-4d89-4d1d-80b9-6533aaacdd3a',
-            budName: '영어 문제 풀기1',
-            complete: true,
-          },
-          {
-            budId: 'b7d74ef2-9a20-44ea-9527-4b3c9b3bd8a6',
-            budName: '영어 문제 풀기3',
-            complete: false,
-          },
-          {
-            budId: 'd3e9c11c-d52c-4b77-8fc5-7e1e0839f90c',
-            budName: '영어 문제 풀기4',
-            complete: false,
-          },
-        ],
-        totalBudCount: 4,
-        completedBudCount: 2,
-      },
-      {
-        branchId: 'b7d74ef2-9a20-44ea-9527-4b3c9b3bd8a6',
-        branchName: '영어 3',
-        buds: [],
-        totalBudCount: 0,
-        completedBudCount: 0,
-      },
-      {
-        branchId: 'd3e9c11c-d52c-4b77-8fc5-7e1e0839f90c',
-        branchName: '영어 4',
-        buds: [],
-        totalBudCount: 0,
-        completedBudCount: 0,
-      },
-    ],
-  }
+  const detailData = useSelector((state: RootState) => state.forest.detailData)
   return (
     <div className="tree-page">
       <div className="tree-page-title">

@@ -16,19 +16,6 @@ const WeeklyBudsPage = () => {
     }
   }, [treeId])
 
-  // 페이지 새로고침 시 경고 이벤트
-  // useEffect(() => {
-  //   // beforeunload 이벤트 핸들러
-  //   const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-  //     event.preventDefault()
-  //   }
-  //   // 이벤트 리스너 등록
-  //   window.addEventListener('beforeunload', handleBeforeUnload)
-  //   // 컴포넌트 언마운트 시 이벤트 리스너 제거
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleBeforeUnload)
-  //   }
-  // }, [])
   return <ItemPlacement />
 }
 export default LoginCheck(WeeklyBudsPage)

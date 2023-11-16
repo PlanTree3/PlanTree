@@ -22,14 +22,12 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     loginCheck: () => {
-      console.log('logInCheck 들어옴!')
       localStorage.clear()
     },
     saveUserData: (state, action: PayloadAction<any>) => {
       localStorage.clear()
       state.isLoggedIn = true
       state.userData = action.payload
-      console.log('유저 정보', action.payload)
       if (state.userData.role === 'STUDENT') {
         window.location.href = '/main'
       } else if (state.userData.role === 'TEACHER') {
@@ -43,13 +41,8 @@ export const userSlice = createSlice({
     },
     addProfileImageUrl: (state, action: PayloadAction<string>) => {
       state.userData.profileImageUrl = action.payload
-      console.log(
-        'userSlice의 profileImgUrl입니다.: ',
-        state.userData.profileImageUrl,
-      )
     },
     logOutCheck: (state) => {
-      console.log('slice의 logoutCheck')
       state.isLoggedIn = false
       state.userData = defaultUser
     },

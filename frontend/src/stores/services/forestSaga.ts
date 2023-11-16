@@ -42,7 +42,6 @@ function* getStudentForestSaga(
 > {
   const { memberId } = action.payload
   const response: AxiosResponse<any> = yield call(studentForestGetApi, memberId)
-  console.log(response)
   if (response.data.data.forests) {
     yield put(saveStudentForestData(response.data.data.forests))
   }
@@ -98,7 +97,7 @@ function* getTreeSelectSaga(
     newFin += branch.completedBudCount
   })
   if (newSum > 0) {
-    totalPercent = (newFin / newSum) * 100
+    totalPercent = Math.floor((newFin / newSum) * 100)
   } else {
     totalPercent = 0
   }
