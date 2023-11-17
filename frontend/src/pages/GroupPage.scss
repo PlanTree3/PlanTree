@@ -217,7 +217,7 @@
 
 .student-group {
   &-nest-area {
-    @apply md:flex items-center;
+    @apply md:flex items-center border-4 border-4 border-yellow-900 rounded-3xl;
 
     &-image-container {
       @apply w-2/5 flex justify-center;
@@ -227,16 +227,17 @@
       @apply w-3/5 space-y-2;
 
       title {
-        @apply block text-2xl;
+        @apply block text-2xl ;
       }
 
       text {
-        @apply block text-lg text-center;
+        @apply block text-lg font-semibold text-center;
       }
     }
     &-text {
       grid-template-columns: 1fr 5fr;
-      @apply grid;
+      @apply grid ;
+      
     }
   }
 }
