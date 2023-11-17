@@ -11,10 +11,8 @@ import {
   branchGroupCreate,
   groupDelete,
   groupNameUpdate,
-  groupNoticeCreate,
   groupQuestCreate,
   groupStudents,
-  noticeFileCreate,
 } from '@/apis'
 
 const AdminGroupDetailPage: React.FC<any> = () => {
