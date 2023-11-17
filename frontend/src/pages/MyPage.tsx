@@ -71,8 +71,6 @@ const MyPage = () => {
   const chooseProfileImg = (url: string) => {
     setInputProfileImg(url)
     dispatch(addProfileImageUrl(url))
-    console.log('mypage의 profileImg 변경입니다.: ', url)
-
     const profileImg = {
       profileImageUrl: url,
     }
@@ -101,22 +99,15 @@ const MyPage = () => {
   const moveProfileImg = () => {
     const content = (
       <div>
-        {/* className="mb-3.5" */}
         {imgList.map((img: string) => (
           <button
             key={img}
-            // className="selectImg p-0 mx-1"
             onClick={() => {
-              chooseProfileImg(`public/profile/${img}.jpg`)
+              chooseProfileImg(`/profile/${img}.jpg`)
               MySwal.close() // 모달을 닫음
             }}
           >
-            <img
-              // className="selectImg m-0"
-              className="selectImg"
-              src={`public/profile/${img}.jpg`}
-              alt={img}
-            />
+            <img className="selectImg" src={`/profile/${img}.jpg`} alt={img} />
           </button>
         ))}
       </div>
@@ -124,7 +115,7 @@ const MyPage = () => {
 
     MySwal.fire({
       html: content,
-      width: '27%',
+      width: '40%',
       heightAuto: false,
       position: 'center',
       showConfirmButton: false,

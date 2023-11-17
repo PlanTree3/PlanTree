@@ -3,19 +3,19 @@ import { BranchType, BudsType, SeedsType } from '@/types'
 
 interface BranchStateType {
   isLoading: boolean
-  seeds: null | SeedsType[]
-  buds: null | BudsType[]
-  branches: null | BranchType[]
-  newComments: null | number
+  seeds: SeedsType[]
+  buds: BudsType[]
+  branches: BranchType[]
+  newComments: number
   degree: number
   complete: number
 }
 const initialState: BranchStateType = {
   isLoading: false,
-  seeds: null,
-  buds: null,
-  branches: null,
-  newComments: null,
+  seeds: [],
+  buds: [],
+  branches: [],
+  newComments: 0,
   degree: 0,
   complete: 0,
 }
@@ -40,7 +40,6 @@ export const branchSlice = createSlice({
     },
     saveBuds: (state, action) => {
       state.buds = action.payload
-      console.log('우효~~', state.buds)
     },
     addBuds: (state, action) => {
       state.buds = action.payload.newBuds

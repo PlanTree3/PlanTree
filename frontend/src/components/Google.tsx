@@ -17,7 +17,6 @@ const Google = () => {
   })
 
   const loginUrl = `${AUTHORIZE_URI}?${GoggleQuery}`
-  console.log(import.meta.env.VITE_PUBLIC_GOOGLE_CLIENT_ID)
 
   return (
     <a href={loginUrl} className="w-2/3 flex justify-center">

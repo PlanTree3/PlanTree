@@ -36,6 +36,7 @@ import {
   budDelete,
   getSchedule,
   seedCreate,
+  seedDelete,
 } from '@/apis'
 
 import { getTreeId } from '@/stores/selectors'
@@ -202,8 +203,8 @@ function* removeSeedsSaga(
   yield put(setLoading(true))
   const treeId: any = yield select(getTreeId)
   const { branchId } = action.payload.createdItem
-  const { budId } = action.payload.createdItem
-  yield call(seedCreate, treeId, branchId, budId)
+  const { seedId } = action.payload.createdItem
+  yield call(seedDelete, treeId, branchId, seedId)
   yield put(setLoading(false))
 }
 
@@ -225,8 +226,6 @@ function* moveBudsSaga(
     }
     if (data.dayOfWeek) {
       yield call(budDayUpdate, treeId, branchId, budId, data)
-    } else {
-      console.log('아니 왜 null이 감지됨???')
     }
     yield put(setLoading(false))
   } catch (error) {
@@ -253,8 +252,6 @@ function* finishBudsSaga(
     }
     if (data.dayOfWeek) {
       yield call(budComplete, treeId, branchId, budId, data)
-    } else {
-      console.log('아니 왜 null이 감지됨???')
     }
     yield put(setLoading(false))
   } catch (error) {
@@ -280,8 +277,6 @@ function* finishRejectBudsSaga(
     }
     if (data.dayOfWeek) {
       yield call(budCompleteCancel, treeId, branchId, budId, data)
-    } else {
-      console.log('아니 왜 null이 감지됨???')
     }
     yield put(setLoading(false))
   } catch (error) {

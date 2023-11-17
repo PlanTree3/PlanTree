@@ -1,6 +1,8 @@
 .tutorial-2-container {
-  @apply grid w-4/5;
+  @apply grid w-[55%];
   grid-template-columns: 1fr 4fr;
+  justify-content: center;
+  align-items: center;
   img {
     @apply justify-self-center self-center;
   }

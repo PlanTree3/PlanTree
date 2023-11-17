@@ -25,15 +25,48 @@ const detailData: SelectTree = {
   branches: [],
 }
 
-const initialState = {
-  forests: null,
-  studentForest: null,
-  trees: null,
+interface TreeData {
+  treeId: string
+  treeName: string
+  startedAt: string
+  endedAt: string
+  totalBudCount: number
+  completedBudCount: number
+}
+interface Forest {
+  endedAt: string
+  startedAt: string
+  forestId: string
+}
+interface ForestData {
+  forests: Forest[]
+  studentForest: []
+  trees: TreeData[]
+  detailData: SelectTree
+  selectedForest: {
+    forestId: string
+    startedAt: string
+    endedAt: string
+  }
+  selectTree: string
+  selectedInfo: {
+    totalPercent: number
+    branchNames: []
+    branchTotalCount: []
+    branchDoneCount: []
+    notYet: []
+  }
+}
+
+const initialState: ForestData = {
+  forests: [],
+  studentForest: [],
+  trees: [],
   detailData,
   selectedForest: {
-    forestId: null,
-    startedAt: null,
-    endedAt: null,
+    forestId: '',
+    startedAt: '',
+    endedAt: '',
   },
   selectTree: '',
   selectedInfo: {
@@ -53,16 +86,13 @@ export const forestSlice = createSlice({
     saveForestData: (state, action) => {
       state.forests = action.payload
     },
-    getStudentForestData: (state, action) => {
-      console.log(state.selectTree)
-      console.log(action.payload)
-    },
+    // saga 감지용 reducer
+    getStudentForestData: (_state, _action) => {},
     saveStudentForestData: (state, action) => {
       state.studentForest = action.payload
     },
     getTreesData: (state, action) => {
       state.selectedForest = action.payload
-      console.log(action.payload)
     },
     saveTreesData: (state, action) => {
       state.trees = action.payload

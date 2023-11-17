@@ -23,6 +23,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   const [currentPage, setCurrentPage] = useState(1)
   const [studentsData, setStudentsData] = useState<any>(null)
+  const [fileList, setFileList] = useState<File[]>([])
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [questmodalIsOpen, setQuestModalIsOpen] = useState(false)
@@ -107,23 +108,20 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     setInputNewsContent(e.target.value)
   }
   // 파일 저장
-  const fileList: File[] = []
-
   const onSaveFiles = (e: ChangeEvent<HTMLInputElement>) => {
-    const uploadFiles = e.target.files
+    const { files } = e.target
 
-    if (uploadFiles) {
-      const filesArray = Array.from(uploadFiles)
-      filesArray.map((file) => fileList.push(file))
+    if (files) {
+      const filesArray = Array.from(files)
+      setFileList([...fileList, ...filesArray])
     }
   }
 
   const onFileUpload = async () => {
     const formData = new FormData()
 
-    fileList.map((file) => {
+    fileList.forEach((file) => {
       formData.append('file', file)
-      return null
     })
     formData.append(
       'data',
@@ -235,6 +233,9 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   // 가정통신문 생성
   const handleGroupNotice = async () => {
     const data = {
+      groupId,
+      title: inputNewsTitle,
+      content: inputNewsContent,
       file: fileList,
     }
     try {
@@ -271,11 +272,24 @@ const AdminGroupDetailPage: React.FC<any> = () => {
       <div className="admin-group-detail-container">
         <div className="admin-group-detail-title">
           {' '}
-          <div className="flex">
+          <div className="flex items-center gap-1">
             {inputGroupName}
             <button onClick={openPencilModal}>
               <img src={pencil} alt="그룹이름수정" />
             </button>
+            <div>
+              <Button
+                label="그룹원 추가하기"
+                className="normal primary"
+                onClick={openQrModal}
+              />
+            </div>
+            <Link
+              to={`/adminGroupRequest/${groupId}`}
+              state={{ groupName: inputGroupName }}
+            >
+              <Button label="가입요청 확인하기" className="normal gray" />
+            </Link>
           </div>
           <Link to="/adminGroup">
             <img
@@ -295,17 +309,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             label="가지 일괄 등록"
             className="normal primary"
             onClick={openModal}
-          />
-          <Link
-            to={`/adminGroupRequest/${groupId}`}
-            state={{ groupName: inputGroupName }}
-          >
-            <Button label="가입요청 확인하기" className="normal gray" />
-          </Link>
-          <Button
-            label="그룹원 추가하기"
-            className="normal red"
-            onClick={openQrModal}
           />
         </div>
 
@@ -339,31 +342,28 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           </div>
         </div>
         <div className="admin-group-detail-btn-container-bottom">
-          <div>
+          <div className="space-x-2">
             <Button
-              className="normal primary mr-[1vh]"
+              className="normal primary"
+              label="퀘스트 생성"
+              onClick={openQuestModal}
+            />
+            <Button
+              className="normal primary"
               label="가정통신문 생성"
               onClick={openNewsModal}
             />
             <Link to={`/newsLetter/${groupId}`}>
-              <Button
-                className="normal gray mt-[1vh]"
-                label="가정통신문 보기"
-              />
+              <Button className="normal gray" label="가정통신문 보기" />
             </Link>
           </div>
           <Button
-            className="normal primary"
-            label="퀘스트 생성"
-            onClick={openQuestModal}
+            className="normal red"
+            onClick={handleGroupDelete}
+            label="그룹 삭제하기"
           />
         </div>
       </div>
-      <Button
-        className="normal red mt-[4vh]"
-        onClick={handleGroupDelete}
-        label="그룹 삭제하기"
-      />
       <ReactModal
         isOpen={modalIsOpen}
         ariaHideApp={false}
@@ -478,8 +478,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         </div>
         <div className="flex justify-center mt-[8vh]">
           <QR
-            // value={`https://k9a302a.p.ssafy.io//groupJoin/${groupId}`}
-            value={`https://http://localhost:3000/groupJoin/${groupId}`}
+            value={`https://k9a302a.p.ssafy.io/groupJoin/${groupId}`}
+            // value={`https://http://localhost:3000/groupJoin/${groupId}`}
             size={300}
             id="qr-gen"
             includeMargin={false}

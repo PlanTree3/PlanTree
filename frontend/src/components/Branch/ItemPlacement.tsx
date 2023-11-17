@@ -19,10 +19,9 @@ import Column from '@/components/Column'
 
 const ItemPlacement = () => {
   const backendForDND = isMobile ? TouchBackend : HTML5Backend
-  // const backendForDND = TouchBackend
   const backendOptions = {
-    delayTouchStart: 200, // 드래그 시작 전의 지연 시간 (밀리초)
-    enableMouseEvents: true, // 마우스 이벤트 활성화
+    delayTouchStart: 200,
+    enableMouseEvents: true,
   }
 
   const dispatch = useDispatch()
@@ -83,6 +82,7 @@ const ItemPlacement = () => {
           branchColor: colors,
         }
         const newSeeds = [...seeds, newItem]
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { seedId, ...createdItem } = newItem
         const data = {
           newSeeds,
@@ -115,6 +115,7 @@ const ItemPlacement = () => {
         color: getRandomColor(),
       }
       const newBranches = [...branches, newItem]
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { branchId, ...createdItem } = newItem
       const data = {
         newBranches,
@@ -148,12 +149,12 @@ const ItemPlacement = () => {
   const handleCloseCreateSeed = () => {
     setOpenSeed(false)
   }
-
-  useEffect(() => {
-    if (branches) {
-      handleBranchSelect(branches[0].branchId, branches[0].branchColor)
-    }
-  }, [branches])
+  //
+  // useEffect(() => {
+  //   if (branches) {
+  //     handleBranchSelect(branches[0].branchId, branches[0].branchColor)
+  //   }
+  // }, [branches])
 
   return (
     <DndProvider backend={backendForDND} options={backendOptions}>
@@ -268,13 +269,58 @@ const ItemPlacement = () => {
           </div>
         </div>
         <div className="dnd_container">
-          <div className="dnd_container-text">월</div>
-          <div className="dnd_container-text">화</div>
-          <div className="dnd_container-text">수</div>
-          <div className="dnd_container-text">목</div>
-          <div className="dnd_container-text">금</div>
+          <div
+            className="dnd_container-text"
+            style={{
+              gridArea: 'mon',
+            }}
+          >
+            월
+          </div>
+          <div
+            className="dnd_container-text"
+            style={{
+              gridArea: 'tue',
+            }}
+          >
+            화
+          </div>
+          <div
+            className="dnd_container-text"
+            style={{
+              gridArea: 'wed',
+            }}
+          >
+            수
+          </div>
+          <div
+            className="dnd_container-text"
+            style={{
+              gridArea: 'thu',
+            }}
+          >
+            목
+          </div>
+          <div
+            className="dnd_container-text"
+            style={{
+              gridArea: 'fri',
+            }}
+          >
+            금
+          </div>
         </div>
         <div className="dnd_container">
+          <div
+            className="flex justify-center items-center py-1 border-[3px] rounded-r-[1vw]"
+            style={{
+              writingMode: 'vertical-lr',
+              boxShadow: '2px 2px 5px 3px #999',
+              gridArea: 'a',
+            }}
+          >
+            진행중
+          </div>
           <Column title={MONDAY} className="dnd_column dnd_column_shape1">
             {ReturnItems(MONDAY, selectedBranchId)}
           </Column>
@@ -292,6 +338,16 @@ const ItemPlacement = () => {
           </Column>
         </div>
         <div className="dnd_container">
+          <div
+            className="flex justify-center items-center py-1 border-[3px] rounded-r-[1vw]"
+            style={{
+              writingMode: 'vertical-lr',
+              boxShadow: '2px 2px 5px 3px #999',
+              gridArea: 'a',
+            }}
+          >
+            완료
+          </div>
           <Column
             title={MONDAY_FINISH}
             className="dnd_column dnd_column_shape1"

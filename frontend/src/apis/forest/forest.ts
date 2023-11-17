@@ -77,7 +77,6 @@ const branchCreate = async (treeId: string, data: any) => {
   return authApi
     .post(`${treeApiUrl(treeId)}/branch`, data)
     .then((response) => {
-      console.log('가지 생성', response)
       return response
     })
     .catch()
