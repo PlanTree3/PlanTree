@@ -18,8 +18,8 @@ const StudentGroupPage = () => {
     try {
       console.log('2')
       const response = await userGroupList()
-      console.log('Response:', response)
-      console.log('Response:', response.data.data)
+      // console.log('Response:', response)
+      // console.log('Response:', response.data.data)
       setStudentData(response.data.data)
     } catch (error) {
       console.error('Error:', error)

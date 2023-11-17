@@ -82,6 +82,7 @@ const ItemPlacement = () => {
           branchColor: colors,
         }
         const newSeeds = [...seeds, newItem]
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { seedId, ...createdItem } = newItem
         const data = {
           newSeeds,
@@ -114,6 +115,7 @@ const ItemPlacement = () => {
         color: getRandomColor(),
       }
       const newBranches = [...branches, newItem]
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { branchId, ...createdItem } = newItem
       const data = {
         newBranches,

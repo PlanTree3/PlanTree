@@ -478,8 +478,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         </div>
         <div className="flex justify-center mt-[8vh]">
           <QR
-            // value={`https://k9a302a.p.ssafy.io//groupJoin/${groupId}`}
-            value={`https://http://localhost:3000/groupJoin/${groupId}`}
+            value={`https://k9a302a.p.ssafy.io/groupJoin/${groupId}`}
+            // value={`https://http://localhost:3000/groupJoin/${groupId}`}
             size={300}
             id="qr-gen"
             includeMargin={false}
