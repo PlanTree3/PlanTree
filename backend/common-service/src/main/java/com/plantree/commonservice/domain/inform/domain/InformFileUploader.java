@@ -22,7 +22,7 @@ public class InformFileUploader {
     public List<InformFile> uploadFiles(List<MultipartFile> files, UUID groupId) {
         List<InformFile> informFiles = new ArrayList<>();
         if (files == null) {
-            return null;
+            return informFiles;
         }
         String today = LocalDate.now()
                                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
