@@ -54,7 +54,7 @@ public class QuestSearchUseCase {
         quests.stream()
               .map(quest -> issuerIds.add(quest.getIssuer()));
 
-        return getQuestResponseDtos(quests, issuerIds);
+        return getQuestResponseDtos(quests, issuerIds, authMember.getMemberId());
 
     }
 
@@ -66,9 +66,9 @@ public class QuestSearchUseCase {
 
         List<UUID> acceptors = new ArrayList<>();
         quests.stream()
-              .map(quest -> acceptors.add(quest.getIssuer()));
+              .map(quest -> acceptors.add(quest.getAcceptor()));
 
-        return getQuestResponseDtos(quests, acceptors);
+        return getQuestResponseDtos(quests, acceptors, authMember.getMemberId());
 
     }
 
@@ -80,16 +80,18 @@ public class QuestSearchUseCase {
 
         List<UUID> acceptors = new ArrayList<>();
         quests.stream()
-              .map(quest -> acceptors.add(quest.getIssuer()));
+              .map(quest -> acceptors.add(quest.getAcceptor()));
 
-        return getQuestResponseDtos(quests, acceptors);
+        return getQuestResponseDtos(quests, acceptors, authMember.getMemberId());
 
     }
 
-    private List<QuestResponseDto> getQuestResponseDtos(List<Quest> quests, List<UUID> acceptors) {
+    private List<QuestResponseDto> getQuestResponseDtos(List<Quest> quests, List<UUID> ids, UUID authMemberId) {
+        ids.add(authMemberId);
+
         Map<UUID, String> names = memberServiceClient.getNamesFromMember(
                                                              new GetNamesFromMemberIdReqDto(
-                                                                     acceptors))
+                                                                     ids))
                                                      .getNames();
 
         return quests.stream()
