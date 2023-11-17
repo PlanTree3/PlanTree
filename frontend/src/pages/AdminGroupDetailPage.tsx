@@ -1,5 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
 import QR from 'qrcode.react'
+import axios from 'axios'
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import pencil from '../../public/pencil.png'
@@ -13,6 +14,7 @@ import {
   groupNoticeCreate,
   groupQuestCreate,
   groupStudents,
+  noticeFileCreate,
 } from '@/apis'
 
 const AdminGroupDetailPage: React.FC<any> = () => {
@@ -109,37 +111,11 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   }
   // 파일 저장
   const onSaveFiles = (e: ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.target
+    const uploadFiles = e.target.files
 
-    if (files) {
-      const filesArray = Array.from(files)
-      setFileList([...fileList, ...filesArray])
-    }
-  }
-
-  const onFileUpload = async () => {
-    const formData = new FormData()
-
-    fileList.forEach((file) => {
-      formData.append('file', file)
-    })
-    formData.append(
-      'data',
-      JSON.stringify({
-        file: fileList,
-      }),
-    )
-    try {
-      const response = await groupNoticeCreate(
-        groupId,
-        formData,
-        //   {
-        //   headers: { 'Content-Type': 'multipart/form-data', charset: 'utf-8' },
-        // }
-      )
-      console.log('그룹 퀘스트 응답:', response)
-    } catch (error) {
-      console.error('그룹 퀘스트 에러:', error)
+    if (uploadFiles) {
+      const filesArray = Array.from(uploadFiles)
+      setFileList([...fileList, ...filesArray]) // 기존 파일 목록에 새로운 파일 추가
     }
   }
 
@@ -232,24 +208,51 @@ const AdminGroupDetailPage: React.FC<any> = () => {
 
   // 가정통신문 생성
   const handleGroupNotice = async () => {
-    const data = {
-      groupId,
-      title: inputNewsTitle,
-      content: inputNewsContent,
-      file: fileList,
-    }
+    const formData2 = new FormData()
+
+    fileList.forEach((file) => {
+      formData2.append('files', file)
+      // console.log('파일 도는 중', file)
+    })
+    // console.log('폼', formData2)
+
+    formData2.append('title', inputNewsTitle)
+    formData2.append('content', inputNewsContent)
+
+    // console.log('2차 폼데이터 파일', formData2.getAll('files'))
+    // console.log('2차 폼데이터 제목', formData2.getAll('title'))
+
+    formData2.forEach((value, key) => {
+      console.log('객체 도는 중', key, formData2.getAll(key), value)
+    })
+
+    // data.append('files', [])
+    // data.append('files', fileList)
+
+    // fileList.forEach((file) => {
+    //   data.append('files', file)
+    // })
+    // data.append('files',)
+
     try {
-      const response = await groupNoticeCreate(groupId, data)
-      console.log('그룹 퀘스트 응답:', response)
+      await axios.post(
+        `https://k9a302a.p.ssafy.io/api/common-service/inform/group/${groupId}`,
+        formData2,
+        {
+          headers: { 'Content-Type': 'multipart/form-data', charset: 'utf-8' },
+          withCredentials: true,
+        },
+      )
+      // console.log('가정통신문 생성 응답:', response)
     } catch (error) {
-      console.error('그룹 퀘스트 에러:', error)
+      console.error('가정통신문 생성 에러:', error)
     }
     closeNewsModal()
+    setFileList([])
   }
 
   useEffect(() => {
     handleGetGroupDetail()
-    console.log('그룹네임', groupName)
   }, [])
 
   // const navi = useNavigate()
@@ -583,11 +586,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           />
           <div>첨부파일</div>
           <input type="file" multiple onChange={onSaveFiles} />
-          <Button
-            onClick={onFileUpload}
-            label="파일 업로드"
-            className="normal gray mt-[1vh]"
-          />
         </div>
         <Button
           onClick={handleGroupNotice}

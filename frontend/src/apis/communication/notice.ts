@@ -54,9 +54,12 @@ const groupNoticeUpdate = async (informId: any, data: unknown) => {
 // 가정통신문 파일 추가
 const noticeFileCreate = async (informId: any, data: unknown) => {
   return authApi
-    .post(`${baseUrl}/${informId}/file`, data)
-    .then((res) => res)
-    .catch((err) => err)
+    .post(`${baseUrl}/${informId}/file`, data, {
+      headers: { 'Content-Type': 'multipart/form-data', charset: 'utf-8' },
+      withCredentials: true,
+    })
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
 }
 
 // 가정통신문 파일 다운로드
