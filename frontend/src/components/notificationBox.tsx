@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import {
   notificationBox,
   notificationDelete,
-  // notificationReading,
+  notificationReading,
 } from '@/apis/notification'
 import { Button } from '.'
 
@@ -14,7 +14,7 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
     try {
       const response = await notificationBox()
       // console.log('알림함 조회', response)
-      setNotificationData(response.data)
+      setNotificationData(response.data.data)
     } catch (error) {
       console.error('알림함 에러:', error)
     }
@@ -31,41 +31,42 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
     } catch (error) {
       console.error('알림함 전체 삭제 에러:', error)
     }
+    closeModal()
   }
 
   // 알림함 알림 하나 조회
-  // const handleNotificationReading = async (notificationId) => {
-  //   try {
-  //     const response = await notificationReading()
-  //     console.log('알림 하나 조회 응답', response)
-  //   } catch (error) {
-  //     console.error('알림 하나 조회 에러:', error)
-  //   }
-  // }
+  const handleNotificationReading = async (notificationId: any) => {
+    try {
+      const response = await notificationReading(notificationId)
+      console.log('알림 하나 조회 응답', response)
+    } catch (error) {
+      console.error('알림 하나 조회 에러:', error)
+    }
+  }
 
   useEffect(() => {
     handleNotification()
   }, [])
 
   // 타입에 따른 문구
-  const getNotificationTypeText = (type: string) => {
+  const getNotificationTypeText = (type: string, branchName?: string) => {
     switch (type) {
       case 'STU_GEN_BUD':
-        return '학생이 버드 만듬'
+        return ' 학생이 버드 만듬'
       case 'STU_COM_BUD':
-        return '학생이 버드 완료'
+        return ' 학생이 버드 완료'
       case 'STU_GEN_BRA':
-        return '학생이 가지 만듬'
+        return ` 학생이 ${branchName} 가지 만듬`
       case 'PAR_GEN_BRA':
-        return '부모가 가지 만듬'
+        return `부모가 ${branchName} 가지 만듬`
       case 'TEA_GEN_BRA':
-        return '선생이 가지 만듬'
+        return ` 선생이 ${branchName} 가지 만듬`
       case 'STU_WRI_BUD':
-        return '학생이 버드에 코멘트 씀'
+        return ' 학생이 버드에 코멘트 씀'
       case 'PAR_WRI_BUD':
-        return '부모가 버드에 코멘트 씀'
+        return ' 부모가 버드에 코멘트 씀'
       case 'TEA_WRI_BUD':
-        return '선생이 버드에 코멘트 씀'
+        return ' 선생이 버드에 코멘트 씀'
       default:
         return '알 수 없는 타입'
     }
@@ -87,16 +88,35 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
           (notification: any, index: number) => (
             <div key={index}>
               <p>
-                {index + 1} {getNotificationTypeText(notification.type)}{' '}
+                {index + 1} {notification.memberName}
+                {getNotificationTypeText(
+                  notification.type,
+                  notification.branchName,
+                )}{' '}
               </p>
-              <p>{notification.read ? '읽음' : '읽지 않음'}</p>
+              <p
+                className={
+                  notification.read ? 'text-green-700' : 'text-red-800'
+                }
+              >
+                {notification.read ? '읽음' : '읽지 않음'}
+                {!notification.read && (
+                  <Button
+                    onClick={() =>
+                      handleNotificationReading(notification.notificationId)
+                    }
+                    label="확인"
+                    className="small primary"
+                  />
+                )}
+              </p>
             </div>
           ),
         )}
         <Button
           label="전체 삭제"
           onClick={handleNotificationDelete}
-          className="normal primary"
+          className="normal red"
         />
       </div>
     )
