@@ -67,7 +67,9 @@ const StudentGroupPage = () => {
                 <img src={chick} alt="" />
               </div>
               <div className="student-group-nest-area-text-container">
-                <div className="text-3xl">{studentData.nest.nestName}</div>
+                <div className="text-4xl font-semibold">
+                  {studentData.nest.nestName}
+                </div>
                 <div className="student-group-nest-area-text">
                   <title>둥지장</title>
                   {studentData.nest.parents.map((parent: any) => (

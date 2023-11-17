@@ -65,6 +65,7 @@ const StudentGroupDetailPage = () => {
         {currentStudents?.length !== 0 && (
           <>
             <div className="admin-group-page-list-title2">
+              <p>_</p>
               <div>이름</div>
               <div>달성도</div>
             </div>
