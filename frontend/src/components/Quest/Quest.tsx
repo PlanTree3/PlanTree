@@ -37,7 +37,7 @@ const Quest: React.FC<QuestProps> = ({ questStatus }) => {
     setOpen(null)
     if (!isChecked) {
       dispatch(checkQuest(id))
-      console.log('퀘스트 확인함', id)
+      // console.log('퀘스트 확인함', id)
     }
     if (isConfirmed) {
       dispatch(confirmQuest(id))

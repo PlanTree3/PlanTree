@@ -1,4 +1,4 @@
-import { LoginPage } from '.'
+import { LoginPage } from '@/pages/index.ts'
 
 const Home = () => {
   return <LoginPage />

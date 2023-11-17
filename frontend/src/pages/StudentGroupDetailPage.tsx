@@ -17,7 +17,7 @@ const StudentGroupDetailPage = () => {
   const handleGetGroupDetail = async () => {
     try {
       const response = await groupDetail(groupId)
-      console.log('학생 그룹 상제 조회 응답:', response)
+      // console.log('학생 그룹 상제 조회 응답:', response)
       setGroupData(response.data)
     } catch (error) {
       console.error('학생 그룹 상제 조회 에러:', error)
@@ -65,6 +65,7 @@ const StudentGroupDetailPage = () => {
         {currentStudents?.length !== 0 && (
           <>
             <div className="admin-group-page-list-title2">
+              <p>_</p>
               <div>이름</div>
               <div>달성도</div>
             </div>

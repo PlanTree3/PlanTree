@@ -291,8 +291,8 @@ const AdminNestPage = () => {
               <div>
                 <div>QR을 찍어 둥지에 가입해보세요!</div>
                 <QR
-                  // value={`https://k9a302a.p.ssafy.io/nestJoin/${nestId}`}
-                  value={`https://http://localhost:3000/nestJoin/${nestId}`}
+                  value={`https://k9a302a.p.ssafy.io/nestJoin/${nestId}`}
+                  // value={`https://http://localhost:3000/nestJoin/${nestId}`}
                   size={300}
                   id="qr-gen"
                   includeMargin={false}

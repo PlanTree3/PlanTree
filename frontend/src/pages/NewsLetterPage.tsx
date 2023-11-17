@@ -92,7 +92,7 @@ const NewsLetterPage = () => {
 
   const downloadFile = async (name: string) => {
     const delFile = inputFile.filter((file) => file.fileName === name)[0]
-    console.log('delFile: ', delFile)
+    // console.log('delFile: ', delFile)
 
     try {
       const fileUrl = await noticeFileDownload(inputInformId, delFile.fileId)
