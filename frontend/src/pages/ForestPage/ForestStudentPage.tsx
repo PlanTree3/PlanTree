@@ -41,7 +41,7 @@ const ForestStudentPage = () => {
       mousewheel
       modules={[Mousewheel, Pagination]}
     >
-      {forests?.map((forest) => (
+      {forests?.map((forest: any) => (
         <SwiperSlide>
           <div className="forest-card-container">
             <ForestCard

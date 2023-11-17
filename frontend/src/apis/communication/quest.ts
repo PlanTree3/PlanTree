@@ -5,7 +5,7 @@ const baseUrl = 'api/common-service'
 
 // 그룹 퀘스트 생성
 const groupQuestCreate = async (data: unknown) => {
-  authApi
+  return authApi
     .post(`${baseUrl}/group-quest`, data)
     .then((res) => res)
     .catch((err) => err)
