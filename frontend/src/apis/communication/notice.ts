@@ -26,7 +26,6 @@ const noticeList = async () => {
 const noticeDetail = async (informId: any) => {
   try {
     const res = await authApi.get(`${baseUrl}/${informId}`)
-    console.log(res.data)
     return res.data
   } catch (err) {
     console.log(err)
@@ -66,11 +65,8 @@ const noticeFileCreate = async (informId: any, data: unknown) => {
 const noticeFileDownload = async (informId: any, fileId: any) => {
   try {
     const res = await authApi.get(`${baseUrl}/${informId}/file/${fileId}`)
-    console.log(res.data)
     return res.data
   } catch (err) {
-    console.log(err)
-
     return err
   }
 }

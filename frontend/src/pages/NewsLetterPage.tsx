@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { redirect, useParams } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -92,12 +92,13 @@ const NewsLetterPage = () => {
 
   const downloadFile = async (name: string) => {
     const delFile = inputFile.filter((file) => file.fileName === name)[0]
-    // console.log('delFile: ', delFile)
 
     try {
       const fileUrl = await noticeFileDownload(inputInformId, delFile.fileId)
-      window.location.href = fileUrl
+
+      window.location.href = fileUrl.data.fileUrl
     } catch (err) {
+      redirect(`/newsLetterPage/:${groupId}`)
       console.log(err)
     }
   }
@@ -125,23 +126,17 @@ const NewsLetterPage = () => {
     // 여기로 오면 다시 api 연결이 되는지 확인해보자!
     const news: NewsLetter = await noticeDetail(informId)
 
-    // console.log('news: ', news)
-
-    // const news: NewsLetter = {
-    //   title: inputTitle,
-    //   writer: '오주영',
-    //   content: inputContent,
-    //   files: inputFile,
-    // }
-
     // useState에 때려박자
-    setInputTitle(news.title)
-    setInputContent(news.content)
-    setInputFile(news.files)
+    setInputTitle(news.data.title)
+    setInputContent(news.data.content)
+    setInputFile(news.data.files)
     const fileNames: string[] = []
-    news.files.map((file: any) => fileNames.push(file.fileName))
+    if (news.data.files?.length > 0) {
+      news.data.files.map((file: any) => fileNames.push(file.fileName))
+    }
+
     setInputFileName(fileNames)
-    setInputWriter(news.writer)
+    setInputWriter(news.data.writer)
   }
 
   const fileList: File[] = []
@@ -161,8 +156,13 @@ const NewsLetterPage = () => {
 
     fileList.forEach((file) => {
       formData.append('files', file)
+      console.log('fileList의 file: ', file)
+
       fileNames.push(file.name)
     })
+
+    console.log('formData.getAll: ', formData.getAll('files'))
+
     setInputFileName(fileNames)
 
     try {
@@ -201,9 +201,6 @@ const NewsLetterPage = () => {
         const response = await groupNoticeList(groupId)
 
         setInputNewsLetters(response.data.data.informs)
-        // 모달을 벗어났을 때 페이지 업데이트 되는 거는 일단 연결해봐야 알듯...?
-
-        // 날짜 함수 에러가 생기니...
 
         // isModifying가 true일 때만 showNews 함수 호출
         if (isModifying) {
