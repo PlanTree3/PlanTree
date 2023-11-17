@@ -1,7 +1,7 @@
-import { LogIn } from '@/components'
+import { LoginPage } from '.'
 
 const Home = () => {
-  return <LogIn />
+  return <LoginPage />
 }
 
 export default Home
