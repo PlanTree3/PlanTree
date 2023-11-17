@@ -103,15 +103,11 @@ const MyPage = () => {
           <button
             key={img}
             onClick={() => {
-              chooseProfileImg(`public/profile/${img}.jpg`)
+              chooseProfileImg(`/profile/${img}.jpg`)
               MySwal.close() // 모달을 닫음
             }}
           >
-            <img
-              className="selectImg"
-              src={`public/profile/${img}.jpg`}
-              alt={img}
-            />
+            <img className="selectImg" src={`/profile/${img}.jpg`} alt={img} />
           </button>
         ))}
       </div>

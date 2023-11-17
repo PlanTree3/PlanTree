@@ -39,9 +39,7 @@ function* getQuestDataSaga(): Generator<
   const userType: any = yield select(role)
   const reUserType = userType.toLowerCase()
   const response: AxiosResponse<any> = yield call(userQuestList, reUserType)
-  console.log(response)
   if (response.data) {
-    console.log(response.data.data)
     yield put(saveQuestData(response.data.data))
   }
 }
