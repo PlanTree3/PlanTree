@@ -147,12 +147,12 @@ const ItemPlacement = () => {
   const handleCloseCreateSeed = () => {
     setOpenSeed(false)
   }
-
-  useEffect(() => {
-    if (branches) {
-      handleBranchSelect(branches[0].branchId, branches[0].branchColor)
-    }
-  }, [branches])
+  //
+  // useEffect(() => {
+  //   if (branches) {
+  //     handleBranchSelect(branches[0].branchId, branches[0].branchColor)
+  //   }
+  // }, [branches])
 
   return (
     <DndProvider backend={backendForDND} options={backendOptions}>
