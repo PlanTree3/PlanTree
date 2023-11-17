@@ -59,7 +59,19 @@
 }
 
 .newsletterModal {
-  @apply gap-2 grid grid-cols-2 text-lg;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: 1fr 1fr 7fr;
+  @apply gap-2 grid text-lg text-center;
+
+  &-edit {
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr 7fr 1fr;
+    @apply gap-2 grid text-lg text-center;
+  }
+
+  button {
+    display: block;
+  }
 }
 
 // 스크롤 바 높이

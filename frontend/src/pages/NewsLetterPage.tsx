@@ -271,9 +271,9 @@ const NewsLetterPage = () => {
           },
         }}
       >
-        <div>
-          {isModifying ? (
-            <>
+        {isModifying ? (
+          <div className="flex flex-col gap-2">
+            <div className="newsletterModal-edit">
               <div>제목: </div>
               <input type="text" value={inputTitle} onChange={modifyTitle} />
               <div>내용: </div>
@@ -284,39 +284,63 @@ const NewsLetterPage = () => {
               />
               <div>첨부파일</div>
               <input type="file" multiple onChange={onSaveFiles} />
-              <Button onClick={onFileUpload} label="파일 업로드" />
-              {inputFileName.map((fileName) => (
-                <>
-                  <div>{fileName}</div>
-                  <Button onClick={() => deleteFile(fileName)} label="x" />
-                </>
-              ))}
-              <Button onClick={sendNewsLetter} label="확인" />
-            </>
-          ) : (
-            <div className="newsletterModal-item">
+            </div>
+            <div className="flex justify-end">
+              <Button
+                className="lime normal"
+                onClick={onFileUpload}
+                label="파일 업로드"
+              />
+            </div>
+            {inputFileName.map((fileName) => (
+              <div className="flex items-center self-end">
+                {fileName}
+                <Button
+                  className="xsmall red ml-2"
+                  onClick={() => deleteFile(fileName)}
+                  label="삭제"
+                />
+              </div>
+            ))}
+            <Button
+              className="primary normal self-center"
+              onClick={sendNewsLetter}
+              label="확인"
+            />
+          </div>
+        ) : (
+          <>
+            <div className="newsletterModal">
               <div>제목: </div>
               <div>{inputTitle}</div>
               <div>작성자: </div>
               <div>{inputWriter}</div>
               <div>내용: </div>
               <div>{inputContent}</div>
-              <hr />
-              {inputFileName?.length > 0 ? (
-                inputFileName?.map((file, index) => (
-                  <button onClick={() => downloadFile(file)}>
-                    <div key={index}>
-                      <div>{file}</div>
-                    </div>
-                  </button>
-                ))
-              ) : (
-                <p />
-              )}
-              <Button onClick={modifyNewsLetter} label="수정하기" />
             </div>
-          )}
-        </div>
+            <hr />
+            {inputFileName?.length > 0 ? (
+              inputFileName?.map((file, index) => (
+                <button
+                  key={index}
+                  onClick={() => downloadFile(file)}
+                  className="block"
+                >
+                  <div>파일: {file}</div>
+                </button>
+              ))
+            ) : (
+              <p />
+            )}
+            <div className="flex justify-end">
+              <Button
+                className="red normal"
+                onClick={modifyNewsLetter}
+                label="수정하기"
+              />
+            </div>
+          </>
+        )}
       </ReactModal>
     </div>
   )
