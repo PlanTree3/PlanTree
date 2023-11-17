@@ -118,6 +118,13 @@ const AdminGroupPage: React.FC = () => {
   //   });
   // };
 
+  // 그룹 유니크
+  const uniqueGroups = currentGroups
+    ? Array.from(new Set(currentGroups.map((group: any) => group.groupId))).map(
+        (groupId) =>
+          currentGroups.find((group: any) => group.groupId === groupId),
+      )
+    : []
   return (
     <div className="admin-group-page-container">
       <div className="admin-group-page-title">
@@ -140,7 +147,8 @@ const AdminGroupPage: React.FC = () => {
             <hr />
           </>
         )}
-        {currentGroups?.map((group: any, index: number) => (
+
+        {uniqueGroups?.map((group: any, index: number) => (
           <Link
             to={`/adminGroupDetail/${group.groupId}`}
             state={{ groupName: group.groupName }}

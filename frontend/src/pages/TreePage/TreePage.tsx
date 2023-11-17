@@ -74,7 +74,7 @@ const TreePage = () => {
         </div>
       </div>
       <div className="tree-page-title">회고</div>
-      <div>회고 맵돌리는 구간</div>
+      <div>이번 주는 그래도 많은 계획을 달성했다</div>
     </div>
   )
 }
