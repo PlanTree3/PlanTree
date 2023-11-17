@@ -19,9 +19,9 @@ public class EventNotificationHelper {
 
     public void saveStudentEvent(List<UUID> parentIds, List<UUID> teacherIds, String payload) {
         log.info("EventNotificationHelper.saveStudentEvent method");
-        log.info("payload :", payload);
-        log.info("parentIds :", parentIds);
-        log.info("teacherIds :", teacherIds);
+        log.info("payload : {}", payload);
+        log.info("parentIds : {}", parentIds);
+        log.info("teacherIds : {}", teacherIds);
         Map<String, Object> notificationInfo = getNotificationInfo(payload);
         if (parentIds != null) {
             parentIds.forEach(
@@ -37,8 +37,8 @@ public class EventNotificationHelper {
 
     public void saveParentEvent(UUID studentId, String payload) {
         log.info("EventNotificationHelper.saveParentEvent method");
-        log.info("payload :", payload);
-        log.info("studentId :", studentId);
+        log.info("payload : {}", payload);
+        log.info("studentId : {}", studentId);
         Map<String, Object> notificationInfo = getNotificationInfo(payload);
         redisRepository.setAllValueHashes(studentId.toString(), notificationInfo,
                 Duration.ofDays(30));
@@ -46,8 +46,8 @@ public class EventNotificationHelper {
 
     public void saveTeacherEvent(UUID studentId, List<UUID> parentIds, String payload) {
         log.info("EventNotificationHelper.saveTeacherEvent method");
-        log.info("payload :", payload);
-        log.info("parentIds :", parentIds);
+        log.info("payload : {}", payload);
+        log.info("parentIds : {}", parentIds);
         Map<String, Object> notificationInfo = getNotificationInfo(payload);
         if (parentIds != null) {
             parentIds.forEach(
