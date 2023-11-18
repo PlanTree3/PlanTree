@@ -31,10 +31,10 @@ public class Quest extends BaseTimeEntity {
     @Convert(converter = IssuerTypeConverter.class)
     private IssuerType issuerType;
 
-    @Column
+    @Column(columnDefinition = "BINARY(16)")
     private UUID issuer;
 
-    @Column
+    @Column(columnDefinition = "BINARY(16)")
     private UUID acceptor;
 
     @Column
