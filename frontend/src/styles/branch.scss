@@ -160,7 +160,10 @@
   @apply flex justify-between items-center w-[98%];
 }
 .dnd-branch-box {
+  display: grid;
   grid-template-columns: repeat(10, 1fr);
+  overflow-x: auto;
+  white-space: nowrap;
   @apply grid w-[98%];
 }
 
