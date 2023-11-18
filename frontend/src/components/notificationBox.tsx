@@ -9,12 +9,17 @@ import { Button } from '.'
 
 const NotificationBox = ({ modalOpen, closeModal }: any) => {
   const [notificationData, setNotificationData] = useState<any>(null)
+  
+  // 유저 정보
+  
+  
   // 알림함 조회
   const handleNotification = async () => {
     try {
       const response = await notificationBox()
-      // console.log('알림함 조회', response)
-      setNotificationData(response.data.data)
+      console.log('알림함 조회', response)
+      setNotificationData(response.data.data.notifications)
+      console.log(notificationData)
     } catch (error) {
       console.error('알림함 에러:', error)
     }
@@ -43,18 +48,34 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
       console.error('알림 하나 조회 에러:', error)
     }
   }
+  // 알림들 돌면서 전체 읽음 처리
+  const handleNotificationAll = async () => {
+    if (!Array.isArray(notificationData)) return
+
+    notificationData.forEach(async (notification: any) => {
+      try {
+        await handleNotificationReading(notification.notificationId)
+      } catch (error) {
+        console.error('알림 읽음 처리 에러:', error)
+      }
+    })
+  }
 
   useEffect(() => {
     handleNotification()
   }, [])
 
   // 타입에 따른 문구
-  const getNotificationTypeText = (type: string, branchName?: string) => {
+  const getNotificationTypeText = (
+    type: string,
+    branchName?: string,
+    budName?: string,
+  ) => {
     switch (type) {
       case 'STU_GEN_BUD':
-        return ' 학생이 버드 만듬'
+        return ` 학생이 ${budName} 봉오리를 생성했어요`
       case 'STU_COM_BUD':
-        return ' 학생이 버드 완료'
+        return ` 학생이 ${budName} 버드 완료`
       case 'STU_GEN_BRA':
         return ` 학생이 ${branchName} 가지 만듬`
       case 'PAR_GEN_BRA':
@@ -62,11 +83,11 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
       case 'TEA_GEN_BRA':
         return ` 선생이 ${branchName} 가지 만듬`
       case 'STU_WRI_BUD':
-        return ' 학생이 버드에 코멘트 씀'
+        return ` 학생이 ${budName} 버드에 코멘트 씀`
       case 'PAR_WRI_BUD':
-        return ' 부모가 버드에 코멘트 씀'
+        return ` 부모가 ${budName} 버드에 코멘트 씀`
       case 'TEA_WRI_BUD':
-        return ' 선생이 버드에 코멘트 씀'
+        return ` 선생이 ${budName} 버드에 코멘트 씀`
       default:
         return '알 수 없는 타입'
     }
@@ -75,48 +96,50 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
   // 알림함에 보여주는 형식
   const renderNotifications = () => {
     if (
-      !notificationData ||
-      !notificationData.notifications ||
-      !Array.isArray(notificationData.notifications)
+      // !notificationData ||
+      // !notificationData.notifications ||
+      !Array.isArray(notificationData)
     ) {
       return <p>조회할 수 있는 알림이 없습니다</p>
     }
 
     return (
       <div>
-        {notificationData.notifications.map(
-          (notification: any, index: number) => (
-            <div key={index}>
-              <p>
-                {index + 1} {notification.memberName}
-                {getNotificationTypeText(
-                  notification.type,
-                  notification.branchName,
-                )}{' '}
-              </p>
-              <p
-                className={
-                  notification.read ? 'text-green-700' : 'text-red-800'
-                }
-              >
-                {notification.read ? '읽음' : '읽지 않음'}
-                {!notification.read && (
-                  <Button
-                    onClick={() =>
-                      handleNotificationReading(notification.notificationId)
-                    }
-                    label="확인"
-                    className="small primary"
-                  />
-                )}
-              </p>
-            </div>
-          ),
-        )}
+        {notificationData.map((notification: any, index: number) => (
+          <div key={index}>
+            <p>
+              {index + 1} {notification.memberName}
+              {getNotificationTypeText(
+                notification.type,
+                notification.branchName,
+                notification.budName,
+              )}{' '}
+            </p>
+            {/* <p
+              className={notification.read ? 'text-green-700' : 'text-red-800'}
+            >
+              {notification.read ? '읽음' : '읽지 않음'}
+              {!notification.read && (
+                <Button
+                  onClick={() =>
+                    handleNotificationReading(notification.notificationId)
+                  }
+                  label="확인"
+                  className="small primary"
+                />
+              )}
+            </p> */}
+          </div>
+        ))}
+        <Button
+          label="전체 읽음"
+          onClick={handleNotificationAll}
+          className="normal primary"
+        />
         <Button
           label="전체 삭제"
           onClick={handleNotificationDelete}
-          className="normal red"
+          className="normal red ml-[1vh]"
         />
       </div>
     )
