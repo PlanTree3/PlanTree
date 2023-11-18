@@ -16,6 +16,7 @@ const WeeklyBudsAdminPage = () => {
     }
   }, [treeId])
 
-  return <ItemPlacement />
+  // return <ItemPlacement />
+  return <div>우왕</div>
 }
 export default LoginCheck(WeeklyBudsAdminPage)
