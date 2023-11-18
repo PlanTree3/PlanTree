@@ -1,16 +1,64 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { BarChart, DoughnutChart, PieChart, Tree } from '@/components'
 import './TreePage.scss'
 import { RootState } from '@/stores/store.ts'
 import { LoadingPage } from '@/pages'
+import { treeLog } from '@/apis'
 
 const TreePage = () => {
   const [loading, setLoading] = useState(true)
+  const [logData, setLogData] = useState<any[]>([])
+  const { treeId } = useParams<{ treeId: string }>()
+
+  // 나무 로그
+  const handleLog = async () => {
+    try {
+      const response = await treeLog(treeId)
+      console.log('로그 응답', response)
+      setLogData(response.data.data.logs)
+    } catch (error) {
+      console.error('로그 에러:', error)
+    }
+  }
+
+  // // 타입에 따른 문구
+  const getLogTypeText = (
+    type: string,
+    branchName?: string,
+    budName?: string,
+  ) => {
+    switch (type) {
+      case 'STU_GEN_BUD':
+        return ` 학생이 ${budName} 봉오리를 생성했어요`
+      case 'STU_COM_BUD':
+        return ` 학생이 ${budName} 봉오리를 완료했어요`
+      case 'STU_GEN_BRA':
+        return ` 학생이 ${branchName} 가지를 만들었어요`
+      case 'PAR_GEN_BRA':
+        return `부모가 ${branchName} 가지를 만들었어요`
+      case 'TEA_GEN_BRA':
+        return ` 선생이 ${branchName} 가지를 만들었어요`
+      case 'STU_WRI_BUD':
+        return ` 학생이 ${budName} 버드에 코멘트를 남겼어요`
+      case 'PAR_WRI_BUD':
+        return ` 부모가 ${budName} 버드에 코멘트를 남겼어요`
+      case 'TEA_WRI_BUD':
+        return ` 선생이 ${budName} 버드에 코멘트를 남겼어요`
+      default:
+        return '알 수 없는 타입'
+    }
+  }
+
+  useEffect(() => {
+    handleLog()
+  }, [])
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false)
+      console.log('로그 wfdfd', logData)
     }, 700)
 
     return () => clearTimeout(timer)
@@ -73,8 +121,19 @@ const TreePage = () => {
           )}
         </div>
       </div>
-      <div className="tree-page-title">회고</div>
+      <div className="tree-page-title">되돌아보기</div>
       <div>이번 주는 그래도 많은 계획을 달성했다</div>
+      <div className="tree-page-title">기록</div>
+      <div>
+        {Array.isArray(logData) &&
+          logData.map((log: any, index: number) => (
+            <div key={index}>
+              {log.memberName}
+              {getLogTypeText(log.type, log.branchName, log.budName)}{' '}
+              {log.createdAt}
+            </div>
+          ))}
+      </div>
     </div>
   )
 }
