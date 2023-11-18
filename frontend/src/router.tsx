@@ -62,7 +62,7 @@ const RoutesComponent = () => (
     <Route path="/forest" element={<ForestPage />} />
     <Route path="/forest/student/:memberId" element={<ForestStudentPage />} />
     <Route path="/forest/:id" element={<ForestDetailPage />} />
-    <Route path="/tree/:id" element={<TreePage />} />
+    <Route path="/tree/:treeId" element={<TreePage />} />
     <Route path="/branch" element={<WeeklyBudsPage />} />
     <Route path="/branch/:studentId" element={<WeeklyBudsAdminPage />} />
     <Route path="/mypage" element={<MyPage />} />
