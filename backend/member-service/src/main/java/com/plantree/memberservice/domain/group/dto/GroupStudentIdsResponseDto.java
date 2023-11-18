@@ -4,6 +4,7 @@ import com.plantree.memberservice.domain.group.domain.Group;
 import com.plantree.memberservice.domain.group.domain.GroupStudent;
 import com.plantree.memberservice.domain.member.domain.Member;
 import com.plantree.memberservice.domain.member.domain.Student;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
