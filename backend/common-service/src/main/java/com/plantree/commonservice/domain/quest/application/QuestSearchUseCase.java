@@ -87,6 +87,7 @@ public class QuestSearchUseCase {
     }
 
     private List<QuestResponseDto> getQuestResponseDtos(List<Quest> quests, List<UUID> ids, UUID authMemberId) {
+
         ids.add(authMemberId);
 
         Map<UUID, String> names = memberServiceClient.getNamesFromMember(
