@@ -1,4 +1,5 @@
 // default
+
 export { default as Kakao } from '@/components/Kakao'
 export { default as Google } from '@/components/Google'
 export { default as Button } from '@/components/Button/Button'
@@ -10,6 +11,9 @@ export { default as ItemPlacement } from '@/components/Branch/ItemPlacement'
 export { default as ReturnItems } from '@/components/Branch/ReturnItems'
 export { default as Comments } from '@/components/Branch/Comments'
 export { default as MovableItem } from '@/components/Branch/MovableItem'
+export { default as NonMovableItem } from '@/components/Branch/NonMovableItem'
+export { default as ReturnItemsAdmin } from '@/components/Branch/ReturnItemsAdmin'
+export { default as ItemPlacementAdmin } from '@/components/Branch/ItemPlacementAdmin'
 
 // Chart
 export { BarChart, DoughnutChart, PieChart } from '@/components/Charts'
@@ -36,3 +40,6 @@ export { default as LogIn } from '@/components/Tutorial/LogIn'
 // Check
 export { default as LoginCheck } from '@/components/LoginCheck'
 export { StudentCheck, ParentCheck, TeacherCheck } from '@/components/RoleCheck'
+
+// Quest
+export { default as QuestAdmin } from '@/components/Quest/QuestAdmin.tsx'
