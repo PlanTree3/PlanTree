@@ -20,12 +20,9 @@ const userLogin = async (data: unknown): Promise<AxiosResponse> => {
   return api
     .post(`${userBaseUrl}/login`, data)
     .then((res) => {
-      console.log(res.data.data.newMember)
-
       return res.data.data.newMember
     })
     .catch((error) => {
-      console.log(error)
       showLogInErrorModal()
       return error
     })
@@ -36,7 +33,6 @@ const userSignup = async (data: unknown): Promise<AxiosResponse> => {
   return api
     .post(`${userBaseUrl}`, data)
     .then((res) => {
-      console.log('회원가입 이후 확인', res)
       return res.data.data.memberId
     })
     .catch((err) => err)
@@ -46,10 +42,8 @@ const userSignup = async (data: unknown): Promise<AxiosResponse> => {
 const userInfo = async (): Promise<any> => {
   try {
     const response = await api.get(`${userBaseUrl}`)
-    console.log(response)
     return response.data
   } catch (error) {
-    console.log(error)
     return error
   }
 }
@@ -59,25 +53,23 @@ const userRefresh = async () => {
   // const navigate = useNavigate()
   authApi
     .post(`${userBaseUrl}/refresh`)
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => console.log(err))
+    .then((res) => res)
+    .catch((err) => err)
 }
 
 // 프로필 이미지 수정
 const userImageUpdate = async (data: unknown) =>
   authApi
     .patch(`${userBaseUrl}/profile-image`, data)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+    .then((res) => res)
+    .catch((err) => err)
 
 // 이름 수정
 const userNameUpdate = async (data: unknown) =>
   authApi
     .patch(`${userBaseUrl}/name`, data)
     .then((res) => res)
-    .catch((err) => console.log(err))
+    .catch((err) => err)
 
 // 그룹 둥지 리스트 조회(학생)
 const userGroupList = async () => {
@@ -101,8 +93,7 @@ const userLogout = async () => {
     const res = await authApi.post(`${userBaseUrl}/logout`)
     return res
   } catch (err) {
-    console.error('로그아웃 오류:', err)
-    throw err
+    return err
   }
 }
 
