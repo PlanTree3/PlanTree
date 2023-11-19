@@ -131,9 +131,10 @@ const AdminGroupPage: React.FC = () => {
         {uniqueGroups?.map((group: any, index: number) => (
           <Link
             to={`/adminGroupDetail/${group.groupId}`}
+            key={(group.groupId, index)}
             state={{ groupName: group.groupName }}
           >
-            <div key={(group.groupId, index)} className="admin-group-item">
+            <div className="admin-group-item">
               <p className="groupInfo">{index + 1 + (currentPage - 1) * 5} </p>
               <p className="groupInfo">{group.groupName} </p>
               <p className="groupInfo">
