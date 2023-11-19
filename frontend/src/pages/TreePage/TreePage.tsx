@@ -72,8 +72,10 @@ const TreePage = () => {
   } = useSelector((state: RootState) => state.forest.selectedInfo)
   const { degree, complete } = useSelector((state: RootState) => state.branch)
   const detailData = useSelector((state: RootState) => state.forest.detailData)
+  const role = useSelector((state: RootState) => state.user.userData?.role)
   return (
     <div className="tree-page">
+      {/* <Button className="normal primary" label="일정 확인하기" /> */}
       <div className="tree-page-title">
         {detailData.startedAt} ~ {detailData.endedAt}
       </div>

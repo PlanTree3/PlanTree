@@ -12,7 +12,6 @@ import { userInfo } from '@/apis'
 const NotificationBox = ({ modalOpen, closeModal }: any) => {
   const [notificationData, setNotificationData] = useState<any>(null)
   const [userRole, setUserRole] = useState<any>(null)
-
   // 유저 정보
   const handleUserInfo = async () => {
     try {
@@ -115,8 +114,8 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
       <div>
         {notificationData.map((notification: any, index: number) => (
           <div key={index}>
-            {userRole === 'Teacher' || userRole === 'Parent' ? (
-              <Link to={`/branch/${notification.studentId}`}>
+            {userRole === 'TEACHER' || userRole === 'PARENT' ? (
+              <Link to={`/branch/${notification.treeId}`}>
                 <p>
                   {index + 1} {notification.memberName}
                   {getNotificationTypeText(
@@ -127,7 +126,7 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
                 </p>
               </Link>
             ) : (
-              <Link to={`/branch/${notification.studentId}`}>
+              <Link to="/branch">
                 <p>
                   {index + 1} {notification.memberName}
                   {getNotificationTypeText(
