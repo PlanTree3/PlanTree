@@ -9,28 +9,6 @@ import './LoginPage.scss'
 const LoginPage = () => {
   const baseURL = import.meta.env.VITE_PUBLIC_SERVER_BASE_URL
   console.log(baseURL)
-
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const loginTest = () => {
-    // test입니다.
-    const testURL =
-      // 'https://k9a302a.p.ssafy.io/api/member-service/dev/auth/login?oauthId=yjStudent'
-      'https://k9a302a.p.ssafy.io/api/member-service/dev/auth/login?oauthId=jyTeacher'
-    axios
-      .post(testURL, null, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response)
-        dispatch(loginCheck())
-        navigate('/mypage')
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-
   return (
     <div className="log-in-container">
       <div className="log-in-box">
