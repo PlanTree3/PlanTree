@@ -33,6 +33,7 @@ const MovableItem = ({
   moveHandler,
   dayOfWeek,
   branchColor,
+  effect,
 }: MovableItemProps) => {
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
@@ -215,7 +216,7 @@ const MovableItem = ({
   return (
     <div
       ref={ref}
-      className="dnd_movable-item"
+      className={`dnd_movable-item ${effect}`}
       style={{ opacity, backgroundColor: branchColor }}
     >
       {idType === 'bud' && (

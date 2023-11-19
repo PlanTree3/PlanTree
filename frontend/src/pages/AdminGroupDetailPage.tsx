@@ -313,34 +313,41 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           />
         </div>
 
-        <div className="admin-group-detail-content">
+        <div className="admin-group-page-list-box">
           {currentStudents.length > 0 ? (
-            currentStudents.map((student: any, index: number) => (
-              <Link to={`/forest/student/${student.studentId}`}>
-                <div key={student.studentId} className="studentBox">
-                  <p className="studentFont flex-1 flex justify-center my-[2vh]">
-                    {index + 1 + (currentPage - 1) * 5}
-                  </p>
-                  <p className="studentGroupFont font-semibold">
-                    {student.studentName}
-                  </p>
-                  <p className="studentGroupFont">
-                    {student.completedBudCount}/{student.totalBudCount}
-                  </p>
-                </div>
-              </Link>
-            ))
+            <>
+              <div className="admin-group-page-list-title2">
+                <p>index</p>
+                <div>이름</div>
+                <div>달성도</div>
+              </div>
+              <hr />
+              {currentStudents.map((student: any, index: number) => (
+                <Link to={`/forest/student/${student.studentId}`}>
+                  <div key={student.studentId} className="admin-group-item2">
+                    <p className="studentFont flex-1 flex justify-center my-[2vh]">
+                      {index + 1 + (currentPage - 1) * 5}
+                    </p>
+                    <p className="studentGroupFont font-semibold">
+                      {student.studentName}
+                    </p>
+                    <p className="studentGroupFont">
+                      {student.completedBudCount}/{student.totalBudCount}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </>
           ) : (
             <p>현재 그룹원이 없습니다.</p>
           )}
-
-          <div className="pagination">
-            {pageNumbers.map((number, idx) => (
-              <button key={idx} onClick={() => changePage(number)}>
-                {number}
-              </button>
-            ))}
-          </div>
+        </div>
+        <div className="pagination">
+          {pageNumbers.map((number, idx) => (
+            <button key={idx} onClick={() => changePage(number)}>
+              {number}
+            </button>
+          ))}
         </div>
         <div className="admin-group-detail-btn-container-bottom">
           <div className="space-x-2">

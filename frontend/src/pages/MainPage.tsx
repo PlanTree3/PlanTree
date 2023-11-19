@@ -172,10 +172,6 @@ const MainPage = () => {
           </div>
         </div>
         <div className="main-todo-container">
-          {dayToday === 0 ||
-            (dayToday === 6 && (
-              <Button className="long primary" label="회고하러 가기" />
-            ))}
           <div className="main-todo-list">
             <div className="main-todo-list-title">To Do</div>
             <div className="main-todo-list-content">
