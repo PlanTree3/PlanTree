@@ -6,9 +6,6 @@ import { groupJoinRequest } from '@/apis'
 const GroupJoinPage: React.FC<any> = () => {
   const { groupId } = useParams()
 
-  // const [studentsData, setStudentsData] = useState<any>(null)
-  // const [requestData, setRequestData] = useState<any>(null)
-
   // 그룹 가입 신청
   const handleGroupJoin = async () => {
     try {

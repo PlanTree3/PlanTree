@@ -123,7 +123,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
       name: inputValue,
     }
     // console.log('그룹아이디', groupId)
-    console.log('인풋값', data)
+    // console.log('인풋값', data)
     try {
       const response = await branchGroupCreate(groupId, data)
       console.log('Response:', response)
@@ -143,7 +143,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     try {
       // const groupId = '1'
       const response = await groupNameUpdate(groupId, data)
-      console.log('inputGroupName 업뎃', inputGroupName)
       console.log('그룹이름 업뎃', response)
     } catch (error) {
       console.error('그룹이름 업뎃 에러', error)
@@ -156,7 +155,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     try {
       const response = await groupStudents(groupId)
       console.log('학생 리스트 조회 응답:', response)
-      console.log('dkfjdklfjdf', response.data.data)
       setStudentsData(response.data.data)
     } catch (error) {
       console.error('학생 리스트 조회 에러:', error)
@@ -190,47 +188,20 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     closeQuestModal()
   }
 
-  // 가정통신문 파일 추가
-  // const handleNoticeFile = async () => {
-  //   onFileUpload()
-  //   const data = {
-  //     file,
-  //   }
-  //   try {
-  //     const response = await groupNoticeCreate(groupId, data)
-  //     console.log('그룹 퀘스트 응답:', response)
-  //   } catch (error) {
-  //     console.error('그룹 퀘스트 에러:', error)
-  //   }
-  // }
-
   // 가정통신문 생성
   const handleGroupNotice = async () => {
     const formData2 = new FormData()
 
     fileList.forEach((file) => {
       formData2.append('files', file)
-      // console.log('파일 도는 중', file)
     })
-    // console.log('폼', formData2)
 
     formData2.append('title', inputNewsTitle)
     formData2.append('content', inputNewsContent)
 
-    // console.log('2차 폼데이터 파일', formData2.getAll('files'))
-    // console.log('2차 폼데이터 제목', formData2.getAll('title'))
-
     formData2.forEach((value, key) => {
       console.log('객체 도는 중', key, formData2.getAll(key), value)
     })
-
-    // data.append('files', [])
-    // data.append('files', fileList)
-
-    // fileList.forEach((file) => {
-    //   data.append('files', file)
-    // })
-    // data.append('files',)
 
     try {
       await axios.post(
