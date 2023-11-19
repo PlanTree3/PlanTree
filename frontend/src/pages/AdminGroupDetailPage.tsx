@@ -315,7 +315,11 @@ const AdminGroupDetailPage: React.FC<any> = () => {
         </div>
         <div className="pagination">
           {pageNumbers.map((number, idx) => (
-            <button key={idx} onClick={() => changePage(number)}>
+            <button
+              style={{ marginRight: '2vw', marginTop: '1vh' }}
+              key={idx}
+              onClick={() => changePage(number)}
+            >
               {number}
             </button>
           ))}
