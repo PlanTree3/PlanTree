@@ -1,18 +1,29 @@
 import ReactModal from 'react-modal'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import {
   notificationBox,
   notificationDelete,
   notificationReading,
 } from '@/apis/notification'
 import { Button } from '.'
+import { userInfo } from '@/apis'
 
 const NotificationBox = ({ modalOpen, closeModal }: any) => {
   const [notificationData, setNotificationData] = useState<any>(null)
-  
+  const [userRole, setUserRole] = useState<any>(null)
+
   // 유저 정보
-  
-  
+  const handleUserInfo = async () => {
+    try {
+      const response = await userInfo()
+      console.log('유저정보 조회 응답', response)
+      setUserRole(response.data.role)
+    } catch (error) {
+      console.error('유저정보 조회 에러:', error)
+    }
+  }
+
   // 알림함 조회
   const handleNotification = async () => {
     try {
@@ -62,7 +73,8 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
   }
 
   useEffect(() => {
-    handleNotification()
+    handleUserInfo()
+    // handleNotification()
   }, [])
 
   // 타입에 따른 문구
@@ -75,19 +87,19 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
       case 'STU_GEN_BUD':
         return ` 학생이 ${budName} 봉오리를 생성했어요`
       case 'STU_COM_BUD':
-        return ` 학생이 ${budName} 버드 완료`
+        return ` 학생이 ${budName} 봉오리를 완료했어요`
       case 'STU_GEN_BRA':
-        return ` 학생이 ${branchName} 가지 만듬`
+        return ` 학생이 ${branchName} 가지를 만들었어요`
       case 'PAR_GEN_BRA':
-        return `부모가 ${branchName} 가지 만듬`
+        return `부모가 ${branchName} 가지를 만들었어요`
       case 'TEA_GEN_BRA':
-        return ` 선생이 ${branchName} 가지 만듬`
+        return ` 선생이 ${branchName} 가지를 만들었어요`
       case 'STU_WRI_BUD':
-        return ` 학생이 ${budName} 버드에 코멘트 씀`
+        return ` 학생이 ${budName} 버드에 코멘트를 남겼어요`
       case 'PAR_WRI_BUD':
-        return ` 부모가 ${budName} 버드에 코멘트 씀`
+        return ` 부모가 ${budName} 버드에 코멘트를 남겼어요`
       case 'TEA_WRI_BUD':
-        return ` 선생이 ${budName} 버드에 코멘트 씀`
+        return ` 선생이 ${budName} 버드에 코멘트를 남겼어요`
       default:
         return '알 수 없는 타입'
     }
@@ -95,11 +107,7 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
 
   // 알림함에 보여주는 형식
   const renderNotifications = () => {
-    if (
-      // !notificationData ||
-      // !notificationData.notifications ||
-      !Array.isArray(notificationData)
-    ) {
+    if (!notificationData || notificationData.length === 0) {
       return <p>조회할 수 있는 알림이 없습니다</p>
     }
 
@@ -107,28 +115,29 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
       <div>
         {notificationData.map((notification: any, index: number) => (
           <div key={index}>
-            <p>
-              {index + 1} {notification.memberName}
-              {getNotificationTypeText(
-                notification.type,
-                notification.branchName,
-                notification.budName,
-              )}{' '}
-            </p>
-            {/* <p
-              className={notification.read ? 'text-green-700' : 'text-red-800'}
-            >
-              {notification.read ? '읽음' : '읽지 않음'}
-              {!notification.read && (
-                <Button
-                  onClick={() =>
-                    handleNotificationReading(notification.notificationId)
-                  }
-                  label="확인"
-                  className="small primary"
-                />
-              )}
-            </p> */}
+            {userRole === 'Teacher' || userRole === 'Parent' ? (
+              <Link to={`/branch/${notification.studentId}`}>
+                <p>
+                  {index + 1} {notification.memberName}
+                  {getNotificationTypeText(
+                    notification.type,
+                    notification.branchName,
+                    notification.budName,
+                  )}{' '}
+                </p>
+              </Link>
+            ) : (
+              <Link to={`/branch/${notification.studentId}`}>
+                <p>
+                  {index + 1} {notification.memberName}
+                  {getNotificationTypeText(
+                    notification.type,
+                    notification.branchName,
+                    notification.budName,
+                  )}{' '}
+                </p>
+              </Link>
+            )}
           </div>
         ))}
         <Button
