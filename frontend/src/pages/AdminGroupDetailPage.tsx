@@ -240,11 +240,10 @@ const AdminGroupDetailPage: React.FC<any> = () => {
   }
 
   return (
-    <div>
+    <>
       <div className="admin-group-detail-container">
         <div className="admin-group-detail-title">
-          {' '}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center">
             {inputGroupName}
             <button onClick={openPencilModal}>
               <img src={pencil} alt="그룹이름수정" />
@@ -313,7 +312,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
             <p>현재 그룹원이 없습니다.</p>
           )}
         </div>
-        <div className="pagination">
+        <div className="admin-group-pagination">
           {pageNumbers.map((number, idx) => (
             <button key={idx} onClick={() => changePage(number)}>
               {number}
@@ -569,7 +568,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           className="normal primary mt-[2vh]"
         />
       </ReactModal>
-    </div>
+    </>
   )
 }
 
