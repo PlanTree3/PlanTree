@@ -1,20 +1,35 @@
 import ReactModal from 'react-modal'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import {
   notificationBox,
   notificationDelete,
-  // notificationReading,
+  notificationReading,
 } from '@/apis/notification'
 import { Button } from '.'
+import { userInfo } from '@/apis'
 
 const NotificationBox = ({ modalOpen, closeModal }: any) => {
   const [notificationData, setNotificationData] = useState<any>(null)
+  const [userRole, setUserRole] = useState<any>(null)
+  // 유저 정보
+  const handleUserInfo = async () => {
+    try {
+      const response = await userInfo()
+      console.log('유저정보 조회 응답', response)
+      setUserRole(response.data.role)
+    } catch (error) {
+      console.error('유저정보 조회 에러:', error)
+    }
+  }
+
   // 알림함 조회
   const handleNotification = async () => {
     try {
       const response = await notificationBox()
-      // console.log('알림함 조회', response)
-      setNotificationData(response.data)
+      console.log('알림함 조회', response)
+      setNotificationData(response.data.data.notifications)
+      console.log(notificationData)
     } catch (error) {
       console.error('알림함 에러:', error)
     }
@@ -31,41 +46,59 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
     } catch (error) {
       console.error('알림함 전체 삭제 에러:', error)
     }
+    closeModal()
   }
 
   // 알림함 알림 하나 조회
-  // const handleNotificationReading = async (notificationId) => {
-  //   try {
-  //     const response = await notificationReading()
-  //     console.log('알림 하나 조회 응답', response)
-  //   } catch (error) {
-  //     console.error('알림 하나 조회 에러:', error)
-  //   }
-  // }
+  const handleNotificationReading = async (notificationId: any) => {
+    try {
+      const response = await notificationReading(notificationId)
+      console.log('알림 하나 조회 응답', response)
+    } catch (error) {
+      console.error('알림 하나 조회 에러:', error)
+    }
+  }
+  // 알림들 돌면서 전체 읽음 처리
+  const handleNotificationAll = async () => {
+    if (!Array.isArray(notificationData)) return
+
+    notificationData.forEach(async (notification: any) => {
+      try {
+        await handleNotificationReading(notification.notificationId)
+      } catch (error) {
+        console.error('알림 읽음 처리 에러:', error)
+      }
+    })
+  }
 
   useEffect(() => {
-    handleNotification()
+    handleUserInfo()
+    // handleNotification()
   }, [])
 
   // 타입에 따른 문구
-  const getNotificationTypeText = (type: string) => {
+  const getNotificationTypeText = (
+    type: string,
+    branchName?: string,
+    budName?: string,
+  ) => {
     switch (type) {
       case 'STU_GEN_BUD':
-        return '학생이 버드 만듬'
+        return ` 학생이 ${budName} 봉오리를 생성했어요`
       case 'STU_COM_BUD':
-        return '학생이 버드 완료'
+        return ` 학생이 ${budName} 봉오리를 완료했어요`
       case 'STU_GEN_BRA':
-        return '학생이 가지 만듬'
+        return ` 학생이 ${branchName} 가지를 만들었어요`
       case 'PAR_GEN_BRA':
-        return '부모가 가지 만듬'
+        return `부모가 ${branchName} 가지를 만들었어요`
       case 'TEA_GEN_BRA':
-        return '선생이 가지 만듬'
+        return ` 선생이 ${branchName} 가지를 만들었어요`
       case 'STU_WRI_BUD':
-        return '학생이 버드에 코멘트 씀'
+        return ` 학생이 ${budName} 버드에 코멘트를 남겼어요`
       case 'PAR_WRI_BUD':
-        return '부모가 버드에 코멘트 씀'
+        return ` 부모가 ${budName} 버드에 코멘트를 남겼어요`
       case 'TEA_WRI_BUD':
-        return '선생이 버드에 코멘트 씀'
+        return ` 선생이 ${budName} 버드에 코멘트를 남겼어요`
       default:
         return '알 수 없는 타입'
     }
@@ -73,30 +106,48 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
 
   // 알림함에 보여주는 형식
   const renderNotifications = () => {
-    if (
-      !notificationData ||
-      !notificationData.notifications ||
-      !Array.isArray(notificationData.notifications)
-    ) {
+    if (!notificationData || notificationData.length === 0) {
       return <p>조회할 수 있는 알림이 없습니다</p>
     }
 
     return (
       <div>
-        {notificationData.notifications.map(
-          (notification: any, index: number) => (
-            <div key={index}>
-              <p>
-                {index + 1} {getNotificationTypeText(notification.type)}{' '}
-              </p>
-              <p>{notification.read ? '읽음' : '읽지 않음'}</p>
-            </div>
-          ),
-        )}
+        {notificationData.map((notification: any, index: number) => (
+          <div key={index}>
+            {userRole === 'TEACHER' || userRole === 'PARENT' ? (
+              <Link to={`/branch/${notification.treeId}`}>
+                <p>
+                  {index + 1} {notification.memberName}
+                  {getNotificationTypeText(
+                    notification.type,
+                    notification.branchName,
+                    notification.budName,
+                  )}{' '}
+                </p>
+              </Link>
+            ) : (
+              <Link to="/branch">
+                <p>
+                  {index + 1} {notification.memberName}
+                  {getNotificationTypeText(
+                    notification.type,
+                    notification.branchName,
+                    notification.budName,
+                  )}{' '}
+                </p>
+              </Link>
+            )}
+          </div>
+        ))}
+        <Button
+          label="전체 읽음"
+          onClick={handleNotificationAll}
+          className="normal primary"
+        />
         <Button
           label="전체 삭제"
           onClick={handleNotificationDelete}
-          className="normal primary"
+          className="normal red ml-[1vh]"
         />
       </div>
     )

@@ -14,7 +14,7 @@ import {
   checkQuest,
   confirmQuest,
   deleteQuest,
-  successRequestQuest,
+  successAcceptQuest,
 } from '@/stores/features/questSlice'
 import '@/styles/quest/questStyle.scss'
 import { Button } from '..'
@@ -25,7 +25,7 @@ interface QuestProps {
 }
 
 // eslint-disable-next-line react/prop-types
-const Quest: React.FC<QuestProps> = ({ questStatus }) => {
+const QuestAdmin: React.FC<QuestProps> = ({ questStatus }) => {
   const [open, setOpen] = useState<null | string>(null)
   const dispatch = useDispatch()
   const questList = useSelector((state: any) => state.quest.questsList)
@@ -37,7 +37,6 @@ const Quest: React.FC<QuestProps> = ({ questStatus }) => {
     setOpen(null)
     if (!isChecked) {
       dispatch(checkQuest(id))
-      // console.log('퀘스트 확인함', id)
     }
     if (isConfirmed) {
       dispatch(confirmQuest(id))
@@ -98,36 +97,36 @@ const Quest: React.FC<QuestProps> = ({ questStatus }) => {
     if (quest.isConfirmed) {
       if (!quest.isWaiting) {
         return (
-          <>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation()
-                closeModal(quest.questId, quest.isChecked, true)
-              }}
-              className="normal primary"
-              label="확인"
-            />
-            <Button
-              onClick={(e) => {
-                e.stopPropagation()
-                closeModal(quest.questId, quest.isChecked, true)
-                dispatch(successRequestQuest(quest.questId))
-              }}
-              className="normal primary"
-              label="완료 요청"
-            />
-          </>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              closeModal(quest.questId, quest.isChecked, true)
+            }}
+            className="normal primary"
+            label="확인"
+          />
         )
       }
       return (
-        <Button
-          onClick={(e) => {
-            e.stopPropagation()
-            closeModal(quest.questId, quest.isChecked, true)
-          }}
-          className="normal primary"
-          label="확인"
-        />
+        <>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              closeModal(quest.questId, quest.isChecked, true)
+            }}
+            className="normal primary"
+            label="확인"
+          />
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              closeModal(quest.questId, quest.isChecked, true)
+              dispatch(successAcceptQuest(quest.questId))
+            }}
+            className="normal primary"
+            label="완료 승인"
+          />
+        </>
       )
     }
     return (
@@ -139,14 +138,6 @@ const Quest: React.FC<QuestProps> = ({ questStatus }) => {
           }}
           className="normal primary"
           label="수락"
-        />
-        <Button
-          onClick={(e) => {
-            e.stopPropagation()
-            dispatch(deleteQuest(quest.questId))
-          }}
-          className="normal red"
-          label="거절"
         />
       </div>
     )
@@ -210,4 +201,4 @@ const Quest: React.FC<QuestProps> = ({ questStatus }) => {
   )
 }
 
-export default Quest
+export default QuestAdmin

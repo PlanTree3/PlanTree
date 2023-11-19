@@ -14,7 +14,7 @@ const groupQuestCreate = async (data: unknown) => {
 // 둥지 퀘스트 생성
 const nestQuestCreate = async (data: unknown) => {
   authApi
-    .post(`${baseUrl}/nest-quest`, data)
+    .post(`${baseUrl}/student-quest`, data)
     .then((res) => res)
     .catch((err) => err)
 }
