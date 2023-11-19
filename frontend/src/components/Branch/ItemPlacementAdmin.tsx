@@ -1,12 +1,20 @@
-import { useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
+import { ChangeEvent, useState } from 'react'
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import { RootState } from '@/stores/store'
-import { ReturnItemsAdmin } from '@/components'
+import { Button, getRandomColor, ReturnItemsAdmin } from '@/components'
 import { COLUMN_NAMES } from '@/types/DnDType'
+import { addBranches } from '@/stores/features/branchSlice'
 
 const ItemPlacementAdmin = () => {
   const branches = useSelector((state: RootState) => state.branch.branches)
-  const treeId = useSelector((state: RootState) => state.main.treeId)
+  // const treeId = useSelector((state: RootState) => state.main.treeId)
   const [colors, setColors] = useState('lightgray')
   const [selectedBranchId, setSelectedBranchId] = useState(0)
   const {
@@ -22,11 +30,58 @@ const ItemPlacementAdmin = () => {
     THURSDAY_FINISH,
     FRIDAY_FINISH,
   } = COLUMN_NAMES
-  useEffect(() => {
-    if (!treeId) {
-      window.location.href = '/main'
+  const [newTitle, setNewTitle] = useState('')
+  const dispatch = useDispatch()
+  const [open, setOpen] = useState(false)
+
+  const handleValueTitle = (event: ChangeEvent<HTMLInputElement>) => {
+    setNewTitle(event.target.value)
+  }
+  function generateRandomString(): string {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    const length = 10
+    let result = ''
+    for (let i = 0; i < length; i += 1) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length))
     }
-  })
+    return result
+  }
+
+  const createBranch = () => {
+    if (newTitle.length >= 2 && branches) {
+      const maxId = generateRandomString()
+      const newItem = {
+        branchId: maxId,
+        branchName: newTitle,
+        color: getRandomColor(),
+      }
+      const newBranches = [...branches, newItem]
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { branchId, ...createdItem } = newItem
+      const data = {
+        newBranches,
+        createdItem,
+      }
+      dispatch(addBranches(data))
+      setNewTitle('')
+      setOpen(false)
+    } else {
+      Swal.fire({
+        title: '가지의 이름은 2글자 이상이어야 합니다.',
+        icon: 'warning',
+        iconColor: 'red',
+      })
+    }
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   const handleBranchSelect = (branchId: number, color: string) => {
     setSelectedBranchId(branchId)
     setColors(color)
@@ -57,6 +112,39 @@ const ItemPlacementAdmin = () => {
             </button>
           ))}
         </div>
+        <Button
+          onClick={handleClickOpen}
+          className="lime small w-[9vw]"
+          label="가지 만들기"
+        />
+
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>가지 만들기</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              새로운 일정을 등록할 가지를 입력해주세요
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="가지 이름"
+              type="text"
+              fullWidth
+              variant="standard"
+              value={newTitle}
+              onChange={handleValueTitle}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button className="red small" onClick={handleClose} label="취소" />
+            <Button
+              className="primary small"
+              onClick={createBranch}
+              label="등록"
+            />
+          </DialogActions>
+        </Dialog>
       </div>
       <div
         style={{ border: `0.3vw solid ${colors}` }}
