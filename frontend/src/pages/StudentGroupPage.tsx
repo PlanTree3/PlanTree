@@ -14,12 +14,9 @@ const StudentGroupPage = () => {
 
   // 학생의 그룹, 둥지 정보 조회
   const handleGetList = async () => {
-    console.log('1')
     try {
-      console.log('2')
       const response = await userGroupList()
       // console.log('Response:', response)
-      // console.log('Response:', response.data.data)
       setStudentData(response.data.data)
     } catch (error) {
       console.error('Error:', error)
