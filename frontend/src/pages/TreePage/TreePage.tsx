@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { BarChart, DoughnutChart, PieChart, Tree } from '@/components'
+import { useParams, Link } from 'react-router-dom'
+import { BarChart, DoughnutChart, PieChart, Tree, Button } from '@/components'
 import './TreePage.scss'
 import { RootState } from '@/stores/store.ts'
 import { LoadingPage } from '@/pages'
@@ -75,9 +75,17 @@ const TreePage = () => {
   const role = useSelector((state: RootState) => state.user.userData?.role)
   return (
     <div className="tree-page">
-      {/* <Button className="normal primary" label="일정 확인하기" /> */}
-      <div className="tree-page-title">
+      <div className="tree-page-title space-between">
         {detailData.startedAt} ~ {detailData.endedAt}
+        {role === 'TEACHER' || role === 'PARENT' ? (
+          <Link to={`/branch/${treeId}`}>
+            <Button className="normal gray" label="일정 확인하기" />
+          </Link>
+        ) : (
+          <Link to="/branch">
+            <Button className="normal gray" label="일정 확인하기" />
+          </Link>
+        )}
       </div>
       <div className="tree-page-tree">
         {loading && <LoadingPage />}
