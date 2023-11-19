@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux'
-import { MovableItem, MoveHandler } from '@/components'
 import { RootState } from '@/stores/store.ts'
 import '@/styles/branch.scss'
+import NonMovableItem from './NonMovableItem.tsx'
 
-const ReturnItems = (columnName: string, selectedBranchId: number) => {
+const ReturnItemsAdmin = (columnName: string, selectedBranchId: number) => {
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const buds = useSelector((state: RootState) => state.branch.buds)
   const filteredSeeds = seeds?.filter(
@@ -14,38 +14,29 @@ const ReturnItems = (columnName: string, selectedBranchId: number) => {
     <>
       {filteredSeeds
         ?.filter((seed: any) => seed.dayOfWeek === columnName)
-        .map((seed: any, index: number) => {
+        .map((seed: any) => {
           return (
-            <MovableItem
-              branchId={seed.branchId}
+            <NonMovableItem
               key={seed.seedId}
               id={seed.seedId}
               idType="seed"
               budName={seed.seedName}
               commentCount={seed.commentCount}
-              index={index}
-              dayOfWeek={seed.dayOfWeek}
-              moveHandler={MoveHandler}
               branchColor={seed.branchColor}
             />
           )
         })}
       {buds
         ?.filter((bud: any) => bud.dayOfWeek === columnName)
-        .map((bud: any, index: number) => {
+        .map((bud: any) => {
           return (
-            <MovableItem
-              branchId={bud.branchId}
+            <NonMovableItem
               key={bud.budId}
               id={bud.budId}
               idType="bud"
               budName={bud.budName}
               commentCount={bud.commentCount}
-              index={index}
-              dayOfWeek={bud.dayOfWeek}
-              moveHandler={MoveHandler}
               branchColor={bud.branchColor}
-              effect={bud.complete && 'light'}
             />
           )
         })}
@@ -53,4 +44,4 @@ const ReturnItems = (columnName: string, selectedBranchId: number) => {
   )
 }
 
-export default ReturnItems
+export default ReturnItemsAdmin

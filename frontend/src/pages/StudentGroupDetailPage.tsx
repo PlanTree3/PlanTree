@@ -85,7 +85,7 @@ const StudentGroupDetailPage = () => {
                 }}
               />
               {/* <p className="font-semibold text-l">{student.studentName}</p> */}
-              <p className="groupInfo font -semibold">{student.studentName}</p>
+              <p className="groupInfo font-semibold">{student.studentName}</p>
               {/* <div className="ms-6 flex-col flex justify-center "> */}
               {/* <p>달성도</p> */}
               <p className="groupInfo">

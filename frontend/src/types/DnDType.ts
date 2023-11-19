@@ -28,6 +28,7 @@ export interface MovableItemProps {
   moveHandler: (dragIndex: number, hoverIndex: number) => void
   dayOfWeek: string
   branchColor: string
+  effect?: string
 }
 
 export interface DragItem {

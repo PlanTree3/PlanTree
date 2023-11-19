@@ -2,6 +2,79 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@keyframes sparkle {
+  from {
+    background-position: 0% 100%;
+  }
+  to {
+    background-position: 200% 100%;
+  }
+}
+
+$c1: #7fefbd;
+$c2: #fff689;
+$c3: #ec0b43;
+
+.sparkle {
+  &:before {
+    animation: sparkle 4s infinite linear;
+    background: linear-gradient(
+      90deg,
+      $c1 0%,
+      $c2 11%,
+      $c3 22%,
+      $c1 33%,
+      $c2 44%,
+      $c3 55%,
+      $c1 66%,
+      $c2 77%,
+      $c3 88%,
+      $c1 100%
+    );
+    background-size: 300% 100%;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    filter: blur(3px);
+    z-index: -1;
+    transform: scale(0.99) translateY(3px);
+  }
+}
+
+.light {
+  position: relative;
+  display: inline-block;
+
+  &:before {
+    position: absolute;
+    left: 0;
+    top: -10%;
+    width: 120%;
+    height: 120%;
+    background: lightblue;
+    filter: blur(15px);
+    content: '';
+    opacity: 0;
+    animation: flash 1.5s ease-out alternate infinite;
+  }
+}
+
+@keyframes flash {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes flashText {
+  to {
+    opacity: 0.15;
+  }
+}
+
 .dnd-box-container {
   max-height: 100%; /* 또는 원하는 최대 높이 */
   overflow-y: auto; /* 내용이 넘칠 때 스크롤바 표시 */
@@ -48,6 +121,7 @@
 .dnd-seed-outer-box {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(8vw, 1fr));
+  gap: 1vw;
 }
 
 .dnd-seed-create-btn {
@@ -73,9 +147,10 @@
   padding: 1vw;
   border-radius: 1vw;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
   justify-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
 }
 
 .dnd_column_shape1 {
@@ -130,6 +205,7 @@
   justify-content: center;
   align-items: center;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+
   @apply truncate text-center;
   &:hover {
     height: 7vh;
@@ -160,7 +236,10 @@
   @apply flex justify-between items-center w-[98%];
 }
 .dnd-branch-box {
+  display: grid;
   grid-template-columns: repeat(10, 1fr);
+  overflow-x: auto;
+  white-space: nowrap;
   @apply grid w-[98%];
 }
 

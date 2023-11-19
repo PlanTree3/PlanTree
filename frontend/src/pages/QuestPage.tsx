@@ -4,6 +4,7 @@ import Quest from '@/components/Quest/Quest'
 import LoginCheck from '@/components/LoginCheck.tsx'
 import { RootState } from '@/stores/store.ts'
 import { getQuestData } from '@/stores/features/questSlice.ts'
+import { QuestAdmin } from '@/components'
 
 const QuestPage = () => {
   const [questStatus, setQuestStatus] = useState('all')
@@ -47,16 +48,12 @@ const QuestPage = () => {
         >
           이전 퀘스트
         </button>
-        {/*{questStatus === 'past' && (*/}
-        {/*  <button*/}
-        {/*    onClick={deleteTrigger}*/}
-        {/*    className={deleteState ? 'quest-del-btn-selected' : 'quest-del-btn'}*/}
-        {/*  >*/}
-        {/*    퀘스트 삭제*/}
-        {/*  </button>*/}
-        {/*)}*/}
       </div>
-      <Quest questStatus={questStatus} />
+      {role === 'STUDENT' ? (
+        <Quest questStatus={questStatus} />
+      ) : (
+        <QuestAdmin questStatus={questStatus} />
+      )}
     </>
   )
 }

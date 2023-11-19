@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './SideBar.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,12 +8,15 @@ import forestImg from '../../../public/sidebar/navbar_forest.png'
 import questImg from '../../../public/sidebar/navbar_quest.png'
 import nestImg from '../../../public/sidebar/navbar_nest.png'
 import bell from '../../../public/bell.png'
+import checkBell from '../../../public/checkBell.png'
 import { logOutCheck } from '@/stores/features/userSlice'
 import NotificationBox from '../notificationBox'
 import Button from '../Button/Button'
+import { notificationCheck } from '@/apis'
 
 const SideBar = () => {
   const [modalOpen, setModalOpen] = useState(false)
+  const [checkData, setCheckData] = useState(false)
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn)
   const role = useSelector((state: any) => state.user.userData.role) ?? null
   const dispatch = useDispatch()
@@ -30,6 +33,16 @@ const SideBar = () => {
     dispatch(logOutCheck())
     navigate('/login')
   }
+  // 새로운 알람있는지 확인
+  const handleNotificationCheck = async () => {
+    try {
+      const response = await notificationCheck()
+      console.log('알림함 체크 응답', response)
+      setCheckData(response.data.data.notificationPresent)
+    } catch (error) {
+      console.error('알림함 체크 에러:', error)
+    }
+  }
 
   const roleBasedMain = (kind: string | null) => {
     switch (kind) {
@@ -43,6 +56,11 @@ const SideBar = () => {
         return '/main'
     }
   }
+
+  //이 부분 추가 로직 필요 / 언제 체크할지?
+  useEffect(() => {
+    handleNotificationCheck()
+  }, [])
 
   return (
     <div className="sidebar-container">
@@ -83,7 +101,11 @@ const SideBar = () => {
       </div>
       <div className="sidebar-bottom">
         <button onClick={openModal} className="sidebar-bell">
-          <img src={bell} alt="알람" className="sidebar-bell-img" />
+          <img
+            src={checkData ? checkBell : bell}
+            alt="알람"
+            className="sidebar-bell-img"
+          />
         </button>
         <NotificationBox modalOpen={modalOpen} closeModal={closeModal} />
 
