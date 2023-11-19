@@ -40,7 +40,7 @@ const ForestPage = () => {
       modules={[Mousewheel, Pagination]}
     >
       {forests?.map((forest) => (
-        <SwiperSlide>
+        <SwiperSlide key={forest.forestId}>
           <div className="forest-card-container">
             <ForestCard
               nav={forest.forestId}
