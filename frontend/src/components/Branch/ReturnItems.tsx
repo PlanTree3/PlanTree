@@ -45,6 +45,7 @@ const ReturnItems = (columnName: string, selectedBranchId: number) => {
               dayOfWeek={bud.dayOfWeek}
               moveHandler={MoveHandler}
               branchColor={bud.branchColor}
+              effect={bud.complete && 'light'}
             />
           )
         })}

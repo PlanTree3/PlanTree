@@ -131,18 +131,24 @@ const TreePage = () => {
           )}
         </div>
       </div>
-      <div className="tree-page-title">되돌아보기</div>
-      <div>이번 주는 그래도 많은 계획을 달성했다</div>
-      <div className="tree-page-title">기록</div>
-      <div>
-        {Array.isArray(logData) &&
-          logData.map((log: any, index: number) => (
-            <div key={index}>
-              {log.memberName}
-              {getLogTypeText(log.type, log.branchName, log.budName)}{' '}
-              {log.createdAt}
-            </div>
-          ))}
+      <div className="tree-page-container">
+        <div className="tree-page-title">되돌아보기</div>
+        <div>이번 주는 그래도 많은 계획을 달성했다</div>
+      </div>
+      <div className="tree-page-container">
+        <div className="tree-page-title">기록</div>
+        <ul className="tree-page-report-container">
+          {Array.isArray(logData) &&
+            logData.map((log: any, index: number) => (
+              <li key={index}>
+                <div className="tree-page-report-list">
+                  {log.memberName}
+                  {getLogTypeText(log.type, log.branchName, log.budName)}{' '}
+                  <div>{log.createdAt}</div>
+                </div>
+              </li>
+            ))}
+        </ul>
       </div>
     </div>
   )
