@@ -60,7 +60,8 @@ const Comments: React.FC<CommentsProps> = ({
       content: newComment,
     }
     try {
-      await commentCreate(treeId, budId, data)
+      const response = commentCreate(treeId, budId, data)
+      console.log(response)
       updateInfo()
     } catch (error) {
       console.error(error)
@@ -96,9 +97,7 @@ const Comments: React.FC<CommentsProps> = ({
         {comments.length > 0 ? (
           comments.map((comment: Comment, index) => (
             <div key={index}>
-              <p>
-                작성자 : {comment.name} ({comment.role})
-              </p>
+              <p>작성자 : {comment.name}</p>
               <p>등록일 : {comment.createdAt.slice(0, 10)}</p>
               <p>{comment.content}</p>
             </div>

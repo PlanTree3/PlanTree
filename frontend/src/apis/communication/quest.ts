@@ -64,10 +64,12 @@ const questCorrection = async (questId: string, data: any) => {
 }
 // 퀘스트 수락
 const questAccept = async (questId: string, data: any) => {
-  authApi
-    .patch(`${baseUrl}/quest/${questId}/accept`, data)
-    .then((res) => res)
-    .catch((err) => err)
+  try {
+    return await authApi.patch(`${baseUrl}/quest/${questId}/accept`, data)
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
 
 // 퀘스트 포기
@@ -80,18 +82,28 @@ const questGiveUp = async (questId: string, data: any) => {
 
 // 퀘스트 성공 요청
 const questSuccessRequest = async (questId: string, data: any) => {
-  authApi
-    .patch(`${baseUrl}/quest/${questId}/success-request`, data)
-    .then((res) => res)
-    .catch((err) => err)
+  try {
+    return await authApi.patch(
+      `${baseUrl}/quest/${questId}/success-request`,
+      data,
+    )
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
 
 // 퀘스트 성공 수락
 const questSuccessAccept = async (questId: number, data: any) => {
-  authApi
-    .patch(`${baseUrl}/quest/${questId}/success-accept`, data)
-    .then((res) => res)
-    .catch((err) => err)
+  try {
+    return await authApi.patch(
+      `${baseUrl}/quest/${questId}/success-accept`,
+      data,
+    )
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
 
 export {

@@ -4,7 +4,6 @@ import './LoginPage.scss'
 const LoginPage = () => {
   const baseURL = import.meta.env.VITE_PUBLIC_SERVER_BASE_URL
   console.log(baseURL)
-
   return (
     <div className="log-in-container">
       <div className="log-in-box">

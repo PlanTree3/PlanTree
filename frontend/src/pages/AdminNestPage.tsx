@@ -108,7 +108,6 @@ const AdminNestPage = () => {
 
   //둥지의 학생 리스트 조회
   const handleGetNestDetail = async (nestId: string) => {
-    console.log('정보확인', nestId)
     try {
       const response = await nestStudents(nestId)
       console.log('학생 리스트 조회', response)
@@ -144,7 +143,6 @@ const AdminNestPage = () => {
     const data = {
       nestName: inputNestName,
     }
-    console.log('inputNestName', inputNestName)
     try {
       const response = await nestNameUpdate(nestId, data)
       console.log('둥지이름 업뎃', response)
