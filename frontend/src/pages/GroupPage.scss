@@ -189,12 +189,12 @@
   }
 
   &-pagination {
-    @apply flex justify-center;
+    @apply flex justify-center gap-2;
   }
 
   &-detail {
     &-container {
-      @apply flex flex-col space-y-[4vh];
+      @apply flex flex-col space-y-[2vh];
     }
     &-title {
       img {
@@ -227,7 +227,7 @@
       @apply w-3/5 space-y-2;
 
       title {
-        @apply block text-2xl ;
+        @apply block text-2xl;
       }
 
       text {
@@ -236,8 +236,7 @@
     }
     &-text {
       grid-template-columns: 1fr 5fr;
-      @apply grid ;
-      
+      @apply grid;
     }
   }
 }
