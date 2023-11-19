@@ -35,9 +35,9 @@ public class QuestUpdateUseCase {
     @Transactional
     public void acceptQuest(UUID questId, AuthMember authMember) {
 
-        authMemberValidator.ValidateAuthMemberAndQuestAcceptor(questId, authMember);
         Quest quest = questRepository.findById(questId)
                                      .orElseThrow(QuestNotFoundException::new);
+        authMemberValidator.ValidateAuthMemberAndQuestAcceptor(quest.getAcceptor(), authMember);
         quest.accept();
 
     }
@@ -45,9 +45,9 @@ public class QuestUpdateUseCase {
     @Transactional
     public void questSuccessRequest(UUID questId, AuthMember authMember) {
 
-        authMemberValidator.ValidateAuthMemberAndQuestAcceptor(questId, authMember);
         Quest quest = questRepository.findById(questId)
                                      .orElseThrow(QuestNotFoundException::new);
+        authMemberValidator.ValidateAuthMemberAndQuestAcceptor(quest.getAcceptor(), authMember);
         quest.finishRequest();
 
     }
@@ -55,9 +55,9 @@ public class QuestUpdateUseCase {
     @Transactional
     public void questSuccessAccept(UUID questId, AuthMember authMember) {
 
-        authMemberValidator.validateAuthMemberAndQuestIssuer(questId, authMember);
         Quest quest = questRepository.findById(questId)
                                      .orElseThrow(QuestNotFoundException::new);
+        authMemberValidator.validateAuthMemberAndQuestIssuer(quest.getIssuer(), authMember);
         quest.finish();
 
     }
