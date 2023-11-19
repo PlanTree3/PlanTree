@@ -51,6 +51,7 @@ const AdminGroupPage: React.FC = () => {
       console.log('2')
       const response = await teacherGroupList()
       console.log('Response:', response)
+      setGroupData(response.data)
     } catch (error) {
       console.error('Error:', error)
     }
