@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { RootState } from '@/stores/store'
 import { ReturnItemsAdmin } from '@/components'
 import { COLUMN_NAMES } from '@/types/DnDType'
 
 const ItemPlacementAdmin = () => {
   const branches = useSelector((state: RootState) => state.branch.branches)
-  const treeId = useSelector((state: RootState) => state.main.treeId)
+  // const treeId = useSelector((state: RootState) => state.main.treeId)
   const [colors, setColors] = useState('lightgray')
   const [selectedBranchId, setSelectedBranchId] = useState(0)
   const {
@@ -22,11 +22,7 @@ const ItemPlacementAdmin = () => {
     THURSDAY_FINISH,
     FRIDAY_FINISH,
   } = COLUMN_NAMES
-  useEffect(() => {
-    if (!treeId) {
-      window.location.href = '/main'
-    }
-  })
+
   const handleBranchSelect = (branchId: number, color: string) => {
     setSelectedBranchId(branchId)
     setColors(color)
