@@ -58,7 +58,6 @@ const TreePage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false)
-      console.log('로그 wfdfd', logData)
     }, 700)
 
     return () => clearTimeout(timer)
@@ -70,7 +69,35 @@ const TreePage = () => {
     branchDoneCount,
     notYet,
   } = useSelector((state: RootState) => state.forest.selectedInfo)
-  const { degree, complete } = useSelector((state: RootState) => state.branch)
+  const [degree, setDegree] = useState(0)
+  const [complete, setComplete] = useState(0)
+  useEffect(() => {
+    if (branchDoneCount && branchTotalCount) {
+      let i = 0
+      let j = 0
+      let k = 0
+      let x = 0
+      branchTotalCount.forEach((cnt: number) => {
+        i += cnt
+      })
+      branchDoneCount.forEach((cnt: number) => {
+        j += cnt
+      })
+      x = Math.floor((j / i) * 100)
+      if (branchTotalCount.length < 5) {
+        k = 20
+      } else if (branchTotalCount.length < 9) {
+        k = 50
+      } else {
+        k = 80
+      }
+      if (x > k) {
+        x = k
+      }
+      setDegree(k)
+      setComplete(x)
+    }
+  }, [totalPercent])
   const detailData = useSelector((state: RootState) => state.forest.detailData)
   const role = useSelector((state: RootState) => state.user.userData?.role)
   return (
@@ -96,9 +123,6 @@ const TreePage = () => {
         <div className="tree-page-chart">
           전체 달성도
           <DoughnutChart
-            centerText={
-              totalPercent === null ? 'Loading...' : `${totalPercent}%`
-            }
             chartData={{
               data:
                 totalPercent === null
