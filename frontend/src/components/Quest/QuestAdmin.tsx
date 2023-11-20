@@ -145,7 +145,7 @@ const QuestAdmin: React.FC<QuestProps> = ({ questStatus }) => {
                   closeModal(quest.questId, quest.checked)
                 }}
               >
-                <img src="/public/btn/closeBtn.png" alt="닫기" />
+                <img src="/btn/closeBtn.png" alt="닫기" />
               </button>
             </div>
             <DialogTitle id={`quest-title-${quest.questId}`}>
