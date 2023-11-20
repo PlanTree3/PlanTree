@@ -58,7 +58,6 @@ const TreePage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false)
-      console.log('로그 wfdfd', logData)
     }, 700)
 
     return () => clearTimeout(timer)

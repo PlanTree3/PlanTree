@@ -127,7 +127,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
       console.log('Response:', response)
       // setStudentData(response.data.data)
     } catch (error) {
-      console.error('Error:', error)
+      console.error(error)
     }
     closeModal()
     setInputValue('')
@@ -143,7 +143,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
       const response = await groupNameUpdate(groupId, data)
       console.log('그룹이름 업뎃', response)
     } catch (error) {
-      console.error('그룹이름 업뎃 에러', error)
+      console.error(error)
     }
     setPencilModalIsOpen(false)
   }
@@ -155,7 +155,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
       console.log('학생 리스트 조회 응답:', response)
       setStudentsData(response.data.data)
     } catch (error) {
-      console.error('학생 리스트 조회 에러:', error)
+      console.error(error)
     }
   }
   // 그룹 삭제
@@ -164,7 +164,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
       const response = await groupDelete(groupId)
       console.log('그룹 삭제 응답:', response)
     } catch (error) {
-      console.error('그룹 삭제 에러:', error)
+      console.error(error)
     }
     // memo 사용 등 강제 리렌더 할 수 있는 기능 넣기
     navigate('/adminGroup')
@@ -181,7 +181,7 @@ const AdminGroupDetailPage: React.FC<any> = () => {
       const response = await groupQuestCreate(data)
       console.log('그룹 퀘스트 응답:', response)
     } catch (error) {
-      console.error('그룹 퀘스트 에러:', error)
+      console.error(error)
     }
     closeQuestModal()
   }
@@ -210,9 +210,8 @@ const AdminGroupDetailPage: React.FC<any> = () => {
           withCredentials: true,
         },
       )
-      // console.log('가정통신문 생성 응답:', response)
     } catch (error) {
-      console.error('가정통신문 생성 에러:', error)
+      console.error(error)
     }
     closeNewsModal()
     setFileList([])

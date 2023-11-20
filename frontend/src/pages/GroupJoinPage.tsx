@@ -12,7 +12,7 @@ const GroupJoinPage: React.FC<any> = () => {
       const response = await groupJoinRequest(groupId)
       console.log('그룹가입신청 응답:', response)
     } catch (error) {
-      console.error('그룹가입신청 Error:', error)
+      console.error(error)
     }
   }
 

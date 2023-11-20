@@ -16,10 +16,9 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
   const handleUserInfo = async () => {
     try {
       const response = await userInfo()
-      console.log('유저정보 조회 응답', response)
       setUserRole(response.data.role)
     } catch (error) {
-      console.error('유저정보 조회 에러:', error)
+      console.error(error)
     }
   }
 
@@ -27,10 +26,9 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
   const handleNotification = async () => {
     try {
       const response = await notificationBox()
-      console.log('알림함 조회', response)
       setNotificationData(response.data.data.notifications)
     } catch (error) {
-      console.error('알림함 에러:', error)
+      console.error(error)
     }
   }
   useEffect(() => {
@@ -43,7 +41,7 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
       const response = await notificationDelete()
       console.log('알림함 전체 응답', response)
     } catch (error) {
-      console.error('알림함 전체 삭제 에러:', error)
+      console.error(error)
     }
     closeModal()
   }
@@ -54,7 +52,7 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
       const response = await notificationReading(notificationId)
       console.log('알림 하나 조회 응답', response)
     } catch (error) {
-      console.error('알림 하나 조회 에러:', error)
+      console.error(error)
     }
   }
   // 알림들 돌면서 전체 읽음 처리
@@ -65,7 +63,7 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
       try {
         await handleNotificationReading(notification.notificationId)
       } catch (error) {
-        console.error('알림 읽음 처리 에러:', error)
+        console.error(error)
       }
     })
   }

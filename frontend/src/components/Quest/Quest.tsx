@@ -34,14 +34,11 @@ const Quest: React.FC<QuestProps> = ({ questStatus }) => {
     setOpen(id)
   }
   const closeModal = (id: string, isChecked: boolean, isConfirmed: boolean) => {
-    console.log('야 이거 실행되고는 있지???')
     setOpen(null)
     if (!isChecked) {
       dispatch(checkQuest(id))
-      // console.log('퀘스트 확인함', id)
     }
     if (isConfirmed) {
-      console.log('로직 뭐임???')
       dispatch(confirmQuest(id))
     }
   }

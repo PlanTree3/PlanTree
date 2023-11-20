@@ -6,7 +6,6 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
-// import { noticeList } from '@/apis/communication/notice'
 import {
   Tutorial1,
   Tutorial2,
@@ -17,7 +16,7 @@ import {
   LoginCheck,
 } from '@/components'
 import './MyPageStyle.scss'
-import { noticeDetail, userImageUpdate, userNameUpdate } from '@/apis'
+import { userImageUpdate, userNameUpdate } from '@/apis'
 import { addProfileImageUrl, addName } from '@/stores/features/userSlice'
 import Button from '@/components/Button/Button'
 import { getMainData } from '@/stores/features/mainSlice.ts'
@@ -173,120 +172,6 @@ const MyPage = () => {
       },
     })
   }
-
-  // // 가정통신문 모달
-  // const moveNewsList = () => {
-  //   // 여기서 개인의 가정통신문 불러오는 axios 만들기
-  //   // interface Notice {
-  //   //   notificationId: number
-  //   //   title: string
-  //   //   groupName: string
-  //   //   createdAt: Date
-  //   // }
-  //   const newsList: any = noticeList()
-  //   // const newsList: Notice[] = [
-  //   //   {
-  //   //     notificationId: 1,
-  //   //     title: '플젝이',
-  //   //     groupName: '벌써',
-  //   //     createdAt: new Date(),
-  //   //   },
-  //   // ]
-
-  //   const newsListDate = (date: Date) => {
-  //     const year = date.getFullYear()
-  //     const month = date.getMonth()
-  //     const day = date.getDate()
-
-  //     return [year, month, day].join('-')
-  //   }
-
-  //   const showNews = (notificationId: number) => {
-  //     // interface NewsData {
-  //     //   title: string
-  //     //   content: string
-  //     //   files: [{ fileName: string; fileUrl: string }]
-  //     // }
-
-  //     // const news: NewsData = {
-  //     //   title: '플젝이',
-  //     //   content: '벌써',
-  //     //   files: [{ fileName: '랄랄라라라', fileUrl: '루루룰루룰' }],
-  //     // }
-
-  //     const news: any = noticeDetail(notificationId)
-
-  //     const content = (
-  //       <>
-  //         <div>{news.title}</div>
-  //         <div>{news.content}</div>
-  //         {news.files.map((file: any, index: any) => (
-  //           <div key={index}>
-  //             <div>{file.fileName}</div>
-  //             <div>{file.fileUrl}</div>
-  //           </div>
-  //         ))}
-  //       </>
-  //     )
-
-  //     MySwal.fire({
-  //       html: content,
-  //       position: 'center',
-  //       width: '70%',
-  //       heightAuto: false,
-  //       padding: 0,
-  //       confirmButtonText: '확인',
-  //       customClass: {
-  //         confirmButton: 'py-0', // 새로운 클래스 이름을 지정합니다.
-  //       },
-  //     }).then(() => {
-  //       // 확인 버튼을 누르면 moveNewsList 모달 호출
-  //       moveNewsList()
-  //     })
-  //   }
-
-  //   const content = (
-  //     <table className="table-fixed">
-  //       <thead>
-  //         <tr>
-  //           <th>번호</th>
-  //           <th>제목</th>
-  //           <th>그룹명</th>
-  //           <th>날짜</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //         {newsList.map((news: any, idx: any) => {
-  //           return (
-  //             <tr>
-  //               <td>{idx + 1}</td>
-  //               <td>
-  //                 <button onClick={() => showNews(news.notificationId)}>
-  //                   {news.title}
-  //                 </button>
-  //               </td>
-  //               <td>{news.groupName}</td>
-  //               <td>{newsListDate(news.createdAt)}</td>
-  //             </tr>
-  //           )
-  //         })}
-  //       </tbody>
-  //     </table>
-  //   )
-
-  //   MySwal.fire({
-  //     title: '가정통신문 보기',
-  //     html: content,
-  //     position: 'center',
-  //     width: '70%',
-  //     heightAuto: false,
-  //     padding: 0,
-  //     confirmButtonText: '확인',
-  //     customClass: {
-  //       confirmButton: 'py-0',
-  //     },
-  //   })
-  // }
 
   // 이번 주 통계 보기
   const moveChart = () => {
