@@ -72,6 +72,7 @@ const TreePage = () => {
   const [degree, setDegree] = useState(0)
   const [complete, setComplete] = useState(0)
   useEffect(() => {
+    console.log('기록을 보여줘', branchTotalCount, branchDoneCount)
     if (branchDoneCount && branchTotalCount) {
       let i = 0
       let j = 0
@@ -84,9 +85,9 @@ const TreePage = () => {
         j += cnt
       })
       x = Math.floor((j / i) * 100)
-      if (branchTotalCount.length < 5) {
+      if (i < 5) {
         k = 20
-      } else if (branchTotalCount.length < 9) {
+      } else if (i < 9) {
         k = 50
       } else {
         k = 80
