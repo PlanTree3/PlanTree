@@ -22,7 +22,7 @@ const SignUpPage = () => {
   return (
     <>
       <div className="signUpTitle">
-        <img className="selectImg" src="public/tutorial/Seed.png" alt="" />
+        <img className="selectImg" src="/tutorial/Seed.png" alt="seed" />
         <div className="signUpTitleTxt">저는 이런 사람입니다.</div>
       </div>
       <Swiper
