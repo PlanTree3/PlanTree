@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import {Navigate, Route, Routes} from 'react-router-dom'
 import StudentGroupPage from './pages/StudentGroupPage.tsx'
 import StudentGroupDetailPage from './pages/StudentGroupDetailPage.tsx'
 import AdminGroupDetailPage from './pages/AdminGroupDetailPage.tsx'
@@ -11,7 +11,7 @@ import ForestStudentPage from './pages/ForestPage/ForestStudentPage.tsx'
 import WeeklyBudsAdminPage from './pages/WeeklyBudsAdminPage.tsx'
 
 import {
-  Home,
+  // Home,
   LoginPage,
   SignUpPage,
   MainPage,
@@ -29,9 +29,8 @@ import {
 
 const RoutesComponent = () => (
   <Routes>
-    <Route path="/" element={<Home />} />
+    <Route path="/" element={<Navigate to="/login" replace />} />
     <Route path="/login" element={<LoginPage />} />
-
     <Route path="/studentGroup" element={<StudentGroupPage />} />
     <Route
       path="/studentGroupDetail/:groupId"
