@@ -10,15 +10,11 @@ import Provider from '@/stores/provider'
 import App from './App'
 
 const backendForDND = isMobile ? TouchBackend : HTML5Backend
-const backendOptions = {
-  delayTouchStart: 200,
-  enableMouseEvents: true,
-}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider>
     <PersistGate loading={null} persistor={persist}>
-      <DndProvider backend={backendForDND} options={backendOptions}>
+      <DndProvider backend={backendForDND}>
         <App />
       </DndProvider>
     </PersistGate>
