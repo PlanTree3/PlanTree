@@ -16,27 +16,22 @@ const OidcGoogle = () => {
 
       if (idTokenMatch) {
         const idToken = idTokenMatch[1]
-        console.log('ID Token:', idToken)
 
         const data = {
           oauthProvider: 'GOOGLE',
           idToken,
         }
-
         try {
           const loginResult = await userLogin(data)
-
           if (loginResult) {
             dispatch(addOauthProvider('GOOGLE'))
             dispatch(addIdToken(idToken))
             navigate('/signUp')
           } else {
             dispatch(loginCheck())
-            navigate('/main')
           }
         } catch (error) {
           console.error('Error during login:', error)
-          // Handle the error as needed
         }
       }
     }
@@ -44,7 +39,7 @@ const OidcGoogle = () => {
     fetchData()
   }, [])
 
-  return <div>잠시 쉬어가는 페이지입니다.</div>
+  return <div />
 }
 
 export default OidcGoogle

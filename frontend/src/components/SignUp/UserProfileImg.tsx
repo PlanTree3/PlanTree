@@ -41,13 +41,24 @@ const UserProfileImg = () => {
     'tiger',
   ]
 
+  // userBirth가 string으로 오면 Date로 변경
+  // persist에는 직렬 가능한 정보를 넣어야 하기에 object 저장 X가 원칙
+  const checkDateType = (day: Date | string) => {
+    if (day instanceof Date) {
+      return day
+    }
+    const fixDay = new Date(day)
+    return fixDay
+  }
+
   // userBirth로부터 나이 추출
   const currentDate = new Date()
-  const userAge = currentDate.getFullYear() - userBirth.getFullYear()
+  const userBithDate = checkDateType(userBirth)
+  const userAge = currentDate.getFullYear() - userBithDate.getFullYear()
 
   // userBirth로부터 month, day 추출
-  const userBirthMonth = userBirth.getMonth() + 1
-  const userBirthDay = userBirth.getDate()
+  const userBirthMonth = userBithDate.getMonth() + 1
+  const userBirthDay = userBithDate.getDate()
 
   // userRole 한국어 패치
   const showUserRole = () => {
@@ -70,7 +81,7 @@ const UserProfileImg = () => {
   }
 
   // 객체에 담아서 백에 보내주자!
-  const data = {
+  const signUpData = {
     idToken,
     oauthProvider,
     name: userName,
@@ -79,11 +90,12 @@ const UserProfileImg = () => {
     profileImageUrl: inputProfileImg,
   }
 
-  const saveUser = () => {
-    console.log(data)
-    userSignup(data)
-    dispatch(loginCheck())
-    localStorage.clear()
+  const saveUser = async () => {
+    const response: any = await userSignup(signUpData)
+    // console.log(response)
+    if (response) {
+      dispatch(loginCheck())
+    }
     navigate('/main')
   }
 
@@ -95,30 +107,26 @@ const UserProfileImg = () => {
 
   const moveProfileImg = () => {
     const content = (
-      <div className="mb-3.5">
+      <div className="selectImgModal">
         {imgList.map((img: string, index: number) => (
           <button
             key={index}
-            className="selectImg p-0 mx-1"
+            className="selectImg"
             onClick={() => {
               chooseProfileImg(`/profile/${img}.jpg`)
               MySwal.close()
             }}
           >
-            <img
-              className="selectImg m-0"
-              src={`/profile/${img}.jpg`}
-              alt={img}
-            />
+            <img className="selectImg" src={`/profile/${img}.jpg`} alt={img} />
           </button>
         ))}
       </div>
     )
 
     MySwal.fire({
-      title: '프로필 사진을 골라 주세요',
+      title: '프로필 사진을 고르세요',
       html: content,
-      width: 300,
+      width: '45%',
       heightAuto: false,
       position: 'center',
       showConfirmButton: false,
@@ -131,11 +139,8 @@ const UserProfileImg = () => {
   }, [userRole])
 
   return (
-    <div className="w-8/12 h-3/5 relative">
-      <div className="flex bg-no-repeat w-full h-full bg-contain bg-[url('./asset/student_card/rm245-bb-17-g.jpg')]">
-        <button className="addImgBtn" onClick={() => moveProfileImg()}>
-          <LuImagePlus />
-        </button>
+    <div className="studentCard">
+      <div className="sign-up-profile-image-container">
         <div className="profileImg">
           {isProfileImg ? (
             <img
@@ -144,36 +149,32 @@ const UserProfileImg = () => {
               alt={inputProfileImg}
             />
           ) : (
-            <div className="profilePlaceholder">프로필 사진을 선택하세요!</div>
+            <div className="profilePlaceholder">
+              <div>프로필 사진을 선택하세요!</div>
+            </div>
           )}
         </div>
-        <span className="w-3/5 flex">
-          <div
-            className={`mx-1 w-max h-min border-2 rounded-full border-zinc-950 ${bgColor}`}
-          >
-            <div className="mx-1 text-xs">{inputUserRole}</div>
-          </div>
-          <div className="w-2/6">
-            <div className="title">이름</div>
-            <div className="title">나이</div>
-            <div className="title">생일</div>
-          </div>
-          <div className="w-3/6">
-            <div className="content">
-              <div>{userName}</div>
-            </div>
-            <div className="content">
-              <div>{userAge}세</div>
-            </div>
-            <div className="content">
-              <div>
-                {userBirthMonth}월 {userBirthDay}일
-              </div>
-            </div>
-          </div>
-        </span>
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+        <button onClick={() => moveProfileImg()}>
+          <LuImagePlus />
+        </button>
       </div>
-      <button className="absolute right-0" onClick={saveUser}>
+      <div className="sign-up-info">
+        <div className="sign-up-info-container">
+          <div>이름</div>
+          <div className="flex justify-center items-center gap-1">
+            {userName}
+            <div className={`userRole ${bgColor}`}>{inputUserRole}</div>
+          </div>
+          <div>나이</div>
+          <div>{userAge}세</div>
+          <div>생일</div>
+          <div>
+            {userBirthMonth}월 {userBirthDay}일
+          </div>
+        </div>
+      </div>
+      <button className="lime normal" onClick={saveUser}>
         지금부터 숲을 가꿔보자!
       </button>
     </div>

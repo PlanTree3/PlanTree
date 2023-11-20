@@ -10,7 +10,7 @@ import { FetchUserDataResponse } from '@/types/UserType'
 import {
   loginCheck,
   saveUserData,
-  fetchUserLogout,
+  logOutCheck,
   successUserLogout,
 } from '@/stores/features/userSlice'
 import { userInfo, userLogout } from '@/apis/member/user'
@@ -21,7 +21,7 @@ function* fetchUserDataSaga(): Generator<
   AxiosResponse<FetchUserDataResponse>
 > {
   const response: AxiosResponse<unknown> = yield call(userInfo)
-  if (response.data) {
+  if (response) {
     yield put(saveUserData(response.data))
   }
 }
@@ -31,14 +31,11 @@ function* fetchUserLogoutSaga(): Generator<
   void,
   AxiosResponse<FetchUserDataResponse>
 > {
-  const response: AxiosResponse<unknown> = yield call(userLogout)
-  if (response) {
-    yield put(successUserLogout())
-    sessionStorage.clear()
-  }
+  yield put(successUserLogout())
+  yield call(userLogout)
 }
 
 export function* watchFetchUserData() {
   yield takeLatest(loginCheck.type, fetchUserDataSaga)
-  yield takeLatest(fetchUserLogout.type, fetchUserLogoutSaga)
+  yield takeLatest(logOutCheck.type, fetchUserLogoutSaga)
 }

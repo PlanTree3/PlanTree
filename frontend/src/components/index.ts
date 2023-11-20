@@ -1,14 +1,19 @@
 // default
+
 export { default as Kakao } from '@/components/Kakao'
 export { default as Google } from '@/components/Google'
+export { default as Button } from '@/components/Button/Button'
 
 // Branch
 export { default as getRandomColor } from '@/components/Branch/ColorFunc'
 export { MoveHandler } from '@/components/Branch/HandleBranch'
 export { default as ItemPlacement } from '@/components/Branch/ItemPlacement'
 export { default as ReturnItems } from '@/components/Branch/ReturnItems'
-export { handleComment } from '@/components/Branch/Comments'
+export { default as Comments } from '@/components/Branch/Comments'
 export { default as MovableItem } from '@/components/Branch/MovableItem'
+export { default as NonMovableItem } from '@/components/Branch/NonMovableItem'
+export { default as ReturnItemsAdmin } from '@/components/Branch/ReturnItemsAdmin'
+export { default as ItemPlacementAdmin } from '@/components/Branch/ItemPlacementAdmin'
 
 // Chart
 export { BarChart, DoughnutChart, PieChart } from '@/components/Charts'
@@ -31,3 +36,10 @@ export { default as Tutorial1 } from '@/components/Tutorial/Tutorial1'
 export { default as Tutorial2 } from '@/components/Tutorial/Tutorial2'
 export { default as Tutorial3 } from '@/components/Tutorial/Tutorial3'
 export { default as LogIn } from '@/components/Tutorial/LogIn'
+
+// Check
+export { default as LoginCheck } from '@/components/LoginCheck'
+export { StudentCheck, ParentCheck, TeacherCheck } from '@/components/RoleCheck'
+
+// Quest
+export { default as QuestAdmin } from '@/components/Quest/QuestAdmin.tsx'

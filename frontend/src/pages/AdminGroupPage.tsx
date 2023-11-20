@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react'
-// import { Link } from 'react-router-dom'
-import axios from 'axios'
-// import QR from 'qrcode.react'
-import './GroupPage.css'
+import { Link, useNavigate } from 'react-router-dom'
+import './GroupPage.scss'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Button/Modal'
-import { groupCreate } from '@/apis'
-// import { GroupRequest } from '@/types/GroupAdminType'
-// import Rooster from '../../public/Rooster.png'
+import { groupCreate, teacherGroupList } from '@/apis'
+import { LoginCheck } from '@/components'
 
 const AdminGroupPage: React.FC = () => {
+  const navigate = useNavigate()
   //useState들
   const [currentPage, setCurrentPage] = useState(1)
   const [inputGroupName, setInputGroupName] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+  const [groupData, setGroupData] = useState<any>(null)
 
   // 모달 관련
   const openModal = () => {
@@ -26,99 +25,57 @@ const AdminGroupPage: React.FC = () => {
   const handleEnterKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      // handleCreateGroup();
     }
   }
-  // 임시 (뒤에 학생/교사/학부모) -> useState에 넣기
-  useEffect(() => {
-    // API 요청을 보내는 부분
-    axios
-      .post(
-        // 'http://localhost:8000/api/member-service/group',
-        'http://localhost:8000/api/member-service/dev/auth/login?oauthId=jyTeacher',
-      )
-      .then((response) => {
-        console.log('성공', response)
-      })
-      .catch((error) => {
-        console.error('오류', error)
-      })
-  }, [])
 
-  //그룹생성
-
+  // 그룹생성
   // if (!inputGroupName) {
   //   alert('그룹 이름을 지정해주세요')
   // } else {
   const data = { groupName: inputGroupName }
   const handleCreateGroup = async () => {
-    console.log('여기까진 됌??')
     try {
-      console.log('이것도 되지?')
       const response = await groupCreate(data)
       console.log('Response:', response)
     } catch (error) {
       console.error('Error:', error)
     }
-
-    // }
-    // 그룹 생성 API 호출
-    //   const data: GroupRequest = {
-    //     groupName: inputGroupName,
-    //   }
-    //   try {
-    //     const response = await authApi.post('api/member-service/group', data)
-    //     console.log(data)
-    //     if (response.status === 201) {
-    //       console.log('그룹 생성에 성공했습니다.')
-    //       closeModal()
-    //     }
-    //   } catch (error) {
-    //     console.error('그룹 생성에 실패했습니다.', error)
-    //   }
+    setIsOpen(false)
+    navigate('/adminGroup')
   }
 
-  // 일단 QR 임시
-  // const createQr = () => {
-  //   return (
-  //     <QR
-  //       value="https://www.naver.com/"
-  //       size={500}
-  //       id="basic"
-  //       level="H"
-  //       includeMargin={false} //QR 테두리 여부
-  //       bgColor="green"
-  //       fgColor="black"
-  //     />
-  //   )
-  // }
-  //여기부터는 페이지 넘기면서 조회하는 것 임시
+  // 그룹 리스트 조회
+  const handleGetGroupList = async () => {
+    try {
+      const response = await teacherGroupList()
+      console.log('Response:', response)
+      setGroupData(response.data)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  // useEffect(() => {
+  //   handleGetGroupList()
+  // }, [])
+
+  useEffect(() => {
+    handleGetGroupList()
+  }, [navigate])
+
+  //여기부터는 페이지 넘기면서 조회하는 것
   const GroupsPerPage = 5
-  const dummyData = {
-    statusCode: 200,
-    message: '수락 성공',
-    data: {
-      groups: [
-        { groupName: '그룹1', createdAt: '2023-01-15', studentCount: 10 },
-        { groupName: '그룹2', createdAt: '2023-02-20', studentCount: 15 },
-        { groupName: '그룹3', createdAt: '2023-03-10', studentCount: 8 },
-        { groupName: '그룹4', createdAt: '2023-04-05', studentCount: 12 },
-        { groupName: '그룹5', createdAt: '2023-05-18', studentCount: 20 },
-        { groupName: '그룹6', createdAt: '2023-06-22', studentCount: 7 },
-        { groupName: '그룹7', createdAt: '2023-07-09', studentCount: 13 },
-        { groupName: '그룹8', createdAt: '2023-08-12', studentCount: 18 },
-      ],
-    },
-  }
 
   const indexOfLastGroup = currentPage * GroupsPerPage
   const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
-  const currentGroups = dummyData.data.groups.slice(
+  const currentGroups = groupData?.data.groups?.slice(
     indexOfFirstGroup,
     indexOfLastGroup,
   )
 
-  const totalPages = Math.ceil(dummyData.data.groups.length / GroupsPerPage)
+  const totalPages = groupData?.data.groups
+    ? Math.ceil(groupData.data.groups.length / GroupsPerPage)
+    : 0
 
   const pageNumbers = []
   for (let i = 1; i <= totalPages; i += 1) {
@@ -129,56 +86,76 @@ const AdminGroupPage: React.FC = () => {
     setCurrentPage(page)
   }
 
+  // const navigate = useNavigate();
+
+  // const handleClick = () => {
+  //   const groupName = groupData.groupName
+  //   navigate({
+  //     pathname: `/adminGroupDetail/${groupData.groupId}`,
+  //     state: { groupName: groupName },
+  //   });
+  // };
+
+  // 그룹 유니크
+  const uniqueGroups = currentGroups
+    ? Array.from(new Set(currentGroups.map((group: any) => group.groupId))).map(
+        (groupId) =>
+          currentGroups.find((group: any) => group.groupId === groupId),
+      )
+    : []
   return (
-    <div>
-      <div>
-        {/* 이 부분은 학부모/ 교사가 분리되며 필요 없어짐 온전하게 그룹 */}
-        {/* <Link to="/adminNest">
-          <button className="box-border w-2/3 p-5 border-4 bg-amber-400 rounded-3xl">
-            <div className="flex flex-row">
-              <img className="chick flex flex-start" src={Rooster} alt="" />
-              <div className="flex items-center text-white tracking-widest">
-                여기는 그룹이름임
-                <br />
-                둥지장동지:
-                <br />
-                병아리 동지:
-              </div>
-            </div>
-          </button>
-        </Link> */}
+    <div className="admin-group-page-container">
+      <div className="admin-group-page-title">
+        <div className="admin-group-page-title-text">내 그룹 확인하기</div>
+        <Button
+          className="normal primary"
+          onClick={openModal}
+          label="그룹 생성하기"
+        />
       </div>
-      <hr />
-      <h2>내 그룹 확인하기</h2>
-      <div className="studentListBox">
-        <h3>번호 그룹명 시작일 인원</h3>
-        {currentGroups.map((group, index: number) => (
-          <div>
-            {/* eslint-disable-next-line react/no-array-index-key */}
-            <div key={index} className="groupItem">
+      <div className="admin-group-page-list-box">
+        {currentGroups?.length !== 0 && (
+          <>
+            <div className="admin-group-page-list-title">
+              <div>번호</div>
+              <div>제목</div>
+              <div>생성일</div>
+              <div>인원</div>
+            </div>
+            <hr />
+          </>
+        )}
+
+        {uniqueGroups?.map((group: any, index: number) => (
+          <Link
+            to={`/adminGroupDetail/${group.groupId}`}
+            key={(group.groupId, index)}
+            state={{ groupName: group.groupName }}
+          >
+            <div className="admin-group-item">
               <p className="groupInfo">{index + 1 + (currentPage - 1) * 5} </p>
               <p className="groupInfo">{group.groupName} </p>
-              <p className="groupInfo">{group.createdAt} </p>
+              <p className="groupInfo">
+                {group.createdAt[0]}-{group.createdAt[1]}-{group.createdAt[2]}{' '}
+              </p>
               <p className="groupInfo">{group.studentCount} </p>
             </div>
-            <hr style={{ background: 'black', height: 1, border: 0 }} />
-          </div>
+          </Link>
         ))}
       </div>
-      <div className="pagination">
+      <div className="admin-group-pagination">
         {pageNumbers.map((number) => (
           <button key={number} onClick={() => changePage(number)}>
             {number}
           </button>
         ))}
       </div>
-      <Button className="primary" onClick={openModal} label="그룹 생성하기" />
       <Modal
         isOpen={isOpen}
         onClose={closeModal}
         content={
-          <div>
-            <div>그룹명을 입력해주세요</div>
+          <div className="space-y-[2vh]">
+            <div className="text-lg">그룹명을 입력해주세요</div>
             <input
               placeholder="ex. 2023 3학년 2반"
               maxLength={50}
@@ -186,11 +163,15 @@ const AdminGroupPage: React.FC = () => {
               onKeyDown={handleEnterKeyPress}
             />
             <Button
-              className="primary"
+              className="primary normal"
               label="생성하기"
               onClick={handleCreateGroup}
             />
-            <Button className="primary" label="취소" onClick={closeModal} />
+            <Button
+              className="red normal ml-4"
+              label="취소"
+              onClick={closeModal}
+            />
           </div>
         }
       />
@@ -198,4 +179,4 @@ const AdminGroupPage: React.FC = () => {
   )
 }
 
-export default AdminGroupPage
+export default LoginCheck(AdminGroupPage)

@@ -1,85 +1,58 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Mousewheel } from 'swiper/modules'
+import { Mousewheel, Pagination } from 'swiper/modules'
+import { useDispatch, useSelector } from 'react-redux'
 import ForestCard from '@/components/ForestCard/ForestCard'
 import './ForestPage.css'
 import 'atropos/css'
-import Button from '@/components/Button/Button'
-
-// Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
 
-let forests = [
-  {
-    forestName: '놀러오세요 주영의 숲',
-    year: 2020,
-  },
-  {
-    forestName: '놀러오세요 도현의 숲',
-    year: 2021,
-  },
-  {
-    forestName: '튀어나와요 연재의 숲',
-    year: 2022,
-  },
-  {
-    forestName: '모여봐요 영석의 숲',
-    year: 2023,
-  },
-]
-forests = forests.sort((a, b) => b.year - a.year)
+import { RootState } from '@/stores/store.ts'
+import { getForestData } from '@/stores/features/forestSlice.ts'
+import { LoginCheck, StudentCheck } from '@/components'
 
 const ForestPage = () => {
-  const [selected, setIndex] = useState(0)
-
-  const handleSelect = (idx: number) => {
-    setIndex(idx)
-  }
-
-  const slideChange = (e: any) => {
-    setIndex(e.activeIndex)
-  }
+  const dummyData = [
+    {
+      forestId: '23e77f3c-30f1-4f64-a42c-8b42de61d0ed',
+      startedAt: '2022-03-07',
+      endedAt: '2023-03-05',
+    },
+    {
+      forestId: '6b9cfd4c-e61a-4d2e-8ec5-55f92d2f5a19',
+      startedAt: '2023-03-06',
+      endedAt: '2024-03-03',
+    },
+  ]
+  const forests =
+    useSelector((state: RootState) => state.forest.forests) ?? dummyData
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getForestData())
+  }, [])
 
   return (
-    <div className="forest-page-container">
-      <div className="side-bar">
-        {forests.map((forest, idx) => {
-          return (
-            <Button
-              label={forest.year.toString()}
-              className={selected === idx ? 'primary' : 'gray'}
-              onClick={() => handleSelect(idx)}
+    <Swiper
+      slidesPerView="auto"
+      pagination={{ clickable: true }}
+      mousewheel
+      modules={[Mousewheel, Pagination]}
+    >
+      {forests?.map((forest) => (
+        <SwiperSlide key={forest.forestId}>
+          <div className="forest-card-container">
+            <ForestCard
+              nav={forest.forestId}
+              forestName={forest.startedAt}
+              endedAt={forest.endedAt}
             />
-          )
-        })}
-        <Swiper
-          direction="vertical"
-          slidesPerView={1}
-          mousewheel
-          modules={[Mousewheel]}
-          onSlideChange={slideChange}
-          initialSlide={selected}
-        >
-          {forests.map((forest) => {
-            return (
-              <SwiperSlide>
-                <div>
-                  {forest.year} - {forest.forestName}
-                </div>
-              </SwiperSlide>
-            )
-          })}
-        </Swiper>
-      </div>
-      <div className="forest-card-container">
-        <ForestCard
-          nav={forests[selected].year}
-          forestName={forests[selected].forestName}
-        />
-      </div>
-    </div>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
   )
 }
 
-export default ForestPage
+// export default LoginCheck(ForestPage)
+export default StudentCheck(LoginCheck(ForestPage))

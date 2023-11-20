@@ -9,7 +9,7 @@ export interface UserState {
 const defaultUser: UserData = {
   role: 'STUDENT',
   name: '요 정 출 현',
-  profileImageUrl: 'public/asset/profile/rabbit.jpg',
+  profileImageUrl: 'public/profile/rabbit.jpg',
 }
 const initialState: UserState = {
   isLoggedIn: false,
@@ -21,22 +21,43 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginCheck: (state) => {
-      state.isLoggedIn = true
+    loginCheck: () => {
+      localStorage.clear()
     },
-    fetchReUserData: () => {},
     saveUserData: (state, action: PayloadAction<any>) => {
+      localStorage.clear()
+      state.isLoggedIn = true
       state.userData = action.payload
+      if (state.userData.role === 'STUDENT') {
+        window.location.href = '/main'
+      } else if (state.userData.role === 'TEACHER') {
+        window.location.href = '/adminGroup'
+      } else {
+        window.location.href = '/adminNest'
+      }
     },
-    fetchUserLogout: () => {},
-    successUserLogout: (state) => {
+    successUserLogout: () => {
+      localStorage.clear()
+    },
+    addProfileImageUrl: (state, action: PayloadAction<string>) => {
+      state.userData.profileImageUrl = action.payload
+    },
+    logOutCheck: (state) => {
       state.isLoggedIn = false
       state.userData = defaultUser
-      localStorage.clear()
+    },
+    addName: (state, action: PayloadAction<string>) => {
+      state.userData.name = action.payload
     },
   },
 })
 
-export const { loginCheck, saveUserData, fetchUserLogout, successUserLogout } =
-  userSlice.actions
+export const {
+  loginCheck,
+  saveUserData,
+  successUserLogout,
+  addProfileImageUrl,
+  logOutCheck,
+  addName,
+} = userSlice.actions
 export default userSlice.reducer

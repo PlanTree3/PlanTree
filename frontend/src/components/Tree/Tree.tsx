@@ -1,44 +1,25 @@
 /* eslint-disable react/no-unknown-property */
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls, useGLTF } from '@react-three/drei'
 import { Suspense } from 'react'
-import { GLTF } from 'three-stdlib'
 
-type GLTFResult = GLTF & {
-  nodes: {
-    Icosphere_Material001_0: THREE.Mesh
-  }
-  materials: {
-    ['Material.001']: THREE.MeshStandardMaterial
-  }
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
+import { BigTree, Fruit, Log, MediumTree, SmallTree } from './models'
+
+interface TreeProps {
+  degree: number
+  complete: number
 }
 
-export const Model = (props: JSX.IntrinsicElements['group']) => {
-  const { nodes, materials } = useGLTF('/models/tree/scene.gltf') as GLTFResult
-  return (
-    <group {...props} dispose={null}>
-      <mesh
-        geometry={nodes.Icosphere_Material001_0.geometry}
-        material={materials['Material.001']}
-        position={[0, 8, 7]}
-        rotation={[-Math.PI / 2, 0, 89.56]}
-        scale={[10, 10, 7.458]}
-      />
-    </group>
-  )
-}
-
-const Tree = () => {
+const Tree = ({ degree, complete }: TreeProps) => {
   return (
     <Canvas
       camera={{
-        fov: 75,
-        position: [37, 0, 0],
+        position: [30, 50, 0],
       }}
     >
       <Suspense fallback={null}>
-        <ambientLight />
-        <directionalLight />
+        <ambientLight intensity={1} />
+        <directionalLight intensity={5} position={[3, 2, 1]} />
         <spotLight
           intensity={2}
           angle={2}
@@ -46,13 +27,19 @@ const Tree = () => {
           position={[0, 0, 0]}
           castShadow
         />
-        <Model />
+        {degree <= 20 && <Log />}
+        {degree > 20 && degree <= 50 && <SmallTree />}
+        {degree > 50 && degree < 100 && <MediumTree />}
+        {degree === 100 && <BigTree />}
+        <Fruit degree={complete} />
         <OrbitControls
-          enablePan
+          enablePan={false}
           enableZoom={false}
           enableRotate
           minPolarAngle={Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
+          minAzimuthAngle={Math.PI / 2.7}
+          maxAzimuthAngle={Math.PI / 1.7}
         />
       </Suspense>
     </Canvas>

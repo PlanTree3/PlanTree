@@ -7,38 +7,45 @@
 }
 
 .xsmall {
-  width: 120px;
-  height: 40px;
-  font-size: 1rem;
+  height: 2.5vh;
+  font-size: 0.7rem;
   border-radius: 4px;
-  padding: 0;
+  @apply px-[1vw];
 }
 
 .small {
-  width: 140px;
-  height: 60px;
-  font-size: 1rem;
+  height: 3.5vh;
+  font-size: 0.8rem;
   border-radius: 4px;
+
+  @apply px-[1vw];
 }
 
 .normal {
-  width: 240px;
-  height: 60px;
-  font-size: 1.5rem;
-  border-radius: 8px;
+  height: 4vh;
+  font-size: 1rem;
+  border-radius: 10px;
+  @apply px-3;
 }
 
 .large {
-  width: 360px;
-  height: 60px;
-  font-size: 1.5rem;
+  /* width: 60px;
+  height: 60px; */
   border-radius: 8px;
+  @apply text-base;
+}
+
+.long {
+  @apply w-full h-[7vh] text-xl rounded-lg px-3;
 }
 
 .primary {
   background-color: #3579d4;
   color: #fff;
   border: #3579d4;
+}
+.lime {
+  @apply bg-lime-500 border-lime-500;
 }
 
 .gray {
@@ -55,4 +62,12 @@
 
 .button {
   cursor: pointer;
+  @apply hover:bg-amber-700;
+}
+
+.brown {
+  background-color: #dddbcb;
+  color: #964b00;
+  /* border-color: #964b00; */
+  @apply border-red-800;
 }

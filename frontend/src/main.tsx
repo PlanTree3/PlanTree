@@ -1,17 +1,22 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { PersistGate } from 'redux-persist/integration/react'
-import { persistor } from '@/stores/store'
+import './index.css'
+import { isMobile } from 'react-device-detect'
+import { TouchBackend } from 'react-dnd-touch-backend'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
+import { persist } from '@/stores/store'
 import Provider from '@/stores/provider'
 import App from './App'
-import './index.css'
+
+const backendForDND = isMobile ? TouchBackend : HTML5Backend
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Provider>
-      <PersistGate loading={null} persistor={persistor}>
+  <Provider>
+    <PersistGate loading={null} persistor={persist}>
+      <DndProvider backend={backendForDND}>
         <App />
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>,
+      </DndProvider>
+    </PersistGate>
+  </Provider>,
 )

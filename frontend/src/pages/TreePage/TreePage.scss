@@ -1,8 +1,11 @@
 .tree-page {
-  @apply space-y-3 h-full overflow-y-auto;
+  @apply space-y-5 h-full overflow-y-auto;
 
   &-tree {
-    @apply h-4/5 flex justify-center;
+    @apply h-3/5 flex justify-center;
+  }
+  &-container {
+    @apply space-y-3;
   }
   &-title {
     @apply text-xl;
@@ -12,5 +15,12 @@
   }
   &-chart {
     @apply text-center max-h-full w-[30%];
+  }
+  &-report-container {
+    @apply list-disc ml-5;
+  }
+
+  &-report-list {
+    @apply flex justify-between;
   }
 }

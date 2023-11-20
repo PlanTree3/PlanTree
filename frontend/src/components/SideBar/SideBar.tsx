@@ -1,88 +1,123 @@
-import { useState } from 'react'
-// import axios from 'axios';
-import ReactModal from 'react-modal'
+import { useState, useEffect } from 'react'
 import './SideBar.scss'
-import { Link } from 'react-router-dom'
-import post2 from '../../../public/sidebar/02_orange.png'
-import post3 from '../../../public/sidebar/03_yellow.png'
-import post4 from '../../../public/sidebar/04_gress.png'
-import post5 from '../../../public/sidebar/05_sky.png'
-import post1 from '../../../public/sidebar/01_red.png'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import treeImg from '../../../public/sidebar/navbar_tree.png'
+import forestImg from '../../../public/sidebar/navbar_forest.png'
+// import post3 from '../../../public/sidebar/navbar_.png'
+import questImg from '../../../public/sidebar/navbar_quest.png'
+import nestImg from '../../../public/sidebar/navbar_nest.png'
 import bell from '../../../public/bell.png'
+import checkBell from '../../../public/checkBell.png'
+import { logOutCheck } from '@/stores/features/userSlice'
+import NotificationBox from '../notificationBox'
+import Button from '../Button/Button'
+import { notificationCheck } from '@/apis'
 
 const SideBar = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [checkData, setCheckData] = useState(false)
+  const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn)
+  const role = useSelector((state: any) => state.user.userData.role) ?? null
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const openModal = () => {
-    setModalIsOpen(true)
+    setModalOpen(true)
   }
 
   const closeModal = () => {
-    setModalIsOpen(false)
+    setModalOpen(false)
   }
+  const handleLogout = async () => {
+    dispatch(logOutCheck())
+    navigate('/login')
+  }
+  // 새로운 알람있는지 확인
+  const handleNotificationCheck = async () => {
+    try {
+      const response = await notificationCheck()
+      console.log('알림함 체크 응답', response)
+      setCheckData(response.data.data.notificationPresent)
+    } catch (error) {
+      console.error('알림함 체크 에러:', error)
+    }
+  }
+
+  const roleBasedMain = (kind: string | null) => {
+    switch (kind) {
+      case 'STUDENT':
+        return '/main'
+      case 'TEACHER':
+        return '/adminGroup'
+      case 'PARENT':
+        return '/adminNest'
+      default:
+        return '/main'
+    }
+  }
+
+  //이 부분 추가 로직 필요 / 언제 체크할지?
+  useEffect(() => {
+    handleNotificationCheck()
+  }, [])
+
   return (
-    <>
-      <div className="sidebar-btn">
-        <Link to="/" className="sidebar-btn-deco">
-          <button>
-            <img src={post1} alt="Home" className="btn-deco" />
-          </button>
+    <div className="sidebar-container">
+      <div className="sidebar-btn-container">
+        <Link to={roleBasedMain(role)} className="sidebar-btn">
+          <div className="img">
+            <img src={treeImg} alt="Main" />
+            메인
+          </div>
         </Link>
-        <Link to="/main" className="sidebar-btn-deco">
-          <button>
-            <img src={post2} alt="Main" className="btn-deco" />
-          </button>
+        {(role === 'STUDENT' || null) && (
+          <Link to="/forest" className="sidebar-btn">
+            <div className="img">
+              <img src={forestImg} alt="" />숲
+            </div>
+          </Link>
+        )}
+        {(role === 'STUDENT' || null) && (
+          <Link to="/studentGroup" className="sidebar-btn">
+            <div className="img">
+              <img src={nestImg} alt="studentGroup" />
+              둥지
+            </div>
+          </Link>
+        )}
+        <Link to="/quest" className="sidebar-btn">
+          <div className="img">
+            <img src={questImg} alt="Quest" />
+            퀘스트
+          </div>
         </Link>
-        <Link to="/branch" className="sidebar-btn-deco">
-          <button>
-            <img src={post3} alt="Branch" className="btn-deco" />
-          </button>
-        </Link>
-        <Link to="/mypage" className="sidebar-btn-deco">
-          <button>
-            <img src={post4} alt="Mypage" className="btn-deco" />
-          </button>
-        </Link>
-        <Link to="/quest" className="sidebar-btn-deco">
-          <button>
-            <img src={post5} alt="Quest" className="btn-deco" />
-          </button>
+        <Link to="/mypage" className="sidebar-btn">
+          <div className="img">
+            <img src={treeImg} alt="Mypage" />
+            마이페이지
+          </div>
         </Link>
       </div>
-      <button onClick={openModal} className="sidebar-bell">
-        <img src={bell} alt="알람" className="sidebar-bell-img" />
-      </button>
+      <div className="sidebar-bottom">
+        <button onClick={openModal} className="sidebar-bell">
+          <img
+            src={checkData ? checkBell : bell}
+            alt="알람"
+            className="sidebar-bell-img"
+          />
+        </button>
+        <NotificationBox modalOpen={modalOpen} closeModal={closeModal} />
 
-      <ReactModal
-        isOpen={modalIsOpen}
-        ariaHideApp={false}
-        onRequestClose={closeModal}
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
-            width: '100%',
-            height: '100vh',
-            zIndex: 10,
-            top: 0,
-            left: 0,
-          },
-          content: {
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '80%',
-            height: '80%',
-            border: '1px #000',
-            borderRadius: '10px',
-            overflow: 'auto',
-            background: '#F5F5DC',
-            boxShadow: '3px 3px 3px rgba(0, 0, 0, 0.25)',
-          },
-        }}
-      >
-        <div className="font-semibold text-xl">알림 확인하기</div>
-      </ReactModal>
-    </>
+        {isLoggedIn && (
+          <Button
+            className="red small self-center"
+            onClick={handleLogout}
+            label="로그아웃"
+          />
+        )}
+      </div>
+    </div>
   )
 }
 

@@ -1,18 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { DndProvider } from 'react-dnd'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import plusIcon from '../../../public/btn/plusIcon.svg'
-import writeIcon from '../../../public/btn/writeIcon.svg'
 import { RootState } from '@/stores/store'
-import { getRandomColor, ReturnItems } from '@/components'
+import { Button, getRandomColor, ReturnItems } from '@/components'
 import { COLUMN_NAMES } from '@/types/DnDType'
 import { addBranches, addSeeds } from '@/stores/features/branchSlice'
 import Column from '@/components/Column'
@@ -21,7 +17,8 @@ const ItemPlacement = () => {
   const dispatch = useDispatch()
   const seeds = useSelector((state: RootState) => state.branch.seeds)
   const branches = useSelector((state: RootState) => state.branch.branches)
-  const [colors, setColors] = useState('ffffff')
+  const treeId = useSelector((state: RootState) => state.main.treeId)
+  const [colors, setColors] = useState('lightgray')
   const [newText, setNewText] = useState('')
   const [newTitle, setNewTitle] = useState('')
   const [selectedBranchId, setSelectedBranchId] = useState(0)
@@ -40,6 +37,23 @@ const ItemPlacement = () => {
     THURSDAY_FINISH,
     FRIDAY_FINISH,
   } = COLUMN_NAMES
+  useEffect(() => {
+    if (!treeId) {
+      window.location.href = '/main'
+    }
+  })
+
+  function generateRandomString(): string {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    const length = 10
+    let result = ''
+    for (let i = 0; i < length; i += 1) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length))
+    }
+    return result
+  }
+
   const handleValueText = (event: ChangeEvent<HTMLInputElement>) => {
     setNewText(event.target.value)
   }
@@ -47,21 +61,22 @@ const ItemPlacement = () => {
     setNewTitle(event.target.value)
   }
   const createItem = () => {
-    if (selectedBranchId) {
+    if (selectedBranchId && seeds) {
       if (newText.length >= 2) {
-        const maxId = seeds.length + 90873
+        const maxId = generateRandomString()
         const newItem = {
           seedId: maxId,
           seedName: newText,
           dayOfWeek: DEFAULT,
           branchId: selectedBranchId,
-          color: colors,
+          branchColor: colors,
         }
         const newSeeds = [...seeds, newItem]
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { seedId, ...createdItem } = newItem
         const data = {
           newSeeds,
-          createdItem
+          createdItem,
         }
         dispatch(addSeeds(data))
         setNewText('')
@@ -82,18 +97,19 @@ const ItemPlacement = () => {
     }
   }
   const createBranch = () => {
-    if (newTitle.length >= 2) {
-      const maxId = branches.length + 927343
+    if (newTitle.length >= 2 && branches) {
+      const maxId = generateRandomString()
       const newItem = {
         branchId: maxId,
         branchName: newTitle,
         color: getRandomColor(),
       }
       const newBranches = [...branches, newItem]
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { branchId, ...createdItem } = newItem
       const data = {
         newBranches,
-        createdItem
+        createdItem,
       }
       dispatch(addBranches(data))
       setNewTitle('')
@@ -123,42 +139,86 @@ const ItemPlacement = () => {
   const handleCloseCreateSeed = () => {
     setOpenSeed(false)
   }
+  //
+  // useEffect(() => {
+  //   if (branches) {
+  //     handleBranchSelect(branches[0].branchId, branches[0].branchColor)
+  //   }
+  // }, [branches])
+
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="dnd-box-container">
-        <div className="dnd-create-btn-box">
-          <button className="dnd-add-branch-btn" onClick={handleClickOpen}>
-            <img src={plusIcon} alt="추가" />
-          </button>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>가지 만들기</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                새로운 일정을 등록할 가지를 입력해주세요
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="가지 이름"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={newTitle}
-                onChange={handleValueTitle}
-              />
-            </DialogContent>
-            <DialogActions>
-              <button onClick={handleClose}>취소</button>
-              <button onClick={createBranch}>등록</button>
-            </DialogActions>
-          </Dialog>
-          <button
-            className="dnd-add-seed-btn"
+    <div className="dnd-box-container">
+      <div className="dnd-branch-container">
+        <div className="dnd-branch-box">
+          {branches?.map((branch: any) => (
+            <button
+              key={branch.branchId}
+              className="dnd-branch-btn"
+              onClick={() =>
+                handleBranchSelect(branch.branchId, branch.branchColor)
+              }
+              style={{
+                border: `3px solid ${branch.branchColor}`,
+                borderBottom: '0',
+                backgroundColor:
+                  selectedBranchId !== branch.branchId
+                    ? ''
+                    : branch.branchColor,
+                color: selectedBranchId === branch.branchId ? 'white' : 'black',
+                zIndex: selectedBranchId === branch.branchId ? 2 : 1,
+              }}
+            >
+              {branch.branchName}
+            </button>
+          ))}
+        </div>
+        <Button
+          onClick={handleClickOpen}
+          className="lime small w-[9vw]"
+          label="가지 만들기"
+        />
+
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>가지 만들기</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              새로운 일정을 등록할 가지를 입력해주세요
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="가지 이름"
+              type="text"
+              fullWidth
+              variant="standard"
+              value={newTitle}
+              onChange={handleValueTitle}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button className="red small" onClick={handleClose} label="취소" />
+            <Button
+              className="primary small"
+              onClick={createBranch}
+              label="등록"
+            />
+          </DialogActions>
+        </Dialog>
+      </div>
+      <div
+        style={{ border: `0.3vw solid ${colors}` }}
+        className="dnd-seed-outer-container"
+      >
+        <div className="dnd-seed-outer-box">
+          {ReturnItems(DEFAULT, selectedBranchId)}
+        </div>
+        <div className="dnd-seed-create-btn">
+          <Button
+            className="lime small"
             onClick={handleClickOpenCreateSeed}
-          >
-            <img src={writeIcon} alt="추가" />
-          </button>
+            label="씨앗 만들기"
+          />
           <Dialog open={openSeed} onClose={handleCloseCreateSeed}>
             <DialogTitle>씨앗 만들기</DialogTitle>
             <DialogContent>
@@ -178,94 +238,123 @@ const ItemPlacement = () => {
               />
             </DialogContent>
             <DialogActions>
-              <button onClick={handleCloseCreateSeed}>취소</button>
-              <button onClick={createItem}>등록</button>
+              <Button
+                className="red small"
+                onClick={handleCloseCreateSeed}
+                label="취소"
+              />
+              <Button
+                className="primary small"
+                onClick={createItem}
+                label="등록"
+              />
             </DialogActions>
           </Dialog>
         </div>
-        <div className="dnd-branch-box">
-          {branches.map((branch: any) => (
-            <button
-              key={branch.branchId}
-              className="dnd-branch-btn"
-              onClick={() => handleBranchSelect(branch.branchId, branch.color)}
-              style={{
-                backgroundColor:
-                  selectedBranchId === branch.branchId
-                    ? 'lightgray'
-                    : branch.color,
-                color: selectedBranchId === branch.branchId ? 'white' : 'black',
-                zIndex: selectedBranchId === branch.branchId ? 2 : 1,
-              }}
-            >
-              {branch.branchName}
-            </button>
-          ))}
+      </div>
+      <div className="dnd_container">
+        <div
+          className="dnd_container-text"
+          style={{
+            gridArea: 'mon',
+          }}
+        >
+          월
         </div>
         <div
-          style={{ backgroundColor: 'lightgray' }}
-          className="dnd-seed-outer-container"
+          className="dnd_container-text"
+          style={{
+            gridArea: 'tue',
+          }}
         >
-          {ReturnItems(DEFAULT, selectedBranchId)}
+          화
         </div>
-        <div className="dnd_container">
-          <p>월</p>
-          <p>화</p>
-          <p>수</p>
-          <p>목</p>
-          <p>금</p>
+        <div
+          className="dnd_container-text"
+          style={{
+            gridArea: 'wed',
+          }}
+        >
+          수
         </div>
-        <div className="dnd_container">
-          <Column title={MONDAY} className="dnd_column dnd_column_shape1">
-            {ReturnItems(MONDAY, selectedBranchId)}
-          </Column>
-          <Column title={TUESDAY} className="dnd_column dnd_column_shape2">
-            {ReturnItems(TUESDAY, selectedBranchId)}
-          </Column>
-          <Column title={WEDNESDAY} className="dnd_column dnd_column_shape3">
-            {ReturnItems(WEDNESDAY, selectedBranchId)}
-          </Column>
-          <Column title={THURSDAY} className="dnd_column dnd_column_shape4">
-            {ReturnItems(THURSDAY, selectedBranchId)}
-          </Column>
-          <Column title={FRIDAY} className="dnd_column dnd_column_shape5">
-            {ReturnItems(FRIDAY, selectedBranchId)}
-          </Column>
+        <div
+          className="dnd_container-text"
+          style={{
+            gridArea: 'thu',
+          }}
+        >
+          목
         </div>
-        <div className="dnd_container">
-          <Column
-            title={MONDAY_FINISH}
-            className="dnd_column dnd_column_shape1"
-          >
-            {ReturnItems(MONDAY_FINISH, selectedBranchId)}
-          </Column>
-          <Column
-            title={TUESDAY_FINISH}
-            className="dnd_column dnd_column_shape2"
-          >
-            {ReturnItems(TUESDAY_FINISH, selectedBranchId)}
-          </Column>
-          <Column
-            title={WEDNESDAY_FINISH}
-            className="dnd_column dnd_column_shape3"
-          >
-            {ReturnItems(WEDNESDAY_FINISH, selectedBranchId)}
-          </Column>
-          <Column
-            title={THURSDAY_FINISH}
-            className="dnd_column dnd_column_shape4"
-          >
-            {ReturnItems(THURSDAY_FINISH, selectedBranchId)}
-          </Column>
-          <Column
-            title={FRIDAY_FINISH}
-            className="dnd_column dnd_column_shape5"
-          >
-            {ReturnItems(FRIDAY_FINISH, selectedBranchId)}
-          </Column>
+        <div
+          className="dnd_container-text"
+          style={{
+            gridArea: 'fri',
+          }}
+        >
+          금
         </div>
       </div>
-    </DndProvider>
+      <div className="dnd_container">
+        <div
+          className="flex justify-center items-center py-1 border-[3px] rounded-r-[1vw]"
+          style={{
+            writingMode: 'vertical-lr',
+            boxShadow: '2px 2px 5px 3px #999',
+            gridArea: 'a',
+          }}
+        >
+          진행중
+        </div>
+        <Column title={MONDAY} className="dnd_column dnd_column_shape1">
+          {ReturnItems(MONDAY, selectedBranchId)}
+        </Column>
+        <Column title={TUESDAY} className="dnd_column dnd_column_shape2">
+          {ReturnItems(TUESDAY, selectedBranchId)}
+        </Column>
+        <Column title={WEDNESDAY} className="dnd_column dnd_column_shape3">
+          {ReturnItems(WEDNESDAY, selectedBranchId)}
+        </Column>
+        <Column title={THURSDAY} className="dnd_column dnd_column_shape4">
+          {ReturnItems(THURSDAY, selectedBranchId)}
+        </Column>
+        <Column title={FRIDAY} className="dnd_column dnd_column_shape5">
+          {ReturnItems(FRIDAY, selectedBranchId)}
+        </Column>
+      </div>
+      <div className="dnd_container">
+        <div
+          className="flex justify-center items-center py-1 border-[3px] rounded-r-[1vw]"
+          style={{
+            writingMode: 'vertical-lr',
+            boxShadow: '2px 2px 5px 3px #999',
+            gridArea: 'a',
+          }}
+        >
+          완료
+        </div>
+        <Column title={MONDAY_FINISH} className="dnd_column dnd_column_shape1">
+          {ReturnItems(MONDAY_FINISH, selectedBranchId)}
+        </Column>
+        <Column title={TUESDAY_FINISH} className="dnd_column dnd_column_shape2">
+          {ReturnItems(TUESDAY_FINISH, selectedBranchId)}
+        </Column>
+        <Column
+          title={WEDNESDAY_FINISH}
+          className="dnd_column dnd_column_shape3"
+        >
+          {ReturnItems(WEDNESDAY_FINISH, selectedBranchId)}
+        </Column>
+        <Column
+          title={THURSDAY_FINISH}
+          className="dnd_column dnd_column_shape4"
+        >
+          {ReturnItems(THURSDAY_FINISH, selectedBranchId)}
+        </Column>
+        <Column title={FRIDAY_FINISH} className="dnd_column dnd_column_shape5">
+          {ReturnItems(FRIDAY_FINISH, selectedBranchId)}
+        </Column>
+      </div>
+    </div>
   )
 }
 export default ItemPlacement

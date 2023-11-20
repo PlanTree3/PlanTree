@@ -1,58 +1,130 @@
-// import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react'
 // import axios from 'axios';
 import { Link } from 'react-router-dom'
 import chick from '../../public/chick.png'
 import forest from '../../public/forest_tmp.png'
-import './GroupPage.css'
+import './GroupPage.scss'
+import { userGroupList } from '@/apis'
+import { LoginCheck, StudentCheck } from '@/components'
 // import StudentGroupPageResponse from '../types/GroupStudentType'
 
 const StudentGroupPage = () => {
-  // const [data, setData] = useState<StudentGroupPageResponse | null>(null);
+  const [studentData, setStudentData] = useState<any>(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
-  // useEffect(() => {
-  // const apiUrl = 'API URL자리임';
-  //   axios
-  //     .get<StudentGroupPageResponse>(apiUrl)
-  //     .then((response) => {
-  //       setData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
+  // 학생의 그룹, 둥지 정보 조회
+  const handleGetList = async () => {
+    try {
+      const response = await userGroupList()
+      console.log('Response:', response)
+      setStudentData(response.data.data)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  useEffect(() => {
+    handleGetList()
+  }, [])
+
+  // 페이지
+  const GroupsPerPage = 5
+
+  const indexOfLastGroup = currentPage * GroupsPerPage
+  const indexOfFirstGroup = indexOfLastGroup - GroupsPerPage
+  const currentGroups = studentData?.groups?.slice(
+    indexOfFirstGroup,
+    indexOfLastGroup,
+  )
+
+  const totalPages = studentData?.groups
+    ? Math.ceil(studentData.groups.length / GroupsPerPage)
+    : 0
+
+  const pageNumbers = []
+  for (let i = 1; i <= totalPages; i += 1) {
+    pageNumbers.push(i)
+  }
+
+  const changePage = (page: number) => {
+    setCurrentPage(page)
+  }
 
   return (
-    // <div className="sketchbook">
-    <div className="p-10">
-      <div className="whiteBox pb-5">
-        <text>내 둥지 확인하기</text>
-        <div className="box-border h-30 w-2/3 p-5 border-4 bg-amber-700 rounded-3xl">
-          <div className="flex flex-row">
-            <img className="chick flex flex-start" src={chick} alt="" />
-            <div className="flex items-center text-white tracking-widest">
-              여기는 그룹이름임
-              <br />
-              둥지장동지:
-              <br />
-              병아리 동지:
+    <div>
+      {studentData && studentData.nest ? (
+        // 둥지가 있는 경우
+        <div>
+          {/* <text className="font-semibold text-2xl"> */}
+          <text className="font-semibold text-2xl">내 둥지 확인하기</text>
+          {/* <div className="box-border h-30 w-3/4 p-5 border-4 bg-amber-700 rounded-3xl"> */}
+          <div>
+            <div className="student-group-nest-area">
+              <div className="student-group-nest-area-image-container">
+                <img src={chick} alt="병아리" />
+              </div>
+              <div className="student-group-nest-area-text-container">
+                <div className="text-4xl font-semibold">
+                  {studentData.nest.nestName}
+                </div>
+                <div className="student-group-nest-area-text">
+                  <title>둥지장</title>
+                  {studentData.nest.parents.map(
+                    (parent: any, index: number) => (
+                      <text key={index}>{parent}</text>
+                    ),
+                  )}
+                </div>
+                <div className="student-group-nest-area-text">
+                  <title>둥지원</title>
+                  <div>
+                    {studentData.nest.children.map(
+                      (child: any, index: number) => (
+                        <text key={index}>{child}</text>
+                      ),
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <text>내 그룹 확인하기</text>
-        <div className="flex-container">
-          <Link to="/studentGroupDetail">
-            <img className="forest" src={forest} alt="" />
-          </Link>
-          <Link to="/studentGroupDetail">
-            <img className="forest" src={forest} alt="" />
-          </Link>
-          <Link to="/studentGroupDetail">
-            <img className="forest" src={forest} alt="" />
-          </Link>
+      ) : (
+        <div className="student-group-nest-area">
+          <div className="student-group-nest-area-image-container">
+            <img src={chick} alt="" />
+          </div>
+          <div className="student-group-nest-area-text-container">
+            <title>아직 둥지가 없어요</title>
+            <text>보호자와 연결해서 둥지를 만들어 보아요!</text>
+          </div>
         </div>
+      )}
+      <br />
+      {/* <text className="font-semibold text-2xl"> */}
+      <text className="font-semibold text-2xl">내 그룹 확인하기</text>
+      <div className="flex-container">
+        {currentGroups?.map((group: any, index: number) => (
+          <div key={index}>
+            {/* eslint-disable-next-line react/no-array-index-key */}
+            <div className="groupItem">
+              <Link to={`/studentGroupDetail/${group.groupId}`}>
+                <img className="forest" src={forest} alt="" />
+                <p className="groupInfo">{group.groupName} </p>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="pagination">
+        {pageNumbers.map((number) => (
+          <button key={number} onClick={() => changePage(number)}>
+            {number}
+          </button>
+        ))}
       </div>
     </div>
   )
 }
 
-export default StudentGroupPage
+export default StudentCheck(LoginCheck(StudentGroupPage))
