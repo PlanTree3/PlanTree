@@ -122,8 +122,6 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     const data = {
       name: inputValue,
     }
-    // console.log('그룹아이디', groupId)
-    // console.log('인풋값', data)
     try {
       const response = await branchGroupCreate(groupId, data)
       console.log('Response:', response)
@@ -199,9 +197,9 @@ const AdminGroupDetailPage: React.FC<any> = () => {
     formData2.append('title', inputNewsTitle)
     formData2.append('content', inputNewsContent)
 
-    formData2.forEach((value, key) => {
-      console.log('객체 도는 중', key, formData2.getAll(key), value)
-    })
+    // formData2.forEach((value, key) => {
+    //   console.log('객체 도는 중', key, formData2.getAll(key), value)
+    // })
 
     try {
       await axios.post(

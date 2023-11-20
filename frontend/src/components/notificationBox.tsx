@@ -29,7 +29,6 @@ const NotificationBox = ({ modalOpen, closeModal }: any) => {
       const response = await notificationBox()
       console.log('알림함 조회', response)
       setNotificationData(response.data.data.notifications)
-      console.log(notificationData)
     } catch (error) {
       console.error('알림함 에러:', error)
     }

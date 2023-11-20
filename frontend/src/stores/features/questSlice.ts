@@ -43,7 +43,6 @@ export const questSlice = createSlice({
     getQuestData: () => {},
     saveQuestData: (state, action) => {
       state.questsList = action.payload
-      console.log(action.payload)
     },
     checkQuest: (state, action) => {
       const questId = action.payload

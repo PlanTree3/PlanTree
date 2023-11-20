@@ -46,9 +46,7 @@ const AdminGroupPage: React.FC = () => {
 
   // 그룹 리스트 조회
   const handleGetGroupList = async () => {
-    console.log('1')
     try {
-      console.log('2')
       const response = await teacherGroupList()
       console.log('Response:', response)
       setGroupData(response.data)

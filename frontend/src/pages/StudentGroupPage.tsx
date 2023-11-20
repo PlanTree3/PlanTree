@@ -16,7 +16,7 @@ const StudentGroupPage = () => {
   const handleGetList = async () => {
     try {
       const response = await userGroupList()
-      // console.log('Response:', response)
+      console.log('Response:', response)
       setStudentData(response.data.data)
     } catch (error) {
       console.error('Error:', error)

@@ -99,7 +99,6 @@ const NewsLetterPage = () => {
       window.location.href = fileUrl.data.fileUrl
     } catch (err) {
       redirect(`/newsLetterPage/:${groupId}`)
-      console.log(err)
     }
   }
 
@@ -156,12 +155,9 @@ const NewsLetterPage = () => {
 
     fileList.forEach((file) => {
       formData.append('files', file)
-      console.log('fileList의 file: ', file)
 
       fileNames.push(file.name)
     })
-
-    console.log('formData.getAll: ', formData.getAll('files'))
 
     setInputFileName(fileNames)
 
@@ -169,7 +165,7 @@ const NewsLetterPage = () => {
       // axios 연결
       await noticeFileCreate(inputInformId, formData)
     } catch (err) {
-      console.log(err)
+      return err
     }
   }
 
