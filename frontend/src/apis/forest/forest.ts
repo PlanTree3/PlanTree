@@ -114,7 +114,7 @@ const seedNameUpdate = async (
 const seedDelete = async (treeId: string, branchId: string, seedId: string) => {
   authApi
     .delete(`${seedApiUrl(treeId, branchId, seedId)}`)
-    .then((res) => console.log(res))
+    .then((res) => res)
     .catch((err) => console.log(err))
 }
 

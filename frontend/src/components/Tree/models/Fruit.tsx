@@ -25,9 +25,6 @@ interface FruitProps {
 
 const FruitModel = ({ degree }: FruitProps) => {
   const { nodes, materials } = useGLTF('/models/fruit/scene.gltf') as GLTFResult
-
-  console.log(degree)
-
   return (
     <>
       {degree > 20 && degree <= 50 && (

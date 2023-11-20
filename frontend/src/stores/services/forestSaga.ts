@@ -27,7 +27,6 @@ function* getForestSaga(): Generator<
   AxiosResponse<FetchUserDataResponse>
 > {
   const response: AxiosResponse<any> = yield call(forestGetApi)
-  console.log('숲', response)
   if (response.data.data.forests) {
     yield put(saveForestData(response.data.data.forests))
   }
@@ -63,8 +62,6 @@ function* getTreesSaga(
     startedAt,
     endedAt,
   )
-  console.log('나무', response)
-
   if (response.data.data.trees) {
     yield put(saveTreesData(response.data.data.trees))
   }

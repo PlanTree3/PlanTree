@@ -20,7 +20,7 @@ const budDayUpdate = async (
 ) => {
   authApi
     .patch(`${budApiUrl(treeId, branchId, budId)}/day`, data)
-    .then((res) => console.log(res))
+    .then((res) => res)
     .catch((err) => console.log(err))
 }
 
@@ -46,7 +46,7 @@ const budComplete = async (
 ) => {
   authApi
     .patch(`${budApiUrl(treeId, branchId, budId)}/complete`, data)
-    .then((res) => console.log(res))
+    .then((res) => res)
     .catch((err) => console.log(err))
 }
 
@@ -59,7 +59,7 @@ const budCompleteCancel = async (
 ) => {
   authApi
     .patch(`${budApiUrl(treeId, branchId, budId)}/undo-complete`, data)
-    .then((res) => console.log(res))
+    .then((res) => res)
     .catch((err) => console.log(err))
 }
 
@@ -67,7 +67,7 @@ const budCompleteCancel = async (
 const budDelete = async (treeId: string, branchId: string, budId: string) => {
   authApi
     .delete(`${budApiUrl(treeId, branchId, budId)}`)
-    .then((res) => console.log(res))
+    .then((res) => res)
     .catch((err) => console.log(err))
 }
 

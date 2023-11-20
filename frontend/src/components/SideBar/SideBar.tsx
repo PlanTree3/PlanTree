@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import treeImg from '../../../public/sidebar/navbar_tree.png'
 import forestImg from '../../../public/sidebar/navbar_forest.png'
-// import post3 from '../../../public/sidebar/navbar_.png'
 import questImg from '../../../public/sidebar/navbar_quest.png'
 import nestImg from '../../../public/sidebar/navbar_nest.png'
 import bell from '../../../public/bell.png'
@@ -33,14 +32,12 @@ const SideBar = () => {
     dispatch(logOutCheck())
     navigate('/login')
   }
-  // 새로운 알람있는지 확인
   const handleNotificationCheck = async () => {
     try {
       const response = await notificationCheck()
-      console.log('알림함 체크 응답', response)
       setCheckData(response.data.data.notificationPresent)
     } catch (error) {
-      console.error('알림함 체크 에러:', error)
+      /* empty */
     }
   }
 
@@ -57,7 +54,6 @@ const SideBar = () => {
     }
   }
 
-  //이 부분 추가 로직 필요 / 언제 체크할지?
   useEffect(() => {
     handleNotificationCheck()
   }, [])

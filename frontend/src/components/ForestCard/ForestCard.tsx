@@ -20,8 +20,6 @@ const ForestCard = ({ forestName, nav, endedAt }: ForestProps) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const routeForestDetail = () => {
-    console.log('asdf')
-
     const data = {
       forestId: nav,
       startedAt: forestName,
