@@ -38,7 +38,7 @@ const AdminGroupPage: React.FC = () => {
       const response = await groupCreate(data)
       console.log('Response:', response)
     } catch (error) {
-      console.error('Error:', error)
+      console.error(error)
     }
     setIsOpen(false)
     navigate('/adminGroup')
@@ -51,7 +51,7 @@ const AdminGroupPage: React.FC = () => {
       console.log('Response:', response)
       setGroupData(response.data)
     } catch (error) {
-      console.error('Error:', error)
+      console.error(error)
     }
   }
 

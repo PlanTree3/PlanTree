@@ -16,21 +16,11 @@ const Kakao = () => {
   const dispatch = useDispatch()
 
   const handleLoginSuccess = async (response: any) => {
-    console.log('로그인 성공', response)
     const data = {
       oauthProvider: 'KAKAO',
       idToken: response.response.id_token,
     }
-
-    //idToken 확인
-    console.log(data.idToken)
-
-    // userLogin에 data를 넣어
-    // boolean이 return
-    // true면 signIn으로 라우팅해
-    // 일단 이 함수는 true, false를 return하게 하자!
     const loginResult = await userLogin(data)
-    console.log('로그인 결과', loginResult)
 
     if (loginResult) {
       dispatch(addOauthProvider('KAKAO'))
@@ -38,27 +28,11 @@ const Kakao = () => {
       navigate('/signUp')
     } else {
       dispatch(loginCheck())
-      // navigate('/main')
     }
-    // catch (error: any) {
-    //   Swal.fire({
-    //     title: `${error.message} 로 서버와 통신에 실패했습니다.`,
-    //     width: 600,
-    //     customClass: {
-    //       confirmButton: 'btn btn-primary',
-    //     },
-    //     buttonsStyling: false,
-    //     confirmButtonText: 'Home 으로 이동',
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       navigate('/')
-    //     }
-    //   })
-    // }
   }
 
   const handleLoginFailure = (error: unknown) => {
-    console.log('소셜 로그인 실패', error)
+    throw error
   }
 
   return (

@@ -101,7 +101,7 @@ const AdminNestPage = () => {
       const response = await nestCreate(data)
       console.log('둥지 생성 응답:', response)
     } catch (error) {
-      console.error('둥지 생성 에러:', error)
+      console.error(error)
     }
     setIsOpen(false)
   }
@@ -113,7 +113,7 @@ const AdminNestPage = () => {
       console.log('학생 리스트 조회', response)
       setStudentsData(response.data.data.students)
     } catch (error) {
-      console.error('Error:', error)
+      console.error(error)
     }
   }
 
@@ -129,7 +129,7 @@ const AdminNestPage = () => {
         setNestData(null)
       }
     } catch (error) {
-      console.error('둥지 조회 에러', error)
+      console.error(error)
     }
   }
 
@@ -143,7 +143,7 @@ const AdminNestPage = () => {
       const response = await nestNameUpdate(nestId, data)
       console.log('둥지이름 업뎃', response)
     } catch (error) {
-      console.error('둥지이름 업뎃 에러', error)
+      console.error(error)
     }
     setPencilModalIsOpen(false)
   }
@@ -155,7 +155,7 @@ const AdminNestPage = () => {
       const response = await nestDelete(nestId)
       console.log('둥지 삭제', response)
     } catch (error) {
-      console.error('둥지 삭제 에러', error)
+      console.error(error)
     }
   }
 
@@ -170,7 +170,7 @@ const AdminNestPage = () => {
       const response = await nestQuestCreate(data)
       console.log('퀘스트 응답:', response)
     } catch (error) {
-      console.error('퀘스트 에러:', error)
+      console.error(error)
     }
     closeQuestModal()
   }

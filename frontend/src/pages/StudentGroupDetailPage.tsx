@@ -20,7 +20,7 @@ const StudentGroupDetailPage = () => {
       console.log('학생 그룹 상제 조회 응답:', response)
       setGroupData(response.data)
     } catch (error) {
-      console.error('학생 그룹 상제 조회 에러:', error)
+      console.error(error)
     }
   }
 
