@@ -81,10 +81,12 @@ const detailBuds = async (treeId: string, budId: string) => {
 
 // 댓글 추가
 const commentCreate = async (treeId: string, budId: string, data: any) => {
-  return authApi
-    .post(`${commentApiUrl(treeId, budId)}/comment`, data)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+  try {
+    return await authApi.post(`${commentApiUrl(treeId, budId)}/comment`, data)
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
 
 export {

@@ -32,28 +32,9 @@ const AdminGroupPage: React.FC = () => {
   // if (!inputGroupName) {
   //   alert('그룹 이름을 지정해주세요')
   // } else {
-  // const handleCreateGroup = useCallback(async () => {
-  //   const data = { groupName: inputGroupName }
-  //   console.log('여기까진??')
-  //   try {
-  //     console.log('이것도 되지?')
-  //     const response = await groupCreate(data)
-  //     console.log('Response:', response)
-  //   } catch (error) {
-  //     console.error('Error:', error)
-  //   }
-  //   setIsOpen(false)
-  // }, [setInputGroupName])
-
-  // 그룹생성
-  // if (!inputGroupName) {
-  //   alert('그룹 이름을 지정해주세요')
-  // } else {
   const data = { groupName: inputGroupName }
   const handleCreateGroup = async () => {
-    console.log('여기까진??')
     try {
-      console.log('이것도 되지?')
       const response = await groupCreate(data)
       console.log('Response:', response)
     } catch (error) {
@@ -65,13 +46,10 @@ const AdminGroupPage: React.FC = () => {
 
   // 그룹 리스트 조회
   const handleGetGroupList = async () => {
-    console.log('1')
     try {
-      console.log('2')
       const response = await teacherGroupList()
       console.log('Response:', response)
       setGroupData(response.data)
-      console.log(response.data.data)
     } catch (error) {
       console.error('Error:', error)
     }
@@ -151,9 +129,10 @@ const AdminGroupPage: React.FC = () => {
         {uniqueGroups?.map((group: any, index: number) => (
           <Link
             to={`/adminGroupDetail/${group.groupId}`}
+            key={(group.groupId, index)}
             state={{ groupName: group.groupName }}
           >
-            <div key={(group.groupId, index)} className="admin-group-item">
+            <div className="admin-group-item">
               <p className="groupInfo">{index + 1 + (currentPage - 1) * 5} </p>
               <p className="groupInfo">{group.groupName} </p>
               <p className="groupInfo">

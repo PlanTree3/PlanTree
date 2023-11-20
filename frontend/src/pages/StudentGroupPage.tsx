@@ -14,12 +14,9 @@ const StudentGroupPage = () => {
 
   // 학생의 그룹, 둥지 정보 조회
   const handleGetList = async () => {
-    console.log('1')
     try {
-      console.log('2')
       const response = await userGroupList()
-      // console.log('Response:', response)
-      // console.log('Response:', response.data.data)
+      console.log('Response:', response)
       setStudentData(response.data.data)
     } catch (error) {
       console.error('Error:', error)
@@ -64,7 +61,7 @@ const StudentGroupPage = () => {
           <div>
             <div className="student-group-nest-area">
               <div className="student-group-nest-area-image-container">
-                <img src={chick} alt="" />
+                <img src={chick} alt="병아리" />
               </div>
               <div className="student-group-nest-area-text-container">
                 <div className="text-4xl font-semibold">
@@ -72,16 +69,20 @@ const StudentGroupPage = () => {
                 </div>
                 <div className="student-group-nest-area-text">
                   <title>둥지장</title>
-                  {studentData.nest.parents.map((parent: any) => (
-                    <text>{parent}</text>
-                  ))}
+                  {studentData.nest.parents.map(
+                    (parent: any, index: number) => (
+                      <text key={index}>{parent}</text>
+                    ),
+                  )}
                 </div>
                 <div className="student-group-nest-area-text">
                   <title>둥지원</title>
                   <div>
-                    {studentData.nest.children.map((child: any) => (
-                      <text>{child}</text>
-                    ))}
+                    {studentData.nest.children.map(
+                      (child: any, index: number) => (
+                        <text key={index}>{child}</text>
+                      ),
+                    )}
                   </div>
                 </div>
               </div>

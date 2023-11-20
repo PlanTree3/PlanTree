@@ -97,8 +97,8 @@ const ForestDetailPage = () => {
         </div>
       </div>
       <div className="forest-detail-tree-container">
-        {showTrees().map((tree: any) => (
-          <Atropos className="atropos-forest-detail">
+        {showTrees().map((tree: any, index: number) => (
+          <Atropos className="atropos-forest-detail" key={index}>
             <div className="atropos-component">
               <div className="atropos-inner">
                 <img
@@ -122,11 +122,11 @@ const ForestDetailPage = () => {
                   <div key={tree.treeId} className="forest-detail-tree-box">
                     <div className="forest-detail-tree">
                       {!tree.treeId ? (
-                        <img src={logImage} alt="" />
+                        <img src={logImage} alt="아주작은나무" />
                       ) : tree.treeId ? (
-                        <img src={smallTree} alt="" />
+                        <img src={smallTree} alt="작은나무" />
                       ) : (
-                        <img src={mediumTree} alt="" />
+                        <img src={mediumTree} alt="중간나무" />
                       )}
                     </div>
                     <div className="forest-detail-chart">

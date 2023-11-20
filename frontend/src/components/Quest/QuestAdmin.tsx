@@ -12,7 +12,6 @@ import questImgDefault from '../../../public/test/questIcon_defalut.png'
 import questImgBlack from '../../../public/test/questIcon_black.png'
 import {
   checkQuest,
-  confirmQuest,
   deleteQuest,
   successAcceptQuest,
 } from '@/stores/features/questSlice'
@@ -33,13 +32,10 @@ const QuestAdmin: React.FC<QuestProps> = ({ questStatus }) => {
   const openModal = (id: string) => {
     setOpen(id)
   }
-  const closeModal = (id: string, isChecked: boolean, isConfirmed: boolean) => {
+  const closeModal = (id: string, isChecked: boolean) => {
     setOpen(null)
     if (!isChecked) {
       dispatch(checkQuest(id))
-    }
-    if (isConfirmed) {
-      dispatch(confirmQuest(id))
     }
   }
 
@@ -53,7 +49,7 @@ const QuestAdmin: React.FC<QuestProps> = ({ questStatus }) => {
         (quest: any) => quest.questId === questId,
       )
       if (questData && questId) {
-        closeModal(questId, questData.isChecked, false)
+        closeModal(questId, questData.checked)
       }
     }
   }
@@ -63,20 +59,20 @@ const QuestAdmin: React.FC<QuestProps> = ({ questStatus }) => {
       case 'all':
         return true
       case 'ing':
-        return quest.isConfirmed && !quest.isFinished
+        return quest.confirmed && !quest.finished
       case 'past':
-        return quest.isFinished
+        return quest.finished
       case 'new':
-        return !quest.isConfirmed
+        return !quest.confirmed
       default:
         return false
     }
   })
   const getQuestImage = (quest: any) => {
-    if (!quest.isChecked) {
+    if (!quest.checked) {
       return questImgNew
     }
-    if (!quest.isFinished) {
+    if (!quest.finished) {
       return questImgDefault
     }
     return questImgBlack
@@ -85,7 +81,7 @@ const QuestAdmin: React.FC<QuestProps> = ({ questStatus }) => {
     dispatch(deleteQuest(id))
   }
   const renderButtons = (quest: any) => {
-    if (quest.isFinished) {
+    if (quest.finished) {
       return (
         <Button
           className="red normal"
@@ -94,52 +90,30 @@ const QuestAdmin: React.FC<QuestProps> = ({ questStatus }) => {
         />
       )
     }
-    if (quest.isConfirmed) {
-      if (!quest.isWaiting) {
+    if (quest.confirmed) {
+      if (quest.waiting) {
         return (
           <Button
             onClick={(e) => {
               e.stopPropagation()
-              closeModal(quest.questId, quest.isChecked, true)
-            }}
-            className="normal primary"
-            label="확인"
-          />
-        )
-      }
-      return (
-        <>
-          <Button
-            onClick={(e) => {
-              e.stopPropagation()
-              closeModal(quest.questId, quest.isChecked, true)
-            }}
-            className="normal primary"
-            label="확인"
-          />
-          <Button
-            onClick={(e) => {
-              e.stopPropagation()
-              closeModal(quest.questId, quest.isChecked, true)
+              closeModal(quest.questId, quest.checked)
               dispatch(successAcceptQuest(quest.questId))
             }}
             className="normal primary"
             label="완료 승인"
           />
-        </>
-      )
+        )
+      }
     }
     return (
-      <div className="quest-button-container">
-        <Button
-          onClick={(e) => {
-            e.stopPropagation()
-            closeModal(quest.questId, quest.isChecked, true)
-          }}
-          className="normal primary"
-          label="수락"
-        />
-      </div>
+      <Button
+        onClick={(e) => {
+          e.stopPropagation()
+          closeModal(quest.questId, quest.checked)
+        }}
+        className="normal primary"
+        label="확인"
+      />
     )
   }
 
@@ -168,7 +142,7 @@ const QuestAdmin: React.FC<QuestProps> = ({ questStatus }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation()
-                  closeModal(quest.questId, quest.isChecked, false)
+                  closeModal(quest.questId, quest.checked)
                 }}
               >
                 <img src="/public/btn/closeBtn.png" alt="닫기" />
@@ -179,8 +153,8 @@ const QuestAdmin: React.FC<QuestProps> = ({ questStatus }) => {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id={`quest-description-${quest.questId}`}>
-                {quest.issuerName} ({quest.issuerType}) 님이{' '}
-                {quest.acceptorName} 에게
+                {/*{quest.issuerName} ({quest.issuerType}) 님이{' '}*/}
+                {/*{quest.acceptorName} 에게*/}
               </DialogContentText>
               <DialogContentText id={`quest-description-${quest.questId}`}>
                 {quest.content}
@@ -193,7 +167,7 @@ const QuestAdmin: React.FC<QuestProps> = ({ questStatus }) => {
             alt="퀘스트이미지"
             className="quest-img"
           />
-          <p className="quest-item-title">{quest.questTitle}</p>
+          <p className="quest-item-title">{quest.title}</p>
           <p className="quest-item-created">{quest.createdAt.slice(0, 10)}</p>
         </button>
       ))}

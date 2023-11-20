@@ -108,7 +108,6 @@ const AdminNestPage = () => {
 
   //둥지의 학생 리스트 조회
   const handleGetNestDetail = async (nestId: string) => {
-    console.log('정보확인', nestId)
     try {
       const response = await nestStudents(nestId)
       console.log('학생 리스트 조회', response)
@@ -122,15 +121,11 @@ const AdminNestPage = () => {
   const handleNestCheck = async () => {
     try {
       const response = await nestCheck()
-      // console.log('둥지 조회', response)
-      // console.log('둥지 조회2', response.data.data.nest)
       if (response.data && response.data.data.nest) {
         setNestData(response.data.data.nest)
-        console.log('둥지 조회 2.4', response.data.data.nest)
         // console.log('둥지 조회3', nestData)
         handleGetNestDetail(response.data.data.nest.nestId)
       } else {
-        console.log('둥지 없음')
         setNestData(null)
       }
     } catch (error) {
@@ -144,7 +139,6 @@ const AdminNestPage = () => {
     const data = {
       nestName: inputNestName,
     }
-    console.log('inputNestName', inputNestName)
     try {
       const response = await nestNameUpdate(nestId, data)
       console.log('둥지이름 업뎃', response)

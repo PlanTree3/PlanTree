@@ -48,10 +48,8 @@ function* getBranchDataSaga(): Generator<
 > {
   try {
     yield put(setLoading(true))
-    console.log('꺄아아아악')
     const treeId: any = yield select(getTreeId)
     const response: any = yield call(getSchedule, treeId)
-    console.log(treeId, response)
     const { branches } = response.data.data
     const { buds } = response.data.data
     const updatedSeeds = branches.reduce((accumulator: any, branch: any) => {

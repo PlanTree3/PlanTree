@@ -28,8 +28,6 @@ const noticeDetail = async (informId: any) => {
     const res = await authApi.get(`${baseUrl}/${informId}`)
     return res.data
   } catch (err) {
-    console.log(err)
-
     return err
   }
 }
@@ -57,8 +55,8 @@ const noticeFileCreate = async (informId: any, data: unknown) => {
       headers: { 'Content-Type': 'multipart/form-data', charset: 'utf-8' },
       withCredentials: true,
     })
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+    .then((res) => res)
+    .catch((err) => err)
 }
 
 // 가정통신문 파일 다운로드

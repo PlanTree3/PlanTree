@@ -71,12 +71,10 @@ const AdminGroupRequestPage = () => {
   }, [])
 
   const handleNo = (studentId: string) => {
-    console.log('nonono')
     handleGroupRefuse(studentId)
   }
 
   const handleYes = (studentId: string) => {
-    console.log('yes!!')
     handleGroupAccept(studentId)
   }
 
