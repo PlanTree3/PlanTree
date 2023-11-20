@@ -1,12 +1,14 @@
 package com.plantree.forestservice.global.openFeign.dto;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
+@NoArgsConstructor
 public class CheckGroupLeaderResDto {
 
-    private boolean isLeader;
+    private boolean teacher;
 
 }

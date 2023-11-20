@@ -1,6 +1,7 @@
 package com.plantree.memberservice.domain.group.dto.client;
 
 import com.plantree.memberservice.domain.group.domain.Group;
+import com.plantree.memberservice.domain.group.domain.GroupStudentState;
 import com.plantree.memberservice.domain.group.domain.Nest;
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +16,8 @@ public class BudCountRequestDto {
     public BudCountRequestDto(Group group) {
         this.studentIds = group.getGroupStudents()
                                .stream()
+                               .filter(groupStudent -> groupStudent.getStudentState()
+                                                                   .equals(GroupStudentState.ACTIVE))
                                .map(groupStudent -> groupStudent.getStudent()
                                                                 .getMember()
                                                                 .getId())

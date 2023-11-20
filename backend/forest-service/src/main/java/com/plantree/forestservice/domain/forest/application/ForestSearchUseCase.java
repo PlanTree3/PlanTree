@@ -25,11 +25,23 @@ public class ForestSearchUseCase {
     private final ForestRepository forestRepository;
     private final TreeRepository treeRepository;
 
-    public ForestListResDto findForests(UUID memberId, AuthMember authMember) {
+    public ForestListResDto findOthersForests(UUID memberId, AuthMember authMember) {
         List<Forest> forests = forestRepository.findForestsByMemberId((memberId));
 
         return new ForestListResDto(
-                forests.stream().map(ForestResDto::new).collect(Collectors.toList()));
+                forests.stream()
+                       .map(ForestResDto::new)
+                       .collect(Collectors.toList()));
+
+    }
+
+    public ForestListResDto findMyForests(AuthMember authMember) {
+        List<Forest> forests = forestRepository.findForestsByMemberId((authMember.getMemberId()));
+
+        return new ForestListResDto(
+                forests.stream()
+                       .map(ForestResDto::new)
+                       .collect(Collectors.toList()));
 
     }
 
@@ -39,8 +51,10 @@ public class ForestSearchUseCase {
         List<Tree> trees = treeRepository.findTreesByForestIdAndPeriod(forestId, startedAt,
                 endedAt);
         return new TreeListFromForestResDto(
-                trees.stream().map(tree -> new TreeFromForestResDto(tree)).collect(
-                        Collectors.toList()));
+                trees.stream()
+                     .map(tree -> new TreeFromForestResDto(tree))
+                     .collect(
+                             Collectors.toList()));
 
     }
 }

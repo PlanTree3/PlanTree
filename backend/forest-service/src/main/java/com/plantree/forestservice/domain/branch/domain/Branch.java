@@ -31,8 +31,8 @@ import org.hibernate.annotations.BatchSize;
 @BatchSize(size = 100)
 public class Branch extends BaseTimeEntity {
 
-    private static String[] colors = new String[]{"FFC1CC", "FFDAAF", "FFFFBA", "CAFFBF",
-            "AFDFFF", "9ABAFF", "D7AAFF", "FFACE4", "A7FFC4", "ECD4FF"
+    private static String[] colors = new String[]{"#FFC1CC", "#FFDAAF", "#FFFFBA", "#CAFFBF",
+            "#AFDFFF", "#9ABAFF", "#D7AAFF", "#FFACE4", "#A7FFC4", "#ECD4FF"
     };
 
     @Id

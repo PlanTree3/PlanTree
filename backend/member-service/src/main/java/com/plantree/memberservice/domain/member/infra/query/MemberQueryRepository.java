@@ -103,6 +103,22 @@ public class MemberQueryRepository {
                               .fetchOne();
     }
 
+    public Member findByIdWithNestStudent(UUID parentId) {
+        return jpaQueryFactory.selectFrom(member)
+                              .leftJoin(member.student, student)
+                              .fetchJoin()
+                              .leftJoin(member.teacher, teacher)
+                              .fetchJoin()
+                              .leftJoin(member.parent, parent)
+                              .fetchJoin()
+                              .leftJoin(student.nest, nest)
+                              .fetchJoin()
+                              .leftJoin(nest.students, student)
+                              .fetchJoin()
+                              .where(member.id.eq(parentId))
+                              .fetchOne();
+    }
+
     public List<Member> findByIdIn(List<UUID> memberIds) {
         return jpaQueryFactory.selectFrom(member)
                               .leftJoin(member.student, student)

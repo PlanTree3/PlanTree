@@ -12,8 +12,10 @@ import com.plantree.forestservice.global.openFeign.dto.CheckNestParentReqDto;
 import com.plantree.forestservice.global.openFeign.dto.CheckTeacherReqDto;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AuthMemberValidator {
@@ -75,10 +77,11 @@ public class AuthMemberValidator {
         }
     }
 
-    public void isGroupLeader(Long groupId, AuthMember authMember) {
+    public void isGroupLeader(UUID groupId, AuthMember authMember) {
         CheckGroupLeaderResDto checkGroupLeaderResDto = memberServiceClient.checkGroupLeader(
-                new CheckGroupLeaderReqDto(authMember.getMemberId(), groupId));
-        if (!checkGroupLeaderResDto.isLeader()) {
+                new CheckGroupLeaderReqDto(authMember.getMemberId()), groupId);
+        log.info("isTeacher: {}", checkGroupLeaderResDto.isTeacher());
+        if (!checkGroupLeaderResDto.isTeacher()) {
             throw new UnauthorizedAccessException();
         }
     }

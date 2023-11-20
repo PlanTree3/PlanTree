@@ -8,6 +8,8 @@ import com.plantree.memberservice.domain.group.application.GroupSearchUseCase;
 import com.plantree.memberservice.domain.group.dto.GroupStudentIdsResponseDto;
 import com.plantree.memberservice.domain.group.dto.IsTeacherOfGroupResponseDto;
 import com.plantree.memberservice.domain.group.dto.IsTeacherOfStudentResponseDto;
+import com.plantree.memberservice.domain.group.dto.TeacherAndParentIdsResponseDto;
+import com.plantree.memberservice.domain.group.dto.client.StudentGroupResDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinAcceptRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.GroupJoinRefuseRequestDto;
@@ -51,7 +53,7 @@ public class GroupController {
     @PatchMapping("/{groupId}/name")
     public ResponseEntity<?> changeName(@PathVariable("groupId") UUID groupId,
             @JwtLoginMember AuthMember authMember,
-            GroupNameChangeRequestDto groupNameChangeRequestDto) {
+            @RequestBody GroupNameChangeRequestDto groupNameChangeRequestDto) {
         groupModifyUseCase.changeName(groupId, authMember, groupNameChangeRequestDto);
         return HttpResponse.ok(HttpStatus.OK, "그룹 이름 수정 성공");
     }
@@ -61,6 +63,13 @@ public class GroupController {
             @JwtLoginMember AuthMember authMember) {
         groupJoinUseCase.requestJoin(groupId, authMember);
         return HttpResponse.ok(HttpStatus.OK, "가입 신청 성공");
+    }
+
+    @GetMapping("/{groupId}/join-request")
+    public ResponseEntity<?> searchJoinRequestList(@PathVariable("groupId") UUID groupId,
+            @JwtLoginMember AuthMember authMember) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                groupJoinUseCase.searchJoinRequestList(groupId, authMember));
     }
 
     @PatchMapping("/{groupId}/join-accept")
@@ -83,6 +92,11 @@ public class GroupController {
     public ResponseEntity<?> searchGroupAndNest(@JwtLoginMember AuthMember authMember) {
         return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
                 groupSearchUseCase.searchGroupAndNest(authMember));
+    }
+
+    @GetMapping("/leader-id/{studentId}")
+    public TeacherAndParentIdsResponseDto searchTeachersAndParentsId(@PathVariable UUID studentId) {
+        return groupSearchUseCase.searchTeachersAndParentsId(studentId);
     }
 
     @GetMapping("/{groupId}")
@@ -129,4 +143,13 @@ public class GroupController {
         return groupSearchUseCase.getIsTeacherOfGroup(groupId, isTeacherOfGroupRequestDto);
     }
 
+    @GetMapping("/{memberId}/student-group")
+    public StudentGroupResDto getStudentGroups(@PathVariable UUID memberId) {
+        return groupSearchUseCase.getStudentGroups(memberId);
+    }
+
+    @GetMapping("/{memberId}/children-group")
+    public StudentGroupResDto getChildrenGroups(@PathVariable UUID memberId) {
+        return groupSearchUseCase.getChildrenGroups(memberId);
+    }
 }

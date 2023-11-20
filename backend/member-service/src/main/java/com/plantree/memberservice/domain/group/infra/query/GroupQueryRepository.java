@@ -57,6 +57,7 @@ public class GroupQueryRepository {
                               .fetchJoin()
                               .leftJoin(group.teacher, teacher)
                               .fetchJoin()
+                              .where(group.id.eq(groupId))
                               .fetchOne();
     }
 

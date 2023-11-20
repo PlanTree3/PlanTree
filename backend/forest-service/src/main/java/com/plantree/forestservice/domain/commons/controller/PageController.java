@@ -20,12 +20,20 @@ public class PageController {
 
     private final CommonsSearchUseCase commonsSearchUseCase;
 
-    @GetMapping("/main/{memberId}")
-    public ResponseEntity<?> findMainPage(@PathVariable UUID memberId,
-            @JwtLoginMember AuthMember authMember) {
+    @GetMapping("/main")
+    public ResponseEntity<?> findMyMainPage(@JwtLoginMember AuthMember authMember) {
 
         return HttpResponse.okWithData(HttpStatus.OK, "메인 페이지 정보입니다.",
-                commonsSearchUseCase.findMainPage(memberId, authMember));
+                commonsSearchUseCase.findMyMainPage(authMember));
+
+    }
+
+    @GetMapping("/main/{memberId}")
+    public ResponseEntity<?> findOthersMainPage(@PathVariable UUID memberId,
+                                          @JwtLoginMember AuthMember authMember) {
+
+        return HttpResponse.okWithData(HttpStatus.OK, "메인 페이지 정보입니다.",
+                commonsSearchUseCase.findOthersMainPage(memberId, authMember));
 
     }
 

@@ -6,6 +6,7 @@ import com.plantree.memberservice.domain.group.application.NestJoinUseCase;
 import com.plantree.memberservice.domain.group.application.NestModifyUseCase;
 import com.plantree.memberservice.domain.group.application.NestSearchUseCase;
 import com.plantree.memberservice.domain.group.dto.IsParentOfStudentResponseDto;
+import com.plantree.memberservice.domain.group.dto.ParentIdsResponseDto;
 import com.plantree.memberservice.domain.group.dto.request.IsParentOfStudentRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestCreateRequestDto;
 import com.plantree.memberservice.domain.group.dto.request.NestNameChangeRequestDto;
@@ -46,7 +47,7 @@ public class NestController {
     @PatchMapping("/{nestId}/name")
     public ResponseEntity<?> changeName(@PathVariable("nestId") UUID nestId,
             @JwtLoginMember AuthMember authMember,
-            NestNameChangeRequestDto nestNameChangeRequestDto) {
+            @RequestBody NestNameChangeRequestDto nestNameChangeRequestDto) {
         nestModifyUseCase.changeName(nestId, authMember, nestNameChangeRequestDto);
         return HttpResponse.ok(HttpStatus.OK, "둥지 이름 수정 성공");
     }
@@ -56,6 +57,12 @@ public class NestController {
             @JwtLoginMember AuthMember authMember) {
         nestJoinUseCase.requestJoin(nestId, authMember);
         return HttpResponse.ok(HttpStatus.OK, "둥지 가입 신청 성공");
+    }
+
+    @GetMapping("/parent-nest")
+    public ResponseEntity<?> searchParentNest(@JwtLoginMember AuthMember authMember) {
+        return HttpResponse.okWithData(HttpStatus.OK, "조회 성공",
+                nestSearchUseCase.searchParentNest(authMember));
     }
 
     @GetMapping("/{nestId}/student")
@@ -76,5 +83,10 @@ public class NestController {
     public IsParentOfStudentResponseDto getIsParentOfStudent(
             @RequestBody IsParentOfStudentRequestDto isParentOfStudentRequestDto) {
         return nestSearchUseCase.getIsParentOfStudent(isParentOfStudentRequestDto);
+    }
+
+    @GetMapping("/leader-id/{studentId}")
+    public ParentIdsResponseDto searchParentIds(@PathVariable UUID studentId) {
+        return nestSearchUseCase.searchParentIds(studentId);
     }
 }
