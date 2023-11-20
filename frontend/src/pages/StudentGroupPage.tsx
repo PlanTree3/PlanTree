@@ -19,7 +19,7 @@ const StudentGroupPage = () => {
       console.log('Response:', response)
       setStudentData(response.data.data)
     } catch (error) {
-      console.error('Error:', error)
+      console.error(error)
     }
   }
 

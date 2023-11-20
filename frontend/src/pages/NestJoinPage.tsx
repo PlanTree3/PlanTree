@@ -11,7 +11,7 @@ const NestJoinPage: React.FC<any> = () => {
       const response = await nestJoinRequest(nestId)
       console.log('둥지가입 응답:', response)
     } catch (error) {
-      console.error('둥지가입 에러:', error)
+      console.error(error)
     }
   }
   // const navi = useNavigate()

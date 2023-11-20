@@ -28,7 +28,6 @@ const LogIn = () => {
   }
 
   const baseURL = import.meta.env.VITE_PUBLIC_SERVER_BASE_URL
-  console.log(baseURL)
   return (
     <div className="w-full">
       <div className="w-full">

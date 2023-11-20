@@ -44,7 +44,6 @@ const Comments: React.FC<CommentsProps> = ({
   const updateInfo = async () => {
     const response: any = await detailBuds(treeId, budId)
     const data = response.data.data?.comments ?? null
-    console.log(response)
     if (data) {
       setComments(data)
     }

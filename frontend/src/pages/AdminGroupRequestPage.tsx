@@ -40,7 +40,7 @@ const AdminGroupRequestPage = () => {
       // setStudentsData(response.data.joinRequestList)
       setStudentsData(response.data.data)
     } catch (error) {
-      console.error('Error:', error)
+      console.error(error)
     }
   }
 
@@ -51,7 +51,7 @@ const AdminGroupRequestPage = () => {
       const response = await groupJoinAccept(groupId, data)
       console.log('Response:', response)
     } catch (error) {
-      console.error('Error:', error)
+      console.error(error)
     }
   }
 
@@ -62,7 +62,7 @@ const AdminGroupRequestPage = () => {
       const response = await groupJoinRefuse(groupId, data)
       console.log('Response:', response)
     } catch (error) {
-      console.error('Error:', error)
+      console.error(error)
     }
   }
 
