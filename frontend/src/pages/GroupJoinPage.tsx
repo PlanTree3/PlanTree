@@ -14,7 +14,6 @@ const GroupJoinPage: React.FC<any> = () => {
     } catch (error) {
       console.error('그룹가입신청 Error:', error)
     }
-    // console.log('이거', response)
   }
 
   // const navi = useNavigate()

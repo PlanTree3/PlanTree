@@ -121,15 +121,11 @@ const AdminNestPage = () => {
   const handleNestCheck = async () => {
     try {
       const response = await nestCheck()
-      // console.log('둥지 조회', response)
-      // console.log('둥지 조회2', response.data.data.nest)
       if (response.data && response.data.data.nest) {
         setNestData(response.data.data.nest)
-        console.log('둥지 조회 2.4', response.data.data.nest)
         // console.log('둥지 조회3', nestData)
         handleGetNestDetail(response.data.data.nest.nestId)
       } else {
-        console.log('둥지 없음')
         setNestData(null)
       }
     } catch (error) {

@@ -48,8 +48,7 @@ const questCheck = async (questId: string) => {
   try {
     return await authApi.patch(`${baseUrl}/quest/${questId}/check`)
   } catch (error) {
-    console.error(error)
-    throw error
+    return error
   }
 }
 
@@ -58,8 +57,7 @@ const questCorrection = async (questId: string, data: any) => {
   try {
     return await authApi.patch(`${baseUrl}/quest/${questId}/check`, data)
   } catch (error) {
-    console.error(error)
-    throw error
+    return error
   }
 }
 // 퀘스트 수락
@@ -67,8 +65,7 @@ const questAccept = async (questId: string, data: any) => {
   try {
     return await authApi.patch(`${baseUrl}/quest/${questId}/accept`, data)
   } catch (error) {
-    console.error(error)
-    throw error
+    return error
   }
 }
 
@@ -76,7 +73,7 @@ const questAccept = async (questId: string, data: any) => {
 const questGiveUp = async (questId: string, data: any) => {
   authApi
     .patch(`${baseUrl}/quest/${questId}/giveup`, data)
-    .then((res) => console.log(res))
+    .then((res) => res)
     .catch((err) => err)
 }
 
@@ -88,8 +85,7 @@ const questSuccessRequest = async (questId: string, data: any) => {
       data,
     )
   } catch (error) {
-    console.error(error)
-    throw error
+    return error
   }
 }
 
@@ -101,8 +97,7 @@ const questSuccessAccept = async (questId: number, data: any) => {
       data,
     )
   } catch (error) {
-    console.error(error)
-    throw error
+    return error
   }
 }
 
