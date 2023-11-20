@@ -1,0 +1,44 @@
+.forest-detail-page-container {
+  @apply space-y-3 h-full flex flex-col;
+}
+
+.forest-detail-date-input {
+  @apply flex justify-between;
+}
+.atropos-forest-detail {
+  @apply w-full max-h-full;
+}
+
+.forest-detail {
+  &-title {
+    @apply text-2xl;
+  }
+  &-filter {
+    grid-template-columns: 3fr 3fr 1fr 3fr 1fr 2fr;
+    @apply grid h-[5vh] text-center items-center;
+  }
+  &-tree-container {
+    @apply grid grid-cols-2 gap-3 p-[1vw] justify-center items-center overflow-y-auto;
+  }
+  &-tree-box {
+    @apply flex justify-center items-center pr-[1vw] h-[95%] w-full space-x-3;
+  }
+  &-tree {
+    @apply w-1/2 flex items-center;
+    img {
+      @apply relative;
+    }
+  }
+  &-chart {
+    @apply w-1/2;
+    &-title {
+      @apply flex justify-between items-center;
+    }
+  }
+}
+
+.atropos-shadow {
+  filter: blur(50px);
+  opacity: 0.5;
+  background-color: #fff;
+}

@@ -1,0 +1,65 @@
+.atropos {
+  @apply w-4/5;
+}
+
+.atropos-tutorial {
+  @apply w-2/3;
+}
+
+/* Atropos web component */
+.atropos-component {
+  width: 100%;
+}
+
+.atropos-component .atropos-inner {
+  @apply border-[0.8vw] border-slate-400 rounded-lg;
+}
+
+.atropos-forest-detail .atropos-component .atropos-inner {
+  @apply border-[0.8vw] border-slate-400 rounded-lg;
+}
+.atropos-component img {
+  position: absolute;
+  left: -5%;
+  top: -5%;
+  width: 110%;
+  height: 110%;
+  object-fit: contain;
+  display: block;
+  z-index: 1;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  max-width: none;
+}
+.atropos-component img.atropos-spacer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+}
+.atropos-component .forest-text-area {
+  @apply absolute
+  left-0 top-0
+  w-[100%] h-[100%]
+  z-20
+  flex flex-col
+  justify-center items-center
+  text-slate-100 font-bold;
+}
+.atropos-component .forest-text-area .forest-text {
+  @apply text-3xl xl:text-5xl;
+}
+.atropos-banner .atropos-shadow {
+  filter: blur(50px);
+  opacity: 0.5;
+  background-color: #fff;
+}
+
+.atropos-component .atropos-highlight {
+  z-index: 100;
+}
+.forest-text-tutorial {
+  @apply text-lg;
+}

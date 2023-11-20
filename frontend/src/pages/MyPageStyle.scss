@@ -1,0 +1,88 @@
+.addImgBtn {
+  @apply rounded-none mt-6 p-0 bg-inherit w-6 h-6 ml-1 hover:border-0; /* hover:border-0 클래스 유지 */
+}
+
+.selectImg {
+  @apply w-[9vw] h-[9vw];
+}
+
+.mypageButton {
+  @apply w-fit;
+}
+
+.my-page {
+  &-profile-box {
+    @apply h-full flex flex-col justify-center items-center space-y-5;
+  }
+  &-profile-image {
+    img {
+      @apply rounded-full;
+    }
+    button {
+      @apply self-start;
+    }
+    @apply flex w-[17%];
+  }
+  &-profile-name {
+    @apply flex items-center space-x-[1vw];
+  }
+  &-name-input {
+    @apply text-3xl flex items-center;
+  }
+  &-btn-container {
+    @apply w-1/3 space-y-1;
+  }
+  &-graph-modal {
+    @apply grid grid-cols-3;
+  }
+}
+.mypage-nickname {
+  background: rgba(255, 255, 255, 0.7); /* 반투명한 흰색 배경 */
+  padding: 1vw 3vw; /* 텍스트 패딩 */
+  border: 2px solid salmon;
+  border-radius: 5%;
+  font-size: 40px;
+  margin-bottom: 2vw;
+}
+.mypage-btn-container {
+  @apply flex flex-col items-center space-y-1;
+}
+
+.mypage-button {
+  margin-bottom: 1vw;
+  width: 50%;
+  background-color: gainsboro;
+}
+.outer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: #f2f2f2;
+}
+
+.mypage-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #dcdcdc;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.inner-box .status {
+  align-self: flex-start;
+  border-radius: 50%;
+  padding: 0.5vw;
+  background-color: hotpink;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
