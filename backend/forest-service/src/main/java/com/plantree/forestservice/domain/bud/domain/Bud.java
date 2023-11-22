@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Table(name = "bud")
@@ -49,6 +50,7 @@ public class Bud extends BaseTimeEntity {
     @JoinColumn(name = "branch_id")
     private Branch branch;
 
+    @BatchSize(size = 20)
     @OneToMany(mappedBy = "bud", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BudComment> budComments = new ArrayList<>();
 
