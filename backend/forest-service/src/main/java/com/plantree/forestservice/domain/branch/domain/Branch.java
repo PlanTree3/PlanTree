@@ -55,11 +55,11 @@ public class Branch extends BaseTimeEntity {
     @JoinColumn(name = "tree_id")
     private Tree tree;
 
-    @BatchSize(size = 100)
+    @BatchSize(size = 20)
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Seed> seeds = new ArrayList<>();
 
-    @BatchSize(size = 100)
+    @BatchSize(size = 20)
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Bud> buds = new ArrayList<>();
 
