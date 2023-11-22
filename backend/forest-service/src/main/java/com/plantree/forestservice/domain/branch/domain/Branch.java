@@ -59,6 +59,7 @@ public class Branch extends BaseTimeEntity {
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Seed> seeds = new ArrayList<>();
 
+    @BatchSize(size = 20)
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Bud> buds = new ArrayList<>();
 
