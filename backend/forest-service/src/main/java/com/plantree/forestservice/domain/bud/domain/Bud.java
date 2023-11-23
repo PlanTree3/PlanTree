@@ -2,6 +2,7 @@ package com.plantree.forestservice.domain.bud.domain;
 
 import com.plantree.forestservice.domain.branch.domain.Branch;
 import com.plantree.forestservice.domain.bud.infra.database.converter.DayConverter;
+import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.plantree.forestservice.global.entity.BaseTimeEntity;
 import com.plantree.forestservice.global.util.SequentialUUIDGenerator;
 import java.util.ArrayList;
@@ -53,6 +54,10 @@ public class Bud extends BaseTimeEntity {
     @BatchSize(size = 20)
     @OneToMany(mappedBy = "bud", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BudComment> budComments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tree_id")
+    private Tree tree;
 
     @Builder
     public Bud(String name, Day day, UUID studentId, Branch branch, UUID treeId) {
