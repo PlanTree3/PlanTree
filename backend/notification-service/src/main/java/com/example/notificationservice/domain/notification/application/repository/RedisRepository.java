@@ -10,11 +10,8 @@ public interface RedisRepository {
 
     void setValue(String key, Object value);
 
-    Object getValue(String key);
-
     List<Object> getValuesByPrefix(String prefix);
 
-    //
     Map<String, Object> findAllEntires(String key);
 
     void deleteAll(String key);

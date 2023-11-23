@@ -9,10 +9,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CheckTeacherResDto {
 
-    private boolean isLeader;
+    private boolean isTeacher;
 
-    public CheckTeacherResDto(boolean isLeader) {
-        this.isLeader = isLeader;
+    public CheckTeacherResDto(boolean isTeacher) {
+        this.isTeacher = isTeacher;
     }
 
 }

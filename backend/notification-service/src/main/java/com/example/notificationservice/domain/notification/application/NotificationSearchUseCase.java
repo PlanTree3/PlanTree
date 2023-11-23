@@ -24,8 +24,7 @@ public class NotificationSearchUseCase {
 
     private final RedisRepository redisRepository;
     private final ForestNotificationRepository forestNotificationRepository;
-
-    @Transactional(readOnly = true)
+    
     public CheckNotificationPresentResponseDto checkNotificationPresent(AuthMember authMember) {
         List<Object> notificationList = redisRepository.getValuesByPrefix(authMember.getMemberId()
                                                                                     .toString());

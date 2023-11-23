@@ -23,7 +23,6 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = "plantree-topic", groupId = "kafkaGroup")
     public void consumeForestTopic(String payload) {
-        System.out.println(payload);
         ForestEvent event;
 
         try {
