@@ -34,18 +34,23 @@ public class BranchRepositoryImpl implements BranchRepository {
     }
 
     @Override
-    public List<Branch> findBranchesWithBudsByTreeId(UUID treeId){
+    public List<Branch> findBranchesWithBudsByTreeId(UUID treeId) {
         return branchQueryRepository.findBranchesWithBudsByTreeId(treeId);
     }
 
     @Override
-    public List<Branch> findBranchesWithBudsAndSeedsByTreeId(UUID treeId){
+    public List<Branch> findBranchesWithBudsAndSeedsByTreeId(UUID treeId) {
         return branchQueryRepository.findBranchesWithBudsAndSeedsByTreeId(treeId);
     }
 
     @Override
     public void saveAll(List<Branch> branches) {
         branchJpaRepository.saveAll(branches);
+    }
+
+    @Override
+    public List<Branch> findBranchesWithSeedsByTreeId(UUID treeId) {
+        return branchQueryRepository.findBranchesWithSeedsByTreeId(treeId);
     }
 
 }

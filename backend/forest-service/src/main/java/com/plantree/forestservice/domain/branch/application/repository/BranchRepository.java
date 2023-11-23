@@ -19,4 +19,6 @@ public interface BranchRepository {
     List<Branch> findBranchesWithBudsAndSeedsByTreeId(UUID treeId);
 
     void saveAll(List<Branch> branches);
+
+    List<Branch> findBranchesWithSeedsByTreeId(UUID treeId);
 }
