@@ -39,13 +39,18 @@ public class BudRepositoryImpl implements BudRepository {
     }
 
     @Override
-    public Bud getReferenceById(UUID budId){
+    public Bud getReferenceById(UUID budId) {
         return budJpaRepository.getReferenceById(budId);
     }
 
     @Override
-    public List<Bud> findCurrentBudsByMemberIds(List<UUID> memberIds){
+    public List<Bud> findCurrentBudsByMemberIds(List<UUID> memberIds) {
         return budQueryRepository.findCurrentBudsByMemberIds(memberIds);
+    }
+
+    @Override
+    public List<Bud> findBudsAndBudCommentsByTreeId(UUID treeId) {
+        return budQueryRepository.findBudsAndBudCommentsByTreeId(treeId);
     }
 
 }

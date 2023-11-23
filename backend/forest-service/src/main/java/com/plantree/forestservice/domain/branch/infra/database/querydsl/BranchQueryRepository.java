@@ -23,22 +23,31 @@ public class BranchQueryRepository {
 
     public List<Branch> findBranchesWithBudsByTreeId(UUID treeId) {
         return jpaQueryFactory.selectDistinct(branch)
-                .from(branch)
-                .where(branch.tree.id.eq(treeId))
-                .leftJoin(branch.buds, bud).fetchJoin()
-                .groupBy(branch.id, bud.id)
-                .fetch();
+                              .from(branch)
+                              .where(branch.tree.id.eq(treeId))
+                              .leftJoin(branch.buds, bud)
+                              .fetchJoin()
+                              .groupBy(branch.id, bud.id)
+                              .fetch();
     }
 
     public List<Branch> findBranchesWithBudsAndSeedsByTreeId(UUID treeId) {
         return jpaQueryFactory.selectDistinct(branch)
-                .from(branch)
-                .where(branch.tree.id.eq(treeId))
-                .leftJoin(branch.buds, bud)
-                .fetchJoin()
-                .leftJoin(branch.seeds, seed)
-                .groupBy(branch.id, bud.id, seed.id)
-                .fetch();
+                              .from(branch)
+                              .where(branch.tree.id.eq(treeId))
+                              .leftJoin(branch.buds, bud)
+                              .fetchJoin()
+                              .leftJoin(branch.seeds, seed)
+                              .groupBy(branch.id, bud.id, seed.id)
+                              .fetch();
     }
 
+    public List<Branch> findBranchesWithSeedsByTreeId(UUID treeId) {
+        return jpaQueryFactory.selectDistinct(branch)
+                              .from(branch)
+                              .where(branch.tree.id.eq(treeId))
+                              .leftJoin(branch.seeds, seed)
+                              .fetchJoin()
+                              .fetch();
+    }
 }
