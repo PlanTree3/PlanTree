@@ -1,31 +1,32 @@
 package com.example.notificationservice.domain.notification.dto;
 
-import com.example.notificationservice.domain.notification.domain.NotificationType;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.example.notificationservice.domain.notification.domain.ForestNotification;
+import com.example.notificationservice.domain.notification.domain.ForestNotificationDetail;
+import com.example.notificationservice.domain.notification.domain.ForestNotificationType;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 import java.util.UUID;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
-@NoArgsConstructor
-@JsonInclude(Include.NON_NULL)
 public class NotificationResponseDto {
 
-    private NotificationType type;
+    private ForestNotificationType type;
     private boolean isRead;
-    private UUID notificationId;
-    private String createdAt;
-    private UUID studentId;
-    private UUID parentId;
-    private UUID teacherId;
-    private UUID budId;
-    private String budName;
-    private UUID branchId;
-    private String branchName;
-    private UUID treeId;
-    private String memberName;
+    private String notificationId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate createdAt;
+    private UUID treeId;
+    private ForestNotificationDetail detail;
+
+    public NotificationResponseDto(ForestNotification notification, boolean isRead) {
+        this.isRead = isRead;
+        this.notificationId = notification.getId()
+                                          .toString();
+        this.type = notification.getType();
+        this.createdAt = notification.getCreatedAt();
+        this.treeId = notification.getTreeId();
+        this.detail = notification.getDetail();
+    }
 }

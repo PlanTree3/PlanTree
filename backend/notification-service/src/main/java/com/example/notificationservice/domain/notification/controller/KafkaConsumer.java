@@ -1,15 +1,11 @@
 package com.example.notificationservice.domain.notification.controller;
 
-import com.example.notificationservice.domain.notification.application.EventHandler;
-import com.example.notificationservice.global.event.forest.BranchCreatedByParentEvent;
-import com.example.notificationservice.global.event.forest.BranchCreatedByStudentEvent;
-import com.example.notificationservice.global.event.forest.BranchCreatedByTeacherEvent;
-import com.example.notificationservice.global.event.forest.BudCommentCreatedByParentEvent;
-import com.example.notificationservice.global.event.forest.BudCommentCreatedByStudentEvent;
-import com.example.notificationservice.global.event.forest.BudCommentCreatedByTeacherEvent;
-import com.example.notificationservice.global.event.forest.BudCompletedEvent;
-import com.example.notificationservice.global.event.forest.BudCreatedEvent;
+import com.example.notificationservice.domain.notification.application.BranchCreatedUseCase;
+import com.example.notificationservice.domain.notification.application.BudCommentWritedUseCase;
+import com.example.notificationservice.domain.notification.application.BudCompletedUseCase;
+import com.example.notificationservice.domain.notification.application.BudCreatedUseCase;
 import com.example.notificationservice.global.event.forest.ForestEvent;
+import com.example.notificationservice.global.exception.DeserializeFailException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,41 +16,49 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-    private final EventHandler eventHandler;
+    private final BudCreatedUseCase budCreatedUseCase;
+    private final BudCompletedUseCase budCompletedUseCase;
+    private final BranchCreatedUseCase branchCreatedUseCase;
+    private final BudCommentWritedUseCase budCommentWritedUseCase;
 
     @KafkaListener(topics = "plantree-topic", groupId = "kafkaGroup")
     public void consumeForestTopic(String payload) {
+        System.out.println(payload);
         ForestEvent event;
 
         try {
             event = new ObjectMapper().readValue(payload, ForestEvent.class);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new DeserializeFailException();
         }
 
-        if (event instanceof BudCreatedEvent) {
-            eventHandler.handleBudCreatedEvent((BudCreatedEvent) event, payload);
-        } else if (event instanceof BudCompletedEvent) {
-            eventHandler.handleBudCompletedEvent((BudCompletedEvent) event, payload);
-        } else if (event instanceof BranchCreatedByParentEvent) {
-            eventHandler.handleBranchCreatedByParentEvent((BranchCreatedByParentEvent) event,
-                    payload);
-        } else if (event instanceof BranchCreatedByTeacherEvent) {
-            eventHandler.handleBranchCreatedByTeacherEvent((BranchCreatedByTeacherEvent) event,
-                    payload);
-        } else if (event instanceof BranchCreatedByStudentEvent) {
-            eventHandler.handleBranchCreatedByStudentEvent((BranchCreatedByStudentEvent) event,
-                    payload);
-        } else if (event instanceof BudCommentCreatedByParentEvent) {
-            eventHandler.handleBudCommentCreatedByParentEvent(
-                    (BudCommentCreatedByParentEvent) event, payload);
-        } else if (event instanceof BudCommentCreatedByTeacherEvent) {
-            eventHandler.handleBudCommentCreatedByTeacherEvent(
-                    (BudCommentCreatedByTeacherEvent) event, payload);
-        } else if (event instanceof BudCommentCreatedByStudentEvent) {
-            eventHandler.handleBudCommentCreatedByStudentEvent(
-                    (BudCommentCreatedByStudentEvent) event, payload);
+        switch (event.getType()) {
+            case STU_GEN_BUD:
+                budCreatedUseCase.handleBudCreatedEvent(event);
+                break;
+            case STU_COM_BUD:
+                budCompletedUseCase.handleBudCompletedEvent(event);
+                break;
+            case STU_GEN_BRA:
+                branchCreatedUseCase.handleBranchCreatedByStudentEvent(event);
+                break;
+            case PAR_GEN_BRA:
+                branchCreatedUseCase.handleBranchCreatedByParentEvent(event);
+                break;
+            case TEA_GEN_BRA:
+                branchCreatedUseCase.handleBranchCreatedByTeacherEvent(event);
+                break;
+            case STU_WRI_BUD:
+                budCommentWritedUseCase.handleBudCommentCreatedByStudentEvent(event);
+                break;
+            case PAR_WRI_BUD:
+                budCommentWritedUseCase.handleBudCommentCreatedByParentEvent(event);
+                break;
+            case TEA_WRI_BUD:
+                budCommentWritedUseCase.handleBudCommentCreatedByTeacherEvent(event);
+                break;
+            default:
+                break;
         }
-
     }
 }
