@@ -12,10 +12,12 @@ public class EventProducer {
         EventProducer.producer = producer;
     }
 
-    public static void send(Event event) {
+    public static void send(ForestEvent forestEvent) {
         if (producer != null) {
             try {
-                producer.produce(new ObjectMapper().writeValueAsString(event));
+                String payload = new ObjectMapper().writeValueAsString(forestEvent);
+                System.out.println(payload);
+                producer.produce(payload);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
