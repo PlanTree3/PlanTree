@@ -63,7 +63,7 @@ public class BudQueryRepository {
     public List<Bud> findBudsAndBudCommentsByTreeId(UUID treeId) {
         return jpaQueryFactory.selectDistinct(bud)
                               .from(bud)
-                              .where(bud.tree.id.eq(treeId))
+                              .where(bud.treeId.eq(treeId))
                               .leftJoin(bud.budComments, budComment)
                               .fetchJoin()
                               .fetch();
