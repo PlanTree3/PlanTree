@@ -16,7 +16,6 @@ public class EventProducer {
         if (producer != null) {
             try {
                 String payload = new ObjectMapper().writeValueAsString(forestEvent);
-                System.out.println(payload);
                 producer.produce(payload);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();

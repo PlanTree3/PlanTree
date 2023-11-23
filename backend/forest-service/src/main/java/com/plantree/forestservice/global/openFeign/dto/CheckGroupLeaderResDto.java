@@ -11,4 +11,8 @@ public class CheckGroupLeaderResDto {
 
     private boolean teacher;
 
+    public CheckGroupLeaderResDto(boolean teacher) {
+        this.teacher = teacher;
+    }
+
 }
