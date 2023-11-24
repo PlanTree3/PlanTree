@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Builder;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class BudComment extends BaseTimeEntity {
 
     @Id
-    @Column(name = "bud_comment")
+    @Column(name = "bud_comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -32,10 +33,11 @@ public class BudComment extends BaseTimeEntity {
     private UUID writerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bud_id")
     private Bud bud;
 
     @Builder
-    public BudComment(String content, UUID writerId, Bud bud){
+    public BudComment(String content, UUID writerId, Bud bud) {
         this.content = content;
         this.writerId = writerId;
         this.bud = bud;
