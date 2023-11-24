@@ -12,4 +12,7 @@ public class CheckNestParentResDto {
 
     private boolean isParent;
 
+    public CheckNestParentResDto(boolean isParent) {
+        this.isParent = isParent;
+    }
 }

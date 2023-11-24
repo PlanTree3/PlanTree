@@ -2,10 +2,13 @@ package com.plantree.forestservice.domain.bud.application;
 
 import com.plantree.forestservice.domain.bud.application.repository.BudRepository;
 import com.plantree.forestservice.domain.bud.domain.Bud;
-import com.plantree.forestservice.domain.bud.domain.BudCompletedEvent;
 import com.plantree.forestservice.domain.bud.domain.Day;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
+import com.plantree.forestservice.global.event.BudCompletedEvent;
 import com.plantree.forestservice.global.event.EventProducer;
+import com.plantree.forestservice.global.event.ForestEvent;
+import com.plantree.forestservice.global.event.ForestEventDetail;
+import com.plantree.forestservice.global.event.ForestEventType;
 import com.plantree.forestservice.global.exception.Bud.BudNotFoundException;
 import com.plantree.forestservice.global.util.AuthMemberValidator;
 import java.util.UUID;
@@ -42,13 +45,7 @@ public class BudUpdateUseCase {
                                .orElseThrow(BudNotFoundException::new);
         bud.complete();
         bud.updateDay(day);
-        BudCompletedEvent budCompletedEvent = BudCompletedEvent.builder()
-                                                               .treeId(treeId)
-                                                               .studentId(authMember.getMemberId())
-                                                               .budId(budId)
-                                                               .budName(bud.getName())
-                                                               .build();
-        EventProducer.send(budCompletedEvent);
+        produceBudCompletedEvent(bud, treeId);
     }
 
     @Transactional
@@ -70,6 +67,20 @@ public class BudUpdateUseCase {
         Bud bud = budRepository.findById(budId)
                                .orElseThrow(BudNotFoundException::new);
         bud.updateName(name);
+    }
+
+    private void produceBudCompletedEvent(Bud bud, UUID treeId) {
+        ForestEventDetail detail = BudCompletedEvent.builder()
+                                                    .studentId(bud.getStudentId())
+                                                    .budId(bud.getId())
+                                                    .budName(bud.getName())
+                                                    .build();
+        ForestEvent event = ForestEvent.builder()
+                                       .treeId(treeId)
+                                       .type(ForestEventType.STU_COM_BUD)
+                                       .detail(detail)
+                                       .build();
+        EventProducer.send(event);
     }
 
 }

@@ -5,7 +5,7 @@ import com.plantree.forestservice.domain.tree.domain.Tree;
 import com.plantree.forestservice.global.config.webmvc.AuthMember;
 import com.plantree.forestservice.global.exception.Tree.TreeNotFoundException;
 import com.plantree.forestservice.global.exception.UnauthorizedAccessException;
-import com.plantree.forestservice.global.openFeign.MemberServiceClient;
+import com.plantree.forestservice.global.openFeign.AuthServiceClient;
 import com.plantree.forestservice.global.openFeign.dto.CheckGroupLeaderReqDto;
 import com.plantree.forestservice.global.openFeign.dto.CheckGroupLeaderResDto;
 import com.plantree.forestservice.global.openFeign.dto.CheckNestParentReqDto;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AuthMemberValidator {
 
-    private final MemberServiceClient memberServiceClient;
+    private final AuthServiceClient authServiceClient;
     private final TreeRepository treeRepository;
 
     public void validateAuthMember(UUID studentId, AuthMember authMember) {
@@ -38,29 +38,30 @@ public class AuthMemberValidator {
     }
 
 
-    public void checkParentOfStudentFromTreeId(UUID studentId, AuthMember authMember) {
+    private void checkParentOfStudentFromTreeId(UUID studentId, AuthMember authMember) {
         CheckNestParentReqDto checkNestParentReqDto = new CheckNestParentReqDto(studentId,
                 authMember.getMemberId());
         boolean isAuthMemberParentOfStudent =
-                memberServiceClient.checkNestParent(checkNestParentReqDto)
-                                   .isParent();
+                authServiceClient.checkNestParent(checkNestParentReqDto)
+                                 .isParent();
         if (!isAuthMemberParentOfStudent) {
             throw new UnauthorizedAccessException();
         }
     }
 
-    public void checkTeacherOfStudentFromTreeId(UUID studentId, AuthMember authMember) {
+    private void checkTeacherOfStudentFromTreeId(UUID studentId, AuthMember authMember) {
         CheckTeacherReqDto checkTeacherReqDto = new CheckTeacherReqDto(studentId,
                 authMember.getMemberId());
         boolean isAuthMemberTeacherOfStudent =
-                memberServiceClient.checkTeacher(checkTeacherReqDto)
-                                   .isLeader();
+                authServiceClient.checkTeacher(checkTeacherReqDto)
+                                 .isTeacher();
+
         if (!isAuthMemberTeacherOfStudent) {
             throw new UnauthorizedAccessException();
         }
     }
 
-    public void checkAuthMemberFromStudentIdOfTree(UUID studentId, AuthMember authMember) {
+    private void checkAuthMemberFromStudentIdOfTree(UUID studentId, AuthMember authMember) {
         boolean authMemberIsOwnerOfTree = studentId.equals(authMember.getMemberId());
         if (!authMemberIsOwnerOfTree) {
             throw new UnauthorizedAccessException();
@@ -78,7 +79,7 @@ public class AuthMemberValidator {
     }
 
     public void isGroupLeader(UUID groupId, AuthMember authMember) {
-        CheckGroupLeaderResDto checkGroupLeaderResDto = memberServiceClient.checkGroupLeader(
+        CheckGroupLeaderResDto checkGroupLeaderResDto = authServiceClient.checkGroupLeader(
                 new CheckGroupLeaderReqDto(authMember.getMemberId()), groupId);
         log.info("isTeacher: {}", checkGroupLeaderResDto.isTeacher());
         if (!checkGroupLeaderResDto.isTeacher()) {

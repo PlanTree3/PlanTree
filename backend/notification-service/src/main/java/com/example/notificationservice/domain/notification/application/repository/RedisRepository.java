@@ -6,17 +6,13 @@ import java.util.Map;
 
 public interface RedisRepository {
 
-    void setValueHashes(String key, String subKey, Object value);
+    void setValue(String key, Object value, Duration duration);
 
-    void setAllValueHashes(String key, Map<String, Object> map, Duration duration);
+    void setValue(String key, Object value);
 
-    Map<Object, Object> getAllValueHashes(String key);
+    List<Object> getValuesByPrefix(String prefix);
 
-    Object getValueHashes(String key, String subKey);
-
-    List<Map<Object, Object>> findAll(String key);
-
-    List<Map<Object, Object>> findAllWithNotificationId(String key);
+    Map<String, Object> findAllEntires(String key);
 
     void deleteAll(String key);
 
