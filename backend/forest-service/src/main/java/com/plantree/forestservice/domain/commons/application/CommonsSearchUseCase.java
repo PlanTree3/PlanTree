@@ -5,6 +5,7 @@ import com.plantree.forestservice.domain.branch.domain.Branch;
 import com.plantree.forestservice.domain.bud.application.repository.BudRepository;
 import com.plantree.forestservice.domain.bud.domain.Bud;
 import com.plantree.forestservice.domain.bud.domain.Day;
+import com.plantree.forestservice.domain.commons.dto.BranchSearchProjectionDto;
 import com.plantree.forestservice.domain.commons.dto.CommonsMainBudResDto;
 import com.plantree.forestservice.domain.commons.dto.CommonsMainDaysResDto;
 import com.plantree.forestservice.domain.commons.dto.CommonsMainPageResDto;
@@ -19,6 +20,7 @@ import com.plantree.forestservice.global.exception.Branch.BranchNotFoundExceptio
 import com.plantree.forestservice.global.exception.Tree.TreeNotFoundException;
 import com.plantree.forestservice.global.util.AuthMemberValidator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -119,36 +121,70 @@ public class CommonsSearchUseCase {
 
     public CommonsTodoPageResDto findTodoPage(UUID treeId, AuthMember authMember) {
 
-        List<Branch> branches = branchRepository.findBranchesWithSeedsByTreeId(treeId);
-        List<CommonsTodoBranchResDto> branchResDtos = branches.stream()
-                                                              .map(branch -> {
-                                                                  List<CommonsTodoSeedResDto> seedResDtos = branch.getSeeds()
-                                                                                                                  .stream()
-                                                                                                                  .map(CommonsTodoSeedResDto::new)
-                                                                                                                  .collect(
-                                                                                                                          Collectors.toList());
-                                                                  return new CommonsTodoBranchResDto(
-                                                                          branch, seedResDtos);
-                                                              })
-                                                              .collect(Collectors.toList());
+        Map<String, Map> branchInfo = new HashMap<>();
+        Map<String, List> branches = new HashMap<>();
+        Map<String, Map> budInfo = new HashMap<>();
+        List<BranchSearchProjectionDto> projectionDtos = branchRepository.findByTreeId(treeId.toString());
+        projectionDtos.stream().forEach(dto -> {
+            branches.putIfAbsent(dto.getBranchId(), new ArrayList<>());
+            branchInfo.putIfAbsent(dto.getBranchId(), new HashMap());
+            Map<String, Object> branchInfoMap = branchInfo.get(dto.getBranchId());
+            if(dto.getBranchName() != null){
+                branchInfoMap.putIfAbsent("branchName", dto.getBranchName());
+                branchInfoMap.putIfAbsent("branchColor", dto.getBranchColor());
+            }
 
-        List<Bud> buds = budRepository.findBudsAndBudCommentsByTreeId(treeId);
-        List<CommonsTodoBudResDto> budResDtos = buds.stream()
-                                                    .map(bud -> {
-                                                        Branch branch = branches.stream()
-                                                                                .filter(foundBranch -> foundBranch.getId()
-                                                                                                                  .equals(
-                                                                                                                          bud.getBranch()
-                                                                                                                             .getId()))
-                                                                                .findFirst()
-                                                                                .orElseThrow(
-                                                                                        BranchNotFoundException::new);
-                                                        return new CommonsTodoBudResDto(bud,
-                                                                branch);
-                                                    })
-                                                    .collect(Collectors.toList());
+            if(dto.getSeedId() != null) {
+                branches.get(dto.getBranchId()).add(new CommonsTodoSeedResDto(dto.getSeedId(), dto.getSeedName()));
+            }
+            if(dto.getBudId() != null){
+                budInfo.putIfAbsent(dto.getBudId(), new HashMap());
+                Map<String, Object> budInfoMap = budInfo.get(dto.getBudId());
+                budInfoMap.put("branchId", dto.getBranchId());
+                budInfoMap.put("budName", dto.getBudName());
+                budInfoMap.put("dayOfWeek", dto.getDayOfWeek());
+                budInfoMap.put("isComplete", dto.isComplete());
+                budInfoMap.put("commentCount", dto.getCommentCount());
+            }
+        });
+
+        List<CommonsTodoBudResDto> budResDtos = budInfo.keySet().stream().map(key -> {
+            Map<String, Object> budInfoMap = budInfo.get(key);
+            String branchId = budInfoMap.get("branchId").toString();
+            Map<String, Object> branch = branchInfo.get(branchId);
+            return CommonsTodoBudResDto.builder()
+                    .budId(key)
+                    .budName((String) budInfoMap.get("budName"))
+                    .dayOfWeek((String) budInfoMap.get("dayOfWeek"))
+                    .isComplete((Boolean) budInfoMap.get("isComplete"))
+                    .commentCount((Integer) budInfoMap.get("commentCount"))
+                    .branchId((String) budInfoMap.get("branchId"))
+                    .branchColor((String) branch.get("branchColor"))
+                    .build();
+        }).collect(Collectors.toList());
+
+        List<CommonsTodoBranchResDto> branchResDtos = branches.keySet().stream()
+                .map(key -> {
+                    Map<String, Object> branchInfoMap = branchInfo.get(key);
+                    if(branches.get(key).isEmpty()){
+                        return CommonsTodoBranchResDto.builder()
+                                .branchId(key)
+                                .branchColor((String) branchInfoMap.get("branchColor"))
+                                .branchName((String) branchInfoMap.get("branchName"))
+                                .seeds(new ArrayList<>())
+                                .build();
+                    }
+
+                    return CommonsTodoBranchResDto.builder()
+                            .branchId(key)
+                            .branchColor((String) branchInfoMap.get("branchColor"))
+                            .branchName((String) branchInfoMap.get("branchName"))
+                            .seeds(branches.get(key))
+                            .build();
+                }).collect(Collectors.toList());
 
         return new CommonsTodoPageResDto(branchResDtos, budResDtos);
 
     }
+
 }

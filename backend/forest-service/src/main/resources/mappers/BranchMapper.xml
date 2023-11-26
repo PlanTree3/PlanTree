@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plantree.forestservice.domain.branch.infra.database.mybatis.BranchMapper">
+
+    <resultMap id="branchResultMap" type="com.plantree.forestservice.domain.commons.dto.BranchSearchProjectionDto">
+        <id property="branchId" column="branch_id" javaType="String"></id>
+        <result property="branchName" column="branch_name" javaType="String"></result>
+        <result property="branchColor" column="branch_color" javaType="String"></result>
+        <result property="seedId" column="seed_id" javaType="String"></result>
+        <result property="seedName" column="seed_name" javaType="String"></result>
+        <result property="isComplete" column="is_complete" javaType="boolean"></result>
+        <result property="budId" column="bud_id" javaType="String"></result>
+        <result property="budName" column="bud_name" javaType="String"></result>
+        <result property="dayOfWeek" column="day_of_week" javaType="String"></result>
+        <result property="commentCount" column="comment_count" javaType="int"></result>
+    </resultMap>
+
+    <select id="findByTreeId" resultMap="branchResultMap">
+        select * from
+            (select bin_to_uuid(branch.branch_id) as branch_id, branch.name as branch_name, branch.color as branch_color,
+                    bin_to_uuid(seed.seed_id) as seed_id, seed.name as seed_name,
+                    null as bud_id, null as bud_name, null as day_of_week, null as comment_count, null as is_complete
+             from branch left outer join seed on seed.branch_id = branch.branch_id
+             where branch.tree_id = uuid_to_bin(#{treeId})) as t1
+        union
+        (select bin_to_uuid(bud.branch_id) as branch_id, null as branch_name, null as branch_color,
+                null as seed_id, null as seed_name,
+                bin_to_uuid(bud.bud_id) as bud_id, bud.name as bud_name, bud.day as day_of_week, count(bud_comment.bud_comment_id) as comment_count, bud.is_complete as is_complete
+         from bud left outer join bud_comment on bud_comment.bud_id = bud.bud_id
+         where bud.tree_id = uuid_to_bin(#{treeId})
+         group by bud.bud_id, bud.bud_id);
+    </select>
+</mapper>
