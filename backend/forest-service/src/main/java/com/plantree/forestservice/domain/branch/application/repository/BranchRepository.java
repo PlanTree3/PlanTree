@@ -1,6 +1,7 @@
 package com.plantree.forestservice.domain.branch.application.repository;
 
 import com.plantree.forestservice.domain.branch.domain.Branch;
+import com.plantree.forestservice.domain.commons.dto.BranchSearchProjectionDto;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,4 +22,6 @@ public interface BranchRepository {
     void saveAll(List<Branch> branches);
 
     List<Branch> findBranchesWithSeedsByTreeId(UUID treeId);
+
+    List<BranchSearchProjectionDto> findByTreeId(String treeId);
 }

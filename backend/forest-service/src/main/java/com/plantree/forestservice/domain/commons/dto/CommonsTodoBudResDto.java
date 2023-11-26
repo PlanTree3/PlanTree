@@ -4,6 +4,7 @@ import com.plantree.forestservice.domain.branch.domain.Branch;
 import com.plantree.forestservice.domain.bud.domain.Bud;
 import com.plantree.forestservice.domain.bud.domain.Day;
 import java.util.UUID;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -26,6 +27,18 @@ public class CommonsTodoBudResDto {
         this.commentCount = bud.getBudComments()
                                .size();
         this.dayOfWeek = bud.getDay();
+    }
+
+    @Builder
+    public CommonsTodoBudResDto(String budId, String budName, boolean isComplete, String branchId, String branchColor,
+                                int commentCount, String dayOfWeek){
+        this.budId = UUID.fromString(budId);
+        this.budName = budName;
+        this.isComplete = isComplete;
+        this.branchId = UUID.fromString(branchId);
+        this.branchColor = branchColor;
+        this.commentCount = commentCount;
+        this.dayOfWeek = Day.valueOf(dayOfWeek);
     }
 
 }

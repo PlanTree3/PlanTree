@@ -15,4 +15,9 @@ public class CommonsTodoSeedResDto {
         this.seedName = seed.getName();
     }
 
+    public CommonsTodoSeedResDto(String seedId, String seedName){
+        this.seedId = UUID.fromString(seedId);
+        this.seedName = seedName;
+    }
+
 }

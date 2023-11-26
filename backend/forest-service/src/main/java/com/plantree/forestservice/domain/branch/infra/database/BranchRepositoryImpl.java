@@ -3,7 +3,9 @@ package com.plantree.forestservice.domain.branch.infra.database;
 import com.plantree.forestservice.domain.branch.application.repository.BranchRepository;
 import com.plantree.forestservice.domain.branch.domain.Branch;
 import com.plantree.forestservice.domain.branch.infra.database.jpa.BranchJpaRepository;
+import com.plantree.forestservice.domain.branch.infra.database.mybatis.BranchMapper;
 import com.plantree.forestservice.domain.branch.infra.database.querydsl.BranchQueryRepository;
+import com.plantree.forestservice.domain.commons.dto.BranchSearchProjectionDto;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,6 +18,7 @@ public class BranchRepositoryImpl implements BranchRepository {
 
     private final BranchJpaRepository branchJpaRepository;
     private final BranchQueryRepository branchQueryRepository;
+    private final BranchMapper branchMapper;
 
     @Override
     public Branch save(
@@ -51,6 +54,11 @@ public class BranchRepositoryImpl implements BranchRepository {
     @Override
     public List<Branch> findBranchesWithSeedsByTreeId(UUID treeId) {
         return branchQueryRepository.findBranchesWithSeedsByTreeId(treeId);
+    }
+
+    @Override
+    public List<BranchSearchProjectionDto> findByTreeId(String treeId){
+        return branchMapper.findByTreeId(treeId);
     }
 
 }
