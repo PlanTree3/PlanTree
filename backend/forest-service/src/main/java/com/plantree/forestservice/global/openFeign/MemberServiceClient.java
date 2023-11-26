@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface MemberServiceClient {
 
     @PostMapping("/group/{groupId}/student-id")
-    GetGroupMembersResDto getGroupMembers(@PathVariable(value = "groupId") UUID groupId);
+    GetGroupMembersResDto getGroupMembers(@PathVariable("groupId") UUID groupId);
 
     @PostMapping("/group/student/check-leader")
     CheckTeacherResDto checkTeacher(@RequestBody CheckTeacherReqDto checkTeacherReqDto);
@@ -32,7 +32,7 @@ public interface MemberServiceClient {
 
     @PostMapping("/group/{groupId}/check-leader")
     CheckGroupLeaderResDto checkGroupLeader(
-            @RequestBody CheckGroupLeaderReqDto checkGroupLeaderReqDto, @PathVariable UUID groupId);
+            @RequestBody CheckGroupLeaderReqDto checkGroupLeaderReqDto, @PathVariable("groupId") UUID groupId);
 
     @PostMapping("/member/name")
     GetNamesFromMemberIdResDto getNamesFromMember(
