@@ -60,12 +60,4 @@ public class BudQueryRepository {
                                                   .and(tree.endedAt.eq(nextSunday)));
     }
 
-    public List<Bud> findBudsAndBudCommentsByTreeId(UUID treeId) {
-        return jpaQueryFactory.selectDistinct(bud)
-                              .from(bud)
-                              .where(bud.treeId.eq(treeId))
-                              .leftJoin(bud.budComments, budComment)
-                              .fetchJoin()
-                              .fetch();
-    }
 }
