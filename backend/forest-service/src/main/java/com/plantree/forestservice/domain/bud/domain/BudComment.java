@@ -33,7 +33,6 @@ public class BudComment extends BaseTimeEntity {
     private UUID writerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bud_id")
     private Bud bud;
 
     @Builder
