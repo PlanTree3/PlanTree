@@ -19,5 +19,4 @@ public interface BudRepository {
 
     List<Bud> findCurrentBudsByMemberIds(List<UUID> memberIds);
 
-    List<Bud> findBudsAndBudCommentsByTreeId(UUID treeId);
 }

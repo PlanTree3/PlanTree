@@ -48,9 +48,4 @@ public class BudRepositoryImpl implements BudRepository {
         return budQueryRepository.findCurrentBudsByMemberIds(memberIds);
     }
 
-    @Override
-    public List<Bud> findBudsAndBudCommentsByTreeId(UUID treeId) {
-        return budQueryRepository.findBudsAndBudCommentsByTreeId(treeId);
-    }
-
 }
