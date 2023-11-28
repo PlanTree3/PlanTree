@@ -29,6 +29,6 @@
                 bin_to_uuid(bud.bud_id) as bud_id, bud.name as bud_name, bud.day as day_of_week, count(bud_comment.bud_comment_id) as comment_count, bud.is_complete as is_complete
          from bud left outer join bud_comment on bud_comment.bud_id = bud.bud_id
          where bud.tree_id = uuid_to_bin(#{treeId})
-         group by bud.bud_id, bud.bud_id);
+         group by branch_id, bud.bud_id);
     </select>
 </mapper>
