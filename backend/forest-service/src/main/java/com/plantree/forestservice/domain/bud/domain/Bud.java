@@ -54,9 +54,6 @@ public class Bud extends BaseTimeEntity {
     @OneToMany(mappedBy = "bud", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BudComment> budComments = new ArrayList<>();
 
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID treeId;
-
     @Builder
     public Bud(String name, Day day, UUID studentId, Branch branch, UUID treeId) {
         this.name = name;
